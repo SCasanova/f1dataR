@@ -1,0 +1,15 @@
+Package: f1dataR
+Title: Wrapper for Ergast Developer API (Formula 1 Data)
+Version: 0.0.1
+Authors@R: 
+    person(given = "Santiago",
+           family = "Casanova",
+           role = c("aut", "cre"),
+           email = "santiago.casanova@yahoo.com")
+Description: A collection of funtions that wrap Ergast API Formula 1 data. The load_* function family allow the user to get a neat dataframe of the requested data.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
