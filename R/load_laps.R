@@ -26,12 +26,13 @@
     full <- data$MRData$RaceTable$Races$Laps[[1]][2]
   }
   laps <- tibble::tibble()
+  season_text <-  ifelse(season == current, 2022, season)
   for (i in 1:nrow(full)) {
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%
                         dplyr::mutate(lap = i,
                                time_sec = purrr::map_dbl(time, time_to_sec),
-                               season = season))
+                               season = season_text))
   }
   laps
 }
