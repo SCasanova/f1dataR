@@ -2,3 +2,4 @@
 
 export(load_drivers)
 export(load_laps)
+importFrom(magrittr,"%>%")
