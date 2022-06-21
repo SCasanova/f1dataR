@@ -7,9 +7,9 @@
 load_laps(season = "current", race = "last")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season)}
+\item{season}{number from 1996 to 2022 (defaults to current season)}
 
-\item{race}{number from 1 to 22 (depending on season selected) and defaults
+\item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent}
 }
 \value{
@@ -18,5 +18,5 @@ during lap, time (in clock form), lap number, time (in seconds), and season.
 }
 \description{
 This function loads lap-by-lap time data for all drivers in a given season
-and round.
+and round. Lap time data is available from 1996 onwards.
 }

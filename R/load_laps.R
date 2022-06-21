@@ -1,10 +1,10 @@
 #' Load Lap by Lap Time Data (not cached)
 #'
 #' This function loads lap-by-lap time data for all drivers in a given season
-#' and round. This funtion does not export, only the cached version.
+#' and round. Lap time data is available from 1996 onwards. This funtion does not export, only the cached version.
 #'
-#' @param season number from 1950 to 2022 (defaults to current season)
-#' @param race number from 1 to 22 (depending on season selected) and defaults
+#' @param season number from 1996 to 2022 (defaults to current season)
+#' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns driverId (unique and recurring), position
@@ -53,10 +53,10 @@ time_to_sec <- function(time){
 #' Load Lap by Lap Time Data
 #'
 #' This function loads lap-by-lap time data for all drivers in a given season
-#' and round.
+#' and round. Lap time data is available from 1996 onwards.
 #'
-#' @param season number from 1950 to 2022 (defaults to current season)
-#' @param race number from 1 to 22 (depending on season selected) and defaults
+#' @param season number from 1996 to 2022 (defaults to current season)
+#' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @return A dataframe with columns driverId (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
