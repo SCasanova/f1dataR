@@ -11,8 +11,8 @@
 #' permanent number (for post-2014 drivers).
 
 .load_drivers <- function(season = 2022){
-  res <-  GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40', season = season))
-  data <- fromJSON(rawToChar(res$content))
+  res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40', season = season))
+  data <- jsonlite::fromJSON(rawToChar(res$content))
   data$MRData$DriverTable$Drivers %>%
     dplyr::select(driverId, givenName, familyName, nationality, dateOfBirth, code, permanentNumber)
 }
