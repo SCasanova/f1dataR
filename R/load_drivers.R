@@ -14,7 +14,8 @@
   res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40', season = season))
   data <- jsonlite::fromJSON(rawToChar(res$content))
   data$MRData$DriverTable$Drivers %>%
-    dplyr::select(driverId, givenName, familyName, nationality, dateOfBirth, code, permanentNumber)
+    dplyr::select(driverId, givenName, familyName, nationality, dateOfBirth, code, permanentNumber) %>%
+    tibble::as_tibble()
 }
 
 #' Load Driver Info
@@ -30,3 +31,4 @@
 #' @export
 
 load_drivers <- memoise::memoise(.load_drivers)
+

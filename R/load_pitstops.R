@@ -16,7 +16,7 @@
                                season = season,
                                race = race))
   data <- jsonlite::fromJSON(rawToChar(res$content))
-  data$MRData$RaceTable$Races$PitStops[[1]]
+  data$MRData$RaceTable$Races$PitStops[[1]] %>% tibble::as_tibble()
 }
 
 #' Load Pitstop Data
