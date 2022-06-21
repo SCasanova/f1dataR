@@ -204,3 +204,17 @@ load_pitstops(2021, 20)
 # … with 20 more rows
 ```
 
+## Loaded Data
+
+The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.
+
+```{r}
+f1dataR::driver_constructor_data %>% colnames()
+
+[1] "driverId"          "fullName"         
+[3] "constructor"       "constructorColor" 
+[5] "constructorColor2" "constructorLogo"  
+[7] "driverNumber"      "numberImage"      
+[9] "season" 
+
+```
