@@ -1,4 +1,4 @@
-# A set of functions to easily access Formula 1 data from the Ergast API.
+# A set of functions to easily access Formula 1 data from the Ergast API
 
 ## Installation
 
