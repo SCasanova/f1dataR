@@ -1,4 +1,6 @@
-# A set of functions to easily access Formula 1 data from the Ergast API and the official F1 data stream via the fastf1 python library.
+# f1dataR
+
+A set of functions to easily access Formula 1 data from the Ergast API and the official F1 data stream via the fastf1 python library.
 
 ## Installation
 
@@ -7,6 +9,12 @@ if (!require("remotes")) install.packages("remotes")
 remotes::install_github("SCasanova/f1dataR")
 ```
 
+## Data Sources
+
+Data is pulled from:
+
+* [Ergast API](http://ergast.com/mrd/)
+* [F1 Data Stream](https://www.formula1.com/en/f1-live.html/) via the [Fast F1 python library](https://theoehrly.github.io/Fast-F1/index.html)
 
 ## Functions
 
