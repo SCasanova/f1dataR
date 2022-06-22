@@ -7,6 +7,12 @@ Authors@R:
            role = c("aut", "cre"),
            email = "santiago.casanova@yahoo.com")
 Description: A collection of funtions that wrap Ergast API Formula 1 data. The load_* function family allow the user to get a neat dataframe of the requested data.
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "fastf1", pip = TRUE),
+    )
+  )
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

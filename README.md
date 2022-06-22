@@ -1,4 +1,4 @@
-# A set of functions to easily access Formula 1 data from the Ergast API
+# A set of functions to easily access Formula 1 data from the Ergast API and the official F1 data stream via the fastf1 python library.
 
 ## Installation
 
@@ -11,7 +11,7 @@ remotes::install_github("SCasanova/f1dataR")
 ## Functions
 
 ### Load Lap Times
-`load_laps()`
+`load_laps(season = 'current', race = 'last')`
 This function loads lap-by-lap time data for all drivers in a given season
 and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.
 
@@ -57,7 +57,7 @@ load_laps(2021, 15)
 ```
 
 ### Load Driver Data
-`load_drivers()`
+`load_drivers(season = 2022)`
 This function loads driver data for a given season. The default is current season.
 
 **Example:**
@@ -104,7 +104,7 @@ load_drivers(2013))
 ```
 
 ### Load Schedule
-`load_schedule()`
+`load_schedule(season = 2022)`
 This function loads schedule and circuit data for a given season.
 
 **Example:**
@@ -131,7 +131,7 @@ load_schedule()
 or
 
 ```{r}
-load_drivers(2011)
+load_schedule(2011)
 
 # A tibble: 19 × 11
    season round race_name  circuit_id circuit_name lat   long 
@@ -160,7 +160,7 @@ load_drivers(2011)
 ```
 
 ### Load Pit Stop Data
-`load_pitstops()`
+`load_pitstops(season = 'current', race  = 'last')`
 This function loads pitstop lap and duration data for a given race. It defaults to current season and latest race.
 
 **Example:**
@@ -203,6 +203,55 @@ load_pitstops(2021, 20)
 10 mick_schumacher 22    1     17:37:38 25.881  
 # … with 20 more rows
 ```
+
+### Load Session Data
+`load_session_data(obj_name, season = 2022, race = 1)`
+This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
+
+**Example:**
+```{r}
+load_race_session('bahrain22')
+
+# A tibble: 32 × 5
+   driverId        lap   stop  time     duration
+   <chr>           <chr> <chr> <chr>    <chr>   
+ 1 vettel          5     1     14:10:02 23.406  
+ 2 gasly           5     1     14:10:04 23.557  
+ 3 kevin_magnussen 7     1     14:12:33 38.262  
+ 4 max_verstappen  9     1     14:15:15 24.217  
+ 5 hamilton        9     1     14:15:24 23.845  
+ 6 tsunoda         9     1     14:15:50 23.248  
+ 7 latifi          9     1     14:15:59 24.020  
+ 8 albon           18    1     14:28:07 23.804  
+ 9 russell         19    1     14:29:03 23.951  
+10 ocon            19    1     14:29:16 25.684  
+# … with 22 more rows
+```
+
+### Load Session Data
+`load_session_data(obj_name, season = 2022, race = 1)`
+This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
+
+**Example:**
+```{r}
+load_race_session('bahrain22')
+
+# A tibble: 32 × 5
+   driverId        lap   stop  time     duration
+   <chr>           <chr> <chr> <chr>    <chr>   
+ 1 vettel          5     1     14:10:02 23.406  
+ 2 gasly           5     1     14:10:04 23.557  
+ 3 kevin_magnussen 7     1     14:12:33 38.262  
+ 4 max_verstappen  9     1     14:15:15 24.217  
+ 5 hamilton        9     1     14:15:24 23.845  
+ 6 tsunoda         9     1     14:15:50 23.248  
+ 7 latifi          9     1     14:15:59 24.020  
+ 8 albon           18    1     14:28:07 23.804  
+ 9 russell         19    1     14:29:03 23.951  
+10 ocon            19    1     14:29:16 25.684  
+# … with 22 more rows
+```
+
 
 ## Loaded Data
 
