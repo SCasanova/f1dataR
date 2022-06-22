@@ -16,7 +16,7 @@ to most recent. Also accepts race name.}
 A session object to be used in other functions.
 }
 \description{
-This function loads telemetry and ambient data from the official F1
+Loads telemetry and general data from the official F1
 data stream via the fastf1 python library. Data is available from
 2018 onward.
 }

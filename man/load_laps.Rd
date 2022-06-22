@@ -17,6 +17,6 @@ A dataframe with columns driverId (unique and recurring), position
 during lap, time (in clock form), lap number, time (in seconds), and season.
 }
 \description{
-This function loads lap-by-lap time data for all drivers in a given season
+Loads lap-by-lap time data for all drivers in a given season
 and round. Lap time data is available from 1996 onwards.
 }

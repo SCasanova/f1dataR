@@ -212,46 +212,66 @@ This function loads a session object with all telemetry data for a given race. I
 ```{r}
 load_race_session('bahrain22')
 
-# A tibble: 32 × 5
-   driverId        lap   stop  time     duration
-   <chr>           <chr> <chr> <chr>    <chr>   
- 1 vettel          5     1     14:10:02 23.406  
- 2 gasly           5     1     14:10:04 23.557  
- 3 kevin_magnussen 7     1     14:12:33 38.262  
- 4 max_verstappen  9     1     14:15:15 24.217  
- 5 hamilton        9     1     14:15:24 23.845  
- 6 tsunoda         9     1     14:15:50 23.248  
- 7 latifi          9     1     14:15:59 24.020  
- 8 albon           18    1     14:28:07 23.804  
- 9 russell         19    1     14:29:03 23.951  
-10 ocon            19    1     14:29:16 25.684  
-# … with 22 more rows
+core           INFO 	Loading data for Bahrain Grand Prix - Race [v2.2.8]
+
+
+load_race_session('canada18', '2018', 'Canada')
+
+core           INFO 	Loading data for Canadian Grand Prix - Race [v2.2.8]
 ```
 
-### Load Session Data
-`load_session_data(obj_name, season = 2022, race = 1)`
-This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
+### Driver Telemetry
+`get_driver_telemetry(session_name, driver, fastest_only = FALSE)`
+Once a session is loaded, we can access specific driver telemetry for the race. The argument session name refers to the name assigned during the `load_race_session()` step. This function will act on the provided sesion name.
+The parameter `fastest_only`, when set to true, will output the telemetry for the fastest lap exclusiveley.
 
-**Example:**
 ```{r}
-load_race_session('bahrain22')
+get_driver_telemetry('bahrain22', 'PER')
 
-# A tibble: 32 × 5
-   driverId        lap   stop  time     duration
-   <chr>           <chr> <chr> <chr>    <chr>   
- 1 vettel          5     1     14:10:02 23.406  
- 2 gasly           5     1     14:10:04 23.557  
- 3 kevin_magnussen 7     1     14:12:33 38.262  
- 4 max_verstappen  9     1     14:15:15 24.217  
- 5 hamilton        9     1     14:15:24 23.845  
- 6 tsunoda         9     1     14:15:50 23.248  
- 7 latifi          9     1     14:15:59 24.020  
- 8 albon           18    1     14:28:07 23.804  
- 9 russell         19    1     14:29:03 23.951  
-10 ocon            19    1     14:29:16 25.684  
-# … with 22 more rows
+# A tibble: 43,384 × 18
+   Date                SessionTime DriverAhead
+   <dttm>              <dttm>      <chr>      
+ 1 2022-03-20 09:03:34 NA          ""         
+ 2 2022-03-20 09:03:34 NA          ""         
+ 3 2022-03-20 09:03:34 NA          ""         
+ 4 2022-03-20 09:03:35 NA          ""         
+ 5 2022-03-20 09:03:35 NA          ""         
+ 6 2022-03-20 09:03:35 NA          "24"       
+ 7 2022-03-20 09:03:35 NA          "24"       
+ 8 2022-03-20 09:03:35 NA          "24"       
+ 9 2022-03-20 09:03:35 NA          "77"       
+10 2022-03-20 09:03:35 NA          "77"       
+# … with 43,374 more rows, and 15 more variables:
+#   DistanceToDriverAhead <dbl>, Time <dttm>, RPM <dbl>,
+#   Speed <dbl>, nGear <dbl>, Throttle <dbl>, Brake <lgl>,
+#   DRS <dbl>, Source <chr>, RelativeDistance <dbl>,
+#   Status <chr>, X <dbl>, Y <dbl>, Z <dbl>, Distance <dbl>
+
+get_driver_telemetry('canada18', 'HAM', fastest_only = T)
+
+# A tibble: 550 × 18
+   Date                SessionTime DriverAhead
+   <dttm>              <dttm>      <chr>      
+ 1 2018-06-10 14:38:05 NA          ""         
+ 2 2018-06-10 14:38:05 NA          ""         
+ 3 2018-06-10 14:38:06 NA          ""         
+ 4 2018-06-10 14:38:06 NA          "3"        
+ 5 2018-06-10 14:38:06 NA          "3"        
+ 6 2018-06-10 14:38:06 NA          "3"        
+ 7 2018-06-10 14:38:06 NA          "3"        
+ 8 2018-06-10 14:38:06 NA          "3"        
+ 9 2018-06-10 14:38:06 NA          "3"        
+10 2018-06-10 14:38:07 NA          "3"        
+# … with 540 more rows, and 15 more variables:
+#   DistanceToDriverAhead <dbl>, Time <dttm>, RPM <dbl>,
+#   Speed <dbl>, nGear <dbl>, Throttle <dbl>, Brake <lgl>,
+#   DRS <dbl>, Source <chr>, RelativeDistance <dbl>,
+#   Status <chr>, X <dbl>, Y <dbl>, Z <dbl>, Distance <dbl>
 ```
 
+### Clear F1 Cache
+`clear_f1_cache()`
+Clears the cache for all functions in the package.
 
 ## Loaded Data
 

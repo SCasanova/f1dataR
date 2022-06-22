@@ -10,7 +10,7 @@ Description: A collection of funtions that wrap Ergast API Formula 1 data. The l
 Config/reticulate:
   list(
     packages = list(
-      list(package = "fastf1", pip = TRUE),
+      list(package = "fastf1", pip = TRUE)
     )
   )
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a

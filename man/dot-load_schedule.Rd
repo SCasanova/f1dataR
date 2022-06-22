@@ -15,6 +15,6 @@ latitute and Longitude, locality (city usually), country, date, and time
 of the race.
 }
 \description{
-This function loads schedule information for a given F1 season.
+Loads schedule information for a given F1 season.
 This funtion does not export, only the cached version.
 }

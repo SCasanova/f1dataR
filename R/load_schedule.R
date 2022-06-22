@@ -1,6 +1,6 @@
 #' Load Schedule (not cached)
 #'
-#' This function loads schedule information for a given F1 season.
+#' Loads schedule information for a given F1 season.
 #' This funtion does not export, only the cached version.
 #'
 #' @param season number from 1950 to 2022 (defaults to current season).
@@ -31,7 +31,7 @@
 
 #' Load Schedule
 #'
-#' This function loads schedule information for a given F1 season.
+#' Loads schedule information for a given F1 season.
 #'
 #' @param season number from 1950 to 2022 (defaults to current season).
 #' @return A dataframe with columns season, round, circuitId, circuitName,

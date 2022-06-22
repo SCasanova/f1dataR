@@ -1,6 +1,6 @@
 #' Load Session Data
 #'
-#' This function loads telemetry and ambient data from the official F1
+#' Loads telemetry and general data from the official F1
 #' data stream via the fastf1 python library. Data is available from
 #' 2018 onward.
 #'
@@ -13,7 +13,10 @@
 load_race_session <- function(obj_name, season = 2022, race = 1){
   reticulate::py_run_string('import fastf1')
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{wd}')", wd = getwd()))
-  reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, {race}, 'R')", season = season, race = race, name = obj_name))
+  if(is.numeric(race))
+    reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, {race}, 'R')", season = season, race = race, name = obj_name))
+  else
+    reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, '{race}', 'R')", season = season, race = race, name = obj_name))
   reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
 }
 

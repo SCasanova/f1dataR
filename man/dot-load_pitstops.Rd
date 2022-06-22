@@ -17,7 +17,7 @@ A dataframe with columns driverId, lap, stop (number), time (of day),
 and stop duration
 }
 \description{
-This function loads pit stop info (number, lap, time elapsed) for a given race
+Loads pit stop info (number, lap, time elapsed) for a given race
 in a season. Pit stop data is available from 2012 onwards.
 This funtion does not export, only the cached version.
 }

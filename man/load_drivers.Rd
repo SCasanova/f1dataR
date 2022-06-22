@@ -16,5 +16,5 @@ last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 permanent number (for post-2014 drivers).
 }
 \description{
-This function loads driver info for all participants in a given season.
+Loads driver info for all participants in a given season.
 }

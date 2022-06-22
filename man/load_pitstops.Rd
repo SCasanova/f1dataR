@@ -16,6 +16,6 @@ to most recent.}
 A dataframe with columns
 }
 \description{
-This function loads pit stop info (number, lap, time elapsed) for a given race
+Loads pit stop info (number, lap, time elapsed) for a given race
 in a season. Pit stop data is available from 2012 onwards.
 }
