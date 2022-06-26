@@ -53,51 +53,6 @@ or
 load_laps(2021, 15)
 ```
 
-### Load Driver Data
-`load_drivers(season = 2022)`
-This function loads driver data for a given season. The default is current season.
-
-**Example:**
-```{r}
-load_drivers()
-```
-
-or
-
-```{r}
-load_drivers(2013)
-```
-
-### Load Schedule
-`load_schedule(season = 2022)`
-This function loads schedule and circuit data for a given season.
-
-**Example:**
-```{r}
-load_schedule()
-```
-
-or
-
-```{r}
-load_schedule(2011)
-```
-
-### Load Pit Stop Data
-`load_pitstops(season = 'current', race  = 'last')`
-This function loads pitstop lap and duration data for a given race. It defaults to current season and latest race.
-
-**Example:**
-```{r}
-load_pitstops()
-```
-
-or
-
-```{r}
-load_pitstops(2021, 20)
-```
-
 ### Load Session Data
 `load_session_data(obj_name, season = 2022, race = 1)`
 This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
@@ -120,6 +75,17 @@ get_driver_telemetry('canada18', 'HAM', fastest_only = T)
 
 ```
 
+### Load Race or Qualifying Results
+`load_results(season = 'current', round = 'last')`
+`load_quali(season = 'current', round = 'last')`
+
+### Other funcitons
+* `load_pitstops(season = 'current', race  ='last')`
+* `load_drivers(season = 2022)`
+* `load_schedule(season = 2022)`
+* `load_standings(season = 'current', round = 'last', type = c('driver', 'constructor'))`
+
+
 ### Clear F1 Cache
 `clear_f1_cache()`
 Clears the cache for all functions in the package.
@@ -129,5 +95,5 @@ Clears the cache for all functions in the package.
 The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.
 
 ```{r}
-f1dataR::driver_constructor_data %>% colnames()
+driver_constructor_data %>% colnames()
 ```
