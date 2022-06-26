@@ -1,0 +1,133 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+library(tibble)
+options(tibble.max_extra_cols = 10,
+        tibble.bold = TRUE,
+        tibble.print_max = 5,
+        pillar.min_title_width = 5)
+```
+
+# f1dataR <img src='man/figures/logo.svg' align="right" width="25%" min-width="120px"/>
+
+A set of functions to easily access Formula 1 data from the Ergast API and the official F1 data stream via the fastf1 python library.
+
+## Installation
+
+```{r eval = FALSE}
+if (!require("remotes")) install.packages("remotes")
+remotes::install_github("SCasanova/f1dataR")
+```
+
+## Data Sources
+
+Data is pulled from:
+
+* [Ergast API](http://ergast.com/mrd/)
+* [F1 Data Stream](https://www.formula1.com/en/f1-live.html/) via the [Fast F1 python library](https://theoehrly.github.io/Fast-F1/index.html)
+
+## Functions
+
+### Load Lap Times
+`load_laps(season = 'current', race = 'last')`
+This function loads lap-by-lap time data for all drivers in a given season
+and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.
+
+**Example:**
+```{r}
+library(f1dataR)
+load_laps()
+```
+
+or
+
+```{r}
+load_laps(2021, 15)
+```
+
+### Load Driver Data
+`load_drivers(season = 2022)`
+This function loads driver data for a given season. The default is current season.
+
+**Example:**
+```{r}
+load_drivers()
+```
+
+or
+
+```{r}
+load_drivers(2013)
+```
+
+### Load Schedule
+`load_schedule(season = 2022)`
+This function loads schedule and circuit data for a given season.
+
+**Example:**
+```{r}
+load_schedule()
+```
+
+or
+
+```{r}
+load_schedule(2011)
+```
+
+### Load Pit Stop Data
+`load_pitstops(season = 'current', race  = 'last')`
+This function loads pitstop lap and duration data for a given race. It defaults to current season and latest race.
+
+**Example:**
+```{r}
+load_pitstops()
+```
+
+or
+
+```{r}
+load_pitstops(2021, 20)
+```
+
+### Load Session Data
+`load_session_data(obj_name, season = 2022, race = 1)`
+This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
+
+**Example:**
+```{r}
+load_race_session('bahrain22')
+load_race_session('canada18', '2018', 'Canada')
+```
+
+### Driver Telemetry
+`get_driver_telemetry(session_name, driver, fastest_only = FALSE)`
+Once a session is loaded, we can access specific driver telemetry for the race. The argument session name refers to the name assigned during the `load_race_session()` step. This function will act on the provided sesion name.
+The parameter `fastest_only`, when set to true, will output the telemetry for the fastest lap exclusiveley.
+
+```{r}
+get_driver_telemetry('bahrain22', 'PER')
+
+get_driver_telemetry('canada18', 'HAM', fastest_only = T)
+
+```
+
+### Clear F1 Cache
+`clear_f1_cache()`
+Clears the cache for all functions in the package.
+
+## Loaded Data
+
+The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.
+
+```{r}
+f1dataR::driver_constructor_data %>% colnames()
+```

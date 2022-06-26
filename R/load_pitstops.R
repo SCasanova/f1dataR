@@ -10,7 +10,6 @@
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns driverId, lap, stop (number), time (of day),
 #' and stop duration
-#' @export
 
 .load_pitstops <- function(season = 'current', race  ='last'){
   res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/pitstops.json?limit=80',
@@ -29,5 +28,6 @@
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
 #' @return A dataframe with columns
+#' @export
 
 load_pitstops <- memoise::memoise(.load_pitstops)
