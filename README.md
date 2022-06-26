@@ -157,8 +157,14 @@ driver number logo.
 
 ``` r
 driver_constructor_data %>% colnames()
+<<<<<<< HEAD
 #>  [1] "driverId"          "fullName"          "constructorId"    
 #>  [4] "constructorName"   "constructorColor"  "constructorColor2"
 #>  [7] "constructorLogo"   "driverNumber"      "numberImage"      
 #> [10] "season"
+=======
+#> [1] "driverId"          "fullName"          "constructor"      
+#> [4] "constructorColor"  "constructorColor2" "constructorLogo"  
+#> [7] "driverNumber"      "numberImage"       "season"
+>>>>>>> a1fcf78a75bf53f520ae78105483826622b4e81b
 ```
