@@ -31,7 +31,7 @@
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%
                         dplyr::mutate(lap = i,
-                               time_sec = purrr::map_dbl(time, time_to_sec),
+                               time_sec = time_to_sec(time),
                                season = season_text))
   }
   laps
@@ -46,8 +46,16 @@
 #' @return A numeric variable that represents that time in seconds
 
 time_to_sec <- function(time){
-  split <- time %>% stringr::str_split(':')
-  as.numeric(split[[1]][1])*60 + as.numeric(split[[1]][2])
+  subfun <- function(x){
+    if(is.na(x))
+      NA
+    else{
+      split <- x %>% stringr::str_split(':')
+      as.numeric(split[[1]][1])*60 + as.numeric(split[[1]][2])
+    }
+  }
+  purrr::map_dbl(time, subfun)
+
 }
 
 #' Load Lap by Lap Time Data

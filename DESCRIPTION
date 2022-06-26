@@ -1,12 +1,12 @@
 Package: f1dataR
 Title: Wrapper for Ergast Developer API (Formula 1 Data)
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: 
     person(given = "Santiago",
            family = "Casanova",
            role = c("aut", "cre"),
            email = "santiago.casanova@yahoo.com")
-Description: A collection of funtions that wrap Ergast API Formula 1 data. The load_* function family allow the user to get a neat dataframe of the requested data.
+Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 offial data via the fastf1 python library. The load_* function family allow the user to get a neat dataframe of the requested data.
 Config/reticulate:
   list(
     packages = list(

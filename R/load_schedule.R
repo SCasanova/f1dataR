@@ -26,7 +26,8 @@
       circuit_name,
       lat:country,
       date, time
-    )
+    ) %>%
+    tibble::as_tibble()
 }
 
 #' Load Schedule

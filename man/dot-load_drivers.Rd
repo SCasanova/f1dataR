@@ -7,8 +7,7 @@
 .load_drivers(season = 2022)
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season). All
-drivers after 2014 will have a permanent number.}
+\item{season}{number from 1950 to 2022 (defaults to current season).}
 }
 \value{
 A dataframe with columns driverId (unique and recurring), first name,
