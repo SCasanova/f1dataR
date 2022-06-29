@@ -41,10 +41,12 @@
 #' @param season number from 1950 to 2022 (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
+#' #' @param type select drivers or constructors championship data. Defaluts to
+#' drivers
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
-#' times in clock format as well as seconds.
+#' @return A dataframe with columns driverId (or constructorId), position,
+#' points, wins and constructorsId in the case of drivers championship.
 #' @export
 
-load_quali <- memoise::memoise(.load_quali)
+load_standings <- memoise::memoise(.load_standings)
 
