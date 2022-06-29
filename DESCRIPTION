@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: Wrapper for Ergast Developer API (Formula 1 Data)
-Version: 0.3.0
+Version: 0.3.2
 Authors@R: 
     person(given = "Santiago",
            family = "Casanova",

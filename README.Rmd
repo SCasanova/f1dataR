@@ -53,25 +53,15 @@ or
 load_laps(2021, 15)
 ```
 
-### Load Session Data
-`load_session_data(obj_name, season = 2022, race = 1)`
-This function loads a session object with all telemetry data for a given race. It takes a name as an input to assign to said object that can later be used to get specific data using other functions (such as `get_driver_telemetry()`).
-
-**Example:**
-```{r}
-load_race_session('bahrain22')
-load_race_session('canada18', '2018', 'Canada')
-```
 
 ### Driver Telemetry
-`get_driver_telemetry(session_name, driver, fastest_only = FALSE)`
-Once a session is loaded, we can access specific driver telemetry for the race. The argument session name refers to the name assigned during the `load_race_session()` step. This function will act on the provided sesion name.
-The parameter `fastest_only`, when set to true, will output the telemetry for the fastest lap exclusiveley.
+`get_driver_telemetry(season = 'current', race = 'last', driver, fastest_only = FALSE)`
+When the parameters for season (four digit year), race (number or GP name), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds
 
 ```{r}
-get_driver_telemetry('bahrain22', 'PER')
+get_driver_telemetry(2022, 4, 'PER')
 
-get_driver_telemetry('canada18', 'HAM', fastest_only = T)
+get_driver_telemetry(2018, 7, 'HAM', fastest_only = T)
 
 ```
 

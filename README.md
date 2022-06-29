@@ -70,50 +70,38 @@ load_laps(2021, 15)
 #> # … with 1,015 more rows
 ```
 
-### Load Session Data
-
-`load_session_data(obj_name, season = 2022, race = 1)` This function
-loads a session object with all telemetry data for a given race. It
-takes a name as an input to assign to said object that can later be used
-to get specific data using other functions (such as
-`get_driver_telemetry()`).
-
-**Example:**
-
-``` r
-load_race_session('bahrain22')
-load_race_session('canada18', '2018', 'Canada')
-```
-
 ### Driver Telemetry
 
-`get_driver_telemetry(session_name, driver, fastest_only = FALSE)` Once
-a session is loaded, we can access specific driver telemetry for the
-race. The argument session name refers to the name assigned during the
-`load_race_session()` step. This function will act on the provided
-sesion name. The parameter `fastest_only`, when set to true, will output
-the telemetry for the fastest lap exclusiveley.
+`get_driver_telemetry(season = 'current', race = 'last', driver,
+fastest_only = FALSE)` When the parameters for season (four digit year),
+race (number or GP name), and driver code (three letter code) are
+entered, the function will load all data for a session and the pull the
+info for the selected driver. The first time a session is called,
+loading times will be relatively long but in subsequent calls this will
+improve to only a couple of seconds
 
 ``` r
-get_driver_telemetry('bahrain22', 'PER')
-#> # A tibble: 43,384 × 18
+get_driver_telemetry(2022, 4, 'PER')
+#> The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster
+#> # A tibble: 42,415 × 18
 #>    Date                SessionTime DriverAhead DistanceToDriverAhead
 #>    <dttm>              <dttm>      <chr>                       <dbl>
-#>  1 2022-03-20 09:03:34 NA          ""                         0     
-#>  2 2022-03-20 09:03:34 NA          ""                         0     
-#>  3 2022-03-20 09:03:34 NA          ""                         0     
-#>  4 2022-03-20 09:03:35 NA          ""                         0     
-#>  5 2022-03-20 09:03:35 NA          ""                         0     
-#>  6 2022-03-20 09:03:35 NA          "24"                       0     
-#>  7 2022-03-20 09:03:35 NA          "24"                       0.0407
-#>  8 2022-03-20 09:03:35 NA          "24"                       0.0815
-#>  9 2022-03-20 09:03:35 NA          "77"                       0.122 
-#> 10 2022-03-20 09:03:35 NA          "77"                       0.0926
-#> # … with 43,374 more rows, and 14 more variables: Time <dttm>, RPM <dbl>,
+#>  1 2022-04-24 08:03:03 NA          ""                         0.0889
+#>  2 2022-04-24 08:03:03 NA          ""                         0.0889
+#>  3 2022-04-24 08:03:03 NA          ""                         0.0889
+#>  4 2022-04-24 08:03:03 NA          "6"                        0.0889
+#>  5 2022-04-24 08:03:03 NA          "6"                        0.0593
+#>  6 2022-04-24 08:03:03 NA          "6"                        0.0296
+#>  7 2022-04-24 08:03:03 NA          "77"                       0     
+#>  8 2022-04-24 08:03:04 NA          "77"                       0.0222
+#>  9 2022-04-24 08:03:04 NA          "6"                        0.0444
+#> 10 2022-04-24 08:03:04 NA          "6"                        0.0444
+#> # … with 42,405 more rows, and 14 more variables: Time <dttm>, RPM <dbl>,
 #> #   Speed <dbl>, nGear <dbl>, Throttle <dbl>, Brake <lgl>, DRS <dbl>,
 #> #   Source <chr>, RelativeDistance <dbl>, Status <chr>, …
 
-get_driver_telemetry('canada18', 'HAM', fastest_only = T)
+get_driver_telemetry(2018, 7, 'HAM', fastest_only = T)
+#> The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster
 #> # A tibble: 550 × 18
 #>    Date                SessionTime DriverAhead DistanceToDriverAhead
 #>    <dttm>              <dttm>      <chr>                       <dbl>
