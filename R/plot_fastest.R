@@ -11,10 +11,9 @@
 #' @param color argument that indicates which variable to plot overtop the
 #' circuit
 #' @importFrom magrittr "%>%"
-#' @import ggplot2
 #' @return A ggplot object that indicates grand prix, driver, time and selected
 #' color variable.
-
+#' @export
 
 plot_fastest <- function(season, race, driver, color = 'gear'){
   message("If the session has not been loaded yet, this could take a minute\n\n")
@@ -38,20 +37,21 @@ plot_fastest <- function(season, race, driver, color = 'gear'){
     ggplot2::ggplot(driver_data, ggplot2::aes(X, Y, color = as.factor(nGear), group = Time)) +
       ggplot2::geom_path(size = 4, lineend = 'round') +
       ggsci::scale_color_nejm(name = 'Gear') +
-      ggdark::dark_theme_gray() +
+      ggplot2::theme_gray()+
       ggplot2::theme(
-        panel.grid = element_blank(),
-        axis.line = element_blank(),
-        axis.text = element_blank(),
-        axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title  = element_text(face = 'bold', size = 17, color = '#cf1b1f'),
-        plot.subtitle  = element_text(face = 'bold', size = 14),
-        plot.background = element_rect(fill = "grey10"),
-        panel.background = element_blank(),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        plot.caption = element_text(size = 8, color = 'white')
+        panel.grid = ggplot2::element_blank(),
+        axis.line = ggplot2::element_blank(),
+        axis.text = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        plot.title  = ggplot2::element_text(face = 'bold', size = 17, color = '#cf1b1f'),
+        plot.subtitle  = ggplot2::element_text(face = 'bold', size = 14),
+        plot.background = ggplot2::element_rect(fill = "grey10"),
+        panel.background = ggplot2::element_blank(),
+        legend.background = ggplot2::element_blank(),
+        legend.key = ggplot2::element_blank(),
+        plot.caption = ggplot2::element_text(size = 8, color = 'white'),
+        text = ggplot2::element_text(color = 'white')
       ) +
       ggplot2::labs(title = race,
                     subtitle = paste0(driver, ' Fastest Lap | ', lap_time),
@@ -61,20 +61,21 @@ plot_fastest <- function(season, race, driver, color = 'gear'){
     ggplot2::ggplot(driver_data, ggplot2::aes(X, Y, color = Speed, group = Time)) +
       ggplot2::geom_path(size = 4, lineend = 'round') +
       ggplot2::scale_color_gradient(low = 'white', high = 'red')+
-      ggdark::dark_theme_gray() +
+      ggplot2::theme_gray() +
       ggplot2::theme(
-        panel.grid = element_blank(),
-        axis.line = element_blank(),
-        axis.text = element_blank(),
-        axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        plot.title  = element_text(face = 'bold', size = 17, color = '#cf1b1f'),
-        plot.subtitle  = element_text(face = 'bold', size = 14),
-        plot.background = element_rect(fill = "grey10"),
-        panel.background = element_blank(),
-        legend.background = element_blank(),
-        legend.key = element_blank(),
-        plot.caption = element_text(size = 8, color = 'white')
+        panel.grid = ggplot2::element_blank(),
+        axis.line = ggplot2::element_blank(),
+        axis.text = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        plot.title  = ggplot2::element_text(face = 'bold', size = 17, color = '#cf1b1f'),
+        plot.subtitle  = ggplot2::element_text(face = 'bold', size = 14),
+        plot.background = ggplot2::element_rect(fill = "grey10"),
+        panel.background = ggplot2::element_blank(),
+        legend.background = ggplot2::element_blank(),
+        legend.key = ggplot2::element_blank(),
+        plot.caption = ggplot2::element_text(size = 8, color = 'white'),
+        text = ggplot2::element_text(color = 'white')
       ) +
       ggplot2::labs(title = race,
                     subtitle = paste0(driver, ' Fastest Lap | ', lap_time),
