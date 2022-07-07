@@ -1,7 +1,7 @@
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
-A set of functions to easily access Formula 1 data from the Ergast API
+A set of R functions to easily access Formula 1 data from the Ergast API
 and the official F1 data stream via the fastf1 python library.
 
 ## Installation
@@ -34,27 +34,27 @@ Lap data is limited to 1996-present.
 ``` r
 library(f1dataR)
 load_laps()
-#> # A tibble: 1,262 × 6
-#>    driverId        position time       lap time_sec season
-#>    <chr>           <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 max_verstappen  1        1:23.396     1     83.4   2022
-#>  2 alonso          2        1:24.435     1     84.4   2022
-#>  3 sainz           3        1:25.160     1     85.2   2022
-#>  4 hamilton        4        1:26.209     1     86.2   2022
-#>  5 kevin_magnussen 5        1:27.088     1     87.1   2022
-#>  6 ocon            6        1:27.881     1     87.9   2022
-#>  7 russell         7        1:28.761     1     88.8   2022
-#>  8 mick_schumacher 8        1:29.342     1     89.3   2022
-#>  9 ricciardo       9        1:29.928     1     89.9   2022
-#> 10 zhou            10       1:30.286     1     90.3   2022
-#> # … with 1,252 more rows
+#> # A tibble: 811 × 6
+#>    driverId       position time       lap time_sec season
+#>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
+#>  1 max_verstappen 1        2:21.969     1     142.   2022
+#>  2 sainz          2        2:23.979     1     144.   2022
+#>  3 hamilton       3        2:26.223     1     146.   2022
+#>  4 leclerc        4        2:27.771     1     148.   2022
+#>  5 alonso         5        2:30.972     1     151.   2022
+#>  6 perez          6        2:34.001     1     154.   2022
+#>  7 norris         7        2:36.287     1     156.   2022
+#>  8 latifi         8        2:39.570     1     160.   2022
+#>  9 bottas         9        2:42.397     1     162.   2022
+#> 10 ricciardo      10       2:46.878     1     167.   2022
+#> # … with 801 more rows
 ```
 
 or
 
 ``` r
 load_laps(2021, 15)
-#> # A tibble: 1,025 × 6
+#> # A tibble: 1,000 × 6
 #>    driverId  position time       lap time_sec season
 #>    <chr>     <chr>    <chr>    <int>    <dbl>  <dbl>
 #>  1 sainz     1        1:42.997     1     103.   2021
@@ -67,21 +67,23 @@ load_laps(2021, 15)
 #>  8 perez     8        1:50.617     1     111.   2021
 #>  9 ocon      9        1:51.098     1     111.   2021
 #> 10 raikkonen 10       1:51.778     1     112.   2021
-#> # … with 1,015 more rows
+#> # … with 990 more rows
 ```
 
 ### Driver Telemetry
 
-`get_driver_telemetry(season = 'current', race = 'last', driver,
-fastest_only = FALSE)` When the parameters for season (four digit year),
-race (number or GP name), and driver code (three letter code) are
-entered, the function will load all data for a session and the pull the
-info for the selected driver. The first time a session is called,
-loading times will be relatively long but in subsequent calls this will
-improve to only a couple of seconds
+`get_driver_telemetry(season = 'current', race = 'last', session = 'R',
+driver, fastest_only = FALSE)`
+
+When the parameters for season (four digit year), race (number or GP
+name), session (FP1. FP2, FP3, Q or R), and driver code (three letter
+code) are entered, the function will load all data for a session and the
+pull the info for the selected driver. The first time a session is
+called, loading times will be relatively long but in subsequent calls
+this will improve to only a couple of seconds
 
 ``` r
-get_driver_telemetry(2022, 4, 'PER')
+get_driver_telemetry(2022, 4, driver = 'PER')
 #> The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster
 #> # A tibble: 42,415 × 18
 #>    Date                SessionTime DriverAhead DistanceToDriverAhead
@@ -100,30 +102,25 @@ get_driver_telemetry(2022, 4, 'PER')
 #> #   Speed <dbl>, nGear <dbl>, Throttle <dbl>, Brake <lgl>, DRS <dbl>,
 #> #   Source <chr>, RelativeDistance <dbl>, Status <chr>, …
 
-get_driver_telemetry(2018, 7, 'HAM', fastest_only = T)
+get_driver_telemetry(2018, 7,'Q', 'HAM', fastest_only = T)
 #> The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster
-#> # A tibble: 550 × 18
+#> # A tibble: 534 × 18
 #>    Date                SessionTime DriverAhead DistanceToDriverAhead
 #>    <dttm>              <dttm>      <chr>                       <dbl>
-#>  1 2018-06-10 14:38:05 NA          ""                           66.2
-#>  2 2018-06-10 14:38:05 NA          ""                           66.2
-#>  3 2018-06-10 14:38:06 NA          ""                           66.2
-#>  4 2018-06-10 14:38:06 NA          "3"                          66.2
-#>  5 2018-06-10 14:38:06 NA          "3"                          65.6
-#>  6 2018-06-10 14:38:06 NA          "3"                          65.1
-#>  7 2018-06-10 14:38:06 NA          "3"                          63.8
-#>  8 2018-06-10 14:38:06 NA          "3"                          62.6
-#>  9 2018-06-10 14:38:06 NA          "3"                          61.3
-#> 10 2018-06-10 14:38:07 NA          "3"                          56.4
-#> # … with 540 more rows, and 14 more variables: Time <dttm>, RPM <dbl>,
+#>  1 2018-06-09 13:59:18 NA          ""                           383.
+#>  2 2018-06-09 13:59:18 NA          ""                           383.
+#>  3 2018-06-09 13:59:18 NA          ""                           383.
+#>  4 2018-06-09 13:59:19 NA          "7"                          383.
+#>  5 2018-06-09 13:59:19 NA          "7"                          379.
+#>  6 2018-06-09 13:59:19 NA          "7"                          375.
+#>  7 2018-06-09 13:59:19 NA          "7"                          370.
+#>  8 2018-06-09 13:59:19 NA          "7"                          366.
+#>  9 2018-06-09 13:59:19 NA          "7"                          362.
+#> 10 2018-06-09 13:59:19 NA          "7"                          358.
+#> # … with 524 more rows, and 14 more variables: Time <dttm>, RPM <dbl>,
 #> #   Speed <dbl>, nGear <dbl>, Throttle <dbl>, Brake <lgl>, DRS <dbl>,
 #> #   Source <chr>, RelativeDistance <dbl>, Status <chr>, …
 ```
-
-### Load Race or Qualifying Results
-
-`load_results(season = 'current', round = 'last')` `load_quali(season =
-'current', round = 'last')`
 
 ### Other funcitons
 
@@ -132,6 +129,10 @@ get_driver_telemetry(2018, 7, 'HAM', fastest_only = T)
   - `load_schedule(season = 2022)`
   - `load_standings(season = 'current', round = 'last', type =
     c('driver', 'constructor'))`
+  - `load_results(season = 'current', round = 'last')`
+  - `load_quali(season = 'current', round = 'last')`
+  - `plot_fastest(season = 'current', race = 'last', driver, color =
+    'gear')`
 
 ### Clear F1 Cache
 
