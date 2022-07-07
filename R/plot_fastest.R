@@ -10,10 +10,6 @@
 #' @param color argument that indicates which variable to plot overtop the
 #' circuit
 #' @importFrom magrittr "%>%"
-<<<<<<< HEAD
-=======
-#' @importFrom ggplot2 theme_gray
->>>>>>> 5f099aacad09a3cc42e9e3897a26641458eafbce
 #' @return A ggplot object that indicates grand prix, driver, time and selected
 #' color variable.
 #' @export
