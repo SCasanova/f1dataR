@@ -9,6 +9,10 @@ export(load_quali)
 export(load_results)
 export(load_schedule)
 export(load_standings)
+<<<<<<< HEAD
 export(plot_fastest)
 export(theme_dark_f1)
+=======
+importFrom(ggplot2,theme_gray)
+>>>>>>> 5f099aacad09a3cc42e9e3897a26641458eafbce
 importFrom(magrittr,"%>%")
