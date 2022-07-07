@@ -1,6 +1,6 @@
 Package: f1dataR
-Title: Wrapper for Ergast Developer API (Formula 1 Data)
-Version: 0.3.3
+Title: Wrapper for Ergast Developer API (Formula 1 Data) and the official F1 Data Stream via fastf1 Python library
+Version: 0.3.6
 Authors@R: 
     person(given = "Santiago",
            family = "Casanova",
@@ -21,3 +21,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

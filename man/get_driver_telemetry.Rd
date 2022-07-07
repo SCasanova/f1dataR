@@ -4,7 +4,13 @@
 \alias{get_driver_telemetry}
 \title{Load Telemetry Data for a Driver}
 \usage{
-get_driver_telemetry(season, race, driver, fastest_only = FALSE)
+get_driver_telemetry(
+  season = "current",
+  race = "last",
+  session = "R",
+  driver,
+  fastest_only = FALSE
+)
 }
 \arguments{
 \item{season}{number from 2018 to 2022 (defaults to current season).}

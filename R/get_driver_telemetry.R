@@ -14,8 +14,8 @@
 #' and stop duration
 #' @export
 
-get_driver_telemetry <- function(season, race, driver, fastest_only = FALSE){
-  load_race_session('session', season, race)
+get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE){
+  load_race_session('session', season, race, session)
   if(fastest_only){
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
                                                 driver = driver))

@@ -4,7 +4,7 @@
 \alias{load_race_session}
 \title{Load Session Data}
 \usage{
-load_race_session(obj_name, season = 2022, race = 1)
+load_race_session(obj_name, season = 2022, race = 1, session = "R")
 }
 \arguments{
 \item{season}{number from 2018 to 2022 (defaults to current season).}
