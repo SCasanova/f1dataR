@@ -1,8 +1,8 @@
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
-A set of R functions to easily access Formula 1 data from the Ergast API
-and the official F1 data stream via the fastf1 python library.
+An R package to access Formula 1 Data from the Ergast API and the
+official F1 data stream via the fastf1 python library.
 
 ## Installation
 
