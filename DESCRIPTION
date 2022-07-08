@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: Wrapper for Ergast Developer API (Formula 1 Data) and the official F1 Data Stream via fastf1 Python library
-Version: 0.3.6
+Version: 0.3.7
 Authors@R: 
     person(given = "Santiago",
            family = "Casanova",
