@@ -36,6 +36,7 @@ Data is pulled from:
 
 ## Functions
 
+
 ### Load Lap Times
 `load_laps(season = 'current', race = 'last')`
 This function loads lap-by-lap time data for all drivers in a given season
