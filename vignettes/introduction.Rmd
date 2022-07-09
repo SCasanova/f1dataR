@@ -1,0 +1,66 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+f1dataR serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
+
+The most sought-after aspect of F1 data is telemetry data. 
+Let's get LeClerc's fastest lap from the first race of 2022:
+```{r setup}
+library(f1dataR)
+
+get_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
+```
+
+
+now let's use ggplot2 to visualize some of the data we have
+
+```{r}
+library(tidyverse)
+
+lec <- get_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
+  head(300)%>% 
+  mutate(index = 1:300)
+
+ggplot(lec, aes(index, Throttle))+
+  geom_line()+
+  theme_minimal()
+```
+
+What if we get more drivers involved. Let's also get the Quaifiying data from Hamilton
+
+```{r}
+ham <- get_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
+  head(300) %>% 
+  mutate(index = 1:300)
+
+per <- get_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
+  head(300)%>% 
+  mutate(index = 1:300)
+
+data <- bind_rows(lec,ham,per)
+
+ggplot(data, aes(index, Throttle, color = driverId))+
+  geom_line()+
+  theme_minimal()
+
+```
+
+We can also use one of the plotting functions included in the package.
+
+```{r}
+plot_fastest(2022, 1, 'R', 'PER')
+```
+

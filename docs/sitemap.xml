@@ -1,75 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/articles/index.html</loc>
   </url>
   <url>
-    <loc>/reference/clear_f1_cache.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/articles/introduction.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_drivers.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/authors.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_laps.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/index.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_pitstops.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/clear_f1_cache.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_quali.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_drivers.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_results.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_laps.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_schedule.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_pitstops.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-load_standings.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_quali.html</loc>
   </url>
   <url>
-    <loc>/reference/get_driver_telemetry.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_results.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_schedule.html</loc>
   </url>
   <url>
-    <loc>/reference/load_drivers.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/dot-load_standings.html</loc>
   </url>
   <url>
-    <loc>/reference/load_laps.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/get_driver_telemetry.html</loc>
   </url>
   <url>
-    <loc>/reference/load_pitstops.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/load_quali.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_drivers.html</loc>
   </url>
   <url>
-    <loc>/reference/load_race_session.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_laps.html</loc>
   </url>
   <url>
-    <loc>/reference/load_results.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_pitstops.html</loc>
   </url>
   <url>
-    <loc>/reference/load_schedule.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_quali.html</loc>
   </url>
   <url>
-    <loc>/reference/load_standings.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_race_session.html</loc>
   </url>
   <url>
-    <loc>/reference/plot_fastest.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_results.html</loc>
   </url>
   <url>
-    <loc>/reference/theme_dark_f1.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_schedule.html</loc>
   </url>
   <url>
-    <loc>/reference/time_to_sec.html</loc>
+    <loc>https://scasanova.github.io/f1dataR/reference/load_standings.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/plot_fastest.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/theme_dark_f1.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/time_to_sec.html</loc>
   </url>
 </urlset>

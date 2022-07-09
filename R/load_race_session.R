@@ -9,10 +9,11 @@
 #' to most recent. Also accepts race name.
 #' @return A session object to be used in other functions.
 
-load_race_session <- function(obj_name, season = 2022, race = 1, session = 'R'){
+load_race_session <- function(obj_name, season = 2022, race = 1, session = 'R', cache = T){
   message("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster\n\n")
   reticulate::py_run_string('import fastf1')
-  reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{wd}')", wd = getwd()))
+  if(cache)
+    reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{wd}')", wd = getwd()))
   if(is.numeric(race))
     reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, {race}, '{session}')", season = season, race = race, name = obj_name, session = session))
   else

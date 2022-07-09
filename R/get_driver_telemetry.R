@@ -10,8 +10,7 @@
 #' @param fastest_only boolean value whether to pick all laps or only the fastest
 #' by the driver in that session.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId, lap, stop (number), time (of day),
-#' and stop duration
+#' @return A dataframe with telemetry data for selected driver/session.
 #' @export
 
 get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE){
@@ -19,14 +18,15 @@ get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R
   if(fastest_only){
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
                                                 driver = driver))
-  (tel %>% reticulate::py_to_r())$tel %>%
-    reticulate::py_to_r() %>%
-    tibble::as_tibble()
+    res <- (tel %>% reticulate::py_to_r())$tel %>%
+      reticulate::py_to_r() %>%
+      tibble::as_tibble()
   }else{
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').get_telemetry().add_distance()",
                                                 driver = driver))
-  (tel %>% reticulate::py_to_r())$tel %>%
-    reticulate::py_to_r() %>%
-    tibble::as_tibble()
+    res <-(tel %>% reticulate::py_to_r())$tel %>%
+      reticulate::py_to_r() %>%
+      tibble::as_tibble()
   }
+  res %>% dplyr::mutate(driverId = driver)
 }

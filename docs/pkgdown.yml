@@ -1,17 +1,10 @@
 pandoc: 2.7.3
 pkgdown: 2.0.5
 pkgdown_sha: ~
-articles: {}
-last_built: 2022-07-09T02:50Z
+articles:
+  introduction: introduction.html
+last_built: 2022-07-09T16:36Z
+urls:
+  reference: https://scasanova.github.io/f1dataR/reference
+  article: https://scasanova.github.io/f1dataR/articles
 
-reference:
-- title: Telemetry
-  desc:  Access car and driver telemetry from any session and any race
-- contents:
-  - get_driver_telemetry
-- title: General Data
-- contents:
-  - starts_with("load_")
-- title: Plotting
-- contents:
-  - starts_with("plot_")

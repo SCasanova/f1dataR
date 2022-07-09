@@ -24,8 +24,7 @@ to most recent. Also accepts race name.}
 by the driver in that session.}
 }
 \value{
-A dataframe with columns driverId, lap, stop (number), time (of day),
-and stop duration
+A dataframe with telemetry data for selected driver/session.
 }
 \description{
 Recieves season, race number, driver code, and an optional fastest lap only

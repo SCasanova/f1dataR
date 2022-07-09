@@ -4,7 +4,13 @@
 \alias{plot_fastest}
 \title{Plot Fastest Lap}
 \usage{
-plot_fastest(season = "current", race = "last", driver, color = "gear")
+plot_fastest(
+  season = "current",
+  race = "last",
+  session = "R",
+  driver,
+  color = "gear"
+)
 }
 \arguments{
 \item{season}{number from 2018 to 2022 (defaults to current season).}
