@@ -2,5 +2,13 @@ pandoc: 2.7.3
 pkgdown: 2.0.5
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-07-09T02:32Z
+last_built: 2022-07-09T02:45Z
 
+reference:
+- title: Telemetry
+  desc:  Access car and driver telemetry from any session and any race
+- contents:
+  - get_driver_telemetry
+- title: General Data
+- contents:
+  - starts_with("load_")
