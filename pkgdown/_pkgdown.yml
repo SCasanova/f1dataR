@@ -2,7 +2,6 @@ destination: docs
 
 url: https://scasanova.github.io/f1dataR
 
-
 reference:
   - title: Telemetry
     desc:  Access car and driver telemetry from any session and any race

@@ -4,7 +4,7 @@ Version: 0.3.7
 Authors@R: 
     person(given = "Santiago",
            family = "Casanova",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "santiago.casanova@yahoo.com")
 Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 offial data via the fastf1 python library. 
 Config/reticulate:
@@ -33,3 +33,4 @@ Suggests:
     memoise
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
+BugReports: https://github.com/scasanova/f1dataR/issues
