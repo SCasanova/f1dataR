@@ -2,12 +2,6 @@
 #'
 #' Theme for all f1dataR plot functions. Mimics Formula 1 style.
 #'
-#' @param season number from 2018 to 2022 (defaults to current season).
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent.
-#' @param driver three letter driver code (see load_drivers() for a list)
-#' @param color argument that indicates which variable to plot overtop the
-#' circuit
 #' @importFrom magrittr "%>%"
 #' @return A ggplot object that indicates grand prix, driver, time and selected
 #' color variable.

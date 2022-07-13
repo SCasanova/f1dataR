@@ -12,6 +12,9 @@
 #' and stop duration
 
 .load_pitstops <- function(season = 'current', race  ='last'){
+  if(season != 'current' & (season < 2012 | season > 2022)){
+    stop('Year must be between 1950 and 2022 (or use "current")')
+  }
   res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/pitstops.json?limit=80',
                                season = season,
                                race = race))

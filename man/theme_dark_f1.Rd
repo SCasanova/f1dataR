@@ -6,17 +6,6 @@
 \usage{
 theme_dark_f1()
 }
-\arguments{
-\item{season}{number from 2018 to 2022 (defaults to current season).}
-
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
-to most recent.}
-
-\item{driver}{three letter driver code (see load_drivers() for a list)}
-
-\item{color}{argument that indicates which variable to plot overtop the
-circuit}
-}
 \value{
 A ggplot object that indicates grand prix, driver, time and selected
 color variable.

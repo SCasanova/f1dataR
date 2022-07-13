@@ -7,10 +7,18 @@
 load_race_session(obj_name, season = 2022, race = 1, session = "R", cache = T)
 }
 \arguments{
+\item{obj_name}{name assigned to the loaded session to be referenced later.}
+
 \item{season}{number from 2018 to 2022 (defaults to current season).}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
+
+\item{session}{the code for the session to load Options are FP1, FP2, FP3,
+Q, and R. DEfault is "R", which refers to Race.}
+
+\item{cache}{whether the seesion will get cached or not. Default is set to
+TRUE (recommended), as this lowers subsequent loading times significantly.}
 }
 \value{
 A session object to be used in other functions.

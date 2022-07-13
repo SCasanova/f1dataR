@@ -19,10 +19,10 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends: 
-    R (>= 2.10)
-Imports:
+    R (>= 2.10),
     magrittr,
-    reticulate,
+    reticulate
+Imports:
     glue,
     tibble,
     jsonlite,
@@ -30,7 +30,8 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    memoise
+    memoise,
+    tidyverse
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues

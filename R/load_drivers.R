@@ -10,11 +10,35 @@
 #' permanent number (for post-2014 drivers).
 
 .load_drivers <- function(season = 2022){
-  res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40', season = season))
-  data <- jsonlite::fromJSON(rawToChar(res$content))
-  data$MRData$DriverTable$Drivers %>%
-    dplyr::select(driverId, givenName, familyName, nationality, dateOfBirth, code, permanentNumber) %>%
-    tibble::as_tibble()
+  if(season != 'current' & (season < 1950 | season > 2022)){
+    stop('Year must be between 1950 and 2022 (or use "current")')
+  }
+  if(season<2014){
+    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40',
+                                 season = season))
+    data <- jsonlite::fromJSON(rawToChar(res$content))
+    data$MRData$DriverTable$Drivers %>%
+      dplyr::select(driverId,
+                    givenName,
+                    familyName,
+                    nationality,
+                    dateOfBirth) %>%
+      tibble::as_tibble()
+  } else{
+    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40',
+                                 season = season))
+    data <- jsonlite::fromJSON(rawToChar(res$content))
+    data$MRData$DriverTable$Drivers %>%
+      dplyr::select(driverId,
+                    givenName,
+                    familyName,
+                    nationality,
+                    dateOfBirth,
+                    code,
+                    permanentNumber) %>%
+      tibble::as_tibble()
+  }
+
 }
 
 #' Load Driver Info

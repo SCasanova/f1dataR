@@ -11,18 +11,42 @@
 #' fastest lap time, fastest lap in seconds, and top speed in kph.
 
 .load_results <- function(season = 'current', round = 'last'){
-  res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40', season = season, round = round))
-  data <- jsonlite::fromJSON(rawToChar(res$content))
-  data$MRData$RaceTable$Races$Results[[1]] %>%
-    tidyr::unnest(cols = c(Driver,Time, FastestLap)) %>%
-    dplyr::select(driverId, grid:AverageSpeed) %>%
-    tidyr::unnest(cols = c(Time, AverageSpeed),
-                  names_repair = 'universal') %>%
-    suppressWarnings() %>%
-    suppressMessages() %>%
-    dplyr::select(driverId:status, gap = `time...6`, fastest_rank =  rank, laps, fastest = `time...9`, top_speed_kph = speed) %>%
-    dplyr::mutate(time_sec = time_to_sec(fastest)) %>%
+  if(season != 'current' & (season < 1950 | season > 2022)){
+    stop('Year must be between 1950 and 2022 (or use "current")')
+  }
+  if(season < 2004){
+    res <-  httr::GET(glue::glue(
+      'http://ergast.com/api/f1/{season}/{round}/results.json?limit=40',
+      season = season,
+      round = round
+    ))
+    data <- jsonlite::fromJSON(rawToChar(res$content))
+    data$MRData$RaceTable$Races$Results[[1]] %>%
+      tidyr::unnest(cols = c(Driver, Time)) %>%
+      dplyr::select(driverId, position, points, grid:time) %>%
     tibble::as_tibble()
+  } else{
+    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40', season = season, round = round))
+    data <- jsonlite::fromJSON(rawToChar(res$content))
+    data$MRData$RaceTable$Races$Results[[1]] %>%
+      tidyr::unnest(cols = c(Driver, Time, FastestLap)) %>%
+      dplyr::select(driverId, points,position, grid:AverageSpeed) %>%
+      tidyr::unnest(cols = c(Time, AverageSpeed),
+                    names_repair = 'universal') %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select(
+        driverId:status,
+        gap = `time...6`,
+        fastest_rank =  rank,
+        laps,
+        fastest = `time...9`,
+        top_speed_kph = speed
+      ) %>%
+      dplyr::mutate(time_sec = time_to_sec(fastest)) %>%
+      tibble::as_tibble()
+  }
+
 }
 
 #' Load Results

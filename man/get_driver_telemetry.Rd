@@ -18,6 +18,9 @@ get_driver_telemetry(
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
+\item{session}{the code for the session to load Options are FP1, FP2, FP3,
+Q, and R. DEfault is "R", which refers to Race.}
+
 \item{driver}{three letter driver code (see load_drivers() for a list)}
 
 \item{fastest_only}{boolean value whether to pick all laps or only the fastest

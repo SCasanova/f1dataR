@@ -10,8 +10,12 @@
 #' @return A dataframe with columns driverId (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 
+
 .load_laps <- function(season = 'current', race = 'last'){
-  res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
+  if(season != 'current' & (season < 1996 | season > 2022)){
+    stop('Year must be between 1996 and 2022 (or use "current")')
+  }
+    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
                     season = season,
                     race = race))
   data <- jsonlite::fromJSON(rawToChar(res$content))
@@ -35,6 +39,7 @@
                                season = season_text))
   }
   laps
+
 }
 
 #' Convert Clock time to seconds

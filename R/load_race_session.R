@@ -4,12 +4,20 @@
 #' data stream via the fastf1 python library. Data is available from
 #' 2018 onward.
 #'
+#' @param obj_name name assigned to the loaded session to be referenced later.
 #' @param season number from 2018 to 2022 (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
+#' @param session the code for the session to load Options are FP1, FP2, FP3,
+#' Q, and R. DEfault is "R", which refers to Race.
+#' @param cache whether the seesion will get cached or not. Default is set to
+#' TRUE (recommended), as this lowers subsequent loading times significantly.
 #' @return A session object to be used in other functions.
 
 load_race_session <- function(obj_name, season = 2022, race = 1, session = 'R', cache = T){
+  if(season != 'current' & (season < 2018 | season > 2022)){
+    stop('Year must be between 1950 and 2022 (or use "current")')
+  }
   message("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster\n\n")
   reticulate::py_run_string('import fastf1')
   if(cache)
