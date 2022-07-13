@@ -32,7 +32,7 @@ remotes::install_github("SCasanova/f1dataR")
 Data is pulled from:
 
 * [Ergast API](http://ergast.com/mrd/)
-* [F1 Data Stream](https://www.formula1.com/en/f1-live.html/) via the [Fast F1 python library](https://theoehrly.github.io/Fast-F1/index.html)
+* [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the [Fast F1 python library](https://theoehrly.github.io/Fast-F1/index.html)
 
 ## Functions
 
