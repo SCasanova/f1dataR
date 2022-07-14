@@ -67,8 +67,10 @@ ggplot(data, aes(index, Speed, color = driverId))+
   theme(
     axis.title = element_text(),
     axis.line = element_line(color = 'white'),
+  )+
+  labs(
+    title = "Speed Comparison for Bahrain 2022"
   )
-  labs(y = 'Speed')
 ```
 
 
