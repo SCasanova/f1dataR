@@ -58,6 +58,20 @@ ggplot(data, aes(index, Throttle, color = driverId))+
 
 ```
 
+Now lets visualize speed and use the f1 dark theme for ggplot included in the package
+
+```{r}
+ggplot(data, aes(index, Speed, color = driverId))+
+  geom_line()+
+  theme_dark_f1()+
+  theme(
+    axis.title = element_text(),
+    axis.line = element_line(color = 'white'),
+  )
+  labs(y = 'Speed')
+```
+
+
 We can also use one of the plotting functions included in the package.
 
 ```{r}
