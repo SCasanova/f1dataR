@@ -37,10 +37,10 @@
       suppressMessages() %>%
       dplyr::select(
         driverId:status,
-        gap = `time...6`,
+        gap = `time...8`,
         fastest_rank =  rank,
         laps,
-        fastest = `time...9`,
+        fastest = `time...11`,
         top_speed_kph = speed
       ) %>%
       dplyr::mutate(time_sec = time_to_sec(fastest)) %>%
