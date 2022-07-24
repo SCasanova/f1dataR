@@ -5,7 +5,7 @@
 \title{Load Telemetry Data for a Driver}
 \usage{
 get_driver_telemetry(
-  season = "current",
+  season = 2022,
   race = "last",
   session = "R",
   driver,
