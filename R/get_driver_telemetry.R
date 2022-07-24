@@ -15,7 +15,7 @@
 #' @return A dataframe with telemetry data for selected driver/session.
 #' @export
 
-get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE){
+get_driver_telemetry <- function(season = 2022, race = 'last', session = 'R', driver, fastest_only = FALSE){
   load_race_session('session', season, race, session)
   if(fastest_only){
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
@@ -30,5 +30,5 @@ get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R
       reticulate::py_to_r() %>%
       tibble::as_tibble()
   }
-  res %>% dplyr::mutate(driverId = driver)
+  res %>% dplyr::mutate(driverCode = driver)
 }
