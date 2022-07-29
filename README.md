@@ -33,30 +33,29 @@ Lap data is limited to 1996-present.
 
 ``` r
 library(f1dataR)
-#> Loading required package: magrittr
-#> Warning: package 'magrittr' was built under R version 4.0.5
+#> Loading required package: reticulate
 load_laps()
-#> # A tibble: 1,323 × 6
-#>    driverId        position time       lap time_sec season
-#>    <chr>           <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 max_verstappen  1        1:12.722     1     72.7   2022
-#>  2 leclerc         2        1:13.649     1     73.6   2022
-#>  3 sainz           3        1:14.784     1     74.8   2022
-#>  4 russell         4        1:16.191     1     76.2   2022
-#>  5 ocon            5        1:16.866     1     76.9   2022
-#>  6 kevin_magnussen 6        1:17.387     1     77.4   2022
-#>  7 hamilton        7        1:17.789     1     77.8   2022
-#>  8 mick_schumacher 8        1:18.147     1     78.1   2022
-#>  9 ricciardo       9        1:18.733     1     78.7   2022
-#> 10 norris          10       1:19.021     1     79.0   2022
-#> # … with 1,313 more rows
+#> # A tibble: 953 × 6
+#>    driverId       position time       lap time_sec season
+#>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
+#>  1 leclerc        1        1:43.351     1     103.   2022
+#>  2 max_verstappen 2        1:44.415     1     104.   2022
+#>  3 hamilton       3        1:45.421     1     105.   2022
+#>  4 perez          4        1:46.399     1     106.   2022
+#>  5 alonso         5        1:47.416     1     107.   2022
+#>  6 russell        6        1:47.996     1     108.   2022
+#>  7 norris         7        1:48.540     1     109.   2022
+#>  8 ricciardo      8        1:49.249     1     109.   2022
+#>  9 ocon           9        1:50.622     1     111.   2022
+#> 10 stroll         10       1:51.666     1     112.   2022
+#> # … with 943 more rows
 ```
 
 or
 
 ``` r
 load_laps(2021, 15)
-#> # A tibble: 1,025 × 6
+#> # A tibble: 1,000 × 6
 #>    driverId  position time       lap time_sec season
 #>    <chr>     <chr>    <chr>    <int>    <dbl>  <dbl>
 #>  1 sainz     1        1:42.997     1     103.   2021
@@ -69,7 +68,7 @@ load_laps(2021, 15)
 #>  8 perez     8        1:50.617     1     111.   2021
 #>  9 ocon      9        1:51.098     1     111.   2021
 #> 10 raikkonen 10       1:51.778     1     112.   2021
-#> # … with 1,015 more rows
+#> # … with 990 more rows
 ```
 
 ### Driver Telemetry
@@ -148,8 +147,8 @@ driver number logo.
 
 ``` r
 driver_constructor_data %>% colnames()
-#>  [1] "driverId"          "fullName"          "constructorId"    
-#>  [4] "constructorName"   "constructorColor"  "constructorColor2"
-#>  [7] "constructorLogo"   "driverNumber"      "numberImage"      
-#> [10] "season"
+#>  [1] "driverId"          "fullName"          "driverCode"       
+#>  [4] "constructorId"     "constructorName"   "constructorColor" 
+#>  [7] "constructorColor2" "constructorLogo"   "driverNumber"     
+#> [10] "numberImage"       "season"
 ```
