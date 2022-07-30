@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.8</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <ul>
 <li><a href="http://ergast.com/mrd/" class="external-link">Ergast API</a></li>
 <li>
-<a href="https://www.formula1.com/en/f1-live.html/" class="external-link">F1 Data Stream</a> via the <a href="https://theoehrly.github.io/Fast-F1/index.html" class="external-link">Fast F1 python library</a>
+<a href="https://www.formula1.com/en/f1-live.html" class="external-link">F1 Data Stream</a> via the <a href="https://theoehrly.github.io/Fast-F1/index.html" class="external-link">Fast F1 python library</a>
 </li>
 </ul>
 </div>
@@ -113,21 +113,22 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR">f1dataR</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: reticulate</span></span>
 <span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 811 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 953 × 6</span></span>
 <span><span class="co">#&gt;    driverId       position time       lap time_sec season</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 max_verstappen 1        2:21.969     1     142.   2022</span></span>
-<span><span class="co">#&gt;  2 sainz          2        2:23.979     1     144.   2022</span></span>
-<span><span class="co">#&gt;  3 hamilton       3        2:26.223     1     146.   2022</span></span>
-<span><span class="co">#&gt;  4 leclerc        4        2:27.771     1     148.   2022</span></span>
-<span><span class="co">#&gt;  5 alonso         5        2:30.972     1     151.   2022</span></span>
-<span><span class="co">#&gt;  6 perez          6        2:34.001     1     154.   2022</span></span>
-<span><span class="co">#&gt;  7 norris         7        2:36.287     1     156.   2022</span></span>
-<span><span class="co">#&gt;  8 latifi         8        2:39.570     1     160.   2022</span></span>
-<span><span class="co">#&gt;  9 bottas         9        2:42.397     1     162.   2022</span></span>
-<span><span class="co">#&gt; 10 ricciardo      10       2:46.878     1     167.   2022</span></span>
-<span><span class="co">#&gt; # … with 801 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 leclerc        1        1:43.351     1     103.   2022</span></span>
+<span><span class="co">#&gt;  2 max_verstappen 2        1:44.415     1     104.   2022</span></span>
+<span><span class="co">#&gt;  3 hamilton       3        1:45.421     1     105.   2022</span></span>
+<span><span class="co">#&gt;  4 perez          4        1:46.399     1     106.   2022</span></span>
+<span><span class="co">#&gt;  5 alonso         5        1:47.416     1     107.   2022</span></span>
+<span><span class="co">#&gt;  6 russell        6        1:47.996     1     108.   2022</span></span>
+<span><span class="co">#&gt;  7 norris         7        1:48.540     1     109.   2022</span></span>
+<span><span class="co">#&gt;  8 ricciardo      8        1:49.249     1     109.   2022</span></span>
+<span><span class="co">#&gt;  9 ocon           9        1:50.622     1     111.   2022</span></span>
+<span><span class="co">#&gt; 10 stroll         10       1:51.666     1     112.   2022</span></span>
+<span><span class="co">#&gt; # … with 943 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">15</span><span class="op">)</span></span>
@@ -154,7 +155,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_driver_telemetry.html">get_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">'PER'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster</span></span>
-<span><span class="co">#&gt; # A tibble: 42,415 × 18</span></span>
+<span><span class="co">#&gt; # A tibble: 42,415 × 19</span></span>
 <span><span class="co">#&gt;    Date                SessionTime DriverAhead DistanceToDriverAhead</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;      &lt;chr&gt;                       &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 2022-04-24 08:03:03 NA          ""                         0.0889</span></span>
@@ -167,13 +168,13 @@
 <span><span class="co">#&gt;  8 2022-04-24 08:03:04 NA          "77"                       0.0222</span></span>
 <span><span class="co">#&gt;  9 2022-04-24 08:03:04 NA          "6"                        0.0444</span></span>
 <span><span class="co">#&gt; 10 2022-04-24 08:03:04 NA          "6"                        0.0444</span></span>
-<span><span class="co">#&gt; # … with 42,405 more rows, and 14 more variables: Time &lt;dttm&gt;, RPM &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # … with 42,405 more rows, and 15 more variables: Time &lt;dttm&gt;, RPM &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Speed &lt;dbl&gt;, nGear &lt;dbl&gt;, Throttle &lt;dbl&gt;, Brake &lt;lgl&gt;, DRS &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Source &lt;chr&gt;, RelativeDistance &lt;dbl&gt;, Status &lt;chr&gt;, …</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/get_driver_telemetry.html">get_driver_telemetry</a></span><span class="op">(</span><span class="fl">2018</span>, <span class="fl">7</span>,<span class="st">'Q'</span>, <span class="st">'HAM'</span>, fastest_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster</span></span>
-<span><span class="co">#&gt; # A tibble: 534 × 18</span></span>
+<span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
 <span><span class="co">#&gt;    Date                SessionTime DriverAhead DistanceToDriverAhead</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;              &lt;dttm&gt;      &lt;chr&gt;                       &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 2018-06-09 13:59:18 NA          ""                           383.</span></span>
@@ -186,7 +187,7 @@
 <span><span class="co">#&gt;  8 2018-06-09 13:59:19 NA          "7"                          366.</span></span>
 <span><span class="co">#&gt;  9 2018-06-09 13:59:19 NA          "7"                          362.</span></span>
 <span><span class="co">#&gt; 10 2018-06-09 13:59:19 NA          "7"                          358.</span></span>
-<span><span class="co">#&gt; # … with 524 more rows, and 14 more variables: Time &lt;dttm&gt;, RPM &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; # … with 524 more rows, and 15 more variables: Time &lt;dttm&gt;, RPM &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Speed &lt;dbl&gt;, nGear &lt;dbl&gt;, Throttle &lt;dbl&gt;, Brake &lt;lgl&gt;, DRS &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   Source &lt;chr&gt;, RelativeDistance &lt;dbl&gt;, Status &lt;chr&gt;, …</span></span></code></pre></div>
 </div>
@@ -214,11 +215,11 @@
 </h2>
 <p>The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">driver_constructor_data</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "driverId"          "fullName"          "constructorId"    </span></span>
-<span><span class="co">#&gt;  [4] "constructorName"   "constructorColor"  "constructorColor2"</span></span>
-<span><span class="co">#&gt;  [7] "constructorLogo"   "driverNumber"      "numberImage"      </span></span>
-<span><span class="co">#&gt; [10] "season"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">driver_constructor_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "driverId"          "fullName"          "driverCode"       </span></span>
+<span><span class="co">#&gt;  [4] "constructorId"     "constructorName"   "constructorColor" </span></span>
+<span><span class="co">#&gt;  [7] "constructorColor2" "constructorLogo"   "driverNumber"     </span></span>
+<span><span class="co">#&gt; [10] "numberImage"       "season"</span></span></code></pre></div>
 </div>
 </div>
   </div>
