@@ -1,6 +1,11 @@
 ---
 output: github_document
+html_document:
+    includes:
+       in_header: GAfile.html
 ---
+
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
