@@ -26,7 +26,7 @@
     suppressMessages() %>%
     dplyr::select(driverId, position,points, wins, constructorId) %>%
     tibble::as_tibble()
-  } else if (type == 'constuctor'){
+  } else if (type == 'constructor'){
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
     tidyr::unnest(cols = c(Constructor)) %>%
     suppressWarnings() %>%
