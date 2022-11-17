@@ -2,7 +2,7 @@
 #'
 #' Loads qualifying session results for a given season and round.
 #'
-#' @param season number from 1950 to 2022 (defaults to current season).
+#' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
@@ -10,8 +10,8 @@
 #' times in clock format as well as seconds.
 
 .load_quali <- function(season = 'current', round = 'last'){
-   if(season != 'current' & (season < 2003 | season > 2022)){
-    stop('Year must be between 1950 and 2022 (or use "current")')
+   if(season != 'current' & (season < 2003 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
    }
   if(season <2006){
     res <-
@@ -57,7 +57,7 @@
 #'
 #' Loads qualifying session results for a given season and round.
 #'
-#' @param season number from 1950 to 2022 (defaults to current season).
+#' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"

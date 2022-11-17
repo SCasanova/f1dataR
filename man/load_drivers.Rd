@@ -4,10 +4,10 @@
 \alias{load_drivers}
 \title{Load Driver Info}
 \usage{
-load_drivers(season = 2022)
+load_drivers(season = "current")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season). All
+\item{season}{number from 1950 to current season (defaults to current season). All
 drivers after 2014 will have a permanent number.}
 }
 \value{

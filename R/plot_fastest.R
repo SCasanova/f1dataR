@@ -3,11 +3,11 @@
 #' Creates a ggplot object that details the fastest lap for a driver in a race.
 #' Complete with a gearshift or speed analysis.
 #'
-#' @param season number from 2018 to 2022 (defaults to current season).
+#' @param season number from 2018 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, and R. DEfault is "R", which refers to Race.
+#' Q, S, and R. Default is "R", which refers to Race.
 #' @param driver three letter driver code (see load_drivers() for a list)
 #' @param color argument that indicates which variable to plot overtop the
 #' circuit
@@ -25,7 +25,7 @@ plot_fastest <- function(season = 'current', race = 'last', session = 'R', drive
     dplyr::filter(code == driver) %>%
     dplyr::pull(driverId)
 
-  lap_time <- load_laps(2022, race) %>%
+  lap_time <- load_laps(season, race) %>%
     dplyr::filter(driverId == driver_id) %>%
     dplyr::filter(time_sec == min(.[, 'time_sec'])) %>%
     dplyr::pull(time)
