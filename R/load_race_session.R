@@ -16,7 +16,7 @@
 
 load_race_session <- function(obj_name, season = 'current', race = 1, session = 'R', cache = T){
   if(season != 'current' & (season < 2018 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop('Year must be between 1950 and 2022 (or use "current")')
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
   }
   if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S"))){
     stop('Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')
