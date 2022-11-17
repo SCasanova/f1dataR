@@ -33,4 +33,4 @@
 #' @return A dataframe with columns
 #' @export
 
-load_pitstops <- memoise::memoise(.load_pitstops)
+load_pitstops <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_pitstops), .load_pitstops)

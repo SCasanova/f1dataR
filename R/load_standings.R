@@ -51,5 +51,5 @@
 #' points, wins and constructorsId in the case of drivers championship.
 #' @export
 
-load_standings <- memoise::memoise(.load_standings)
+load_standings <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_standings), .load_standings)
 
