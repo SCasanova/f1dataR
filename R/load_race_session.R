@@ -5,7 +5,7 @@
 #' 2018 onward.
 #'
 #' @param obj_name name assigned to the loaded session to be referenced later.
-#' @param season number from 2018 to 2022 (defaults to current season).
+#' @param season number from 2018 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
@@ -14,9 +14,12 @@
 #' TRUE (recommended), as this lowers subsequent loading times significantly.
 #' @return A session object to be used in other functions.
 
-load_race_session <- function(obj_name, season = 2022, race = 1, session = 'R', cache = T){
-  if(season != 'current' & (season < 2018 | season > 2022)){
+load_race_session <- function(obj_name, season = 'current', race = 1, session = 'R', cache = T){
+  if(season != 'current' & (season < 2018 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
     stop('Year must be between 1950 and 2022 (or use "current")')
+  }
+  if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S"))){
+    stop('Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')
   }
   message("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster\n\n")
   reticulate::py_run_string('import fastf1')

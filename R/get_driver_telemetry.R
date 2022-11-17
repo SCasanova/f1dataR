@@ -3,7 +3,7 @@
 #' Recieves season, race number, driver code, and an optional fastest lap only
 #' argument to output car telemetry for the selected situation.
 #'
-#' @param season number from 2018 to 2022 (defaults to current season).
+#' @param season number from 2018 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
@@ -15,7 +15,7 @@
 #' @return A dataframe with telemetry data for selected driver/session.
 #' @export
 
-get_driver_telemetry <- function(season = 2022, race = 'last', session = 'R', driver, fastest_only = FALSE){
+get_driver_telemetry <- function(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE){
   load_race_session('session', season, race, session)
   if(fastest_only){
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
