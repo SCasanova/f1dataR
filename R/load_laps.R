@@ -3,7 +3,7 @@
 #' Loads lap-by-lap time data for all drivers in a given season
 #' and round. Lap time data is available from 1996 onwards. This funtion does not export, only the cached version.
 #'
-#' @param season number from 1996 to 2022 (defaults to current season)
+#' @param season number from 1996 to current season (defaults to current season)
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @importFrom magrittr "%>%"
@@ -12,8 +12,8 @@
 
 
 .load_laps <- function(season = 'current', race = 'last'){
-  if(season != 'current' & (season < 1996 | season > 2022)){
-    stop('Year must be between 1996 and 2022 (or use "current")')
+  if(season != 'current' & (season < 1996 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
+    stop(glue::glue('Year must be between 1996 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
   }
     res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
                     season = season,
@@ -30,7 +30,7 @@
     full <- data$MRData$RaceTable$Races$Laps[[1]][2]
   }
   laps <- tibble::tibble()
-  season_text <-  ifelse(season == 'current', 2022, season)
+  season_text <-  ifelse(season == 'current', as.numeric(strftime(Sys.Date(), "%Y")), season)
   for (i in 1:nrow(full)) {
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%
@@ -68,7 +68,7 @@ time_to_sec <- function(time){
 #' Loads lap-by-lap time data for all drivers in a given season
 #' and round. Lap time data is available from 1996 onwards.
 #'
-#' @param season number from 1996 to 2022 (defaults to current season)
+#' @param season number from 1996 to current season (defaults to current season)
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @return A dataframe with columns driverId (unique and recurring), position

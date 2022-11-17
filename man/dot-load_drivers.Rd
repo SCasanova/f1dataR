@@ -4,10 +4,10 @@
 \alias{.load_drivers}
 \title{Load Driver Info (not cached)}
 \usage{
-.load_drivers(season = 2022)
+.load_drivers(season = "current")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
 A dataframe with columns driverId (unique and recurring), first name,
