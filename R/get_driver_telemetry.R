@@ -33,9 +33,9 @@ py_tel_to_tibble<-function(py_tel_object){
   # This funciton converts a python object to tibble.
   # Sometimes, the py_to_r has to be called a few times, this calls it as often as needed recursively.
   # Once not a python object, this converts to data frame
-  if ("python.builtin.dict" %in% class(py_object)){
+  if ("python.builtin.dict" %in% class(py_tel_object)){
     object <- reticulate::py_to_r(py_tel_object)
-    py_tel_to_tibble(object)
+    object <- py_tel_to_tibble(object)
   } else {
     object <- py_tel_object$tel %>%
       tibble::as_tibble()
