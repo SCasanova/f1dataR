@@ -62,5 +62,5 @@
 #' of the race.
 #' @export
 
-load_schedule <- memoise::memoise(.load_schedule)
+load_schedule <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_schedule), .load_schedule)
 

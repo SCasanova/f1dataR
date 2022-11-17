@@ -75,4 +75,4 @@ time_to_sec <- function(time){
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 #' @export
 
-load_laps <- memoise::memoise(.load_laps)
+load_laps <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_laps), .load_laps)
