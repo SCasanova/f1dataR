@@ -1,11 +1,12 @@
-#' Load Qualifying Results (not cached)
+#' Load Standings (not cached)
 #'
-#' Loads qualifying session results for a given season and round.
+#' Loads standings at the end of a given season and round for drivers' or
+#' constructors' championships.
 #'
 #' @param season number from 1950 to 2022 (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' @param type select drivers or constructors championship data. Defaluts to
+#' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns driverId (or constructorId), position,
@@ -37,9 +38,10 @@
 
 }
 
-#' Load Qualifying Results
+#' Load Standings
 #'
-#' Loads qualifying session results for a given season and round.
+#' Loads standings at the end of a given season and round for drivers' or
+#' constructors' championships.
 #'
 #' @param season number from 1950 to 2022 (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
