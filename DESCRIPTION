@@ -31,7 +31,9 @@ Suggests:
     rmarkdown,
     knitr,
     memoise,
-    tidyverse
+    tidyverse,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues
+Config/testthat/edition: 3
