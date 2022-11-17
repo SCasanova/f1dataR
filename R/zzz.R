@@ -5,3 +5,19 @@
     reticulate::py_install("fastf1", method = 'auto', pip = T)
   # reticulate::import("fastf1", delay_load = TRUE)
 }
+
+.onAttach <- function(){
+  #Load preexisting session/user options
+  op <- options()
+
+  #Make our own lost of options
+  op.package <- list(f1dataR.cache = getwd())
+
+  #IFF our options aren't already set, we'll include those in the new options to write
+  toset <- !(names(op.package) %in% names(op))
+  if(any(toset)) {
+    options(op.package[toset])
+  }
+
+  invisible()
+}

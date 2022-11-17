@@ -7,7 +7,7 @@
 .load_standings(season = "current", round = "last", type = "driver")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}

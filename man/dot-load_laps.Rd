@@ -7,7 +7,7 @@
 .load_laps(season = "current", race = "last")
 }
 \arguments{
-\item{season}{number from 1996 to 2022 (defaults to current season)}
+\item{season}{number from 1996 to current season (defaults to current season)}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent}
