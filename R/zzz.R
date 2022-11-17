@@ -6,7 +6,7 @@
   # reticulate::import("fastf1", delay_load = TRUE)
 }
 
-.onAttach <- function(){
+.onAttach <- function(libname, pkgname){
   #Load preexisting session/user options
   op <- options()
 
