@@ -27,10 +27,23 @@ load_race_session <- function(obj_name, season = 'current', race = 1, session = 
   reticulate::py_run_string('import fastf1')
   if(cache)
     reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = getOption('f1dataR.cache')))
-  if(is.numeric(race))
-    reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, {race}, '{session}')", season = season, race = race, name = obj_name, session = session))
-  else
-    reticulate::py_run_string(glue::glue("{name} = fastf1.get_session({season}, '{race}', '{session}')", season = season, race = race, name = obj_name, session = session))
+
+  py_string<-glue::glue("{name} = fastf1.get_session(", name = obj_name)
+  if(is.numeric(season)){
+    py_string<-glue::glue("{string}{season}, ", string = py_string, season = season)
+  } else {
+    #season is 'current' and needs quotes
+    py_string<-glue::glue("{string}'{season}', ", string = py_string, season = season)
+  }
+  if(is.numeric(race)){
+    py_string<-glue::glue("{string}{race}, ", string = py_string, race = race)
+  } else {
+    #season is 'current' and needs quotes
+    py_string<-glue::glue("{string}'{race}', ", string = py_string, race = race)
+  }
+  py_string<-glue::glue("{string}'{session}')", string = py_string, session = session)
+
+  reticulate::py_run_string(py_string)
   reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
 }
 

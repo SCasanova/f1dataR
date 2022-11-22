@@ -14,7 +14,7 @@
 
 .load_standings <- function(season = 'current', round = 'last', type = 'driver'){
   if(season != 'current' & (season < 2003 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=current))
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
    }
   res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{round}/{type}Standings.json?limit=40', season = season, round = round, type = type))
   data <- jsonlite::fromJSON(rawToChar(res$content))

@@ -7,6 +7,7 @@ skip_if_no_ff1 <- function() {
 
 test_that("driver telemetry", {
   skip_if_no_ff1()
+
   telem <- get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM")
   telem_fast <- get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = T)
 
