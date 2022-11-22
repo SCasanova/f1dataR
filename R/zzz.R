@@ -1,12 +1,16 @@
 
 .onLoad <- function(libname,pkgname){
   reticulate::configure_environment(pkgname)
-  if(!reticulate::py_module_available('fastf1'))
-    reticulate::py_install("fastf1", method = 'auto', pip = T)
+
+  # This isn't needed after configure_environment is run -
+  # it already installs fastf1 based on the requirements in DESCRIPTION
+  #
+  # if(!reticulate::py_module_available('fastf1'))
+  #   reticulate::py_install("fastf1", method = 'auto', pip = T)
   # reticulate::import("fastf1", delay_load = TRUE)
 }
 
-.onAttach <- function(){
+.onAttach <- function(libname, pkgname){
   #Load preexisting session/user options
   op <- options()
 
