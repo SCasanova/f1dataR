@@ -65,5 +65,5 @@
 #' times in clock format as well as seconds.
 #' @export
 
-load_quali <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_quali), .load_quali)
+load_quali <- memoise::memoise(.load_quali)
 

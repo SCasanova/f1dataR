@@ -20,17 +20,17 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10),
-    reticulate (>=1.14)
+    reticulate (>= 1.14),
 Imports:
     glue,
     magrittr,
     tibble,
     jsonlite,
-    httr
+    httr, 
+    memoise
 Suggests: 
     rmarkdown,
     knitr,
-    memoise,
     tidyverse,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
