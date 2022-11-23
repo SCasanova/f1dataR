@@ -8,6 +8,17 @@ skip_if_no_ff1 <- function() {
 test_that("driver telemetry", {
   skip_if_no_ff1()
 
+  # Set testing specific parameters - this disposes after the test finishes
+  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
+  # because python's process has it locked.
+  withr::local_file(file.path(getwd(), "tst_telem"))
+  if(dir.exists(file.path(getwd(), "tst_telem"))){
+    unlink(file.path(getwd(), "tst_telem"), recursive = T, force = T)
+  }
+  dir.create(file.path(getwd(), "tst_telem"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_telem"))
+
+  # Tests
   telem <- get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM")
   telem_fast <- get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = T)
 
@@ -19,7 +30,4 @@ test_that("driver telemetry", {
   expect_message(get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
                  regexp = NULL) # This itype of check is set up to later possibly handle verbose = FALSE/TRUE option tests
 
-
-  #Cleanup
-  unlink("./tests/testthat/2022", recursive = TRUE)
 })
