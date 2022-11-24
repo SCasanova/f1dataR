@@ -35,11 +35,11 @@ test_that("Load Session Works", {
   # test without race provided - loads from cache
   expect_invisible(load_race_session("session", season=2022, session = "R"))
   # test without season provided (also no race provided, in case mid-season)
-  # DOESN't WORK YET
+  # DOESN't WORK YET - just provides the default '2022' season
   #expect_invisible(load_race_session("session", session = "R"))
 
   expect_error(load_race_session(season = 2017),
-               "Year must be between 1950 and *")
+               "Year must be between 2018 and *")
   expect_error(load_race_session(session = "ZZZ"),
                'Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')
 
