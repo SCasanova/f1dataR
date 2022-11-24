@@ -33,7 +33,8 @@ Suggests:
     knitr,
     tidyverse,
     testthat (>= 3.0.0),
-    withr
+    withr,
+    vdiffr
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues
