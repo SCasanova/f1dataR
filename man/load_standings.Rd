@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_standings.R
 \name{load_standings}
 \alias{load_standings}
-\title{Load Qualifying Results}
+\title{Load Standings}
 \usage{
 load_standings(season = "current", round = "last", type = "driver")
 }
@@ -19,5 +19,6 @@ A dataframe with columns driverId (or constructorId), position,
 points, wins and constructorsId in the case of drivers championship.
 }
 \description{
-Loads qualifying session results for a given season and round.
+Loads standings at the end of a given season and round for drivers' or
+constructors' championships.
 }
