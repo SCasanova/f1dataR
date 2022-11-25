@@ -12,6 +12,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+#Use a local temporary cache and set back to user's info when finished vignette build
+withr::local_file(file.path(getwd(), "vignettes","vig_build_tmp"))
+if(dir.exists(file.path(getwd(), "vignettes","vig_build_tmp"))){
+  unlink(file.path(getwd(), "vignettes","vig_build_tmp"), recursive = T, force = T)
+}
+dir.create(file.path(getwd(), "vignettes","vig_build_tmp"), recursive = TRUE)
+withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes","vig_build_tmp"))
 ```
 
 f1dataR serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
@@ -32,23 +40,26 @@ library(tidyverse)
 
 lec <- get_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
   head(300)%>% 
-  mutate(index = 1:300)
+  mutate(index = 1:300,
+         driverId = "LEC")
 
 ggplot(lec, aes(index, Throttle))+
   geom_line()+
   theme_minimal()
 ```
 
-What if we get more drivers involved. Let's also get the Quaifiying data from Hamilton
+What if we get more drivers involved. Let's also get the Qualifying data from Hamilton
 
 ```{r}
 ham <- get_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
   head(300) %>% 
-  mutate(index = 1:300)
+  mutate(index = 1:300,
+         driverId = "HAM")
 
 per <- get_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
   head(300)%>% 
-  mutate(index = 1:300)
+  mutate(index = 1:300,
+         driverId = "PER")
 
 data <- bind_rows(lec,ham,per)
 
