@@ -8,4 +8,6 @@ clear_f1_cache()
 }
 \description{
 Clears the cache for f1dataR telemetry.
+Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
+but the default is the current working directory.
 }
