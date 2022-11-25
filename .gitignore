@@ -3,3 +3,5 @@ inst/doc
 fastf1_http_cache.sqlite
 *.pkl
 *.ff1pkl
+.Rhistory
+tests/testthat/tst_*

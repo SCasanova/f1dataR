@@ -53,5 +53,4 @@
 
 #' @export
 
-load_drivers <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_drivers), .load_drivers)
-
+load_drivers <- memoise::memoise(.load_drivers)

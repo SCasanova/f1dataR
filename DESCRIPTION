@@ -20,20 +20,23 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10),
-    reticulate (>=1.14)
+    reticulate (>= 1.14),
 Imports:
     glue,
     magrittr,
     tibble,
     jsonlite,
-    httr,
+    httr, 
     memoise,
     janitor
 Suggests: 
     rmarkdown,
     knitr,
-    memoise,
-    tidyverse
+    tidyverse,
+    testthat (>= 3.0.0),
+    withr,
+    vdiffr
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues
+Config/testthat/edition: 3

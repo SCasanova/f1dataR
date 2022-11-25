@@ -61,5 +61,5 @@
 #' fastest lap time, fastest lap in seconds, and top speed in kph.
 #' @export
 
-load_results <- ifelse(requireNamespace('memoise', quietly = T), memoise::memoise(.load_results), .load_results)
+load_results <- memoise::memoise(.load_results)
 
