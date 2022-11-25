@@ -27,7 +27,8 @@ Imports:
     tibble,
     jsonlite,
     httr, 
-    memoise
+    memoise,
+    janitor
 Suggests: 
     rmarkdown,
     knitr,
