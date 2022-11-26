@@ -12,6 +12,7 @@
 #' by the driver in that session.
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with telemetry data for selected driver/session.
+#' @import reticulate
 #' @export
 
 get_driver_telemetry <- function(season = 2022, race = 1, session = 'R', driver, fastest_only = FALSE){

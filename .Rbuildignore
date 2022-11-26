@@ -4,3 +4,7 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^GAFile\.html$
+^README\.Rmd$
+^data-raw$
+^vignettes/\d{4}/*$
