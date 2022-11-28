@@ -34,7 +34,8 @@ Imports:
     dplyr,
     purrr, 
     stringr, 
-    tidyr
+    tidyr,
+    rlang
 Suggests: 
     rmarkdown,
     knitr,
