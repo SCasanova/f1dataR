@@ -16,7 +16,7 @@
 #' color variable.
 #' @export
 
-plot_fastest <- function(season = 'current', race = 'last', session = 'R', driver, color = 'gear'){
+plot_fastest <- function(season = 2022, race = 1, session = 'R', driver, color = 'gear'){
   message("If the session has not been loaded yet, this could take a minute\n\n")
 
   driver_data <- get_driver_telemetry(season, race, session, driver, T)
