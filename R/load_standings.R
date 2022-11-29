@@ -20,19 +20,19 @@
   data <- jsonlite::fromJSON(rawToChar(res$content))
   if(type == 'driver'){
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
-    tidyr::unnest(cols = c(Driver)) %>%
-    dplyr::select(driverId, position,points, wins, Constructors ) %>%
-    tidyr::unnest(cols = c(Constructors)) %>%
+    tidyr::unnest(cols = c("Driver")) %>%
+    dplyr::select("driverId", "position", "points", "wins", "Constructors" ) %>%
+    tidyr::unnest(cols = c("Constructors")) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(driverId, position,points, wins, constructorId) %>%
+    dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
     tibble::as_tibble()
   } else if (type == 'constructor'){
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
-    tidyr::unnest(cols = c(Constructor)) %>%
+    tidyr::unnest(cols = c("Constructor")) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(constructorId, position, points, wins) %>%
+    dplyr::select("constructorId", "position", "points", "wins") %>%
     tibble::as_tibble()
   }
 
@@ -46,7 +46,7 @@
 #' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' #' @param type select drivers or constructors championship data. Defaluts to
+#' @param type select drivers or constructors championship data. Defaluts to
 #' drivers
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns driverId (or constructorId), position,

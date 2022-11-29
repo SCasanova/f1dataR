@@ -18,24 +18,24 @@
                                  season = season))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth) %>%
+      dplyr::select("driverId",
+                    "givenName",
+                    "familyName",
+                    "nationality",
+                    "dateOfBirth") %>%
       tibble::as_tibble()
   } else{
     res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40',
                                  season = season))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth,
-                    code,
-                    permanentNumber) %>%
+      dplyr::select("driverId",
+                    "givenName",
+                    "familyName",
+                    "nationality",
+                    "dateOfBirth",
+                    "code",
+                    "permanentNumber") %>%
       tibble::as_tibble()
   }
 

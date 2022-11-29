@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_standings.R
 \name{load_standings}
 \alias{load_standings}
-\title{Load Qualifying Results}
+\title{Load Standings}
 \usage{
 load_standings(season = "current", round = "last", type = "driver")
 }
@@ -10,8 +10,9 @@ load_standings(season = "current", round = "last", type = "driver")
 \item{season}{number from 1950 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.
-#' @param type select drivers or constructors championship data. Defaluts to
+to most recent.}
+
+\item{type}{select drivers or constructors championship data. Defaluts to
 drivers}
 }
 \value{
@@ -19,5 +20,6 @@ A dataframe with columns driverId (or constructorId), position,
 points, wins and constructorsId in the case of drivers championship.
 }
 \description{
-Loads qualifying session results for a given season and round.
+Loads standings at the end of a given season and round for drivers' or
+constructors' championships.
 }
