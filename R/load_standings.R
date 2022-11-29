@@ -22,18 +22,18 @@
   if(type == 'driver'){
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
     tidyr::unnest(cols = c(.data$Driver)) %>%
-    dplyr::select(.data$driverId, .data$position, .data$points, .data$wins, .data$Constructors ) %>%
+    dplyr::select("driverId", "position", "points", "wins", "Constructors" ) %>%
     tidyr::unnest(cols = c(.data$Constructors)) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(.data$driverId, .data$position, .data$points, .data$wins, .data$constructorId) %>%
+    dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
     tibble::as_tibble()
   } else if (type == 'constructor'){
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
     tidyr::unnest(cols = c(.data$Constructor)) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(.data$constructorId, .data$position, .data$points, .data$wins) %>%
+    dplyr::select("constructorId", "position", "points", "wins") %>%
     tibble::as_tibble()
   }
 

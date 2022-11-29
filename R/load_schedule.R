@@ -23,13 +23,13 @@
       suppressWarnings() %>%
       suppressMessages() %>%
       tidyr::unnest(cols = c(.data$location)) %>%
-      dplyr::select(.data$season,
-                    .data$round,
-                    .data$race_name,
-                    .data$circuit_id,
-                    .data$circuit_name,
-                    .data$lat:.data$country,
-                    .data$date) %>%
+      dplyr::select("season",
+                    "round",
+                    "race_name",
+                    "circuit_id",
+                    "circuit_name",
+                    "lat":"country",
+                    "date") %>%
       tibble::as_tibble()
   } else{
     res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
@@ -40,14 +40,14 @@
       suppressWarnings() %>%
       suppressMessages() %>%
       tidyr::unnest(cols = c(.data$location)) %>%
-      dplyr::select(.data$season,
-                    .data$round,
-                    .data$race_name,
-                    .data$circuit_id,
-                    .data$circuit_name,
-                    .data$lat:.data$country,
-                    .data$date,
-                    .data$time) %>%
+      dplyr::select("season",
+                    "round",
+                    "race_name",
+                    "circuit_id",
+                    "circuit_name",
+                    "lat":"country",
+                    "date",
+                    "time") %>%
       tibble::as_tibble()
    }
 

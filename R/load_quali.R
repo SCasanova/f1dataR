@@ -26,7 +26,7 @@
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
       tidyr::unnest(cols = c(.data$Driver)) %>%
-      dplyr::select(.data$driverId, .data$position, .data$Q1) %>%
+      dplyr::select("driverId", "position", "Q1") %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
@@ -43,7 +43,7 @@
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
       tidyr::unnest(cols = c(.data$Driver)) %>%
-      dplyr::select(.data$driverId, .data$position, .data$Q1:.data$Q3) %>%
+      dplyr::select("driverId", "position", "Q1":"Q3") %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1),
