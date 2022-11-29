@@ -10,8 +10,9 @@ load_standings(season = "current", round = "last", type = "driver")
 \item{season}{number from 1950 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.
-#' @param type select drivers or constructors championship data. Defaluts to
+to most recent.}
+
+\item{type}{select drivers or constructors championship data. Defaluts to
 drivers}
 }
 \value{

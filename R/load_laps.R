@@ -40,7 +40,7 @@
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%
                         dplyr::mutate(lap = i,
-                               time_sec = time_to_sec(time),
+                               time_sec = time_to_sec(.data$time),
                                season = season_text))
   }
   laps
