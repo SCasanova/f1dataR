@@ -10,8 +10,9 @@
 #' permanent number (for post-2014 drivers).
 
 .load_drivers <- function(season = 'current'){
-  if(season != 'current' & (season < 1950 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
+  if(season != 'current' & (season < 1950 | season > get_current_season())){
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
+                    current=get_current_season()))
   }
 
   url <- glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40',

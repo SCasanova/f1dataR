@@ -12,8 +12,9 @@
 
 
 .load_laps <- function(season = 'current', race = 'last'){
-  if(season != 'current' & (season < 1996 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1996 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
+  if(season != 'current' & (season < 1996 | season > get_current_season())){
+    stop(glue::glue('Year must be between 1996 and {current} (or use "current")',
+                    current=get_current_season()))
   }
 
   url <- glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
@@ -34,7 +35,7 @@
   }
 
   laps <- tibble::tibble()
-  season_text <-  ifelse(season == 'current', as.numeric(strftime(Sys.Date(), "%Y")), season)
+  season_text <-  ifelse(season == 'current', get_current_season(), season)
   for (i in 1:nrow(full)) {
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%

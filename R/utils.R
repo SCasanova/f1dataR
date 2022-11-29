@@ -21,3 +21,32 @@ get_ergast_content<-function(url){
   #presuming ergast is ok...
   return(jsonlite::fromJSON(rawToChar(res$content)))
 }
+
+#' Get Current Season core
+#'
+#' @description Looks up current season from ergast, fallback to manual determination
+#'
+#' @return Year (four digit number) representation of current season, as numeric.
+.get_current_season<-function(){
+  tryCatch({
+    url <- glue::glue('http://ergast.com/api/f1/current.json?limit=30', season = season)
+    data <- get_ergast_content(url)
+    current_season <- as.numeric(data$MRData$RaceTable$season)
+  },
+  error = function(e){
+    message("f1dataR: Error getting current season from ergast", e)
+    message("Falling back to manually determined 'current' season")
+    current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m"))<3,
+                             as.numeric(strftime(Sys.Date(), "%Y"))-1,
+                             as.numeric(strftime(Sys.Date(), "%Y")))
+  })
+  return(current_season)
+}
+
+#' Get Current Season
+#'
+#' @description Looks up current season from ergast, fallback to manual determination
+#'
+#' @export
+#' @return Year (four digit number) representation of current season, as numeric.
+get_current_season <- memoise::memoise(.get_current_season)

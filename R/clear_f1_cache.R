@@ -16,5 +16,6 @@ clear_f1_cache <- function(){
   memoise::forget(f1dataR::load_quali)
   memoise::forget(f1dataR::load_results)
   memoise::forget(f1dataR::load_standings)
+  memoise::forget(f1dataR::get_current_season)
 
 }

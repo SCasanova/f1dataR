@@ -11,12 +11,15 @@
 #' fastest lap time, fastest lap in seconds, and top speed in kph.
 
 .load_results <- function(season = 'current', round = 'last'){
-  if(season != 'current' & (season < 1950 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
+  if(season != 'current' & (season < 1950 | season > get_current_season())){
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
+                    current = get_current_season()))
   }
+
   url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40',
                     season = season, round = round)
   data <- get_ergast_content(url)
+
   if(season < 2004){
     data$MRData$RaceTable$Races$Results[[1]] %>%
       tidyr::unnest(cols = c(Driver, Time)) %>%
