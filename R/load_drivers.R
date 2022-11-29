@@ -5,6 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @return A dataframe with columns driverId (unique and recurring), first name,
 #' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 #' permanent number (for post-2014 drivers).
@@ -18,24 +19,24 @@
                                  season = season))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth) %>%
+      dplyr::select(.data$driverId,
+                    .data$givenName,
+                    .data$familyName,
+                    .data$nationality,
+                    .data$dateOfBirth) %>%
       tibble::as_tibble()
   } else{
     res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/drivers.json?limit=40',
                                  season = season))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth,
-                    code,
-                    permanentNumber) %>%
+      dplyr::select(.data$driverId,
+                    .data$givenName,
+                    .data$familyName,
+                    .data$nationality,
+                    .data$dateOfBirth,
+                    .data$code,
+                    .data$permanentNumber) %>%
       tibble::as_tibble()
   }
 

@@ -6,6 +6,7 @@
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
 #' times in clock format as well as seconds.
 
@@ -24,11 +25,11 @@
       )
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
-      tidyr::unnest(cols = c(Driver)) %>%
-      dplyr::select(driverId, position, Q1) %>%
+      tidyr::unnest(cols = c(.data$Driver)) %>%
+      dplyr::select(.data$driverId, .data$position, .data$Q1) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      dplyr::mutate(Q1_sec = time_to_sec(Q1)) %>%
+      dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
       tibble::as_tibble()
   } else{
     res <-
@@ -41,13 +42,13 @@
       )
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
-      tidyr::unnest(cols = c(Driver)) %>%
-      dplyr::select(driverId, position, Q1:Q3) %>%
+      tidyr::unnest(cols = c(.data$Driver)) %>%
+      dplyr::select(.data$driverId, .data$position, .data$Q1:.data$Q3) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      dplyr::mutate(Q1_sec = time_to_sec(Q1),
-                    Q2_sec = time_to_sec(Q2),
-                    Q3_sec = time_to_sec(Q3)) %>%
+      dplyr::mutate(Q1_sec = time_to_sec(.data$Q1),
+                    Q2_sec = time_to_sec(.data$Q2),
+                    Q3_sec = time_to_sec(.data$Q3)) %>%
       tibble::as_tibble()
   }
 

@@ -9,6 +9,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @return A dataframe with columns driverId (or constructorId), position,
 #' points, wins and constructorsId in the case of drivers championship.
 
@@ -20,19 +21,19 @@
   data <- jsonlite::fromJSON(rawToChar(res$content))
   if(type == 'driver'){
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
-    tidyr::unnest(cols = c(Driver)) %>%
-    dplyr::select(driverId, position,points, wins, Constructors ) %>%
-    tidyr::unnest(cols = c(Constructors)) %>%
+    tidyr::unnest(cols = c(.data$Driver)) %>%
+    dplyr::select(.data$driverId, .data$position, .data$points, .data$wins, .data$Constructors ) %>%
+    tidyr::unnest(cols = c(.data$Constructors)) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(driverId, position,points, wins, constructorId) %>%
+    dplyr::select(.data$driverId, .data$position, .data$points, .data$wins, .data$constructorId) %>%
     tibble::as_tibble()
   } else if (type == 'constructor'){
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
-    tidyr::unnest(cols = c(Constructor)) %>%
+    tidyr::unnest(cols = c(.data$Constructor)) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
-    dplyr::select(constructorId, position, points, wins) %>%
+    dplyr::select(.data$constructorId, .data$position, .data$points, .data$wins) %>%
     tibble::as_tibble()
   }
 
