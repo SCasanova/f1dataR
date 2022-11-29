@@ -23,26 +23,26 @@
     ))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$Results[[1]] %>%
-      tidyr::unnest(cols = c(.data$Driver, .data$Time)) %>%
+      tidyr::unnest(cols = c("Driver", "Time")) %>%
       dplyr::select("driverId", "position", "points", "grid":"time") %>%
     tibble::as_tibble()
   } else{
     res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40', season = season, round = round))
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$Results[[1]] %>%
-      tidyr::unnest(cols = c(.data$Driver, .data$Time, .data$FastestLap)) %>%
+      tidyr::unnest(cols = c("Driver", "Time", "FastestLap")) %>%
       dplyr::select("driverId", "points", "position", "grid":"AverageSpeed") %>%
-      tidyr::unnest(cols = c(.data$Time, .data$AverageSpeed),
+      tidyr::unnest(cols = c("Time", "AverageSpeed"),
                     names_repair = 'universal') %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::select(
         "driverId":"status",
-        gap = .data$`time...8`,
-        fastest_rank =  .data$rank,
+        gap = "time...8",
+        fastest_rank =  "rank",
         "laps",
-        fastest = .data$`time...11`,
-        top_speed_kph = .data$speed
+        fastest = "time...11" ,
+        top_speed_kph = "speed"
       ) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble()

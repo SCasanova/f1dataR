@@ -25,7 +25,7 @@
       )
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
-      tidyr::unnest(cols = c(.data$Driver)) %>%
+      tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "Q1") %>%
       suppressWarnings() %>%
       suppressMessages() %>%
@@ -42,7 +42,7 @@
       )
     data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
-      tidyr::unnest(cols = c(.data$Driver)) %>%
+      tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "Q1":"Q3") %>%
       suppressWarnings() %>%
       suppressMessages() %>%
