@@ -16,9 +16,6 @@
   url <- glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season)
   data <- get_ergast_content(url)
   if(season < 2005){
-    # res <-
-    #   httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    # data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c(Circuit), names_repair = 'universal') %>%
       janitor::clean_names() %>%
@@ -34,8 +31,6 @@
                     date) %>%
       tibble::as_tibble()
   } else{
-    # res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    # data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c(Circuit), names_repair = 'universal') %>%
       janitor::clean_names() %>%

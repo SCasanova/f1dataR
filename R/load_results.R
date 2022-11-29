@@ -14,20 +14,15 @@
   if(season != 'current' & (season < 1950 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
     stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
   }
+  url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40',
+                    season = season, round = round)
+  data <- get_ergast_content(url)
   if(season < 2004){
-    res <-  httr::GET(glue::glue(
-      'http://ergast.com/api/f1/{season}/{round}/results.json?limit=40',
-      season = season,
-      round = round
-    ))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$Results[[1]] %>%
       tidyr::unnest(cols = c(Driver, Time)) %>%
       dplyr::select(driverId, position, points, grid:time) %>%
     tibble::as_tibble()
   } else{
-    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{round}/results.json?limit=40', season = season, round = round))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races$Results[[1]] %>%
       tidyr::unnest(cols = c(Driver, Time, FastestLap)) %>%
       dplyr::select(driverId, points,position, grid:AverageSpeed) %>%
