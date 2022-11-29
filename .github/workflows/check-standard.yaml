@@ -39,20 +39,19 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
-          python_packages <-
-            c("numpy", "fastf1"
+          python_packages <- c("numpy", "fastf1")
 
           library(reticulate)
           virtualenv_create("r-reticulate", Sys.which("python"))
