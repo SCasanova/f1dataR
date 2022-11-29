@@ -20,21 +20,21 @@
 
   if(season<2014){
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth) %>%
+      dplyr::select("driverId",
+                    "givenName",
+                    "familyName",
+                    "nationality",
+                    "dateOfBirth") %>%
       tibble::as_tibble()
   } else{
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select(driverId,
-                    givenName,
-                    familyName,
-                    nationality,
-                    dateOfBirth,
-                    code,
-                    permanentNumber) %>%
+      dplyr::select("driverId",
+                    "givenName",
+                    "familyName",
+                    "nationality",
+                    "dateOfBirth",
+                    "code",
+                    "permanentNumber") %>%
       tibble::as_tibble()
   }
 
