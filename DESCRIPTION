@@ -6,7 +6,7 @@ Authors@R:
            family = "Casanova",
            role = c("aut", "cre", "cph"),
            email = "santiago.casanova@yahoo.com")
-Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 offial data via the fastf1 python library. 
+Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
 Config/reticulate:
   list(
     packages = list(
