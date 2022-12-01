@@ -15,10 +15,10 @@
   if(season != 'current' & (season < 2011 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
     stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
   }
-  res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}/{race}/pitstops.json?limit=80',
-                               season = season,
-                               race = race))
-  data <- jsonlite::fromJSON(rawToChar(res$content))
+
+  url <- glue::glue('http://ergast.com/api/f1/{season}/{race}/pitstops.json?limit=80',
+                    season = season, race = race)
+  data <- get_ergast_content(url)
   data$MRData$RaceTable$Races$PitStops[[1]] %>% tibble::as_tibble()
 }
 

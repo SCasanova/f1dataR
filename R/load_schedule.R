@@ -12,10 +12,10 @@
 .load_schedule <- function(season = 'current'){
   if(season != 'current' & (season < 1950 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
     stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
-  } else if(season < 2005){
-    res <-
-      httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
+  }
+  url <- glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season)
+  data <- get_ergast_content(url)
+  if(season < 2005){
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c("Circuit"), names_repair = 'universal') %>%
       janitor::clean_names() %>%
@@ -31,8 +31,6 @@
                     "date") %>%
       tibble::as_tibble()
   } else{
-    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c("Circuit"), names_repair = 'universal') %>%
       janitor::clean_names() %>%
