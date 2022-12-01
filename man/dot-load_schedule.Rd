@@ -4,10 +4,10 @@
 \alias{.load_schedule}
 \title{Load Schedule (not cached)}
 \usage{
-.load_schedule(season = 2022)
+.load_schedule(season = "current")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
 A dataframe with columns season, round, circuitId, circuitName,

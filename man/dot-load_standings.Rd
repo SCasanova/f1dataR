@@ -2,17 +2,17 @@
 % Please edit documentation in R/load_standings.R
 \name{.load_standings}
 \alias{.load_standings}
-\title{Load Qualifying Results (not cached)}
+\title{Load Standings (not cached)}
 \usage{
 .load_standings(season = "current", round = "last", type = "driver")
 }
 \arguments{
-\item{season}{number from 1950 to 2022 (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}
 
-\item{type}{select drivers or constructors championship data. Defaluts to
+\item{type}{select drivers or constructors championship data. Defaults to
 drivers}
 }
 \value{
@@ -20,5 +20,6 @@ A dataframe with columns driverId (or constructorId), position,
 points, wins and constructorsId in the case of drivers championship.
 }
 \description{
-Loads qualifying session results for a given season and round.
+Loads standings at the end of a given season and round for drivers' or
+constructors' championships.
 }

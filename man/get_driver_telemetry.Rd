@@ -6,20 +6,19 @@
 \usage{
 get_driver_telemetry(
   season = 2022,
-  race = "last",
+  race = 1,
   session = "R",
   driver,
   fastest_only = FALSE
 )
 }
 \arguments{
-\item{season}{number from 2018 to 2022 (defaults to current season).}
+\item{season}{number from 2018 to current season (defaults to current season).}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{race}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, and R. DEfault is "R", which refers to Race.}
+Q, S, and R. Default is "R", which refers to Race.}
 
 \item{driver}{three letter driver code (see load_drivers() for a list)}
 
@@ -30,6 +29,6 @@ by the driver in that session.}
 A dataframe with telemetry data for selected driver/session.
 }
 \description{
-Recieves season, race number, driver code, and an optional fastest lap only
+Receives season, race number, driver code, and an optional fastest lap only
 argument to output car telemetry for the selected situation.
 }
