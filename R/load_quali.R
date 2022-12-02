@@ -11,8 +11,9 @@
 #' times in clock format as well as seconds.
 
 .load_quali <- function(season = 'current', round = 'last'){
-   if(season != 'current' & (season < 2003 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 2003 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
+   if(season != 'current' & (season < 2003 | season > get_current_season())){
+    stop(glue::glue('Year must be between 2003 and {current} (or use "current")',
+                    current=get_current_season()))
    }
 
   url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/qualifying.json?limit=40',

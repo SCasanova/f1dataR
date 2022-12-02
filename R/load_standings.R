@@ -13,8 +13,9 @@
 #' points, wins and constructorsId in the case of drivers championship.
 
 .load_standings <- function(season = 'current', round = 'last', type = 'driver'){
-  if(season != 'current' & (season < 2003 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current=as.numeric(strftime(Sys.Date(), "%Y"))))
+  if(season != 'current' & (season < 2003 | season > get_current_season())){
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
+                    current=get_current_season()))
   }
 
   url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/{type}Standings.json?limit=40',
