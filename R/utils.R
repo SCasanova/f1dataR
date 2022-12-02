@@ -29,7 +29,7 @@ get_ergast_content<-function(url){
 #' @return Year (four digit number) representation of current season, as numeric.
 .get_current_season<-function(){
   tryCatch({
-    url <- glue::glue('http://ergast.com/api/f1/current.json?limit=30', season = season)
+    url <- glue::glue('http://ergast.com/api/f1/current.json?limit=30')
     data <- get_ergast_content(url)
     current_season <- as.numeric(data$MRData$RaceTable$season)
   },
