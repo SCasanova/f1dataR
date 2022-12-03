@@ -6,8 +6,8 @@ official F1 data stream via the fastf1 python library.
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/pbulsink/f1dataR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/pbulsink/f1dataR/actions/workflows/check-standard.yaml)
-[![test-coverage](https://github.com/pbulsink/f1dataR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/pbulsink/f1dataR/actions/workflows/test-coverage.yaml)
+[![R-CMD-check](https://github.com/SCasanova/f1dataR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/check-standard.yaml)
+[![test-coverage](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 ## Installation

@@ -10,43 +10,44 @@
 #' of the race.
 
 .load_schedule <- function(season = 'current'){
-  if(season != 'current' & (season < 1950 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
-  } else if(season < 2005){
-    res <-
-      httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
+  if(season != 'current' & (season < 1950 | season > get_current_season())){
+    stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
+                    current = get_current_season()))
+  }
+
+  url <- glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season)
+  data <- get_ergast_content(url)
+
+  if(season < 2005){
     data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c(Circuit), names_repair = 'universal') %>%
+      tidyr::unnest(cols = c("Circuit"), names_repair = 'universal') %>%
       janitor::clean_names() %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      tidyr::unnest(cols = c(location)) %>%
-      dplyr::select(season,
-                    round,
-                    race_name,
-                    circuit_id,
-                    circuit_name,
-                    lat:country,
-                    date) %>%
+      tidyr::unnest(cols = c("location")) %>%
+      dplyr::select("season",
+                    "round",
+                    "race_name",
+                    "circuit_id",
+                    "circuit_name",
+                    "lat":"country",
+                    "date") %>%
       tibble::as_tibble()
   } else{
-    res <-  httr::GET(glue::glue('http://ergast.com/api/f1/{season}.json?limit=30', season = season))
-    data <- jsonlite::fromJSON(rawToChar(res$content))
     data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c(Circuit), names_repair = 'universal') %>%
+      tidyr::unnest(cols = c("Circuit"), names_repair = 'universal') %>%
       janitor::clean_names() %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      tidyr::unnest(cols = c(location)) %>%
-      dplyr::select(season,
-                    round,
-                    race_name,
-                    circuit_id,
-                    circuit_name,
-                    lat:country,
-                    date,
-                    time) %>%
+      tidyr::unnest(cols = c("location")) %>%
+      dplyr::select("season",
+                    "round",
+                    "race_name",
+                    "circuit_id",
+                    "circuit_name",
+                    "lat":"country",
+                    "date",
+                    "time") %>%
       tibble::as_tibble()
    }
 

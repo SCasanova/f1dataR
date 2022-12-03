@@ -14,11 +14,13 @@
 #' TRUE (recommended), as this lowers subsequent loading times significantly.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
+#' @import reticulate
 #' @return A session object to be used in other functions.
 
 load_race_session <- function(obj_name, season = 2022, race = 1, session = 'R', cache = T){
-  if(season != 'current' & (season < 2018 | season > as.numeric(strftime(Sys.Date(), "%Y")))){
-    stop(glue::glue('Year must be between 2018 and {current} (or use "current")', current = as.numeric(strftime(Sys.Date(), "%Y"))))
+  if(season != 'current' & (season < 2018 | season > get_current_season())){
+    stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
+                    current = get_current_season()))
   }
   if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S"))){
     stop('Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')

@@ -2,11 +2,12 @@ Package: f1dataR
 Title: F1 Data in R
 Version: 0.3.8
 Authors@R: 
-    person(given = "Santiago",
+    c(person(given = "Santiago",
            family = "Casanova",
            role = c("aut", "cre", "cph"),
-           email = "santiago.casanova@yahoo.com")
-Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 offial data via the fastf1 python library. 
+           email = "santiago.casanova@yahoo.com"),
+    person("Philip", "Bulsink", role = "ctb"))
+Description: A collection of funtions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
 Config/reticulate:
   list(
     packages = list(
@@ -27,14 +28,23 @@ Imports:
     tibble,
     jsonlite,
     httr, 
-    memoise
+    memoise,
+    janitor,
+    ggsci,
+    ggplot2,
+    dplyr,
+    purrr, 
+    stringr, 
+    tidyr,
+    rlang
 Suggests: 
     rmarkdown,
     knitr,
     tidyverse,
     testthat (>= 3.0.0),
     withr,
-    vdiffr
+    vdiffr,
+    usethis
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues

@@ -3,6 +3,7 @@
 #' Clears the cache for f1dataR telemetry.
 #' Note that the cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' but the default is the current working directory.
+#' @import reticulate
 #' @export
 
 clear_f1_cache <- function(){
@@ -16,5 +17,8 @@ clear_f1_cache <- function(){
   memoise::forget(f1dataR::load_quali)
   memoise::forget(f1dataR::load_results)
   memoise::forget(f1dataR::load_standings)
+  memoise::forget(f1dataR::get_current_season)
+  memoise::forget(f1dataR::load_circuits)
+  memoise::forget(f1dataR::load_sprint)
 
 }
