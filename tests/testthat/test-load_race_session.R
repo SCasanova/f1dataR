@@ -20,23 +20,29 @@ test_that("Load Session Works", {
 
   #Tests
 
-  # Should change to having 'TRUE' returned invisibly from load_race_session
-  # Then can validate expect_true for success instead of just having nothing return
-
   # test cache is empty
-  load_race_session("session", season=2022, race = 1, session = "R", cache=FALSE)
+  load_race_session("session", season=2022, race = 1, session = "R", cache=F, verbose = F)
   expect_false(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
 
   # test with all parameters but session provided
-  expect_invisible(load_race_session("session", season=2022, race = 1))
+  expect_invisible(load_race_session("session", season=2022, race = 1, verbose = F))
   # validate the cache is there now
   expect_true(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
 
   # test without race provided - loads from cache
-  expect_invisible(load_race_session("session", season=2022, session = "R"))
-  # test without season provided (also no race provided, in case mid-season)
-  # DOESN't WORK YET - just provides the default '2022' season
-  #expect_invisible(load_race_session("session", session = "R"))
+  expect_invisible(load_race_session("session", season=2022, session = "R", verbose = F))
+
+  # test without season provided - default is current year assigned at argument
+  session1<-load_race_session("session", session = "R", verbose = F)
+  # likewise, load it with 'current'
+  session2<-load_race_session('session', session = "R", season="current", verbose = F)
+  expect_equal(session1$api_path, session2$api_path)
+
+  #verify character and numeric race can draw the same endpoint
+  session1<-load_race_session('session', season = 2022, race = 1, session = "R", verbose = F)
+  session1<-load_race_session('session', season = 2022, race = 'Bahrain', session = "R", verbose = F)
+  expect_equal(session1$api_path, session2$api_path)
+
 
   expect_error(load_race_session(season = 2017),
                "Year must be between 2018 and *")
