@@ -50,3 +50,24 @@ get_ergast_content<-function(url){
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- memoise::memoise(.get_current_season)
+
+
+.get_fastf1_version <- function(){
+  if(reticulate::py_module_available("fastf1")){
+    ver<-reticulate::py_list_packages() %>%
+      dplyr::filter(.data$package == "fastf1") %>%
+      dplyr::pull("version")
+    if(as.integer(substr(ver, start = 1, 1)) >= 3){
+      return(3)
+    } else if(as.integer(substr(ver, start = 1, 1)) <= 2){
+      warning("The Python package fastf1 was updated to v3 recently.\nPlease update the version on your system by running:\nreticulate::py_install('fastf1')\nFuture versions of f1dataR may not support fastf1 < v3.0.0")
+      return(2)
+    } else {
+      return(NA)
+    }
+  } else {
+    return(NA)
+  }
+}
+
+get_fastf1_version <- memoise::memoise(.get_fastf1_version)
