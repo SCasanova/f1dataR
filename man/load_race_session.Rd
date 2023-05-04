@@ -5,12 +5,11 @@
 \title{Load Session Data}
 \usage{
 load_race_session(
-  obj_name = session,
+  obj_name = "session",
   season = get_current_season(),
   race = 1,
   session = "R",
-  cache = T,
-  verbose = T
+  log_level = "WARNING"
 )
 }
 \arguments{
@@ -22,15 +21,12 @@ load_race_session(
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, and R. Default is "R", which refers to Race.}
-
-\item{cache}{whether the session will get cached or not. Default is set to
-TRUE (recommended), as this lowers subsequent loading times significantly.
+Q, S, and R. Default is "R", which refers to Race.
 Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 default is the current working directory.}
 
-\item{verbose}{Whether to allow fastf1 information messages to print to screen
-or not. Default True, which can clutter up your console.}
+\item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
+DEBUG, INFO, WARNING, ERROR and CRITICAL. See \link(https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity)}
 }
 \value{
 A session object to be used in other functions invisibly.

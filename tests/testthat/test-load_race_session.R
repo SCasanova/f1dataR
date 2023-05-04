@@ -20,27 +20,27 @@ test_that("Load Session Works", {
 
   #Tests
 
-  # test cache is empty
-  load_race_session("session", season=2022, race = 1, session = "R", cache=F, verbose = F)
-  expect_false(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
+  # test cache is empty fastf1 >= 3.0.0 *always* cachces
+  # load_race_session("session", season=2022, race = 1, session = "R", cache=FALSE)
+  # expect_false(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
 
   # test with all parameters but session provided
-  expect_invisible(load_race_session("session", season=2022, race = 1, verbose = F))
+  expect_invisible(load_race_session("session", season=2022, race = 1))#, verbose = F))
   # validate the cache is there now
   expect_true(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
 
   # test without race provided - loads from cache
-  expect_invisible(load_race_session("session", season=2022, session = "R", verbose = F))
+  expect_invisible(load_race_session("session", season=2022, session = "R"))#, verbose = F))
 
   # test without season provided - default is current year assigned at argument
-  session1<-load_race_session("session", session = "R", verbose = F)
+  session1<-load_race_session("session", session = "R")#, verbose = F)
   # likewise, load it with 'current'
-  session2<-load_race_session('session', session = "R", season="current", verbose = F)
+  session2<-load_race_session('session', session = "R", season="current")#, verbose = F)
   expect_equal(session1$api_path, session2$api_path)
 
   #verify character and numeric race can draw the same endpoint
-  session1<-load_race_session('session', season = 2022, race = 1, session = "R", verbose = F)
-  session1<-load_race_session('session', season = 2022, race = 'Bahrain', session = "R", verbose = F)
+  session1<-load_race_session('session', season = 2022, race = 1, session = "R")#, verbose = F)
+  session2<-load_race_session('session', season = 2022, race = 'Bahrain', session = "R")#, verbose = F)
   expect_equal(session1$api_path, session2$api_path)
 
 
@@ -48,6 +48,9 @@ test_that("Load Session Works", {
                "Year must be between 2018 and *")
   expect_error(load_race_session(session = "ZZZ"),
                'Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')
+  expect_error(load_race_session('session', season = 2022, race = 1, session = "R", log_level = "ZZZ"))
+  #expect_message(load_race_session('session', season = 2022, race = 1, session = "R", log_level = 'INFO'),
+  #               regexp = NULL) # This type of check is set up to later possibly handle verbose = FALSE/TRUE option tests
 
 
 })
