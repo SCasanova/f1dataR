@@ -7,15 +7,15 @@
 load_results(season = "current", round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season  (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}
 }
 \value{
-A dataframe with columns driverId, grid position, laps completed,
+A dataframe with columns driverId, constructorId, grid position, laps completed,
 race status (finished or otherwise), gap to first place, fastest lap rank,
-fastest lap time, fastest lap in seconds, and top speed in kph.
+fastest lap time, fastest lap time in seconds, and top speed in kph.
 }
 \description{
 Loads final race resuts for a given year and round.

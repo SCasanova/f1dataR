@@ -7,9 +7,9 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @return A dataframe with columns driverId, grid position, laps completed,
+#' @return A dataframe with columns driverId, constructorId, grid position, laps completed,
 #' race status (finished or otherwise), gap to first place, fastest lap rank,
-#' fastest lap time, fastest lap in seconds, and top speed in kph.
+#' fastest lap time, fastest lap time in seconds, and top speed in kph.
 
 .load_results <- function(season = 'current', round = 'last'){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
@@ -23,24 +23,27 @@
 
   if(season < 2004){
     data$MRData$RaceTable$Races$Results[[1]] %>%
-      tidyr::unnest(cols = c("Driver", "Time")) %>%
-      dplyr::select("driverId", "position", "points", "grid":"time") %>%
+      tidyr::unnest(cols = c("Driver", "Time", "Constructor"), names_repair = 'universal') %>%
+      dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
     tibble::as_tibble()
   } else{
     data$MRData$RaceTable$Races$Results[[1]] %>%
-      tidyr::unnest(cols = c("Driver", "Time", "FastestLap")) %>%
-      dplyr::select("driverId", "points", "position", "grid":"AverageSpeed") %>%
+      tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = 'universal') %>%
+      dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
       tidyr::unnest(cols = c("Time", "AverageSpeed"),
                     names_repair = 'universal') %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::select(
-        "driverId":"status",
+        "driverId",
+        "constructorId",
+        "points":"status",
         gap = "time...8",
         fastest_rank =  "rank",
         "laps",
         fastest = "time...11" ,
-        top_speed_kph = "speed"
+        top_speed_kph = "speed",
+
       ) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble()
@@ -52,12 +55,13 @@
 #'
 #' Loads final race resuts for a given year and round.
 #'
-#' @param season number from 1950 to current season (defaults to current season).
+#' @param season number from 1950 to current season  (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' @return A dataframe with columns driverId, grid position, laps completed,
+#' @return A dataframe with columns driverId, constructorId, grid position, laps completed,
 #' race status (finished or otherwise), gap to first place, fastest lap rank,
-#' fastest lap time, fastest lap in seconds, and top speed in kph.
+#' fastest lap time, fastest lap time in seconds, and top speed in kph.
+#'
 #' @export
 
 load_results <- memoise::memoise(.load_results)
