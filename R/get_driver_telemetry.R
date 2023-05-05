@@ -11,7 +11,7 @@
 #' @param fastest_only boolean value whether to pick all laps or only the fastest
 #' by the driver in that session.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \link(https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity)
+#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with telemetry data for selected driver/session.
 #' @import reticulate

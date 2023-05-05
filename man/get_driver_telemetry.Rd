@@ -27,7 +27,7 @@ Q, S, and R. Default is "R", which refers to Race.}
 by the driver in that session.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-DEBUG, INFO, WARNING, ERROR and CRITICAL. See \link(https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity)}
+DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 }
 \value{
 A dataframe with telemetry data for selected driver/session.

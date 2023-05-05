@@ -26,7 +26,7 @@ Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])}
 default is the current working directory.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-DEBUG, INFO, WARNING, ERROR and CRITICAL. See \link(https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity)}
+DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 }
 \value{
 A session object to be used in other functions invisibly.
