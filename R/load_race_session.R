@@ -14,17 +14,14 @@
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
 #' Q, S, and R. Default is "R", which refers to Race.
-#' @param cache whether the session will get cached or not. Default is set to
-#' TRUE (recommended), as this lowers subsequent loading times significantly.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
-#' @param verbose Whether to allow fastf1 information messages to print to screen
-#' or not. Default True, which can clutter up your console.
+#' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
+#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @import reticulate
 #' @return A session object to be used in other functions invisibly.
 #' @export
-
-load_race_session <- function(obj_name=session, season = get_current_season(), race = 1, session = 'R', cache = T, verbose = T){
+load_race_session <- function(obj_name="session", season = get_current_season(), race = 1, session = 'R', log_level = "WARNING"){
   if(season != 'current' & (season < 2018 | season > get_current_season())){
     stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
                     current = get_current_season()))
@@ -36,18 +33,19 @@ load_race_session <- function(obj_name=session, season = get_current_season(), r
     season <- get_current_season()
   }
 
-  if(verbose)
+  log_level <- match.arg(log_level, c('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL', TRUE), several.ok = FALSE)
+  if(log_level == TRUE)
+  if(log_level %in% c("DEBUG", "INFO")){
     message("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster\n\n")
+  }
 
   reticulate::py_run_string('import fastf1')
+  if(get_fastf1_version() >= 3){
+    reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
+  }
+  reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = getOption('f1dataR.cache')))
 
-  if(cache)
-    reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')",
-                                         cache_dir = getOption('f1dataR.cache')))
-
-  py_string<-glue::glue("{name} = fastf1.get_session({season}, ",
-                        name = obj_name, season = season)
-
+  py_string<-glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
   if(is.numeric(race)){
     py_string<-glue::glue("{py_string}{race}, '{session}')",
                           py_string = py_string, race = race, session = session)
@@ -59,10 +57,7 @@ load_race_session <- function(obj_name=session, season = get_current_season(), r
 
   reticulate::py_run_string(py_string)
 
-  if(verbose){
-    session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
-  } else {
-    reticulate::py_capture_output(session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name)))
-  }
+  session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
+
   invisible(session[obj_name])
 }

@@ -37,7 +37,7 @@ plot_fastest <- function(season = 2022, race = 1, session = 'R', driver, color =
 
   if(color == 'gear'){
     ggplot2::ggplot(driver_data, ggplot2::aes(.data$X, .data$Y, color = as.factor(.data$nGear), group = .data$Time)) +
-      ggplot2::geom_path(size = 4, lineend = 'round') +
+      ggplot2::geom_path(linewidth = 4, lineend = 'round') +
       ggsci::scale_color_nejm(name = 'Gear') +
       theme_dark_f1() +
       ggplot2::labs(title = race,
@@ -46,7 +46,7 @@ plot_fastest <- function(season = 2022, race = 1, session = 'R', driver, color =
                     )
   } else if(color == 'speed'){
     ggplot2::ggplot(driver_data, ggplot2::aes(.data$X, .data$Y, color = .data$Speed, group = .data$Time)) +
-      ggplot2::geom_path(size = 4, lineend = 'round') +
+      ggplot2::geom_path(linewidth = 4, lineend = 'round') +
       ggplot2::scale_color_gradient(low = 'white', high = 'red')+
       theme_dark_f1() +
       ggplot2::labs(title = race,

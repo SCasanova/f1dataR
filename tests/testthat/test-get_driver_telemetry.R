@@ -27,7 +27,7 @@ test_that("driver telemetry", {
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
 
-  expect_message(get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
-                 regexp = NULL) # This itype of check is set up to later possibly handle verbose = FALSE/TRUE option tests
+  # expect_message(get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
+  #                regexp = NULL) # This itype of check is set up to later possibly handle verbose = FALSE/TRUE option tests
 
 })
