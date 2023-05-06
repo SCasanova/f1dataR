@@ -7,7 +7,7 @@
 #' @export
 
 clear_f1_cache <- function(){
-  if(reticulate::py_module_available("fastf1")){
+  if('fastf1' %in% reticulate::py_list_packages()$package){
     reticulate::py_run_string('import fastf1')
     if(get_fastf1_version() >= 3){
       reticulate::py_run_string(glue::glue('fastf1.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
