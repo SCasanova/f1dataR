@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [main, master]
 
-name: R-CMD-check
+name: R-CMD-check-oldff1
 
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) old fastf1
 
     strategy:
       fail-fast: false
@@ -47,7 +47,7 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
-          python_packages <- c("numpy", "fastf1==2.3.3")
+          python_packages <- c("urllib3==1.26.15", "fastf1==2.3.3")
 
           library(reticulate)
           virtualenv_create("r-reticulate", Sys.which("python"))
