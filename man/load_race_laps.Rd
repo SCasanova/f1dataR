@@ -9,7 +9,8 @@ load_race_laps(
   season = get_current_season(),
   race = 1,
   session = "R",
-  log_level = "WARNING"
+  log_level = "WARNING",
+  add_weather = F
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ default is the current working directory.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+
+\item{add_weather}{Whether to add weather information to the laps. See \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather}
 }
 \value{
 A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
@@ -35,5 +38,5 @@ A data frame. Note time information is in seconds, see \href{https://docs.fastf1
 Loads lapwise data for a race session.
 }
 \details{
-Includes laptime, pit in/out time, tyre information, and track status.
+Includes each driver's each lap's laptime, pit in/out time, tyre information, track status, and (optionally) weather information.
 }

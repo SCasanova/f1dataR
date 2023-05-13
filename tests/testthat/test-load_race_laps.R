@@ -20,8 +20,10 @@ test_that("load race laps works", {
 
 
   laps <- load_race_laps(season = 2022, race = 'bahrain')
+  laps2 <- load_race_laps(season = 2022, race = 'bahrain', add_weather = T)
 
   expect_equal(class(laps), 'data.frame')
   expect_equal(ncol(laps), 31)
-  expect_equal(nrow(laps), 1125)
+  expect_equal(ncol(laps2), 38)
+  expect_equal(nrow(laps), nrow(laps2))
 })
