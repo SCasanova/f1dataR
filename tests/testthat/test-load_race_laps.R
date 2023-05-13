@@ -21,9 +21,12 @@ test_that("load race laps works", {
 
   laps <- load_race_laps(season = 2022, race = 'bahrain')
   laps2 <- load_race_laps(season = 2022, race = 'bahrain', add_weather = T)
+  lapsq <- load_race_laps(season = 2022, race = 'bahrain', session = 'Q')
 
   expect_equal(class(laps), 'data.frame')
-  expect_equal(ncol(laps), 31)
-  expect_equal(ncol(laps2), 38)
+  expect_true(ncol(laps) %in% c(28,32))
+  expect_true(ncol(laps2) %in% c(35, 39))
   expect_equal(nrow(laps), nrow(laps2))
+  expect_true(all(lapsq$SessionType %in% c('Q1', 'Q2', 'Q3')))
+  expect_true(all(c('Q1', 'Q2', 'Q3') %in% unique(laps1$SessionType)))
 })

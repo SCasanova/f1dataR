@@ -3,8 +3,8 @@
 #' Loads lapwise data for a race session.
 #'
 #' Includes each driver's each lap's laptime, pit in/out time, tyre information, track status, and (optionally) weather information.
+#' The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3
 #'
-#' @param obj_name name assigned to the loaded session to be referenced later.
 #' @param season number from 2018 to current season. Defaults to current season
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
@@ -18,32 +18,69 @@
 #' @import reticulate
 #' @return A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-load_race_laps <- function(obj_name="session_laps", season = get_current_season(), race = 1, session = 'R', log_level = "WARNING", add_weather=F){
+load_race_laps <- function(season = get_current_season(), race = 1, session = 'R', log_level = "WARNING", add_weather=F){
+  obj_name <- 'session_laps'
   s <- load_race_session(obj_name = obj_name, season = season, race = race, session = session, log_level = log_level)
+
+  if(get_fastf1_version() < 3){
+    message("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
+  }
 
   reticulate::py_run_string(glue::glue("laps={obj}.laps", obj = obj_name))
   if(add_weather){
     reticulate::py_run_string(paste("import pandas as pd",
+
                                     "weather_data = laps.get_weather_data()",
+
                                     "laps = laps.reset_index(drop=True)",
                                     "weather_data = weather_data.reset_index(drop=True)",
+
                                     "laps = pd.concat([laps, weather_data.loc[:, ~(weather_data.columns == 'Time')]], axis=1)",
                                     sep = "\n"))
   }
 
-  reticulate::py_run_string(paste("laps.Time = laps.Time.dt.total_seconds()",
-                                  "laps.LapTime = laps.LapTime.dt.total_seconds()",
-                                  "laps.PitOutTime = laps.PitOutTime.dt.total_seconds()",
-                                  "laps.PitInTime = laps.PitInTime.dt.total_seconds()",
-                                  "laps.Sector1SessionTime = laps.Sector1SessionTime.dt.total_seconds()",
-                                  "laps.Sector1Time = laps.Sector1Time.dt.total_seconds()",
-                                  "laps.Sector2SessionTime = laps.Sector2SessionTime.dt.total_seconds()",
-                                  "laps.Sector2Time = laps.Sector2Time.dt.total_seconds()",
-                                  "laps.Sector3SessionTime = laps.Sector3SessionTime.dt.total_seconds()",
-                                  "laps.Sector3Time = laps.Sector3Time.dt.total_seconds()",
-                                  "laps.LapStartTime = laps.LapStartTime.dt.total_seconds()",
-                                  sep = "\n"))
+  if(session == 'Q'){
+    # Split the quali session to three objects then recombine once labelled, then do time corrections
+    reticulate::py_run_string(paste("import pandas as pd",
 
-  laps <- reticulate::py_run_string('laps')
-  invisible(laps$laps)
+                                    "q1, q2, q3 = laps.split_qualifying_sessions()",
+                                    "q1.SessionType = 'Q1'",
+                                    "q2.SessionType = 'Q2'",
+                                    "q3.SessionType = 'Q3'",
+
+                                    "frames = [q1, q2, q3]",
+                                    "laps = pd.concat(frames)",
+
+                                    "laps.Time = laps.Time.dt.total_seconds()",
+                                    "laps.LapTime = laps.LapTime.dt.total_seconds()",
+                                    "laps.PitOutTime = laps.PitOutTime.dt.total_seconds()",
+                                    "laps.PitInTime = laps.PitInTime.dt.total_seconds()",
+                                    "laps.Sector1SessionTime = laps.Sector1SessionTime.dt.total_seconds()",
+                                    "laps.Sector1Time = laps.Sector1Time.dt.total_seconds()",
+                                    "laps.Sector2SessionTime = laps.Sector2SessionTime.dt.total_seconds()",
+                                    "laps.Sector2Time = laps.Sector2Time.dt.total_seconds()",
+                                    "laps.Sector3SessionTime = laps.Sector3SessionTime.dt.total_seconds()",
+                                    "laps.Sector3Time = laps.Sector3Time.dt.total_seconds()",
+                                    "laps.LapStartTime = laps.LapStartTime.dt.total_seconds()",
+                                    sep = "\n"))
+    laps <- reticulate::py_run_string('laps')
+    laps <- laps$laps
+  } else {
+    reticulate::py_run_string(paste("laps.Time = laps.Time.dt.total_seconds()",
+                                    "laps.LapTime = laps.LapTime.dt.total_seconds()",
+                                    "laps.PitOutTime = laps.PitOutTime.dt.total_seconds()",
+                                    "laps.PitInTime = laps.PitInTime.dt.total_seconds()",
+                                    "laps.Sector1SessionTime = laps.Sector1SessionTime.dt.total_seconds()",
+                                    "laps.Sector1Time = laps.Sector1Time.dt.total_seconds()",
+                                    "laps.Sector2SessionTime = laps.Sector2SessionTime.dt.total_seconds()",
+                                    "laps.Sector2Time = laps.Sector2Time.dt.total_seconds()",
+                                    "laps.Sector3SessionTime = laps.Sector3SessionTime.dt.total_seconds()",
+                                    "laps.Sector3Time = laps.Sector3Time.dt.total_seconds()",
+                                    "laps.LapStartTime = laps.LapStartTime.dt.total_seconds()",
+                                    sep = "\n"))
+    laps <- reticulate::py_run_string('laps')
+    laps <- laps$laps
+    laps$SessionType <- session
+  }
+  invisible(laps)
 }

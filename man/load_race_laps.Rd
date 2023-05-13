@@ -5,7 +5,6 @@
 \title{Load Lapwise Data}
 \usage{
 load_race_laps(
-  obj_name = "session_laps",
   season = get_current_season(),
   race = 1,
   session = "R",
@@ -14,8 +13,6 @@ load_race_laps(
 )
 }
 \arguments{
-\item{obj_name}{name assigned to the loaded session to be referenced later.}
-
 \item{season}{number from 2018 to current season. Defaults to current season}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
@@ -39,4 +36,5 @@ Loads lapwise data for a race session.
 }
 \details{
 Includes each driver's each lap's laptime, pit in/out time, tyre information, track status, and (optionally) weather information.
+The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3
 }
