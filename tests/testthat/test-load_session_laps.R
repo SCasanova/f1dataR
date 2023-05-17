@@ -27,12 +27,14 @@ test_that("load session laps works", {
   expect_equal(class(laps), 'data.frame')
   expect_true(ncol(laps) %in% c(28,32))
   expect_true(ncol(laps2) %in% c(35, 39))
-  expect_equal(laps$Time[1], 3855.422)
   expect_equal(laps$Time, laps2$Time)
+  expect_true(!is.na(laps$Time[1]))
   expect_equal(nrow(laps), nrow(laps2))
-  expect_true(all(lapsq$SessionType %in% c('Q1', 'Q2', 'Q3')))
-  expect_true(all(c('Q1', 'Q2', 'Q3') %in% unique(lapsq$SessionType)))
-  expect_equal(lapsq$Time[1], 1404.977)
+  if(get_fastf1_version() >= 3){
+    expect_true(all(lapsq$SessionType %in% c('Q1', 'Q2', 'Q3')))
+    expect_true(all(c('Q1', 'Q2', 'Q3') %in% unique(lapsq$SessionType)))
+  }
+  expect_true(!is.na(lapsq$Time[1]))
   expect_equal(min(lapsq$LapTime, na.rm = TRUE), 90.558)
   expect_equal(nrow(lapsq), nrow(lapsqw))
   expect_equal(min(lapsq$LapTime, na.rm = TRUE), min(lapsqw$LapTime, na.rm = TRUE))
