@@ -19,7 +19,7 @@ get_driver_telemetry(
 \item{race}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, and R. Default is "R", which refers to Race.}
+Q, S, SS, and R. Default is "R", which refers to Race.}
 
 \item{driver}{three letter driver code (see load_drivers() for a list)}
 

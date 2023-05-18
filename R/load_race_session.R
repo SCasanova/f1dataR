@@ -13,7 +13,7 @@
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, and R. Default is "R", which refers to Race.
+#' Q, S, SS and R. Default is "R", which refers to Race.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
@@ -26,8 +26,8 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
     stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
                     current = get_current_season()))
   }
-  if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S"))){
-    stop('Session must be one of "FP1", "FP2", "FP3", "Q", "S", or "R"')
+  if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS"))){
+    stop('Session must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
   }
   if(season == 'current'){
     season <- get_current_season()

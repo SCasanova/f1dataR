@@ -21,7 +21,7 @@ load_race_session(
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, and R. Default is "R", which refers to Race.
+Q, S, SS and R. Default is "R", which refers to Race.
 Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 default is the current working directory.}
 
