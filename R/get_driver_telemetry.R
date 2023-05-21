@@ -6,7 +6,7 @@
 #' @param season number from 2018 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, and R. Default is "R", which refers to Race.
+#' Q, S, SS, and R. Default is "R", which refers to Race.
 #' @param driver three letter driver code (see load_drivers() for a list)
 #' @param fastest_only boolean value whether to pick all laps or only the fastest
 #' by the driver in that session.
