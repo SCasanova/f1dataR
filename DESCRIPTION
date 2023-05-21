@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: F1 Data in R
-Version: 0.3.8
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Santiago",
            family = "Casanova",
