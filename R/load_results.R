@@ -21,15 +21,19 @@
                     season = season, round = round)
   data <- get_ergast_content(url)
 
-  if(season < 2004){
-    data$MRData$RaceTable$Races$Results[[1]] %>%
-    tidyr::unnest(cols = c("Driver", "Time", "Constructor"), names_repair = 'universal') %>%
-    suppressWarnings() %>%
-    suppressMessages() %>%
-    dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
-    tibble::as_tibble()
+  data <- data$MRData$RaceTable$Races$Results[[1]]
+
+  if(!('FastestLap' %in% colnames(data))){
+    # all races from before 2004 will have no 'Fastest Lap' column,
+    # but also 2021 round 12 (Belgian GP) where no racing laps were run
+    data %>%
+      tidyr::unnest(cols = c("Driver", "Time", "Constructor"), names_repair = 'universal') %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
+      tibble::as_tibble()
   } else{
-    data$MRData$RaceTable$Races$Results[[1]] %>%
+    data %>%
       tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = 'universal') %>%
       dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
       tidyr::unnest(cols = c("Time", "AverageSpeed"),
