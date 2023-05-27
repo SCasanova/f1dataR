@@ -12,5 +12,7 @@ test_that("Quali Load works", {
   expect_equal(nrow(quali_2004), 20)
   expect_equal(quali_2004$driverId[2], 'barrichello')
 
+  expect_equal(nrow(load_quali(2015, 16)), 20)
+
   expect_error(load_quali(3050, 2), "Year must be between 2003 and *")
 })
