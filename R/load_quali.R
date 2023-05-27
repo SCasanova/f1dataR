@@ -19,9 +19,10 @@
   url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/qualifying.json?limit=40',
                     season = season, round = round)
   data <- get_ergast_content(url)
+  data <- data$MRData$RaceTable$Races$QualifyingResults[[1]]
 
   if(season < 2006){
-    data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
+    data %>%
       tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "Q1") %>%
       suppressWarnings() %>%
@@ -29,7 +30,10 @@
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
       tibble::as_tibble()
   } else{
-    data$MRData$RaceTable$Races$QualifyingResults[[1]] %>%
+    if(season == 2015 & round == 16){
+      data$Q3 <- NA
+    }
+    data %>%
       tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "Q1":"Q3") %>%
       suppressWarnings() %>%
