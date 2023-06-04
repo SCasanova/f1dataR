@@ -50,7 +50,7 @@
 #' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' @param type select drivers or constructors championship data. Defaluts to
+#' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns driverId (or constructorId), position,

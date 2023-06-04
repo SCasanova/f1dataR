@@ -130,7 +130,7 @@ get_driver_telemetry(2018, 7,'Q', 'HAM', fastest_only = T)
 #> #   name ¹​DistanceToDriverAhead
 ```
 
-### Other funcitons
+### Other functions
 
 - `load_pitstops(season = 'current', race  ='last')`
 - `load_drivers(season = 2022)`

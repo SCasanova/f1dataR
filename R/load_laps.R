@@ -1,7 +1,7 @@
 #' Load Lap by Lap Time Data (not cached)
 #'
 #' Loads lap-by-lap time data for all drivers in a given season
-#' and round. Lap time data is available from 1996 onwards. This funtion does not export, only the cached version.
+#' and round. Lap time data is available from 1996 onward. This function does not export, only the cached version.
 #'
 #' @param season number from 1996 to current season (defaults to current season)
 #' @param race number from 1 to 23 (depending on season selected) and defaults
@@ -71,7 +71,7 @@ time_to_sec <- function(time){
 #' Load Lap by Lap Time Data
 #'
 #' Loads lap-by-lap time data for all drivers in a given season
-#' and round. Lap time data is available from 1996 onwards.
+#' and round. Lap time data is available from 1996 onward.
 #'
 #' @param season number from 1996 to current season (defaults to current season)
 #' @param race number from 1 to 23 (depending on season selected) and defaults

@@ -11,10 +11,10 @@
 }
 \value{
 A dataframe with columns season, round, circuitId, circuitName,
-latitute and Longitude, locality (city usually), country, date, and time
+latitude and Longitude, locality (city usually), country, date, and time
 of the race.
 }
 \description{
 Loads schedule information for a given F1 season.
-This funtion does not export, only the cached version.
+This function does not export, only the cached version.
 }

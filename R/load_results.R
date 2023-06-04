@@ -1,6 +1,6 @@
 #' Load Results (not cached)
 #'
-#' Loads final race resuts for a given year and round.
+#' Loads final race results for a given year and round.
 #'
 #' @param season number from 1950 to current season  (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
@@ -58,7 +58,7 @@
 
 #' Load Results
 #'
-#' Loads final race resuts for a given year and round.
+#' Loads final race results for a given year and round.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults

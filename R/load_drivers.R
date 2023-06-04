@@ -1,7 +1,7 @@
 #' Load Driver Info (not cached)
 #'
 #' Loads driver info for all participants in a given season.
-#' This funtion does not export, only the cached version.
+#' This function does not export, only the cached version.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"

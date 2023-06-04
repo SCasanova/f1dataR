@@ -11,7 +11,7 @@ load_schedule(season = "current")
 }
 \value{
 A dataframe with columns season, round, circuitId, circuitName,
-latitute and Longitude, locality (city usually), country, date, and time
+latitude and Longitude, locality (city usually), country, date, and time
 of the race.
 }
 \description{

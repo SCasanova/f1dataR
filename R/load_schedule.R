@@ -1,12 +1,12 @@
 #' Load Schedule (not cached)
 #'
 #' Loads schedule information for a given F1 season.
-#' This funtion does not export, only the cached version.
+#' This function does not export, only the cached version.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with columns season, round, circuitId, circuitName,
-#' latitute and Longitude, locality (city usually), country, date, and time
+#' latitude and Longitude, locality (city usually), country, date, and time
 #' of the race.
 
 .load_schedule <- function(season = 'current'){
@@ -59,7 +59,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @return A dataframe with columns season, round, circuitId, circuitName,
-#' latitute and Longitude, locality (city usually), country, date, and time
+#' latitude and Longitude, locality (city usually), country, date, and time
 #' of the race.
 #' @export
 
