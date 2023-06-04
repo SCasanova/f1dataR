@@ -16,5 +16,5 @@ permanent number (for post-2014 drivers).
 }
 \description{
 Loads driver info for all participants in a given season.
-This funtion does not export, only the cached version.
+This function does not export, only the cached version.
 }

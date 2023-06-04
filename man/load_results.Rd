@@ -18,5 +18,5 @@ race status (finished or otherwise), gap to first place, fastest lap rank,
 fastest lap time, fastest lap in seconds, and top speed in kph.
 }
 \description{
-Loads final race resuts for a given year and round.
+Loads final race results for a given year and round.
 }

@@ -1,8 +1,8 @@
 #' Load Pitstop Data (not cached)
 #'
 #' Loads pit stop info (number, lap, time elapsed) for a given race
-#' in a season. Pit stop data is available from 2012 onwards.
-#' This funtion does not export, only the cached version.
+#' in a season. Pit stop data is available from 2012 onward.
+#' This function does not export, only the cached version.
 #'
 #' @param season number from 2011 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults
@@ -25,7 +25,7 @@
 #' Load Pitstop Data
 #'
 #' Loads pit stop info (number, lap, time elapsed) for a given race
-#' in a season. Pit stop data is available from 2012 onwards.
+#' in a season. Pit stop data is available from 2012 onward.
 #'
 #' @param season number from 2012 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected) and defaults

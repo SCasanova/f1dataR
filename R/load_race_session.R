@@ -10,7 +10,7 @@
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
 #' Q, S, and R. Default is "R", which refers to Race.
-#' @param cache whether the seesion will get cached or not. Default is set to
+#' @param cache whether the session will get cached or not. Default is set to
 #' TRUE (recommended), as this lowers subsequent loading times significantly.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.

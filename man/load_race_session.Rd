@@ -17,7 +17,7 @@ to most recent. Also accepts race name.}
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
 Q, S, and R. Default is "R", which refers to Race.}
 
-\item{cache}{whether the seesion will get cached or not. Default is set to
+\item{cache}{whether the session will get cached or not. Default is set to
 TRUE (recommended), as this lowers subsequent loading times significantly.
 Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 default is the current working directory.}
