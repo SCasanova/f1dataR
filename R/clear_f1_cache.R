@@ -7,8 +7,14 @@
 #' @export
 
 clear_f1_cache <- function(){
-  reticulate::py_run_string('import fastf1')
-  reticulate::py_run_string(glue::glue('fastf1.api.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
+  if('fastf1' %in% reticulate::py_list_packages()$package){
+    reticulate::py_run_string('import fastf1')
+    if(get_fastf1_version() >= 3){
+      reticulate::py_run_string(glue::glue('fastf1.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
+    } else {
+      reticulate::py_run_string(glue::glue('fastf1.api.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
+    }
+  }
 
   memoise::forget(f1dataR::load_drivers)
   memoise::forget(f1dataR::load_laps)
@@ -17,5 +23,8 @@ clear_f1_cache <- function(){
   memoise::forget(f1dataR::load_quali)
   memoise::forget(f1dataR::load_results)
   memoise::forget(f1dataR::load_standings)
+  memoise::forget(f1dataR::get_current_season)
+  memoise::forget(f1dataR::load_circuits)
+  memoise::forget(f1dataR::load_sprint)
 
 }

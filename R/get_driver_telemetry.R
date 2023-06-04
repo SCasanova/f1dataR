@@ -6,17 +6,19 @@
 #' @param season number from 2018 to current season (defaults to current season).
 #' @param race number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, and R. Default is "R", which refers to Race.
+#' Q, S, SS, and R. Default is "R", which refers to Race.
 #' @param driver three letter driver code (see load_drivers() for a list)
 #' @param fastest_only boolean value whether to pick all laps or only the fastest
 #' by the driver in that session.
+#' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
+#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @importFrom magrittr "%>%"
 #' @return A dataframe with telemetry data for selected driver/session.
 #' @import reticulate
 #' @export
 
-get_driver_telemetry <- function(season = 2022, race = 1, session = 'R', driver, fastest_only = FALSE){
-  load_race_session("session", season, race, session)
+get_driver_telemetry <- function(season = 2022, race = 1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING"){
+  load_race_session("session", season = season, race = race, session = session, log_level = log_level)
   if(fastest_only){
     tel <- reticulate::py_run_string(glue::glue("tel =session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
                                                 driver = driver))

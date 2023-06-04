@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: F1 Data in R
-Version: 0.3.8
+Version: 0.4.0
 Authors@R: 
     c(person(given = "Santiago",
            family = "Casanova",
@@ -18,7 +18,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10),
     reticulate (>= 1.14),

@@ -4,29 +4,40 @@
 \alias{load_race_session}
 \title{Load Session Data}
 \usage{
-load_race_session(obj_name, season = 2022, race = 1, session = "R", cache = T)
+load_race_session(
+  obj_name = "session",
+  season = get_current_season(),
+  race = 1,
+  session = "R",
+  log_level = "WARNING"
+)
 }
 \arguments{
 \item{obj_name}{name assigned to the loaded session to be referenced later.}
 
-\item{season}{number from 2018 to current season.}
+\item{season}{number from 2018 to current season. Defaults to current season}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, and R. Default is "R", which refers to Race.}
-
-\item{cache}{whether the session will get cached or not. Default is set to
-TRUE (recommended), as this lowers subsequent loading times significantly.
+Q, S, SS and R. Default is "R", which refers to Race.
 Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 default is the current working directory.}
+
+\item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
+DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 }
 \value{
-A session object to be used in other functions.
+A session object to be used in other functions invisibly.
 }
 \description{
 Loads telemetry and general data from the official F1
 data stream via the fastf1 python library. Data is available from
 2018 onward.
+}
+\details{
+The data loaded can optionally be assigned to a R variable, and then interrogated for
+session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1 documentation}
+for more details on the data returned by the python API.
 }
