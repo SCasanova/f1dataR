@@ -5,8 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns circuitID, circuitName, Location latitude
-#' and longitude, locality (usually city) and country.
+#' @return A tibble with one row per circuit in a season.
 
 .load_circuits <- function(season = 'current'){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
@@ -23,7 +22,8 @@
     dplyr::select("circuitId",
                   "circuitName",
                   "lat":"country") %>%
-    tibble::as_tibble()
+    tibble::as_tibble() %>%
+    janitor::clean_names()
 
 }
 
@@ -32,8 +32,7 @@
 #' Loads Circuit info for all participants in a given season.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
-#' @return A tibble with columns circuitID, circuitName, Location latitude
-#' and longitude, locality (usually city) and country.
+#' @return A tibble with one row per circuit in a season.
 
 #' @export
 

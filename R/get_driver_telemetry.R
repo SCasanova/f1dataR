@@ -29,7 +29,8 @@ get_driver_telemetry <- function(season = 2022, round = 1, session = 'R', driver
     res <- py_tel_to_tibble(tel)
   }
   res %>% dplyr::mutate(driverCode = driver) %>%
-    tibble::as.tibble()
+    tibble::as.tibble() %>%
+    janitor::clean_names()
 }
 
 py_tel_to_tibble<-function(py_tel_object){

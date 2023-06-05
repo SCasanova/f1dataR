@@ -8,10 +8,8 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @return A tibble with columns driverId, points awarded, finishing position,
-#' grid position, laps completed, race status (finished or otherwise), gap to
-#' first place, fastest lap, fastest lap time, fastest lap in seconds,
-#' or NULL if no sprint exists for this season/round combo
+#' @return A tibble with one row per driver or NULL if no sprint exists
+#' for this season/round combo
 
 .load_sprint <- function(season = 'current', round = 'last'){
   if(season != 'current' & (season < 2021 | season > get_current_season())){
@@ -49,7 +47,8 @@
       fastest = "time...20"
     ) %>%
     dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
-    tibble::as_tibble()
+    tibble::as_tibble() %>%
+    janitor::clean_names()
 
 }
 
@@ -61,10 +60,8 @@
 #' @param season number from 2021 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' @return A tibble with columns driverId, points awarded, finishing position,
-#' grid position, laps completed, race status (finished or otherwise), gap to
-#' first place, fastest lap, fastest lap time, fastest lap in seconds,
-#' or NULL if no sprint exists for this season/round combo
+#' @return A tibble with one row per driver or NULL if no sprint exists
+#' for this season/round combo
 #' @export
 
 load_sprint <- memoise::memoise(.load_sprint)

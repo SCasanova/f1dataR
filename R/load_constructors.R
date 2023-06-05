@@ -4,8 +4,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns constructorId (unique and recurring),
-#' name, and nationality
+#' @return A tibble with one row per constructor.
 
 .load_constructors <- function(){
   url <- glue::glue('http://ergast.com/api/f1/constructors.json?limit=300')
@@ -13,7 +12,8 @@
 
   return(data$MRData$ConstructorTable$Constructors %>%
            dplyr::select("constructorId", "name", "nationality") %>%
-           tibble::as_tibble())
+           tibble::as_tibble() %>%
+           janitor::clean_names())
 }
 
 #' Load Constructor Info
@@ -22,8 +22,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns constructorId (unique and recurring),
-#' name, and nationality
+#' @return A tibble with one row per constructor.
 
 #' @export
 

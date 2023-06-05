@@ -9,8 +9,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns driverId (or constructorId), position,
-#' points, wins and constructorsId in the case of drivers championship.
+#' @return A tibble with one row per driver.
 
 .load_standings <- function(season = 'current', round = 'last', type = 'driver'){
   if(season != 'current' & (season < 2003 | season > get_current_season())){
@@ -37,7 +36,8 @@
     suppressWarnings() %>%
     suppressMessages() %>%
     dplyr::select("constructorId", "position", "points", "wins") %>%
-    tibble::as_tibble()
+    tibble::as_tibble() %>%
+    janitor::clean_names()
   }
 
 }
@@ -53,8 +53,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns driverId (or constructorId), position,
-#' points, wins and constructorsId in the case of drivers championship.
+#' @returnA tibble with one row per driver.
 #' @export
 
 load_standings <- memoise::memoise(.load_standings)

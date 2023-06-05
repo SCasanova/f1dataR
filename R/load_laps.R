@@ -7,7 +7,7 @@
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @importFrom magrittr "%>%"
-#' @return A tibble with columns driverId (unique and recurring), position
+#' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 
 
@@ -44,7 +44,8 @@
                                season = season_text))
   }
   laps %>%
-    tibble::as_tibble()
+    tibble::as_tibble() %>%
+    janitor::clean_names()
 
 }
 
@@ -77,7 +78,7 @@ time_to_sec <- function(time){
 #' @param season number from 1996 to current season (defaults to current season)
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
-#' @return A tibble with columns driverId (unique and recurring), position
+#' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 #' @export
 

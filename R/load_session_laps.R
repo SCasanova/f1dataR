@@ -79,5 +79,5 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   } else {
     laps$SessionType <- session
   }
-  return(tibble::as_tibble(laps))
+  return(tibble::as_tibble(laps) %>% janitor::clean_names())
 }
