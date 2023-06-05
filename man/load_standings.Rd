@@ -15,10 +15,6 @@ to most recent.}
 \item{type}{select drivers or constructors championship data. Defaults to
 drivers}
 }
-\value{
-A dataframe with columns driverId (or constructorId), position,
-points, wins and constructorsId in the case of drivers championship.
-}
 \description{
 Loads standings at the end of a given season and round for drivers' or
 constructors' championships.

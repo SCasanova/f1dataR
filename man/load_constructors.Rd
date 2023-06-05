@@ -7,8 +7,7 @@
 load_constructors()
 }
 \value{
-A dataframe with columns constructorId (unique and recurring),
-name, and nationality
+A tibble with one row per constructor.
 }
 \description{
 Loads constructor info for all participants in a given season.

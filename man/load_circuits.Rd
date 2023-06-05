@@ -10,8 +10,7 @@ load_circuits(season = "current")
 \item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
-A dataframe with columns circuitID, circuitName, Location latitude
-and longitude, locality (usually city) and country.
+A tibble with one row per circuit in a season.
 }
 \description{
 Loads Circuit info for all participants in a given season.

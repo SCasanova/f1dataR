@@ -4,16 +4,16 @@
 \alias{load_laps}
 \title{Load Lap by Lap Time Data}
 \usage{
-load_laps(season = "current", race = "last")
+load_laps(season = "current", round = "last")
 }
 \arguments{
 \item{season}{number from 1996 to current season (defaults to current season)}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent}
 }
 \value{
-A dataframe with columns driverId (unique and recurring), position
+A tibble with columns driver_id (unique and recurring), position
 during lap, time (in clock form), lap number, time (in seconds), and season.
 }
 \description{

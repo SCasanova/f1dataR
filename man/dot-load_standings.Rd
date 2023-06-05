@@ -16,8 +16,7 @@ to most recent.}
 drivers}
 }
 \value{
-A dataframe with columns driverId (or constructorId), position,
-points, wins and constructorsId in the case of drivers championship.
+A tibble with one row per driver.
 }
 \description{
 Loads standings at the end of a given season and round for drivers' or

@@ -7,7 +7,7 @@
 load_race_session(
   obj_name = "session",
   season = get_current_season(),
-  race = 1,
+  round = 1,
   session = "R",
   log_level = "WARNING"
 )
@@ -17,7 +17,7 @@ load_race_session(
 
 \item{season}{number from 2018 to current season. Defaults to current season}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,

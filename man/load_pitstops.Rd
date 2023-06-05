@@ -4,16 +4,17 @@
 \alias{load_pitstops}
 \title{Load Pitstop Data}
 \usage{
-load_pitstops(season = "current", race = "last")
+load_pitstops(season = "current", round = "last")
 }
 \arguments{
 \item{season}{number from 2012 to current season (defaults to current season).}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
 }
 \value{
-A dataframe with columns
+A tibble with columns driver_id, lap, stop (number), time (of day),
+and stop duration
 }
 \description{
 Loads pit stop info (number, lap, time elapsed) for a given race

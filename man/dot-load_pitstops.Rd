@@ -4,16 +4,16 @@
 \alias{.load_pitstops}
 \title{Load Pitstop Data (not cached)}
 \usage{
-.load_pitstops(season = "current", race = "last")
+.load_pitstops(season = "current", round = "last")
 }
 \arguments{
 \item{season}{number from 2011 to current season (defaults to current season).}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
 }
 \value{
-A dataframe with columns driverId, lap, stop (number), time (of day),
+A tibble with columns driver_id, lap, stop (number), time (of day),
 and stop duration
 }
 \description{

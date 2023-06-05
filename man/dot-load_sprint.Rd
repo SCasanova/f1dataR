@@ -13,10 +13,8 @@
 to most recent.}
 }
 \value{
-A dataframe with columns driverId, points awarded, finishing position,
-grid position, laps completed, race status (finished or otherwise), gap to
-first place, fastest lap, fastest lap time, fastest lap in seconds,
-or NULL if no sprint exists for this season/round combo
+A tibble with one row per driver or NULL if no sprint exists
+for this season/round combo
 }
 \description{
 Loads final race results for a given year and round. Note not all rounds have
