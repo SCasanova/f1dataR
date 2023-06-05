@@ -4,29 +4,29 @@
 #' and round. Lap time data is available from 1996 onward. This function does not export, only the cached version.
 #'
 #' @param season number from 1996 to current season (defaults to current season)
-#' @param race number from 1 to 23 (depending on season selected) and defaults
+#' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (unique and recurring), position
+#' @return A tibble with columns driverId (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 
 
-.load_laps <- function(season = 'current', race = 'last'){
+.load_laps <- function(season = 'current', round = 'last'){
   if(season != 'current' & (season < 1996 | season > get_current_season())){
     stop(glue::glue('Year must be between 1996 and {current} (or use "current")',
                     current=get_current_season()))
   }
 
-  url <- glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
-                    season = season, race = race)
+  url <- glue::glue('http://ergast.com/api/f1/{season}/{round}/laps.json?limit=1000',
+                    season = season, round = round)
   data <- get_ergast_content(url)
 
   total <- data$MRData$total %>% as.numeric()
   if(total-1000 >0 & total-1000 <= 1000 ){
     lim <- total-1000
 
-    url2 <- glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit={lim}&offset=1000',
-                       lim = lim, season = season, race = race)
+    url2 <- glue::glue('http://ergast.com/api/f1/{season}/{round}/laps.json?limit={lim}&offset=1000',
+                       lim = lim, season = season, round = round)
     data2 <- get_ergast_content(url2)
 
     full <- dplyr::bind_rows(data$MRData$RaceTable$Races$Laps[[1]][2], data2$MRData$RaceTable$Races$Laps[[1]][2])
@@ -43,7 +43,8 @@
                                time_sec = time_to_sec(.data$time),
                                season = season_text))
   }
-  laps
+  laps %>%
+    tibble::as_tibble()
 
 }
 
@@ -74,9 +75,9 @@ time_to_sec <- function(time){
 #' and round. Lap time data is available from 1996 onward.
 #'
 #' @param season number from 1996 to current season (defaults to current season)
-#' @param race number from 1 to 23 (depending on season selected) and defaults
+#' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
-#' @return A dataframe with columns driverId (unique and recurring), position
+#' @return A tibble with columns driverId (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 #' @export
 

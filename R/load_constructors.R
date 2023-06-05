@@ -4,7 +4,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns constructorId (unique and recurring),
+#' @return A tibble with columns constructorId (unique and recurring),
 #' name, and nationality
 
 .load_constructors <- function(){
@@ -12,7 +12,8 @@
   data <- get_ergast_content(url)
 
   return(data$MRData$ConstructorTable$Constructors %>%
-           dplyr::select("constructorId", "name", "nationality"))
+           dplyr::select("constructorId", "name", "nationality") %>%
+           tibble::as_tibble())
 }
 
 #' Load Constructor Info
@@ -21,7 +22,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns constructorId (unique and recurring),
+#' @return A tibble with columns constructorId (unique and recurring),
 #' name, and nationality
 
 #' @export

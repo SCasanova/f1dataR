@@ -7,7 +7,7 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
+#' @return A tibble with columns driverId, obtained position, Q1, Q2, and Q3
 #' times in clock format as well as seconds.
 
 .load_quali <- function(season = 'current', round = 'last'){
@@ -50,7 +50,7 @@
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
+#' @return A tibble with columns driverId, obtained position, Q1, Q2, and Q3
 #' times in clock format as well as seconds.
 #' @export
 

@@ -9,7 +9,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (or constructorId), position,
+#' @return A tibble with columns driverId (or constructorId), position,
 #' points, wins and constructorsId in the case of drivers championship.
 
 .load_standings <- function(season = 'current', round = 'last', type = 'driver'){
@@ -53,7 +53,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (or constructorId), position,
+#' @return A tibble with columns driverId (or constructorId), position,
 #' points, wins and constructorsId in the case of drivers championship.
 #' @export
 

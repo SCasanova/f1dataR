@@ -5,7 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns circuitID, circuitName, Location latitude
+#' @return A tibble with columns circuitID, circuitName, Location latitude
 #' and longitude, locality (usually city) and country.
 
 .load_circuits <- function(season = 'current'){
@@ -32,7 +32,7 @@
 #' Loads Circuit info for all participants in a given season.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
-#' @return A dataframe with columns circuitID, circuitName, Location latitude
+#' @return A tibble with columns circuitID, circuitName, Location latitude
 #' and longitude, locality (usually city) and country.
 
 #' @export

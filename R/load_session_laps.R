@@ -6,7 +6,7 @@
 #' The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3
 #'
 #' @param season number from 2018 to current season. Defaults to current season
-#' @param race number from 1 to 23 (depending on season selected) and defaults
+#' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
 #' Q, S, and R. Default is "R", which refers to Race.
@@ -16,11 +16,12 @@
 #' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param add_weather Whether to add weather information to the laps. See \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather
 #' @import reticulate
-#' @return A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
+#' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-load_session_laps <- function(season = get_current_season(), race = 1, session = 'R', log_level = "WARNING", add_weather=F){
+
+load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F){
   obj_name <- 'session_laps'
-  load_race_session(obj_name = obj_name, season = season, race = race, session = session, log_level = log_level)
+  load_race_session(obj_name = obj_name, season = season, round = round, session = session, log_level = log_level)
 
   if(get_fastf1_version() < 3){
     message("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
@@ -78,5 +79,5 @@ load_session_laps <- function(season = get_current_season(), race = 1, session =
   } else {
     laps$SessionType <- session
   }
-  return(laps)
+  return(tibble::as_tibble(laps))
 }

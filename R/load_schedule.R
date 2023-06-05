@@ -5,7 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns season, round, circuitId, circuitName,
+#' @return A tibble with columns season, round, circuitId, circuitName,
 #' latitude and Longitude, locality (city usually), country, date, and time
 #' of the race.
 
@@ -58,7 +58,7 @@
 #' Loads schedule information for a given F1 season.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
-#' @return A dataframe with columns season, round, circuitId, circuitName,
+#' @return A tibble with columns season, round, circuitId, circuitName,
 #' latitude and Longitude, locality (city usually), country, date, and time
 #' of the race.
 #' @export

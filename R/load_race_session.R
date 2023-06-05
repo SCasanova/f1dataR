@@ -10,7 +10,7 @@
 #'
 #' @param obj_name name assigned to the loaded session to be referenced later.
 #' @param season number from 2018 to current season. Defaults to current season
-#' @param race number from 1 to 23 (depending on season selected) and defaults
+#' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
 #' Q, S, SS and R. Default is "R", which refers to Race.
@@ -21,7 +21,8 @@
 #' @import reticulate
 #' @return A session object to be used in other functions invisibly.
 #' @export
-load_race_session <- function(obj_name="session", season = get_current_season(), race = 1, session = 'R', log_level = "WARNING"){
+#'
+load_race_session <- function(obj_name="session", season = get_current_season(), round = 1, session = 'R', log_level = "WARNING"){
   if(season != 'current' & (season < 2018 | season > get_current_season())){
     stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
                     current = get_current_season()))
@@ -46,13 +47,13 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = getOption('f1dataR.cache')))
 
   py_string<-glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
-  if(is.numeric(race)){
-    py_string<-glue::glue("{py_string}{race}, '{session}')",
-                          py_string = py_string, race = race, session = session)
+  if(is.numeric(round)){
+    py_string<-glue::glue("{py_string}{round}, '{session}')",
+                          py_string = py_string, round = round, session = session)
   } else {
-    #Character race, so need quotes around it
-    py_string<-glue::glue("{py_string}'{race}', '{session}')",
-                          py_string = py_string, race = race, session = session)
+    #Character round, so need quotes around it
+    py_string<-glue::glue("{py_string}'{round}', '{session}')",
+                          py_string = py_string, round = round, session = session)
   }
 
   reticulate::py_run_string(py_string)
