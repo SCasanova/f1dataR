@@ -7,7 +7,19 @@
 #'
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
 get_ergast_content<-function(url){
-  res <- httr::GET(url)
+  fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
+  res <- httr::GET(fullurl,
+                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = installed.packages()['f1dataR','Version'])))
+
+  #Handle Ergast errors with more informative error codes.
+  if(res$status_code != 200 | rawToChar(res$content) == "Unable to select database"){
+    message('Failure at Ergast with https:// connection. Retrying as http://.')
+    # Try revert to not https mode
+    fullurl<-glue::glue("http://ergast.com/api/f1/{url}", url = url)
+    res <- httr::GET(fullurl,
+                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = installed.packages()['f1dataR','Version'])))
+  }
+
 
   #Handle Ergast errors with more informative error codes.
   if(res$status_code != 200){
@@ -29,7 +41,7 @@ get_ergast_content<-function(url){
 #' @return Year (four digit number) representation of current season, as numeric.
 .get_current_season<-function(){
   tryCatch({
-    url <- glue::glue('http://ergast.com/api/f1/current.json?limit=30')
+    url <- glue::glue('current.json?limit=30')
     data <- get_ergast_content(url)
     current_season <- as.numeric(data$MRData$RaceTable$season)
   },

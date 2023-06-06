@@ -8,7 +8,7 @@
 #' name, and nationality
 
 .load_constructors <- function(){
-  url <- glue::glue('http://ergast.com/api/f1/constructors.json?limit=300')
+  url <- glue::glue('constructors.json?limit=300')
   data <- get_ergast_content(url)
 
   return(data$MRData$ConstructorTable$Constructors %>%

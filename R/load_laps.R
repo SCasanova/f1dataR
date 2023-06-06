@@ -17,7 +17,7 @@
                     current=get_current_season()))
   }
 
-  url <- glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit=1000',
+  url <- glue::glue('{season}/{race}/laps.json?limit=1000',
                     season = season, race = race)
   data <- get_ergast_content(url)
 
@@ -25,7 +25,7 @@
   if(total-1000 >0 & total-1000 <= 1000 ){
     lim <- total-1000
 
-    url2 <- glue::glue('http://ergast.com/api/f1/{season}/{race}/laps.json?limit={lim}&offset=1000',
+    url2 <- glue::glue('{season}/{race}/laps.json?limit={lim}&offset=1000',
                        lim = lim, season = season, race = race)
     data2 <- get_ergast_content(url2)
 
