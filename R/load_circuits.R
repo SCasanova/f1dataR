@@ -14,7 +14,7 @@
                     current=get_current_season()))
   }
 
-  url <- glue::glue('http://ergast.com/api/f1/{season}/circuits.json?limit=40',
+  url <- glue::glue('{season}/circuits.json?limit=40',
                     season = season)
   data <- get_ergast_content(url)
 

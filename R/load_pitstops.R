@@ -17,7 +17,7 @@
                     current=get_current_season()))
   }
 
-  url <- glue::glue('http://ergast.com/api/f1/{season}/{race}/pitstops.json?limit=80',
+  url <- glue::glue('{season}/{race}/pitstops.json?limit=80',
                     season = season, race = race)
   data <- get_ergast_content(url)
   data$MRData$RaceTable$Races$PitStops[[1]] %>% tibble::as_tibble()
