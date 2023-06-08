@@ -16,6 +16,7 @@
 #' @return A dataframe with telemetry data for selected driver/session.
 #' @import reticulate
 #' @export
+#'
 
 get_driver_telemetry <- function(season = 2022, round = 1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING"){
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
