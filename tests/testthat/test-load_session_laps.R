@@ -24,7 +24,7 @@ test_that("load session laps works", {
   lapsq <- load_session_laps(season = 2022, round = 'bahrain', session = 'Q')
   lapsqw <- load_session_laps(season = 2022, round = 'bahrain', session = 'Q', add_weather = TRUE)
 
-  expect_equal(class(laps), 'tbl')
+  expect_true('tbl' %in% class(laps))
   expect_true(ncol(laps) %in% c(28,32))
   expect_true(ncol(laps2) %in% c(35, 39))
   expect_equal(laps$time, laps2$time)
