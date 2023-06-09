@@ -16,7 +16,7 @@ to most recent}
 to most recent}
 }
 \value{
-A dataframe with columns driverId (unique and recurring), position
+A tibble with columns driver_id (unique and recurring), position
 during lap, time (in clock form), lap number, time (in seconds), and season.
 }
 \description{

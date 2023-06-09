@@ -20,7 +20,8 @@ to most recent.}
 to most recent.}
 }
 \value{
-A dataframe with columns
+A tibble with columns driver_id, lap, stop (number), time (of day),
+and stop duration
 }
 \description{
 Loads pit stop info (number, lap, time elapsed) for a given race

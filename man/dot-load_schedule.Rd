@@ -10,9 +10,7 @@
 \item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
-A dataframe with columns season, round, circuitId, circuitName,
-latitude and Longitude, locality (city usually), country, date, and time
-of the race.
+A tibble with one row per circuit in season
 }
 \description{
 Loads schedule information for a given F1 season.

@@ -13,9 +13,7 @@ load_results(season = "current", round = "last")
 to most recent.}
 }
 \value{
-A dataframe with columns driverId, constructorId, grid position, laps completed,
-race status (finished or otherwise), gap to first place, fastest lap rank,
-fastest lap time, fastest lap time in seconds, and top speed in kph.
+A tibble with one row per driver
 }
 \description{
 Loads final race results for a given year and round.

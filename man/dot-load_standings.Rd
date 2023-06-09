@@ -16,7 +16,7 @@ to most recent.}
 drivers}
 }
 \value{
-A dataframe with columns driverId (or constructorId), position,
+A tibble with columns driver_id (or constructor_id), position,
 points, wins and constructorsId in the case of drivers championship.
 }
 \description{
