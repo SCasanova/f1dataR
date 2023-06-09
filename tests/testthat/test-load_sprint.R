@@ -3,7 +3,7 @@ test_that("sprint works", {
   sprint_2021_10<-.load_sprint(2021, 10)
 
   expect_equal(nrow(sprint_2021_10), 20)
-  expect_equal(sprint_2021_10$driverId[3], "bottas")
+  expect_equal(sprint_2021_10$driver_id[3], "bottas")
   expect_equal(sprint_2021_10$position[1], "1")
 
   sprint_2021_10_mem<-load_sprint(2021, 10)

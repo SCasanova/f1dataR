@@ -4,8 +4,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns constructorId (unique and recurring),
-#' name, and nationality
+#' @return A tibble with one row per constructor
 
 .load_constructors <- function(){
   url <- glue::glue('constructors.json?limit=300')

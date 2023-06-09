@@ -13,8 +13,7 @@
 to most recent.}
 }
 \value{
-A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
-times in clock format as well as seconds.
+A tibble with one row per driver
 }
 \description{
 Loads qualifying session results for a given season and round.

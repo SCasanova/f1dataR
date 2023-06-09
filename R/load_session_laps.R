@@ -18,7 +18,7 @@
 #' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param add_weather Whether to add weather information to the laps. See \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather
 #' @import reticulate
-#' @return A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
+#' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
 load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F, race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
@@ -85,5 +85,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   } else {
     laps$SessionType <- session
   }
-  return(laps)
+  laps %>%
+    tibble::tibble() %>%
+    janitor::clean_names()
 }

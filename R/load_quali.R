@@ -7,8 +7,7 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
-#' times in clock format as well as seconds.
+#' @return A tibble with one row per driver
 
 .load_quali <- function(season = 'current', round = 'last'){
    if(season != 'current' & (season < 2003 | season > get_current_season())){
@@ -28,7 +27,8 @@
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   } else{
     if(season == 2015 & round == 16){
       data$Q3 <- NA
@@ -41,7 +41,8 @@
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1),
                     Q2_sec = time_to_sec(.data$Q2),
                     Q3_sec = time_to_sec(.data$Q3)) %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   }
 
 }
@@ -54,8 +55,7 @@
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId, obtained position, Q1, Q2, and Q3
-#' times in clock format as well as seconds.
+#' @return A tibble with one row per driver
 #' @export
 
 load_quali <- memoise::memoise(.load_quali)

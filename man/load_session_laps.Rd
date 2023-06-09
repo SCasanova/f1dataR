@@ -33,7 +33,7 @@ DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/
 to most recent. Also accepts race name.}
 }
 \value{
-A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
+A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 }
 \description{
 Loads lapwise data for a race session.

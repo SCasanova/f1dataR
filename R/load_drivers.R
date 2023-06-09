@@ -5,7 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (unique and recurring), first name,
+#' @return A tibble with columns driver_id (unique and recurring), first name,
 #' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 #' permanent number (for post-2014 drivers).
 
@@ -26,7 +26,8 @@
                     "familyName",
                     "nationality",
                     "dateOfBirth") %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   } else{
     data$MRData$DriverTable$Drivers %>%
       dplyr::select("driverId",
@@ -36,7 +37,8 @@
                     "dateOfBirth",
                     "code",
                     "permanentNumber") %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   }
 
 }
@@ -47,7 +49,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season). All
 #' drivers after 2014 will have a permanent number.
-#' @return A dataframe with columns driverId (unique and recurring), first name,
+#' @return A tibble with columns driver_id (unique and recurring), first name,
 #' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 #' permanent number (for post-2014 drivers).
 

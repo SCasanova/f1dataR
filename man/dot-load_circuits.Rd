@@ -10,8 +10,7 @@
 \item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
-A dataframe with columns circuitID, circuitName, Location latitude
-and longitude, locality (usually city) and country.
+A tibble with one row per circuit
 }
 \description{
 Loads circuit info for all circuits in a given season.

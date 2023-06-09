@@ -5,7 +5,7 @@
 \title{Load Telemetry Data for a Driver}
 \usage{
 get_driver_telemetry(
-  season = 2022,
+  season = get_current_season(),
   round = 1,
   session = "R",
   driver,
@@ -33,7 +33,7 @@ DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/
 \item{race}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 }
 \value{
-A dataframe with telemetry data for selected driver/session.
+A tibble with telemetry data for selected driver/session.
 }
 \description{
 Receives season, race number, driver code, and an optional fastest lap only

@@ -14,11 +14,11 @@
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with telemetry data for selected driver/session.
+#' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
 #' @export
 
-get_driver_telemetry <- function(season = 2022, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry(race)", "get_driver_telemetry(round)")
     round <- race
@@ -33,7 +33,10 @@ get_driver_telemetry <- function(season = 2022, round =1, session = 'R', driver,
                                                 driver = driver))
     res <- py_tel_to_tibble(tel)
   }
-  res %>% dplyr::mutate(driverCode = driver)
+  res %>%
+    dplyr::mutate(driverCode = driver) %>%
+    tibble::tibble() %>%
+    janitor::clean_names()
 }
 
 py_tel_to_tibble<-function(py_tel_object){
@@ -44,8 +47,7 @@ py_tel_to_tibble<-function(py_tel_object){
     object <- reticulate::py_to_r(py_tel_object)
     object <- py_tel_to_tibble(object)
   } else {
-    object <- py_tel_object$tel %>%
-      tibble::as_tibble()
+    object <- py_tel_object$tel
   }
-  return(object)
+  return(object %>% tibble::tibble())
 }

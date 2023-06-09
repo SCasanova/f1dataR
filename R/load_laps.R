@@ -9,7 +9,7 @@
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (unique and recurring), position
+#' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 
 
@@ -49,7 +49,9 @@
                                time_sec = time_to_sec(.data$time),
                                season = season_text))
   }
-  laps
+  laps %>%
+    tibble::tibble() %>%
+    janitor::clean_names()
 
 }
 

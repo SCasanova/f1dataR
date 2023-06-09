@@ -5,9 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns season, round, circuitId, circuitName,
-#' latitude and Longitude, locality (city usually), country, date, and time
-#' of the race.
+#' @return A tibble with one row per circuit in season
 
 .load_schedule <- function(season = 'current'){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
@@ -32,7 +30,8 @@
                     "circuit_name",
                     "lat":"country",
                     "date") %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   } else{
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c("Circuit"), names_repair = 'universal') %>%
@@ -48,7 +47,8 @@
                     "lat":"country",
                     "date",
                     "time") %>%
-      tibble::as_tibble()
+      tibble::as_tibble() %>%
+      janitor::clean_names()
    }
 
 }
@@ -58,9 +58,7 @@
 #' Loads schedule information for a given F1 season.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
-#' @return A dataframe with columns season, round, circuitId, circuitName,
-#' latitude and Longitude, locality (city usually), country, date, and time
-#' of the race.
+#' @return A tibble with one row per circuit in season
 #' @export
 
 load_schedule <- memoise::memoise(.load_schedule)

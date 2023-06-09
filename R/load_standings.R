@@ -9,7 +9,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (or constructorId), position,
+#' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins and constructorsId in the case of drivers championship.
 
 .load_standings <- function(season = 'current', round = 'last', type = 'driver'){
@@ -24,20 +24,22 @@
 
   if(type == 'driver'){
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
-    tidyr::unnest(cols = c("Driver")) %>%
-    dplyr::select("driverId", "position", "points", "wins", "Constructors" ) %>%
-    tidyr::unnest(cols = c("Constructors")) %>%
-    suppressWarnings() %>%
-    suppressMessages() %>%
-    dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
-    tibble::as_tibble()
+      tidyr::unnest(cols = c("Driver")) %>%
+      dplyr::select("driverId", "position", "points", "wins", "Constructors") %>%
+      tidyr::unnest(cols = c("Constructors")) %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   } else if (type == 'constructor'){
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
-    tidyr::unnest(cols = c("Constructor")) %>%
-    suppressWarnings() %>%
-    suppressMessages() %>%
-    dplyr::select("constructorId", "position", "points", "wins") %>%
-    tibble::as_tibble()
+      tidyr::unnest(cols = c("Constructor")) %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select("constructorId", "position", "points", "wins") %>%
+      tibble::as_tibble() %>%
+      janitor::clean_names()
   }
 
 }
@@ -53,7 +55,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId (or constructorId), position,
+#' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins and constructorsId in the case of drivers championship.
 #' @export
 
