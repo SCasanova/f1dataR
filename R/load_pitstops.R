@@ -10,7 +10,7 @@
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with columns driverId, lap, stop (number), time (of day),
+#' @return A tibble with columns driver_id, lap, stop (number), time (of day),
 #' and stop duration
 
 .load_pitstops <- function(season = 'current', round  ='last', race = lifecycle::deprecated()){
@@ -27,7 +27,8 @@
                     season = season, round = round)
   data <- get_ergast_content(url)
   data$MRData$RaceTable$Races$PitStops[[1]] %>%
-    tibble::as_tibble()
+    tibble::as_tibble() %>%
+    janitor::clean_names()
 }
 
 #' Load Pitstop Data
@@ -40,7 +41,8 @@
 #' to most recent.
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
-#' @return A dataframe with columns
+#' @return A tibble with columns driver_id, lap, stop (number), time (of day),
+#' and stop duration
 #' @export
 
 load_pitstops <- memoise::memoise(.load_pitstops)

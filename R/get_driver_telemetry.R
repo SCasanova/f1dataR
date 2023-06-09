@@ -14,7 +14,7 @@
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @importFrom magrittr "%>%"
-#' @return A dataframe with telemetry data for selected driver/session.
+#' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
 #' @export
 
@@ -33,7 +33,10 @@ get_driver_telemetry <- function(season = 2022, round =1, session = 'R', driver,
                                                 driver = driver))
     res <- py_tel_to_tibble(tel)
   }
-  res %>% dplyr::mutate(driverCode = driver)
+  res %>%
+    dplyr::mutate(driverCode = driver) %>%
+    tibble::tibble() %>%
+    janitor::clean_names()
 }
 
 py_tel_to_tibble<-function(py_tel_object){
