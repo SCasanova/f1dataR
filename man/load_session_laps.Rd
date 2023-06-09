@@ -6,16 +6,17 @@
 \usage{
 load_session_laps(
   season = get_current_season(),
-  race = 1,
+  round = 1,
   session = "R",
   log_level = "WARNING",
-  add_weather = F
+  add_weather = F,
+  race = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{season}{number from 2018 to current season. Defaults to current season}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
@@ -27,6 +28,9 @@ default is the current working directory.}
 DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{add_weather}{Whether to add weather information to the laps. See \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather}
+
+\item{race}{number from 1 to 23 (depending on season selected) and defaults
+to most recent. Also accepts race name.}
 }
 \value{
 A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.

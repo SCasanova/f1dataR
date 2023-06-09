@@ -4,10 +4,17 @@
 \alias{load_pitstops}
 \title{Load Pitstop Data}
 \usage{
-load_pitstops(season = "current", race = "last")
+load_pitstops(
+  season = "current",
+  round = "last",
+  race = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{season}{number from 2012 to current season (defaults to current season).}
+
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
+to most recent.}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
