@@ -49,5 +49,5 @@ py_tel_to_tibble<-function(py_tel_object){
   } else {
     object <- py_tel_object$tel
   }
-  return(object %>% tibble::tibble)
+  return(object %>% tibble::tibble())
 }
