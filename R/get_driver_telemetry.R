@@ -18,7 +18,7 @@
 #' @import reticulate
 #' @export
 
-get_driver_telemetry <- function(season = 2022, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry(race)", "get_driver_telemetry(round)")
     round <- race
