@@ -43,9 +43,9 @@ library(tidyverse)
 lec <- get_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
   head(300)%>% 
   mutate(index = 1:300,
-         driverId = "LEC")
+         driver_id = "LEC")
 
-ggplot(lec, aes(index, Throttle))+
+ggplot(lec, aes(index, throttle))+
   geom_line()+
   theme_minimal()
 ```
@@ -61,11 +61,11 @@ ham <- get_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>%
 per <- get_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
   head(300)%>% 
   mutate(index = 1:300,
-         driverId = "PER")
+         driver_id = "PER")
 
 data <- bind_rows(lec,ham,per)
 
-ggplot(data, aes(index, Throttle, color = driverId))+
+ggplot(data, aes(index, throttle, color = driver_id))+
   geom_line()+
   theme_minimal()
 
@@ -74,7 +74,7 @@ ggplot(data, aes(index, Throttle, color = driverId))+
 Now lets visualize speed and use the f1 dark theme for ggplot included in the package
 
 ```{r}
-ggplot(data, aes(index, Speed, color = driverId))+
+ggplot(data, aes(index, speed, color = driver_id))+
   geom_line()+
   theme_dark_f1()+
   theme(
