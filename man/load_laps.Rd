@@ -4,15 +4,15 @@
 \alias{load_laps}
 \title{Load Lap by Lap Time Data}
 \usage{
-load_laps(season = "current", race = lifecycle::deprecated(), round = "last")
+load_laps(season = "current", round = "last", race = lifecycle::deprecated())
 }
 \arguments{
 \item{season}{number from 1996 to current season (defaults to current season)}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent}
 
-\item{round}{number from 1 to 23 (depending on season selected) and defaults
+\item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent}
 }
 \value{

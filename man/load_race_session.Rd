@@ -7,19 +7,16 @@
 load_race_session(
   obj_name = "session",
   season = get_current_season(),
-  race = lifecycle::deprecated(),
   round = 1,
   session = "R",
-  log_level = "WARNING"
+  log_level = "WARNING",
+  race = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{obj_name}{name assigned to the loaded session to be referenced later.}
 
 \item{season}{number from 2018 to current season. Defaults to current season}
-
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
 
 \item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
@@ -31,6 +28,9 @@ default is the current working directory.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+
+\item{race}{number from 1 to 23 (depending on season selected) and defaults
+to most recent. Also accepts race name.}
 }
 \value{
 A session object to be used in other functions invisibly.
