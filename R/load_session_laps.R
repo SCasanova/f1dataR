@@ -88,5 +88,4 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   laps %>%
     tibble::tibble() %>%
     janitor::clean_names()
-  return(laps)
 }
