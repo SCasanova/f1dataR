@@ -6,17 +6,18 @@
 \usage{
 get_driver_telemetry(
   season = 2022,
-  race = 1,
+  round = 1,
   session = "R",
   driver,
   fastest_only = FALSE,
-  log_level = "WARNING"
+  log_level = "WARNING",
+  race = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{season}{number from 2018 to current season (defaults to current season).}
 
-\item{race}{number from 1 to 23 (depending on season selected). Also accepts race name.}
+\item{round}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
 Q, S, SS, and R. Default is "R", which refers to Race.}
@@ -28,6 +29,8 @@ by the driver in that session.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+
+\item{race}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 }
 \value{
 A dataframe with telemetry data for selected driver/session.

@@ -4,12 +4,19 @@
 \alias{plot_fastest}
 \title{Plot Fastest Lap}
 \usage{
-plot_fastest(season = 2022, race = 1, session = "R", driver, color = "gear")
+plot_fastest(
+  season = 2022,
+  round = 1,
+  session = "R",
+  driver,
+  color = "gear",
+  race = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{season}{number from 2018 to current season (defaults to current season).}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
 
 \item{session}{the code for the session to load Options are FP1, FP2, FP3,
@@ -19,6 +26,9 @@ Q, S, SS, and R. Default is "R", which refers to Race.}
 
 \item{color}{argument that indicates which variable to plot overtop the
 circuit}
+
+\item{race}{number from 1 to 23 (depending on season selected) and defaults
+to most recent.}
 }
 \value{
 A ggplot object that indicates grand prix, driver, time and selected

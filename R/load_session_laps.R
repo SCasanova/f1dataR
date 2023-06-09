@@ -8,6 +8,8 @@
 #' @param season number from 2018 to current season. Defaults to current season
 #' @param race number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
+#' @param round number from 1 to 23 (depending on season selected) and defaults
+#' to most recent. Also accepts race name.
 #' @param session the code for the session to load Options are FP1, FP2, FP3,
 #' Q, S, and R. Default is "R", which refers to Race.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
@@ -18,9 +20,14 @@
 #' @import reticulate
 #' @return A data frame. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-load_session_laps <- function(season = get_current_season(), race = 1, session = 'R', log_level = "WARNING", add_weather=F){
+load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F, race = lifecycle::deprecated()){
+  if (lifecycle::is_present(race)) {
+    lifecycle::deprecate_warn("0.4.1", "load_session_laps(race)", "load_session_laps(round)")
+    round <- race
+  }
+
   obj_name <- 'session_laps'
-  load_race_session(obj_name = obj_name, season = season, race = race, session = session, log_level = log_level)
+  load_race_session(obj_name = obj_name, season = season, round = round, session = session, log_level = log_level)
 
   if(get_fastf1_version() < 3){
     message("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
