@@ -47,8 +47,7 @@ py_tel_to_tibble<-function(py_tel_object){
     object <- reticulate::py_to_r(py_tel_object)
     object <- py_tel_to_tibble(object)
   } else {
-    object <- py_tel_object$tel %>%
-      tibble::as_tibble()
+    object <- py_tel_object$tel
   }
-  return(object)
+  return(object %>% tibble::tibble)
 }
