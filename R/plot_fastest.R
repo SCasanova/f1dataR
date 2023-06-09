@@ -28,12 +28,12 @@ plot_fastest <- function(season = 2022, round = 1, session = 'R', driver, color 
 
   driver_data <- get_driver_telemetry(season, round, session, driver, T)
 
-  driver_id <- load_drivers(season) %>%
+  selected_driver_id <- load_drivers(season) %>%
     dplyr::filter(.data$code == driver) %>%
     dplyr::pull(.data$driver_id)
 
   lap_time <- load_laps(season, round) %>%
-    dplyr::filter(.data$driver_id == driver_id) %>%
+    dplyr::filter(.data$driver_id == selected_driver_id) %>%
     dplyr::filter(.data$time_sec == min(.data$time_sec)) %>%
     dplyr::pull(.data$time)
 
