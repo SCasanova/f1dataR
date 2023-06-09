@@ -36,7 +36,8 @@ Imports:
     purrr, 
     stringr, 
     tidyr,
-    rlang
+    rlang,
+    lifecycle
 Suggests: 
     rmarkdown,
     knitr,
