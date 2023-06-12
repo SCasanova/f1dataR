@@ -6,7 +6,7 @@
 \title{Driver/Constructor Data}
 \description{
 This contains the following columns:
-driverId, fullName, driverCode, constructorId, constructorName, constructorColor, constructorColor2, constructorLogo, driverNumber, numberImage, season
+driver_id, full_name, driver_code, constructor_id, constructor_name, constructor_color, constructor_color2, constructor_logo, driver_number, number_image, season
 The data is derived from fastf1 python package and can be updated by
 running \code{f1dataR:::build_driver_constructor_data}
 }
