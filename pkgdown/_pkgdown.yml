@@ -6,7 +6,7 @@ reference:
   - title: Telemetry
     desc:  Access car and driver telemetry from any session and any race
     contents:
-    - get_driver_telemetry
+    - load_driver_telemtery
   - title: General Data
     contents:
     - starts_with("load_")

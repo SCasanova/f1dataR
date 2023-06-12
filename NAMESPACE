@@ -2,9 +2,10 @@
 
 export(clear_f1_cache)
 export(get_current_season)
-export(get_driver_telemetry)
+export(get_driver_telemtery)
 export(load_circuits)
 export(load_constructors)
+export(load_driver_telemtery)
 export(load_drivers)
 export(load_laps)
 export(load_pitstops)

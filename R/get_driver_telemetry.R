@@ -18,9 +18,10 @@
 #' @import reticulate
 #' @export
 
-get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+
+load_driver_telemtery <- function(season = get_current_season, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry(race)", "get_driver_telemetry(round)")
+    lifecycle::deprecate_warn("0.4.1", "load_driver_telemtery(race)", "load_driver_telemtery(round)")
     round <- race
   }
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
@@ -38,6 +39,26 @@ get_driver_telemetry <- function(season = get_current_season(), round =1, sessio
     tibble::tibble() %>%
     janitor::clean_names()
 }
+
+#' Load Telemetry Data for a Driver
+#'
+#' Receives season, race number, driver code, and an optional fastest lap only
+#' argument to output car telemetry for the selected situation.
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `load_driver_telemtery()` was renamed to `load_driver_telemetry()` to create a more
+#' consistent API.
+#' @keywords internal
+#' @export
+
+
+get_driver_telemtery <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+  lifecycle::deprecate_warn("0.4.1", "get_driver_telemtery()", "load_driver_telemtery()")
+  load_driver_telemtery(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)
+}
+
 
 py_tel_to_tibble<-function(py_tel_object){
   # This funciton converts a python object to tibble.

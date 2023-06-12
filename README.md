@@ -84,7 +84,7 @@ load_laps(2021, 15)
 
 ### Driver Telemetry
 
-`get_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
+`load_driver_telemtery(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
 
 When the parameters for season (four digit year), race (number or GP
 name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three
@@ -94,7 +94,7 @@ is called, loading times will be relatively long but in subsequent calls
 this will improve to only a couple of seconds
 
 ``` r
-get_driver_telemetry(2022, round = 4, driver = 'PER')
+load_driver_telemtery(2022, round = 4, driver = 'PER')
 #> # A tibble: 42,415 × 19
 #>    date                session_time driver_ahead distance_…¹ time  
 #>    <dttm>              <dttm>       <chr>              <dbl> <dttm>
@@ -113,7 +113,7 @@ get_driver_telemetry(2022, round = 4, driver = 'PER')
 #> #   relative_distance <dbl>, status <chr>, x <dbl>, …, and abbreviated variable
 #> #   name ¹​distance_to_driver_ahead
 
-get_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
+load_driver_telemtery(2018, round = 7,'Q', 'HAM', fastest_only = T)
 #> # A tibble: 534 × 19
 #>    date                session_time driver_ahead distance_…¹ time  
 #>    <dttm>              <dttm>       <chr>              <dbl> <dttm>
