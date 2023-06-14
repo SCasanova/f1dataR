@@ -10,6 +10,7 @@
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
+#' @keyword internal
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
 #' and stop duration
 

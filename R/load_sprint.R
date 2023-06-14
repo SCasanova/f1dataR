@@ -8,6 +8,7 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
+#' @keyword internal
 #' @return A dataframetibble with columns driver_id, points awarded, finishing position,
 #' grid position, laps completed, race status (finished or otherwise), gap to
 #' first place, fastest lap, fastest lap time, fastest lap in seconds,
