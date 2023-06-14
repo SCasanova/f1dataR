@@ -12,3 +12,4 @@ Year (four digit number) representation of current season, as numeric.
 \description{
 Looks up current season from ergast, fallback to manual determination
 }
+\keyword{internal}

@@ -16,3 +16,4 @@ A tibble with one row per circuit
 Loads circuit info for all circuits in a given season.
 This function does not export, only the cached version.
 }
+\keyword{internal}

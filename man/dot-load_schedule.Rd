@@ -16,3 +16,4 @@ A tibble with one row per circuit in season
 Loads schedule information for a given F1 season.
 This function does not export, only the cached version.
 }
+\keyword{internal}

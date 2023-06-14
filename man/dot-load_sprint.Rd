@@ -22,3 +22,4 @@ or NULL if no sprint exists for this season/round combo
 Loads final race results for a given year and round. Note not all rounds have
 sprint results
 }
+\keyword{internal}
