@@ -5,8 +5,8 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @keyword internal
 #' @return A tibble with one row per circuit
+#' @keywords internal
 
 .load_circuits <- function(season = 'current'){
   if(season != 'current' & (season < 1950 | season > get_current_season())){

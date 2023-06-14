@@ -4,7 +4,7 @@
 #' This function does not export, only the cached version.
 #'
 #' @importFrom magrittr "%>%"
-#' @keyword internal
+#' @keywords internal
 #' @return A tibble with one row per constructor
 
 .load_constructors <- function(){
