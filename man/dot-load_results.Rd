@@ -18,3 +18,4 @@ A tibble with one row per driver
 \description{
 Loads final race results for a given year and round.
 }
+\keyword{internal}

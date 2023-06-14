@@ -5,7 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @keyword internal
+#' @keywords internal
 #' @return A tibble with one row per circuit in season
 
 .load_schedule <- function(season = 'current'){

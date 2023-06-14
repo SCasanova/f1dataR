@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,6 +66,18 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="load_circuits.html">load_circuits()</a></code> </p>
+        </td>
+        <td><p>Load Ciruit Info</p></td>
+      </tr><tr><td>
+          <p><code><a href="load_constructors.html">load_constructors()</a></code> </p>
+        </td>
+        <td><p>Load Constructor Info</p></td>
+      </tr><tr><td>
+          <p><code><a href="load_driver_telemtery.html">load_driver_telemtery()</a></code> </p>
+        </td>
+        <td><p>Load Telemetry Data for a Driver</p></td>
+      </tr><tr><td>
           <p><code><a href="load_drivers.html">load_drivers()</a></code> </p>
         </td>
         <td><p>Load Driver Info</p></td>
@@ -94,9 +106,17 @@
         </td>
         <td><p>Load Schedule</p></td>
       </tr><tr><td>
+          <p><code><a href="load_session_laps.html">load_session_laps()</a></code> </p>
+        </td>
+        <td><p>Load Lapwise Data</p></td>
+      </tr><tr><td>
+          <p><code><a href="load_sprint.html">load_sprint()</a></code> </p>
+        </td>
+        <td><p>Load Sprint</p></td>
+      </tr><tr><td>
           <p><code><a href="load_standings.html">load_standings()</a></code> </p>
         </td>
-        <td><p>Load Qualifying Results</p></td>
+        <td><p>Load Standings</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="plotting">Plotting <a href="#plotting" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -110,42 +130,6 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="clear_f1_cache.html">clear_f1_cache()</a></code> </p>
-        </td>
-        <td><p>Clear f1fastR Cache</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_drivers.html">.load_drivers()</a></code> </p>
-        </td>
-        <td><p>Load Driver Info (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_laps.html">.load_laps()</a></code> </p>
-        </td>
-        <td><p>Load Lap by Lap Time Data (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_pitstops.html">.load_pitstops()</a></code> </p>
-        </td>
-        <td><p>Load Pitstop Data (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_quali.html">.load_quali()</a></code> </p>
-        </td>
-        <td><p>Load Qualifying Results (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_results.html">.load_results()</a></code> </p>
-        </td>
-        <td><p>Load Results (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_schedule.html">.load_schedule()</a></code> </p>
-        </td>
-        <td><p>Load Schedule (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="dot-load_standings.html">.load_standings()</a></code> </p>
-        </td>
-        <td><p>Load Qualifying Results (not cached)</p></td>
-      </tr><tr><td>
-          <p><code><a href="plot_fastest.html">plot_fastest()</a></code> </p>
-        </td>
-        <td><p>Plot Fastest Lap</p></td>
-      </tr><tr><td>
           <p><code><a href="theme_dark_f1.html">theme_dark_f1()</a></code> </p>
         </td>
         <td><p>Dark F1-style Theme for ggplot</p></td>
@@ -153,6 +137,14 @@
           <p><code><a href="time_to_sec.html">time_to_sec()</a></code> </p>
         </td>
         <td><p>Convert Clock time to seconds</p></td>
+      </tr><tr><td>
+          <p><code><a href="clear_f1_cache.html">clear_f1_cache()</a></code> </p>
+        </td>
+        <td><p>Clear f1fastR Cache</p></td>
+      </tr><tr><td>
+          <p><code><a href="driver_constructor_data.html">driver_constructor_data</a></code> </p>
+        </td>
+        <td><p>Driver/Constructor Data</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -162,11 +154,11 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://twitter.com/BRotoFFCasanova" class="external-link">Santiago Casanova</a>.</p>
+  <p></p><p>Developed by <a href="https://twitter.com/BrotoFFCasanova" class="external-link">Santiago Casanova</a>, Philip Bulsink.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

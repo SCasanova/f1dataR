@@ -18,3 +18,4 @@ A tibble with one row per driver
 \description{
 Loads qualifying session results for a given season and round.
 }
+\keyword{internal}

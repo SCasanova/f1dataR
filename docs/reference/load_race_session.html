@@ -19,7 +19,7 @@ data stream via the fastf1 python library. Data is available from
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -28,7 +28,7 @@ data stream via the fastf1 python library. Data is available from
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -64,13 +64,41 @@ data stream via the fastf1 python library. Data is available from
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">load_race_session</span><span class="op">(</span><span class="va">obj_name</span>, season <span class="op">=</span> <span class="fl">2022</span>, race <span class="op">=</span> <span class="fl">1</span>, session <span class="op">=</span> <span class="st">"R"</span>, cache <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">load_race_session</span><span class="op">(</span></span>
+<span>  obj_name <span class="op">=</span> <span class="st">"session"</span>,</span>
+<span>  season <span class="op">=</span> <span class="fu"><a href="get_current_season.html">get_current_season</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  round <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  session <span class="op">=</span> <span class="st">"R"</span>,</span>
+<span>  log_level <span class="op">=</span> <span class="st">"WARNING"</span>,</span>
+<span>  race <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>season</dt>
-<dd><p>number from 2018 to 2022 (defaults to current season).</p></dd>
+    <dl><dt>obj_name</dt>
+<dd><p>name assigned to the loaded session to be referenced later.</p></dd>
+
+
+<dt>season</dt>
+<dd><p>number from 2018 to current season. Defaults to current season</p></dd>
+
+
+<dt>round</dt>
+<dd><p>number from 1 to 23 (depending on season selected) and defaults
+to most recent. Also accepts race name.</p></dd>
+
+
+<dt>session</dt>
+<dd><p>the code for the session to load Options are FP1, FP2, FP3,
+Q, S, SS and R. Default is "R", which refers to Race.
+Cache directory can be set by setting <code>option(f1dataR.cache = [cache dir])</code>,
+default is the current working directory.</p></dd>
+
+
+<dt>log_level</dt>
+<dd><p>Detail of logging from fastf1 to be displayed. Choice of:
+DEBUG, INFO, WARNING, ERROR and CRITICAL. See <a href="https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity" class="external-link">fastf1 documentation</a>.</p></dd>
 
 
 <dt>race</dt>
@@ -82,7 +110,13 @@ to most recent. Also accepts race name.</p></dd>
     <h2>Value</h2>
     
 
-<p>A session object to be used in other functions.</p>
+<p>A session object to be used in other functions invisibly.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>The data loaded can optionally be assigned to a R variable, and then interrogated for
+session data streams. See the <a href="https://theoehrly.github.io/Fast-F1/" class="external-link">fastf1 documentation</a>
+for more details on the data returned by the python API.</p>
     </div>
 
   </div>
@@ -93,11 +127,11 @@ to most recent. Also accepts race name.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://twitter.com/BRotoFFCasanova" class="external-link">Santiago Casanova</a>.</p>
+  <p></p><p>Developed by <a href="https://twitter.com/BrotoFFCasanova" class="external-link">Santiago Casanova</a>, Philip Bulsink.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

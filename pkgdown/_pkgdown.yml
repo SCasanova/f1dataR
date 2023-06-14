@@ -15,11 +15,12 @@ reference:
     - starts_with("plot_")
   - title: Extras
     contents:
-    - starts_with(".l")
     - theme_dark_f1
     - time_to_sec
     - clear_f1_cache
+    - driver_constructor_data
 
 authors:
   Santiago Casanova:
-    href: https://twitter.com/BRotoFFCasanova
+    href: https://twitter.com/BrotoFFCasanova
+  Phillip Bulsink:

@@ -18,7 +18,7 @@ and round. Lap time data is available from 1996 onward."><meta property="og:imag
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ and round. Lap time data is available from 1996 onward."><meta property="og:imag
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -62,13 +62,18 @@ and round. Lap time data is available from 1996 onward.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">load_laps</span><span class="op">(</span>season <span class="op">=</span> <span class="st">"current"</span>, race <span class="op">=</span> <span class="st">"last"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">load_laps</span><span class="op">(</span>season <span class="op">=</span> <span class="st">"current"</span>, round <span class="op">=</span> <span class="st">"last"</span>, race <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>season</dt>
-<dd><p>number from 1996 to 2022 (defaults to current season)</p></dd>
+<dd><p>number from 1996 to current season (defaults to current season)</p></dd>
+
+
+<dt>round</dt>
+<dd><p>number from 1 to 23 (depending on season selected) and defaults
+to most recent</p></dd>
 
 
 <dt>race</dt>
@@ -92,11 +97,11 @@ during lap, time (in clock form), lap number, time (in seconds), and season.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://twitter.com/BRotoFFCasanova" class="external-link">Santiago Casanova</a>.</p>
+  <p></p><p>Developed by <a href="https://twitter.com/BrotoFFCasanova" class="external-link">Santiago Casanova</a>, Philip Bulsink.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

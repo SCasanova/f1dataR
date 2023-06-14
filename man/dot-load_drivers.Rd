@@ -18,3 +18,4 @@ permanent number (for post-2014 drivers).
 Loads driver info for all participants in a given season.
 This function does not export, only the cached version.
 }
+\keyword{internal}

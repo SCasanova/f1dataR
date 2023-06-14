@@ -16,3 +16,4 @@ the result of \code{jsonlite::fromJSON} called on ergast's return content
 Gets ergast content and returns the processed json object if
 no Ergast errors are found.
 }
+\keyword{internal}
