@@ -4,8 +4,9 @@
 #' no Ergast errors are found.
 #'
 #' @param url the complete Ergast URL to get
-#'
+#' @keyword internal
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
+
 get_ergast_content<-function(url){
   fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
@@ -37,7 +38,7 @@ get_ergast_content<-function(url){
 #' Get Current Season core
 #'
 #' @description Looks up current season from ergast, fallback to manual determination
-#'
+#' @keyword internal
 #' @return Year (four digit number) representation of current season, as numeric.
 .get_current_season<-function(){
   tryCatch({
@@ -58,9 +59,10 @@ get_ergast_content<-function(url){
 #' Get Current Season
 #'
 #' @description Looks up current season from ergast, fallback to manual determination
-#'
+#' @keyword internal
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
+
 get_current_season <- memoise::memoise(.get_current_season)
 
 

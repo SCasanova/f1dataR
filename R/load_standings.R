@@ -9,6 +9,7 @@
 #' @param type select drivers or constructors championship data. Defaults to
 #' drivers
 #' @importFrom magrittr "%>%"
+#' @keyword internal
 #' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins and constructorsId in the case of drivers championship.
 

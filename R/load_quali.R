@@ -7,6 +7,7 @@
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
+#' @keyword internal
 #' @return A tibble with one row per driver
 
 .load_quali <- function(season = 'current', round = 'last'){
