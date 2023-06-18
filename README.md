@@ -84,9 +84,9 @@ load_laps(2021, 15)
 
 ### Driver Telemetry
 
-`load_driver_telemtery(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
+`load_driver_telemtery(season = 'current', round = 'last', session = 'R', driver, fastest_only = FALSE)`
 
-When the parameters for season (four digit year), race (number or GP
+When the parameters for season (four digit year), round (number or GP
 name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three
 letter code) are entered, the function will load all data for a session
 and the pull the info for the selected driver. The first time a session
@@ -133,15 +133,53 @@ load_driver_telemtery(2018, round = 7,'Q', 'HAM', fastest_only = T)
 #> #   name ¹​distance_to_driver_ahead
 ```
 
+### Lap-by-Lap information
+
+This function will give us detailed information of lap and sector times,
+tyres, weather (optional), and more for every lap of the GP and driver.
+
+``` r
+load_session_laps(season = 2023, round = 4, add_weather = T)
+#> # A tibble: 962 × 39
+#>     time driver driver_n…¹ lap_t…² lap_n…³ stint pit_o…⁴ pit_i…⁵ secto…⁶ secto…⁷
+#>    <dbl> <chr>  <chr>        <dbl>   <dbl> <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+#>  1 3892. VER    1             110.       1     1    697.    NaN    NaN      43.2
+#>  2 4000. VER    1             108.       2     1    NaN     NaN     38.4    43.6
+#>  3 4108. VER    1             108.       3     1    NaN     NaN     38.5    43.7
+#>  4 4215. VER    1             107.       4     1    NaN     NaN     37.9    43.4
+#>  5 4322. VER    1             107.       5     1    NaN     NaN     38.3    43.4
+#>  6 4430. VER    1             107.       6     1    NaN     NaN     38.3    43.2
+#>  7 4537. VER    1             107.       7     1    NaN     NaN     38.3    43.0
+#>  8 4643. VER    1             107.       8     1    NaN     NaN     38.0    43.0
+#>  9 4750. VER    1             107.       9     1    NaN     NaN     38.0    43.1
+#> 10 4861. VER    1             111.      10     1    NaN    4860.    37.9    43.4
+#> # … with 952 more rows, 29 more variables: sector3time <dbl>,
+#> #   sector1session_time <dbl>, sector2session_time <dbl>,
+#> #   sector3session_time <dbl>, speed_i1 <dbl>, speed_i2 <dbl>, speed_fl <dbl>,
+#> #   speed_st <dbl>, is_personal_best <list>, compound <chr>, …, and abbreviated
+#> #   variable names ¹​driver_number, ²​lap_time, ³​lap_number, ⁴​pit_out_time,
+#> #   ⁵​pit_in_time, ⁶​sector1time, ⁷​sector2time
+```
+
+### Cache information
+
+The cache directory for sessions can be set manually with the options
+function
+
+``` r
+options(f1dataR.cache = 'path/to/directory')
+```
+
 ### Other functions
 
-- `load_pitstops(season = 'current', race  ='last')`
+- `load_pitstops(season = 'current', round  ='last')`
 - `load_drivers(season = 2022)`
+- `load_circuits(season = 2022)`
 - `load_schedule(season = 2022)`
 - `load_standings(season = 'current', round = 'last', type = c('driver', 'constructor'))`
 - `load_results(season = 'current', round = 'last')`
 - `load_quali(season = 'current', round = 'last')`
-- `plot_fastest(season = 'current', race = 'last', driver, color = 'gear')`
+- `plot_fastest(season = 'current', round = 'last', driver, color = 'gear')`
 
 ### Clear F1 Cache
 
@@ -155,8 +193,8 @@ driver number logo.
 
 ``` r
 driver_constructor_data %>% colnames()
-#>  [1] "driverId"          "fullName"          "driverCode"       
-#>  [4] "constructorId"     "constructorName"   "constructorColor" 
-#>  [7] "constructorColor2" "constructorLogo"   "driverNumber"     
-#> [10] "numberImage"       "season"
+#>  [1] "driver_id"          "full_name"          "driver_code"       
+#>  [4] "constructor_id"     "constructor_name"   "constructor_color" 
+#>  [7] "constructor_color2" "constructor_logo"   "driver_number"     
+#> [10] "number_image"       "season"
 ```
