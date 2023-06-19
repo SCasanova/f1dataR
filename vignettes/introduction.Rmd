@@ -38,7 +38,8 @@ load_driver_telemtery(2022, 1, driver = 'LEC', fastest_only = T)
 now let's use ggplot2 to visualize some of the data we have
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
 lec <- load_driver_telemtery(2022, 1, driver = 'LEC', fastest_only = T) %>% 
   head(300)%>% 
