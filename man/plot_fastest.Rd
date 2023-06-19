@@ -5,7 +5,7 @@
 \title{Plot Fastest Lap}
 \usage{
 plot_fastest(
-  season = 2022,
+  season = get_current_season(),
   round = 1,
   session = "R",
   driver,

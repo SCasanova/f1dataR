@@ -6,7 +6,7 @@ reference:
   - title: Telemetry
     desc:  Access car and driver telemetry from any session and any race
     contents:
-    - load_driver_telemtery
+    - load_driver_telemetry
   - title: General Data
     contents:
     - starts_with("load_")
@@ -23,4 +23,5 @@ reference:
 authors:
   Santiago Casanova:
     href: https://twitter.com/BrotoFFCasanova
-  Phillip Bulsink:
+  Philip Bulsink:
+    href: https://twitter.com/pbulsink
