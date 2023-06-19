@@ -59,7 +59,7 @@ load_laps()
 #>  8 norris         8        1:28.099     1     88.1   2023
 #>  9 leclerc        9        1:28.596     1     88.6   2023
 #> 10 albon          10       1:29.175     1     89.2   2023
-#> # ℹ 1,305 more rows
+#> # … with 1,305 more rows
 ```
 
 or
@@ -79,7 +79,7 @@ load_laps(2021, 15)
 #>  8 perez     8        1:50.617     1     111.   2021
 #>  9 ocon      9        1:51.098     1     111.   2021
 #> 10 raikkonen 10       1:51.778     1     112.   2021
-#> # ℹ 1,015 more rows
+#> # … with 1,015 more rows
 ```
 
 ### Driver Telemetry
@@ -96,41 +96,41 @@ this will improve to only a couple of seconds
 ``` r
 load_driver_telemetry(2022, round = 4, driver = 'PER')
 #> # A tibble: 42,415 × 19
-#>    date                session_time driver_ahead distance_to_driver_ahead
-#>    <dttm>              <dttm>       <chr>                           <dbl>
-#>  1 2022-04-24 09:03:03 NA           ""                             0.0889
-#>  2 2022-04-24 09:03:03 NA           ""                             0.0889
-#>  3 2022-04-24 09:03:03 NA           ""                             0.0889
-#>  4 2022-04-24 09:03:03 NA           "6"                            0.0889
-#>  5 2022-04-24 09:03:03 NA           "6"                            0.0593
-#>  6 2022-04-24 09:03:03 NA           "6"                            0.0296
-#>  7 2022-04-24 09:03:03 NA           "77"                           0     
-#>  8 2022-04-24 09:03:04 NA           "77"                           0.0222
-#>  9 2022-04-24 09:03:04 NA           "6"                            0.0444
-#> 10 2022-04-24 09:03:04 NA           "6"                            0.0444
-#> # ℹ 42,405 more rows
-#> # ℹ 15 more variables: time <dttm>, rpm <dbl>, speed <dbl>, n_gear <dbl>,
-#> #   throttle <dbl>, brake <lgl>, drs <dbl>, source <chr>,
-#> #   relative_distance <dbl>, status <chr>, …
+#>    date                session_time driver_ahead distance_…¹ time  
+#>    <dttm>              <dttm>       <chr>              <dbl> <dttm>
+#>  1 2022-04-24 15:03:03 NA           ""                0.0889 NA    
+#>  2 2022-04-24 15:03:03 NA           ""                0.0889 NA    
+#>  3 2022-04-24 15:03:03 NA           ""                0.0889 NA    
+#>  4 2022-04-24 15:03:03 NA           "6"               0.0889 NA    
+#>  5 2022-04-24 15:03:03 NA           "6"               0.0593 NA    
+#>  6 2022-04-24 15:03:03 NA           "6"               0.0296 NA    
+#>  7 2022-04-24 15:03:03 NA           "77"              0      NA    
+#>  8 2022-04-24 15:03:04 NA           "77"              0.0222 NA    
+#>  9 2022-04-24 15:03:04 NA           "6"               0.0444 NA    
+#> 10 2022-04-24 15:03:04 NA           "6"               0.0444 NA    
+#> # … with 42,405 more rows, 14 more variables: rpm <dbl>, speed <dbl>,
+#> #   n_gear <dbl>, throttle <dbl>, brake <lgl>, drs <dbl>, source <chr>,
+#> #   relative_distance <dbl>, status <chr>, x <dbl>, …, and abbreviated variable
+#> #   name ¹​distance_to_driver_ahead
 
 load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
 #> # A tibble: 534 × 19
-#>    date                session_time driver_ahead distance_to_driver_ahead
-#>    <dttm>              <dttm>       <chr>                           <dbl>
-#>  1 2018-06-09 14:59:18 NA           ""                               383.
-#>  2 2018-06-09 14:59:18 NA           ""                               383.
-#>  3 2018-06-09 14:59:18 NA           ""                               383.
-#>  4 2018-06-09 14:59:19 NA           "7"                              383.
-#>  5 2018-06-09 14:59:19 NA           "7"                              379.
-#>  6 2018-06-09 14:59:19 NA           "7"                              375.
-#>  7 2018-06-09 14:59:19 NA           "7"                              370.
-#>  8 2018-06-09 14:59:19 NA           "7"                              366.
-#>  9 2018-06-09 14:59:19 NA           "7"                              362.
-#> 10 2018-06-09 14:59:19 NA           "7"                              358.
-#> # ℹ 524 more rows
-#> # ℹ 15 more variables: time <dttm>, rpm <dbl>, speed <dbl>, n_gear <dbl>,
-#> #   throttle <dbl>, brake <lgl>, drs <dbl>, source <chr>,
-#> #   relative_distance <dbl>, status <chr>, …
+#>    date                session_time driver_ahead distance_…¹ time  
+#>    <dttm>              <dttm>       <chr>              <dbl> <dttm>
+#>  1 2018-06-09 20:59:18 NA           ""                  383. NA    
+#>  2 2018-06-09 20:59:18 NA           ""                  383. NA    
+#>  3 2018-06-09 20:59:18 NA           ""                  383. NA    
+#>  4 2018-06-09 20:59:19 NA           "7"                 383. NA    
+#>  5 2018-06-09 20:59:19 NA           "7"                 379. NA    
+#>  6 2018-06-09 20:59:19 NA           "7"                 375. NA    
+#>  7 2018-06-09 20:59:19 NA           "7"                 370. NA    
+#>  8 2018-06-09 20:59:19 NA           "7"                 366. NA    
+#>  9 2018-06-09 20:59:19 NA           "7"                 362. NA    
+#> 10 2018-06-09 20:59:19 NA           "7"                 358. NA    
+#> # … with 524 more rows, 14 more variables: rpm <dbl>, speed <dbl>,
+#> #   n_gear <dbl>, throttle <dbl>, brake <lgl>, drs <dbl>, source <chr>,
+#> #   relative_distance <dbl>, status <chr>, x <dbl>, …, and abbreviated variable
+#> #   name ¹​distance_to_driver_ahead
 ```
 
 ### Lap-by-Lap information
