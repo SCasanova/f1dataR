@@ -30,8 +30,6 @@ Imports:
     httr, 
     memoise,
     janitor,
-    ggsci,
-    ggplot2,
     dplyr,
     purrr, 
     stringr, 
@@ -41,7 +39,7 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    tidyverse,
+    ggplot2,
     testthat (>= 3.0.0),
     withr,
     vdiffr,
