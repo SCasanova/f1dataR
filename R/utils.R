@@ -10,7 +10,7 @@
 get_ergast_content<-function(url){
   fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
-                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = installed.packages()['f1dataR','Version'])))
+                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR','Version'])))
 
   #Handle Ergast errors with more informative error codes.
   if(res$status_code != 200 | rawToChar(res$content) == "Unable to select database"){
@@ -18,7 +18,7 @@ get_ergast_content<-function(url){
     # Try revert to not https mode
     fullurl<-glue::glue("http://ergast.com/api/f1/{url}", url = url)
     res <- httr::GET(fullurl,
-                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = installed.packages()['f1dataR','Version'])))
+                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR','Version'])))
   }
 
 
