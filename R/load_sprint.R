@@ -9,14 +9,14 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @keywords internal
-#' @return A dataframetibble with columns driver_id, points awarded, finishing position,
+#' @return A dataframetibble with columns driver_id, constructor_id, points awarded, finishing position,
 #' grid position, laps completed, race status (finished or otherwise), gap to
 #' first place, fastest lap, fastest lap time, fastest lap in seconds,
 #' or NULL if no sprint exists for this season/round combo
 
 .load_sprint <- function(season = 'current', round = 'last'){
   if(season != 'current' & (season < 2021 | season > get_current_season())){
-    stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
+    stop(glue::glue('Year must be between 2021 and {current} (or use "current")',
                     current = get_current_season()))
   }
 
@@ -30,8 +30,10 @@
     return(NULL)
   }
 
-  data$MRData$RaceTable$Races$SprintResults[[1]] %>%
-    tidyr::unnest(cols = c("Driver", "Time", "FastestLap"),
+  data<- data$MRData$RaceTable$Races$SprintResults[[1]]
+
+  data %>%
+    tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"),
                   names_repair = 'universal') %>%
     tidyr::unnest(cols = c("Time"),
                   names_repair = 'universal') %>%
@@ -39,15 +41,16 @@
     suppressMessages() %>%
     dplyr::select(
       "driverId",
+      "constructorId",
       "points",
       "position",
       "grid",
       "laps",
       "status",
       "position",
-      gap = "time...18",
+      gap = "time...21",
       "lap",
-      fastest = "time...20"
+      fastest = "time...23"
     ) %>%
     dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
     tibble::as_tibble() %>%
@@ -63,7 +66,7 @@
 #' @param season number from 2021 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
-#' @return A tibble with columns driver_id, points awarded, finishing position,
+#' @return A tibble with columns driver_id, constructor_id, points awarded, finishing position,
 #' grid position, laps completed, race status (finished or otherwise), gap to
 #' first place, fastest lap, fastest lap time, fastest lap in seconds,
 #' or NULL if no sprint exists for this season/round combo
