@@ -84,11 +84,7 @@ load_laps(2021, 15)
 
 ### Driver Telemetry
 
-<<<<<<< HEAD
-`load_driver_telemtery(season = 'current', round = 'last', session = 'R', driver, fastest_only = FALSE)`
-=======
 `load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
->>>>>>> origin
 
 When the parameters for season (four digit year), round (number or GP
 name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three
