@@ -31,16 +31,17 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```{r setup}
 library(f1dataR)
 
-load_driver_telemtery(2022, 1, driver = 'LEC', fastest_only = T)
+load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
 ```
 
 
 now let's use ggplot2 to visualize some of the data we have
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 
-lec <- load_driver_telemtery(2022, 1, driver = 'LEC', fastest_only = T) %>% 
+lec <- load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
   head(300)%>% 
   mutate(index = 1:300,
          driver_id = "LEC")
@@ -53,12 +54,12 @@ ggplot(lec, aes(index, throttle))+
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton
 
 ```{r}
-ham <- load_driver_telemtery(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
+ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
   head(300) %>% 
   mutate(index = 1:300,
          driverId = "HAM")
 
-per <- load_driver_telemtery(2022, 1, driver = 'PER', fastest_only = T) %>% 
+per <- load_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
   head(300)%>% 
   mutate(index = 1:300,
          driver_id = "PER")
