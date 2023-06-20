@@ -25,11 +25,11 @@ load_driver_telemetry <- function(season = get_current_season, round =1, session
   }
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
   if(fastest_only){
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance()",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",
                                                 driver = driver))
 
   }else{
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance()",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance().add_driver_ahead()",
                                                 driver = driver))
 
   }
