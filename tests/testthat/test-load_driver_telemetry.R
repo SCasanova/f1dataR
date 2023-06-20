@@ -22,12 +22,9 @@ test_that("driver telemetry", {
   telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM")
   telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", fastest_only = T)
 
-  expect_true(all(telem_fast$time %in% telem$time))
-
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
-
-  # expect_message(load_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
-  #                regexp = NULL) # This itype of check is set up to later possibly handle verbose = FALSE/TRUE option tests
+  expect_equal(telem_fast$session_time[[1]], 3518.641)
+  expect_equal(telem_fast$time[[2]],0.086)
 
 })
