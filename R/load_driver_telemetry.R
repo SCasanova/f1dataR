@@ -63,17 +63,3 @@ get_driver_telemetry <- function(season = get_current_season(), round =1, sessio
   lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry()", "load_driver_telemetry()")
   load_driver_telemetry(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)
 }
-
-
-py_tel_to_tibble<-function(py_tel_object){
-  # This funciton converts a python object to tibble.
-  # Sometimes, the py_to_r has to be called a few times, this calls it as often as needed recursively.
-  # Once not a python object, this converts to data frame
-  if ("python.builtin.dict" %in% class(py_tel_object)){
-    object <- reticulate::py_to_r(py_tel_object)
-    object <- py_tel_to_tibble(object)
-  } else {
-    object <- py_tel_object$tel
-  }
-  return(object %>% tibble::tibble())
-}

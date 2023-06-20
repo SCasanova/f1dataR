@@ -27,5 +27,4 @@ test_that("driver telemetry", {
   expect_equal(telem_fast$session_time[[1]], 3518.641)
   expect_equal(telem_fast$time[[2]],0.086)
 
-
 })
