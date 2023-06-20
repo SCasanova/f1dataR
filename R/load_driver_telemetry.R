@@ -20,7 +20,7 @@
 
 load_driver_telemetry <- function(season = get_current_season, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("0.4.1", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
+    lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
@@ -60,6 +60,6 @@ load_driver_telemetry <- function(season = get_current_season, round =1, session
 
 
 get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
-  lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry()", "load_driver_telemetry()")
+  lifecycle::deprecate_warn("1.0.0", "get_driver_telemetry()", "load_driver_telemetry()")
   load_driver_telemetry(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)
 }

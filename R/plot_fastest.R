@@ -27,7 +27,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = 'R'
 
   message("If the session has not been loaded yet, this could take a minute\n\n")
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("0.4.1", "plot_fastest(race)", "plot_fastest(round)")
+    lifecycle::deprecate_warn("1.0.0", "plot_fastest(race)", "plot_fastest(round)")
     round <- race
   }
 
