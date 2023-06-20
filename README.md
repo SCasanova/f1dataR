@@ -187,12 +187,10 @@ options(f1dataR.cache = 'path/to/directory')
 
 ## Loaded Data
 
-The package also includes a static data frame for all current drivers
-and their respective constructors. Complete with team colors, logo and
-driver number logo.
+The package also includes a static data frame for all current constructors. Complete with team colors and logo.
 
 ``` r
-driver_constructor_data %>% colnames()
+constructor_data %>% colnames()
 #>  [1] "driver_id"          "full_name"          "driver_code"       
 #>  [4] "constructor_id"     "constructor_name"   "constructor_color" 
 #>  [7] "constructor_color2" "constructor_logo"   "driver_number"     
