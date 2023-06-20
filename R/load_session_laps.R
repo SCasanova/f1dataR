@@ -23,7 +23,7 @@
 
 load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F, race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("0.4.1", "load_session_laps(race)", "load_session_laps(round)")
+    lifecycle::deprecate_warn("1.0.0", "load_session_laps(race)", "load_session_laps(round)")
     round <- race
   }
 

@@ -27,7 +27,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = 'R'
 
   message("If the session has not been loaded yet, this could take a minute\n\n")
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("0.4.1", "plot_fastest(race)", "plot_fastest(round)")
+    lifecycle::deprecate_warn("1.0.0", "plot_fastest(race)", "plot_fastest(round)")
     round <- race
   }
 
@@ -56,7 +56,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = 'R'
   }
 
   if(color == 'gear'){
-    ggplot2::ggplot(driver_data, ggplot2::aes(.data$x, .data$y, color = as.factor(.data$n_gear), group = .data$time)) +
+    ggplot2::ggplot(driver_data, ggplot2::aes(.data$x, .data$y, color = as.factor(.data$n_gear), group = NA)) +
       ggplot2::geom_path(linewidth = 4, lineend = 'round') +
       ggplot2::scale_color_manual(name = 'Gear',
                                   values = c("#BC3C29", "#0072B5", "#E18727", "#20854E", "#7876B1", "#6F99AD", "#FFDC91", "#EE4C97"),
