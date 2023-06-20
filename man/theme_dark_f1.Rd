@@ -4,7 +4,11 @@
 \alias{theme_dark_f1}
 \title{Dark F1-style Theme for ggplot}
 \usage{
-theme_dark_f1()
+theme_dark_f1(axis_marks = F)
+}
+\arguments{
+\item{axis_marks}{True or false, whether axis line, ticks and title should
+be shown or not. Defaults to false}
 }
 \value{
 A ggplot object that indicates grand prix, driver, time and selected
