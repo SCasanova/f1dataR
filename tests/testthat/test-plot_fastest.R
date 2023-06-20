@@ -20,9 +20,6 @@ test_that("graphics work", {
   withr::local_seed(1234)
 
   # Snapshot Tests of graphics
-  # These appear different on GitHub Actions than on local devices?
-  # vdiffr::expect_doppelganger("fastest-gear", plot_fastest(2022, 1, "R", "HAM", "gear"))
-  # vdiffr::expect_doppelganger("fastest-speed", plot_fastest(2022, 1, "R", "HAM", "speed"))
   gear<-plot_fastest(2022, 1, "R", "HAM", "gear")
   speed<-plot_fastest(2022, 1, "R", "HAM", "speed")
   expect_equal(gear$label$title, speed$label$title)

@@ -42,7 +42,6 @@ Suggests:
     ggplot2,
     testthat (>= 3.0.0),
     withr,
-    vdiffr,
     usethis
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
