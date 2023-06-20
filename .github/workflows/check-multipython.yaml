@@ -12,13 +12,13 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}/
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) old fastf1
+    name: multipython versions
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'release', }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
