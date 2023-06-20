@@ -37,7 +37,7 @@ load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
 
 now let's use ggplot2 to visualize some of the data we have
 
-```{r, echo =F}
+```{r, include =F}
 library(dplyr)
 library(ggplot2)
 ```
