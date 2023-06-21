@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -28,48 +28,38 @@ f1dataR serves as a tool to get neatly organized Formula 1 data into your R envi
 
 The most sought-after aspect of F1 data is telemetry data. 
 Let's get Leclerc's fastest lap from the first race of 2022:
-```{r setup}
+```{r telem}
 library(f1dataR)
 
 load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
 ```
 
+Now let's use ggplot2 to visualize some of the data we have
 
-now let's use ggplot2 to visualize some of the data we have
-
-```{r, include =F}
+```{r simple_plot}
 library(dplyr)
 library(ggplot2)
-```
 
-
-```{r}
 lec <- load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
-  head(300)%>% 
-  mutate(index = 1:300,
-         driver_id = "LEC")
+  head(300)
 
-ggplot(lec, aes(index, throttle))+
+ggplot(lec, aes(distance, throttle))+
   geom_line()+
   theme_minimal()
 ```
 
-What if we get more drivers involved. Let's also get the Qualifying data from Hamilton
+What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Perez
 
-```{r}
+```{r triple_plot}
 ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
-  head(300) %>% 
-  mutate(index = 1:300,
-         driverId = "HAM")
+  head(300)
 
 per <- load_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
-  head(300)%>% 
-  mutate(index = 1:300,
-         driver_id = "PER")
+  head(300)
 
 data <- bind_rows(lec,ham,per)
 
-ggplot(data, aes(index, throttle, color = driver_id))+
+ggplot(data, aes(distance, throttle, color = driver_code))+
   geom_line()+
   theme_minimal()
 
@@ -77,8 +67,8 @@ ggplot(data, aes(index, throttle, color = driver_id))+
 
 Now lets visualize speed and use the f1 dark theme for ggplot included in the package
 
-```{r}
-ggplot(data, aes(index, speed, color = driver_id))+
+```{r use_theme}
+ggplot(data, aes(distance, speed, color = driver_code))+
   geom_line()+
   theme_dark_f1()+
   theme(
@@ -93,36 +83,7 @@ ggplot(data, aes(index, speed, color = driver_id))+
 
 We can also use one of the plotting functions included in the package.
 
-```{r}
+```{r use_builtin}
 plot_fastest(2022, 1, 'R', 'PER')
 ```
-
-Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
-
-```{r}
-
-laps <- load_session_laps(2023, 'Spain') %>% 
-  filter(driver == 'PER') %>% 
-  group_by(compound) %>% 
-  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% # Remove in and out laps
-  ungroup()
-
-ggplot(laps, aes(tyre_life, lap_time, color = compound))+
-  geom_line()+
-  geom_point()+
-  theme_dark_f1(axis_marks = T)+
-  labs(
-    color = "Tyre Compound",
-    y = "Lap Time (Seconds)",
-    x = "Tyre Life (Laps)"
-  )+
-  scale_color_manual(
-    values = c('white', 'yellow', 'red')
-  )+
-  scale_y_continuous(breaks = seq(75,85, 1))+
-  scale_x_continuous(breaks = seq(2,26, 4))
-
-
-```
-
 
