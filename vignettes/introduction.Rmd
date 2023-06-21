@@ -87,3 +87,30 @@ We can also use one of the plotting functions included in the package.
 plot_fastest(2022, 1, 'R', 'PER')
 ```
 
+
+
+Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
+
+```{r}
+laps <- load_session_laps(2023, 'Spain') %>% 
+  filter(driver == 'PER') %>% 
+  group_by(compound) %>% 
+  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% # Remove in and out laps
+  ungroup()
+ggplot(laps, aes(tyre_life, lap_time, color = compound))+
+  geom_line()+
+  geom_point()+
+  theme_dark_f1(axis_marks = T)+
+  labs(
+    color = "Tyre Compound",
+    y = "Lap Time (Seconds)",
+    x = "Tyre Life (Laps)"
+  )+
+  scale_color_manual(
+    values = c('white', 'yellow', 'red')
+  )+
+  scale_y_continuous(breaks = seq(75,85, 1))+
+  scale_x_continuous(breaks = seq(2,26, 4))
+
+```
+
