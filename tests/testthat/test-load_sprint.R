@@ -9,7 +9,7 @@ test_that("sprint works", {
   sprint_2021_10_mem<-load_sprint(2021, 10)
   expect_identical(sprint_2021_10, sprint_2021_10_mem)
 
-  expect_error(load_results(3050, 2), "Year must be between 1950 and *")
+  expect_error(load_results(3050, 2), "`season` must be between 1950 and *")
 
   # A sprint doesn't exist for season = 2021, round = 11
   expect_null(suppressMessages(load_sprint(2021,11)))
