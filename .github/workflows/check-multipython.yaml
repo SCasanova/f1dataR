@@ -6,19 +6,22 @@ on:
   pull_request:
     branches: [main, master]
 
-name: R-CMD-check-oldff1
+name: R-CMD-CHK-multipython
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}/
+    runs-on: ${{ matrix.config.os }}
 
-    name: multipython versions
+    name: R CMD CHK with Python v${{ matrix.config.py }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest,   r: 'release', }
+          - {os: ubuntu-latest,   r: 'release', py: '3.8'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.9'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.10'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.11'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -37,11 +40,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: |
-            3.8
-            3.9
-            3.10
-            3.11
+          python-version: ${{ matrix.config.py }}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

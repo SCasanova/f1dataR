@@ -20,22 +20,27 @@
 
 load_driver_telemetry <- function(season = get_current_season, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
+    lifecycle::deprecate_warn("0.4.1", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
+  if(get_fastf1_version() >= 3){
+    add_v3_option <- '.add_driver_ahead()'
+  } else {
+    add_v3_option <- ''
+  }
   if(fastest_only){
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",
-                                                driver = driver))
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
+                                         driver = driver, opt = add_v3_option))
 
   }else{
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance().add_driver_ahead()",
-                                                driver = driver))
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
+                                         driver = driver, opt = add_v3_option))
 
   }
   py_env <- reticulate::py_run_string(paste("tel.SessionTime = tel.SessionTime.dt.total_seconds()",
-                                  "tel.Time = tel.Time.dt.total_seconds()",
-                                  sep = "\n"))
+                                            "tel.Time = tel.Time.dt.total_seconds()",
+                                            sep = "\n"))
 
   tel <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'tel'))
 
@@ -60,6 +65,6 @@ load_driver_telemetry <- function(season = get_current_season, round =1, session
 
 
 get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
-  lifecycle::deprecate_warn("1.0.0", "get_driver_telemetry()", "load_driver_telemetry()")
+  lifecycle::deprecate_warn("0.4.1", "get_driver_telemetry()", "load_driver_telemetry()")
   load_driver_telemetry(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)
 }
