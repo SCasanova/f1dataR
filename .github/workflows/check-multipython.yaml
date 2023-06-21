@@ -18,10 +18,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest,   r: 'release', py: 3.8}
-          - {os: ubuntu-latest,   r: 'release', py: 3.9}
-          - {os: ubuntu-latest,   r: 'release', py: 3.10}
-          - {os: ubuntu-latest,   r: 'release', py: 3.11}
+          - {os: ubuntu-latest,   r: 'release', py: '3.8'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.9'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.10'}
+          - {os: ubuntu-latest,   r: 'release', py: '3.11'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
