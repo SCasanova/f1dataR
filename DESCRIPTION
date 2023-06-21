@@ -35,7 +35,8 @@ Imports:
     stringr, 
     tidyr,
     rlang,
-    lifecycle
+    lifecycle,
+    cli
 Suggests: 
     rmarkdown,
     knitr,
