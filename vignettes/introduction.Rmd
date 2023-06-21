@@ -91,12 +91,14 @@ plot_fastest(2022, 1, 'R', 'PER')
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
-```{r}
+```{r session_laps}
 laps <- load_session_laps(2023, 'Spain') %>% 
   filter(driver == 'PER') %>% 
   group_by(compound) %>% 
-  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% # Remove in and out laps
+  # Remove in and out laps
+  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% 
   ungroup()
+
 ggplot(laps, aes(tyre_life, lap_time, color = compound))+
   geom_line()+
   geom_point()+
@@ -113,4 +115,34 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound))+
   scale_x_continuous(breaks = seq(2,26, 4))
 
 ```
+
+
+Finally let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
+
+```{r telem plotting}
+
+
+ver_can <- load_driver_telemetry(season = 2023, 
+                                 round = 'Canada', 
+                                 driver = 'VER',
+                                 fastest_only = T) %>% 
+  mutate(open_throttle = ifelse(throttle == 100, 'Yes', "No"))
+
+ggplot2::ggplot(ver_can, ggplot2::aes(x, y, color = as.factor(open_throttle), group = NA)) +
+  ggplot2::geom_path(linewidth = 4, lineend = 'round') +
+  ggplot2::scale_color_manual( values = c('white', 'red')) +
+  theme_dark_f1() +
+      ggplot2::labs(
+        title = 'Verstappen Flat Out',
+        subtitle = 'Canada 2023 | Fastest Lap',
+        color = 'Throttle 100%'
+      )
+
+```
+
+
+
+
+
+
 
