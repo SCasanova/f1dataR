@@ -12,8 +12,9 @@
 
 .load_quali <- function(season = 'current', round = 'last'){
    if(season != 'current' & (season < 2003 | season > get_current_season())){
-    stop(glue::glue('Year must be between 2003 and {current} (or use "current")',
-                    current=get_current_season()))
+     cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
+    # stop(glue::glue('Year must be between 2003 and {current} (or use "current")',
+    #                 current=get_current_season()))
    }
 
   url <- glue::glue('{season}/{round}/qualifying.json?limit=40',
