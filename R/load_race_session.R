@@ -30,11 +30,13 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
     round <- race
   }
   if(season != 'current' & (season < 2018 | season > get_current_season())){
-    stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
-                    current = get_current_season()))
+    cli::cli_abort('{.var season} must be between 2018 and {get_current_season()} (or use "current")')
+    # stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
+    #                 current = get_current_season()))
   }
   if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS"))){
-    stop('Session must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
+    cli::cli_abort('{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
+    # stop('Session must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
   }
   if(season == 'current'){
     season <- get_current_season()

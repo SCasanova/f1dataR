@@ -8,5 +8,5 @@ test_that("Lap Load works", {
   laps_2021_1_mem<-load_laps(2021, 1)
   expect_identical(laps_2021_1, laps_2021_1_mem)
 
-  expect_error(load_laps(3050, 3), "Year must be between 1996 and *")
+  expect_error(load_laps(3050, 3), "`season` must be between 1996 and *")
 })

@@ -45,9 +45,9 @@ test_that("Load Session Works", {
 
 
   expect_error(load_race_session(season = 2017),
-               "Year must be between 2018 and *")
+               "`season` must be between 2018 and *")
   expect_error(load_race_session(session = "ZZZ"),
-               'Session must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
+               '`session` must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
   expect_error(load_race_session('session', season = 2022, round = 1, session = "R", log_level = "ZZZ"))
   #expect_message(load_race_session('session', season = 2022, race = 1, session = "R", log_level = 'INFO'),
   #               regexp = NULL) # This type of check is set up to later possibly handle verbose = FALSE/TRUE option tests

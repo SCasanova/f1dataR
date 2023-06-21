@@ -10,6 +10,6 @@ test_that("load Standings works", {
   standings_2021_constructor<-load_standings(2021, type = 'constructor')
   expect_equal(nrow(standings_2021_constructor), 10)
 
-  expect_error(load_standings(3050), "Year must be between 1950 and *")
+  expect_error(load_standings(3050), "`season` must be between 1950 and *")
 
 })

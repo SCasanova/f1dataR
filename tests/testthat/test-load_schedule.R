@@ -13,5 +13,5 @@ test_that("Schedule Load works", {
   expect_equal(nrow(schedule_1999), 16)
   expect_equal(schedule_1999$circuit_id[1], 'albert_park')
 
-  expect_error(load_schedule(3050), "Year must be between 1950 and *")
+  expect_error(load_schedule(3050), "`season` must be between 1950 and *")
 })

@@ -18,5 +18,5 @@ test_that("Results Load works", {
   expect_equal(ncol(results_2003), ncol(results_2021_12))
   expect_true(ncol(results_2021_1) != ncol(results_2021_12))
 
-  expect_error(load_results(3050, 2), "Year must be between 1950 and *")
+  expect_error(load_results(3050, 2), "`season` must be between 1950 and *")
 })

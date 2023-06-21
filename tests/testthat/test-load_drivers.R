@@ -12,5 +12,5 @@ test_that("Drivers Load works", {
   expect_equal(nrow(drivers_1999), 24)
   expect_equal(drivers_1999$driver_id[1], 'alesi')
 
-  expect_error(load_drivers(3050), "Year must be between 1950 and *")
+  expect_error(load_drivers(3050), "`season` must be between 1950 and *")
 })
