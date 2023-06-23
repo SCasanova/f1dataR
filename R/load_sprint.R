@@ -1,9 +1,9 @@
-#' Load Sprint Results (not cached)
+#' Load Sprint Results
 #'
 #' Loads final race results for a given year and round. Note not all rounds have
-#' sprint results
+#' sprint results. Use `.load_sprint()` for an uncached version of this function.
 #'
-#' @param season number from 1950 to current season  (defaults to current season).
+#' @param season number from 2021 to current season  (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
@@ -13,8 +13,7 @@
 #' grid position, laps completed, race status (finished or otherwise), gap to
 #' first place, fastest lap, fastest lap time, fastest lap in seconds,
 #' or NULL if no sprint exists for this season/round combo
-
-.load_sprint <- function(season = 'current', round = 'last'){
+.load_sprint <- function(season = get_current_season(), round = 'last'){
   if(season != 'current' & (season < 2021 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 2021 and {get_current_season()} (or use "current")')
     # stop(glue::glue('Year must be between 2021 and {current} (or use "current")',
@@ -56,22 +55,15 @@
     dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
     tibble::as_tibble() %>%
     janitor::clean_names()
-
 }
 
-#' Load Sprint
-#'
-#' @description Loads sprint race results for a given year and round. Note not
-#' all rounds have sprint results
-#'
-#' @param season number from 2021 to current season (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
-#' @return A tibble with columns driver_id, constructor_id, points awarded, finishing position,
-#' grid position, laps completed, race status (finished or otherwise), gap to
-#' first place, fastest lap, fastest lap time, fastest lap in seconds,
-#' or NULL if no sprint exists for this season/round combo
+#' @import .load_sprint title description params return
 #' @export
-
+#' # Load a sprint result
+#' load_sprint(2021, 10)
+#'
+#' # If a weekend doesn't have sprint race/quali results, it will return NULL
+#' load_sprint(2022, 1)
+#'
 load_sprint <- memoise::memoise(.load_sprint)
 
