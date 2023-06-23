@@ -1,20 +1,17 @@
-#' Load Qualifying Results (not cached)
+#' Load Qualifying Results
 #'
-#' Loads qualifying session results for a given season and round.
+#' Loads qualifying session results for a given season and round. Use `.load_quali()` for an uncached version.
 #'
-#' @param season number from 1950 to current season (defaults to current season).
+#' @param season number from 2003 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @keywords internal
 #' @return A tibble with one row per driver
-
-.load_quali <- function(season = 'current', round = 'last'){
+.load_quali <- function(season = get_current_season(), round = 'last'){
    if(season != 'current' & (season < 2003 | season > get_current_season())){
      cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 2003 and {current} (or use "current")',
-    #                 current=get_current_season()))
    }
 
   url <- glue::glue('{season}/{round}/qualifying.json?limit=40',
@@ -49,16 +46,12 @@
 
 }
 
-#' Load Qualifying Results
-#'
-#' Loads qualifying session results for a given season and round.
-#'
-#' @param season number from 1950 to current season (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
-#' @importFrom magrittr "%>%"
-#' @return A tibble with one row per driver
+#' @import .load_quali title description params return
 #' @export
-
+#' @examples
+#' # Load quali from the first race of 2023:
+#' load_quali(2023, 1)
+#' 
+#' # Load quali from the third race of 2004:
+#' load_quali(2004, 1)
 load_quali <- memoise::memoise(.load_quali)
-
