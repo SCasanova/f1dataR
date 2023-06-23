@@ -5,10 +5,9 @@
 #' Call `.load_pitstops()` for an uncached version.
 #'
 #' @param season number from 2011 to current season (defaults to current season).
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent.
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, please use `round`. 
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
