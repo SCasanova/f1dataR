@@ -2,16 +2,25 @@
 % Please edit documentation in R/load_circuits.R
 \name{load_circuits}
 \alias{load_circuits}
-\title{Load Ciruit Info}
+\title{Load Circuit Info (not cached)}
 \usage{
-load_circuits(season = "current")
+load_circuits(season = get_current_season())
 }
 \arguments{
 \item{season}{number from 1950 to current season (defaults to current season).}
 }
 \value{
-A tibble with with one row per circuit
+A tibble with one row per circuit
 }
 \description{
-Loads Circuit info for all participants in a given season.
+Loads circuit info for all circuits in a given season.
+This function does not export, only the cached version.
+}
+\examples{
+#Load the circuits used this season:
+load_circuits()
+
+#Load the circuits used in 1972:
+load_circuits(1972)
+
 }

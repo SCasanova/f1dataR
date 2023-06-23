@@ -4,7 +4,7 @@
 \alias{.load_circuits}
 \title{Load Circuit Info (not cached)}
 \usage{
-.load_circuits(season = "current")
+.load_circuits(season = get_current_season())
 }
 \arguments{
 \item{season}{number from 1950 to current season (defaults to current season).}
@@ -16,4 +16,3 @@ A tibble with one row per circuit
 Loads circuit info for all circuits in a given season.
 This function does not export, only the cached version.
 }
-\keyword{internal}
