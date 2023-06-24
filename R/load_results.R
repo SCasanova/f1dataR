@@ -4,7 +4,7 @@
 #'
 #' @param season number from 1950 to current season (or the word 'current') (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent (via the word 'last').
+#' to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @keywords internal
@@ -12,8 +12,6 @@
 .load_results <- function(season = get_current_season(), round = 'last'){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current = get_current_season()))
   }
 
   url <- glue::glue('{season}/{round}/results.json?limit=40',

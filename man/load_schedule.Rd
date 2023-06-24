@@ -7,7 +7,7 @@
 load_schedule(season = get_current_season())
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season). \code{'current'} also accepted.}
 }
 \value{
 A tibble with one row per circuit in season

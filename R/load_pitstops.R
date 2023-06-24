@@ -6,7 +6,7 @@
 #'
 #' @param season number from 2011 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent.
+#' to most recent.Also accepts `'last'`.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, please use `round`.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
@@ -19,8 +19,6 @@
   }
   if(season != 'current' & (season < 2011 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current=get_current_season()))
   }
 
   url <- glue::glue('{season}/{round}/pitstops.json?limit=80',

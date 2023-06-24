@@ -3,10 +3,10 @@
 #' Loads lap-by-lap time data for all drivers in a given season
 #' and round. Lap time data is available from 1996 onward. Use `.load_laps()` for a uncached version.
 #'
-#' @param season number from 1996 to current season (defaults to current season)
+#' @param season number from 1996 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent
-#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, select `round`
+#' to most recent.  Also accepts `'last'`.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id (unique and recurring), position

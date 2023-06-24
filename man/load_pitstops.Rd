@@ -14,7 +14,7 @@ load_pitstops(
 \item{season}{number from 2011 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season selected) and defaults
-to most recent.}
+to most recent.Also accepts \code{'last'}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, please use \code{round}.}
 }

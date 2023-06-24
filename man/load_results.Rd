@@ -10,7 +10,7 @@ load_results(season = get_current_season(), round = "last")
 \item{season}{number from 1950 to current season (or the word 'current') (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent (via the word 'last').}
+to most recent. Also accepts \code{'last'}.}
 }
 \value{
 A tibble with one row per driver

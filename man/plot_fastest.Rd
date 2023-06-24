@@ -19,13 +19,13 @@ plot_fastest(
 \item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
 
-\item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, SS, and R. Default is "R", which refers to Race.}
+\item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
+\code{'Q'}, \code{'S'}, \code{'SS'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
-\item{driver}{three letter driver code (see load_drivers() for a list)}
+\item{driver}{three letter driver code (see load_drivers() for a list).}
 
-\item{color}{argument that indicates which variable to plot overtop the
-circuit}
+\item{color}{argument that indicates which variable to plot along the
+circuit. Choice of \code{'gear'} or \code{'speed'}, default \code{'gear'}.}
 
 \item{race}{number from 1 to 23 (depending on season selected) and defaults
 to most recent.}
@@ -37,4 +37,10 @@ color variable.
 \description{
 Creates a ggplot object that details the fastest lap for a driver in a race.
 Complete with a gearshift or speed analysis.
+}
+\examples{
+\dontrun{
+# Plot Verstappen's fastest lap (speed) from Bahrain 2023:
+plot_fastest(2023, 1, 'R', 'VER', 'speed')
+}
 }

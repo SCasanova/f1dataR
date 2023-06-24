@@ -5,7 +5,7 @@
 #'
 #' @param season number from 2021 to current season  (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
+#' to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @keywords internal
@@ -16,8 +16,6 @@
 .load_sprint <- function(season = get_current_season(), round = 'last'){
   if(season != 'current' & (season < 2021 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 2021 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 2021 and {current} (or use "current")',
-    #                 current = get_current_season()))
   }
 
   url <- glue::glue('{season}/{round}/sprint.json?limit=40',

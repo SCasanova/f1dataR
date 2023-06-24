@@ -4,7 +4,7 @@
 #'
 #' @param season number from 2003 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
+#' to most recent.  Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @keywords internal

@@ -5,7 +5,7 @@
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
+#' to most recent. Also accepts `'last'`.
 #' @param type select `'drivers'` or `'constructors'` championship data. Defaults to
 #' `'drivers'`
 #' @importFrom magrittr "%>%"
@@ -15,8 +15,6 @@
 .load_standings <- function(season = get_current_season(), round = 'last', type = 'driver'){
   if(season != 'current' & (season < 2003 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current=get_current_season()))
   }
 
   url <- glue::glue('{season}/{round}/{type}Standings.json?limit=40',

@@ -8,17 +8,21 @@
 #' to most recent.
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
-#' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, SS, and R. Default is "R", which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list)
-#' @param color argument that indicates which variable to plot overtop the
-#' circuit
+#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
+#' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
+#' @param driver three letter driver code (see load_drivers() for a list).
+#' @param color argument that indicates which variable to plot along the
+#' circuit. Choice of `'gear'` or `'speed'`, default `'gear'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @return A ggplot object that indicates grand prix, driver, time and selected
 #' color variable.
 #' @export
-
+#' @examples
+#' \dontrun{
+#' # Plot Verstappen's fastest lap (speed) from Bahrain 2023:
+#' plot_fastest(2023, 1, 'R', 'VER', 'speed')
+#' }
 plot_fastest <- function(season = get_current_season(), round = 1, session = 'R', driver, color = 'gear', race = lifecycle::deprecated()){
 
   if(!requireNamespace('ggplot2', quietly = T)){

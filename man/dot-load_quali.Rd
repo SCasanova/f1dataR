@@ -10,7 +10,7 @@
 \item{season}{number from 2003 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent.  Also accepts \code{'last'}.}
 }
 \value{
 A tibble with one row per driver

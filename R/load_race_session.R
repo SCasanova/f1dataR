@@ -9,21 +9,27 @@
 #' for more details on the data returned by the python API.
 #'
 #' @param obj_name name assigned to the loaded session to be referenced later.
-#' @param season number from 2018 to current season. Defaults to current season
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent. Also accepts race name.
+#' Leave as `'session'` unless otherwise required.
+#' @param season number from 2018 to current season. Defaults to current season.
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
-#' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, SS and R. Default is "R", which refers to Race.
+#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
+#' `'Q'`, `'S'`, `'SS'` and `'R'`. Default is `'R'`, which refers to Race.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL.'` See
+#' \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`
 #' @import reticulate
 #' @return A session object to be used in other functions invisibly.
 #' @export
-
+#' @seealso [load_session_laps()] [plot_fastest()]
+#' @examples
+#' \dontrun{
+#' Load the quali session from 2019 first round
+#' session<-load_race_session(season = 2019, round = 1, session = 'Q')
+#' }
 load_race_session <- function(obj_name="session", season = get_current_season(), round =1, session = 'R', log_level = "WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_race_session(race)", "load_race_session(round)")
@@ -36,7 +42,6 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
   }
   if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS"))){
     cli::cli_abort('{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
-    # stop('Session must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
   }
   if(season == 'current'){
     season <- get_current_season()

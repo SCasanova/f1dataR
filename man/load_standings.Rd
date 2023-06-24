@@ -10,7 +10,7 @@ load_standings(season = get_current_season(), round = "last", type = "driver")
 \item{season}{number from 1950 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent. Also accepts \code{'last'}.}
 
 \item{type}{select \code{'drivers'} or \code{'constructors'} championship data. Defaults to
 \code{'drivers'}}

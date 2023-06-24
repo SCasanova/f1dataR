@@ -14,23 +14,24 @@ load_race_session(
 )
 }
 \arguments{
-\item{obj_name}{name assigned to the loaded session to be referenced later.}
+\item{obj_name}{name assigned to the loaded session to be referenced later.
+Leave as \code{'session'} unless otherwise required.}
 
-\item{season}{number from 2018 to current season. Defaults to current season}
+\item{season}{number from 2018 to current season. Defaults to current season.}
 
 \item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
-\item{session}{the code for the session to load Options are FP1, FP2, FP3,
-Q, S, SS and R. Default is "R", which refers to Race.
+\item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
+\code{'Q'}, \code{'S'}, \code{'SS'} and \code{'R'}. Default is \code{'R'}, which refers to Race.
 Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 default is the current working directory.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL.'} See
+\href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}}
 }
 \value{
 A session object to be used in other functions invisibly.
@@ -44,4 +45,13 @@ data stream via the fastf1 python library. Data is available from
 The data loaded can optionally be assigned to a R variable, and then interrogated for
 session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1 documentation}
 for more details on the data returned by the python API.
+}
+\examples{
+\dontrun{
+Load the quali session from 2019 first round
+session<-load_race_session(season = 2019, round = 1, session = 'Q')
+}
+}
+\seealso{
+\code{\link[=load_session_laps]{load_session_laps()}} \code{\link[=plot_fastest]{plot_fastest()}}
 }

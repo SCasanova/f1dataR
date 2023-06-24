@@ -2,15 +2,13 @@
 #'
 #' Loads schedule information for a given F1 season. Use `.load_schedule()` for an uncached version.
 #'
-#' @param season number from 1950 to current season (defaults to current season).
+#' @param season number from 1950 to current season (defaults to current season). `'current'` also accepted.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with one row per circuit in season
 .load_schedule <- function(season = get_current_season()){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current = get_current_season()))
   }
 
   url <- glue::glue('{season}.json?limit=30', season = season)
