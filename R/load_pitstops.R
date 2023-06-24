@@ -33,6 +33,6 @@
 #' @export
 #' @examples
 #' # Load pitstops from the first race of 2023:
-#' load_pistops(season = 2023, round = 1)
+#' load_pitstops(season = 2023, round = 1)
 #'
 load_pitstops <- memoise::memoise(.load_pitstops)

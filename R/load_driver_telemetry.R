@@ -19,7 +19,11 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' telem <- load_driver_telemetry(season = 2023, round = 'bahrain', session = 'Q', driver = 'HAM', fastest_only = TRUE)
+#' telem <- load_driver_telemetry(season = 2023,
+#'                                round = 'bahrain', s
+#'                                ession = 'Q',
+#'                                driver = 'HAM',
+#'                                fastest_only = TRUE)
 #' }
 #'
 load_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
