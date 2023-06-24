@@ -6,8 +6,8 @@
 #' @param season number from 1950 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
 #' to most recent. Also accepts `'last'`.
-#' @param type select `'drivers'` or `'constructors'` championship data. Defaults to
-#' `'drivers'`
+#' @param type select `'driver'` or `'constructor'` championship data. Defaults to
+#' `'driver'`
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id (or constructor_id), position,
@@ -15,6 +15,10 @@
 .load_standings <- function(season = get_current_season(), round = 'last', type = 'driver'){
   if(season != 'current' & (season < 2003 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
+  }
+
+  if(!(type %in% c('driver', 'constructor'))){
+    cli::cli_abort('{.var type} must be either "driver" or "constructor"')
   }
 
   url <- glue::glue('{season}/{round}/{type}Standings.json?limit=40',
@@ -46,7 +50,7 @@
 #' @export
 #' @examples
 #' # Get the driver standings at the end of 2021
-#' load_standings(2021, 'last', 'drivers')
+#' load_standings(2021, 'last', 'driver')
 #'
 #' # Get constructor standings at the end of 1997
 #' load_standings(1997, 'last', 'constructors')

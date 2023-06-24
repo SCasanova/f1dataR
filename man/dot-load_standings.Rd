@@ -12,8 +12,8 @@
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent. Also accepts \code{'last'}.}
 
-\item{type}{select \code{'drivers'} or \code{'constructors'} championship data. Defaults to
-\code{'drivers'}}
+\item{type}{select \code{'driver'} or \code{'constructor'} championship data. Defaults to
+\code{'driver'}}
 }
 \value{
 A tibble with columns driver_id (or constructor_id), position,
