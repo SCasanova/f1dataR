@@ -6,7 +6,6 @@
 #' @param url the complete Ergast URL to get
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
-
 get_ergast_content<-function(url){
   fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
@@ -14,7 +13,7 @@ get_ergast_content<-function(url){
 
   #Handle Ergast errors with more informative error codes.
   if(res$status_code != 200 | rawToChar(res$content) == "Unable to select database"){
-    message('Failure at Ergast with https:// connection. Retrying as http://.')
+    cli::cli_inform('Failure at Ergast with https:// connection. Retrying as http://.')
     # Try revert to not https mode
     fullurl<-glue::glue("http://ergast.com/api/f1/{url}", url = url)
     res <- httr::GET(fullurl,
@@ -24,11 +23,11 @@ get_ergast_content<-function(url){
 
   #Handle Ergast errors with more informative error codes.
   if(res$status_code != 200){
-    stop(glue::glue("Error getting Ergast Data, http status code {code}.",
+    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.",
                     code = res$status_code))
   }
   if(rawToChar(res$content) == "Unable to select database"){
-    stop("Ergast is having database trouble. Please try again at a later time.")
+    cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
 
   #presuming ergast is ok...
@@ -47,8 +46,8 @@ get_ergast_content<-function(url){
     current_season <- as.numeric(data$MRData$RaceTable$season)
   },
   error = function(e){
-    message("f1dataR: Error getting current season from ergast", e)
-    message("Falling back to manually determined 'current' season")
+    cli::cli_inform("f1dataR: Error getting current season from ergast", e)
+    cli::cli_inform("Falling back to manually determined 'current' season")
     current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m"))<3,
                              as.numeric(strftime(Sys.Date(), "%Y"))-1,
                              as.numeric(strftime(Sys.Date(), "%Y")))
@@ -56,32 +55,40 @@ get_ergast_content<-function(url){
   return(current_season)
 }
 
-#' Get Current Season
-#'
-#' @description Looks up current season from ergast, fallback to manual determination
-#' @keywords internal
+#' @inherit .get_current_season title description return
 #' @export
-#' @return Year (four digit number) representation of current season, as numeric.
-
+#' @examples
+#' # Get the current season
+#' get_current_season()
 get_current_season <- memoise::memoise(.get_current_season)
 
 
+#' Get current FastF1 version
+#'
+#' @description
+#' Gets the current installed FastF1 version available (via `reticulate`) to the function.
+#'
+#' Displays a note if significantly out of date.
+#' @keywords internal
+#' @return integer for major version number (or NA if any error )
 .get_fastf1_version <- function(){
   ver<-reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if(length(ver) == 0){
-    message("Ensure fastf1 python package is installed.\nPlease run this to install the most recent version:\nreticulate::py_install('fastf1')")
+    cli::cli_warn("Ensure fastf1 python package is installed.\nPlease run this to install the most recent version:\nreticulate::py_install('fastf1')")
     return(NA)
   }
   if(as.integer(substr(ver, start = 1, 1)) >= 3){
     return(3)
   } else if(as.integer(substr(ver, start = 1, 1)) <= 2){
-    message("The Python package fastf1 was updated to v3 recently.\nPlease update the version on your system by running:\nreticulate::py_install('fastf1')\nFuture versions of f1dataR may not support fastf1 < v3.0.0")
+    cli::cli_inform("The Python package fastf1 was updated to v3 recently.\nPlease update the version on your system by running:\nreticulate::py_install('fastf1')\nFuture versions of f1dataR may not support fastf1 < v3.0.0")
     return(2)
   } else {
     return(NA)
   }
 }
 
+#' @inherit .get_fastf1_version title description return
+#' @keywords internal
 get_fastf1_version <- memoise::memoise(.get_fastf1_version)
