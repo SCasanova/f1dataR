@@ -22,3 +22,7 @@ PackageInstallArgs: --no-multiarch --with-keep.source
 PackageRoxygenize: rd,collate,namespace
 
 QuitChildProcessesOnExit: Yes
+
+PythonType: virtualenv
+PythonVersion: 3.11.0
+PythonPath: ~/.virtualenvs/r-reticulate/Scripts/python.exe

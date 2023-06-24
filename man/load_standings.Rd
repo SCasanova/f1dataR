@@ -7,7 +7,7 @@
 load_standings(season = get_current_season(), round = "last", type = "driver")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 2003 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent. Also accepts \code{'last'}.}
@@ -27,6 +27,6 @@ constructors' championships. Use \code{.load_standings()} for an uncached versio
 # Get the driver standings at the end of 2021
 load_standings(2021, 'last', 'driver')
 
-# Get constructor standings at the end of 1997
-load_standings(1997, 'last', 'constructors')
+# Get constructor standings at part way through 2004
+load_standings(2004, 5, 'constructor')
 }
