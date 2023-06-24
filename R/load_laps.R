@@ -1,20 +1,17 @@
-#' Load Lap by Lap Time Data (not cached)
+#' Load Lap by Lap Time Data
 #'
 #' Loads lap-by-lap time data for all drivers in a given season
-#' and round. Lap time data is available from 1996 onward. This function does not export, only the cached version.
+#' and round. Lap time data is available from 1996 onward. Use `.load_laps()` for a uncached version.
 #'
-#' @param season number from 1996 to current season (defaults to current season)
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent
+#' @param season number from 1996 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent
+#' to most recent.  Also accepts `'last'`.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
-
-
-.load_laps <- function(season = 'current', round = 'last', race = lifecycle::deprecated()){
+.load_laps <- function(season = get_current_season(), round = 'last', race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_laps(race)", "load_laps(round)")
     round <- race
@@ -64,7 +61,6 @@
 #' @param time character string with clock format (0:00.000)
 #' @importFrom magrittr "%>%"
 #' @return A numeric variable that represents that time in seconds
-
 time_to_sec <- function(time){
   subfun <- function(x){
     if(is.na(x))
@@ -75,21 +71,14 @@ time_to_sec <- function(time){
     }
   }
   purrr::map_dbl(time, subfun)
-
 }
 
-#' Load Lap by Lap Time Data
-#'
-#' Loads lap-by-lap time data for all drivers in a given season
-#' and round. Lap time data is available from 1996 onward.
-#'
-#' @param season number from 1996 to current season (defaults to current season)
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent
-#' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent
-#' @return A dataframe with columns driverId (unique and recurring), position
-#' during lap, time (in clock form), lap number, time (in seconds), and season.
+#' @inherit .load_laps title description params return
 #' @export
-
+#' @examples
+#' # Load laps from the last race of 2021
+#' load_laps(2021, 'last')
+#'
+#' # Load laps from the third race of 1999
+#' load_laps(1999, 3)
 load_laps <- memoise::memoise(.load_laps)

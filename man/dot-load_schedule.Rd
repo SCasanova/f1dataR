@@ -2,18 +2,17 @@
 % Please edit documentation in R/load_schedule.R
 \name{.load_schedule}
 \alias{.load_schedule}
-\title{Load Schedule (not cached)}
+\title{Load Schedule}
 \usage{
-.load_schedule(season = "current")
+.load_schedule(season = get_current_season())
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season). \code{'current'} also accepted.}
 }
 \value{
 A tibble with one row per circuit in season
 }
 \description{
-Loads schedule information for a given F1 season.
-This function does not export, only the cached version.
+Loads schedule information for a given F1 season. Use \code{.load_schedule()} for an uncached version.
 }
 \keyword{internal}

@@ -1,26 +1,27 @@
 #' Load Lapwise Data
 #'
-#' Loads lapwise data for a race session.
+#' @description Loads lapwise data for a race session.
 #'
 #' Includes each driver's each lap's laptime, pit in/out time, tyre information, track status, and (optionally) weather information.
-#' The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3
+#' The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3.
 #'
-#' @param season number from 2018 to current season. Defaults to current season
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent. Also accepts race name.
-#' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent. Also accepts race name.
-#' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, and R. Default is "R", which refers to Race.
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
+#'
+#' @param season number from 2018 to current season. Defaults to current season.
+#' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
+#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
+#' `'Q'`, `'S'`, `'SS'` and `'R'` Default is `'R'`, which refers to Race.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
-#' @param add_weather Whether to add weather information to the laps. See \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather
+#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See
+#' \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' @param add_weather Whether to add weather information to the laps. See
+#' \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @import reticulate
 #' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-
+#'
 load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F, race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_session_laps(race)", "load_session_laps(round)")

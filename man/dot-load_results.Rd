@@ -2,20 +2,20 @@
 % Please edit documentation in R/load_results.R
 \name{.load_results}
 \alias{.load_results}
-\title{Load Results (not cached)}
+\title{Load Results}
 \usage{
-.load_results(season = "current", round = "last")
+.load_results(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season  (defaults to current season).}
+\item{season}{number from 1950 to current season (or the word 'current') (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent. Also accepts \code{'last'}.}
 }
 \value{
 A tibble with one row per driver
 }
 \description{
-Loads final race results for a given year and round.
+Loads final race results for a given year and round. Use \code{.load_results()} for an uncached version
 }
 \keyword{internal}

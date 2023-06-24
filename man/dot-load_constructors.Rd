@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_constructors.R
 \name{.load_constructors}
 \alias{.load_constructors}
-\title{Load Constructor Info (not cached)}
+\title{Load Constructor Info}
 \usage{
 .load_constructors()
 }
@@ -10,7 +10,6 @@
 A tibble with one row per constructor
 }
 \description{
-Loads constructor info for all participants in a given season.
-This function does not export, only the cached version.
+Loads constructor info for all participants in a given season. Use \code{.load_constructors()}for an uncached version of this function
 }
 \keyword{internal}

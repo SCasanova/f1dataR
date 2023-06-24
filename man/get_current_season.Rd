@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_current_season}
 \alias{get_current_season}
-\title{Get Current Season}
+\title{Get Current Season core}
 \usage{
 get_current_season()
 }
@@ -12,4 +12,7 @@ Year (four digit number) representation of current season, as numeric.
 \description{
 Looks up current season from ergast, fallback to manual determination
 }
-\keyword{internal}
+\examples{
+# Get the current season
+get_current_season()
+}

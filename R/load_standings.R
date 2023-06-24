@@ -1,23 +1,24 @@
-#' Load Standings (not cached)
+#' Load Standings
 #'
 #' Loads standings at the end of a given season and round for drivers' or
-#' constructors' championships.
+#' constructors' championships. Use `.load_standings()` for an uncached version of this function.
 #'
-#' @param season number from 1950 to current season (defaults to current season).
+#' @param season number from 2003 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
-#' @param type select drivers or constructors championship data. Defaults to
-#' drivers
+#' to most recent. Also accepts `'last'`.
+#' @param type select `'driver'` or `'constructor'` championship data. Defaults to
+#' `'driver'`
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id (or constructor_id), position,
-#' points, wins and constructorsId in the case of drivers championship.
-
-.load_standings <- function(season = 'current', round = 'last', type = 'driver'){
+#' points, wins (and constructorsId in the case of drivers championship).
+.load_standings <- function(season = get_current_season(), round = 'last', type = 'driver'){
   if(season != 'current' & (season < 2003 | season > get_current_season())){
-    cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current=get_current_season()))
+    cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
+  }
+
+  if(!(type %in% c('driver', 'constructor'))){
+    cli::cli_abort('{.var type} must be either "driver" or "constructor"')
   }
 
   url <- glue::glue('{season}/{round}/{type}Standings.json?limit=40',
@@ -43,23 +44,14 @@
       tibble::as_tibble() %>%
       janitor::clean_names()
   }
-
 }
 
-#' Load Standings
-#'
-#' Loads standings at the end of a given season and round for drivers' or
-#' constructors' championships.
-#'
-#' @param season number from 1950 to current season (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent.
-#' @param type select drivers or constructors championship data. Defaults to
-#' drivers
-#' @importFrom magrittr "%>%"
-#' @return A tibble with columns driver_id (or constructor_id), position,
-#' points, wins and constructorsId in the case of drivers championship.
+#' @inherit .load_standings title description params return
 #' @export
-
+#' @examples
+#' # Get the driver standings at the end of 2021
+#' load_standings(2021, 'last', 'driver')
+#'
+#' # Get constructor standings at part way through 2004
+#' load_standings(2004, 5, 'constructor')
 load_standings <- memoise::memoise(.load_standings)
-

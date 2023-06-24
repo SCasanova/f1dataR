@@ -2,23 +2,31 @@
 % Please edit documentation in R/load_sprint.R
 \name{load_sprint}
 \alias{load_sprint}
-\title{Load Sprint}
+\title{Load Sprint Results}
 \usage{
-load_sprint(season = "current", round = "last")
+load_sprint(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 2021 to current season (defaults to current season).}
+\item{season}{number from 2021 to current season  (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent. Also accepts \code{'last'}.}
 }
 \value{
-A tibble with columns driver_id, constructor_id, points awarded, finishing position,
+A dataframetibble with columns driver_id, constructor_id, points awarded, finishing position,
 grid position, laps completed, race status (finished or otherwise), gap to
 first place, fastest lap, fastest lap time, fastest lap in seconds,
 or NULL if no sprint exists for this season/round combo
 }
 \description{
-Loads sprint race results for a given year and round. Note not
-all rounds have sprint results
+Loads final race results for a given year and round. Note not all rounds have
+sprint results. Use \code{.load_sprint()} for an uncached version of this function.
+}
+\examples{
+# Load a sprint result
+load_sprint(2021, 10)
+
+# If a weekend doesn't have sprint race/quali results, it will return NULL
+load_sprint(2022, 1)
+
 }

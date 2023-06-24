@@ -1,24 +1,32 @@
 #' Load Telemetry Data for a Driver
 #'
-#' Receives season, race number, driver code, and an optional fastest lap only
+#' @description Receives season, race number, driver code, and an optional fastest lap only
 #' argument to output car telemetry for the selected situation.
 #'
 #' @param season number from 2018 to current season (defaults to current season).
-#' @param race number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
-#' @param session the code for the session to load Options are FP1, FP2, FP3,
-#' Q, S, SS, and R. Default is "R", which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list)
+#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
+#' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
+#' @param driver three letter driver code (see load_drivers() for a list).
 #' @param fastest_only boolean value whether to pick all laps or only the fastest
 #' by the driver in that session.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' DEBUG, INFO, WARNING, ERROR and CRITICAL. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @importFrom magrittr "%>%"
 #' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
 #' @export
-
-load_driver_telemetry <- function(season = get_current_season, round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+#' @examples
+#' \dontrun{
+#' telem <- load_driver_telemetry(season = 2023,
+#'                                round = 'bahrain', s
+#'                                ession = 'Q',
+#'                                driver = 'HAM',
+#'                                fastest_only = TRUE)
+#' }
+#'
+load_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
@@ -50,11 +58,7 @@ load_driver_telemetry <- function(season = get_current_season, round =1, session
     janitor::clean_names()
 }
 
-#' Load Telemetry Data for a Driver
-#'
-#' Receives season, race number, driver code, and an optional fastest lap only
-#' argument to output car telemetry for the selected situation.
-#'
+#' @inherit load_driver_telemetry title return params
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
@@ -62,8 +66,6 @@ load_driver_telemetry <- function(season = get_current_season, round =1, session
 #' consistent API.
 #' @keywords internal
 #' @export
-
-
 get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
   lifecycle::deprecate_warn("1.0.0", "get_driver_telemetry()", "load_driver_telemetry()")
   load_driver_telemetry(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)

@@ -4,14 +4,21 @@
 \alias{load_schedule}
 \title{Load Schedule}
 \usage{
-load_schedule(season = "current")
+load_schedule(season = get_current_season())
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season (defaults to current season). \code{'current'} also accepted.}
 }
 \value{
 A tibble with one row per circuit in season
 }
 \description{
-Loads schedule information for a given F1 season.
+Loads schedule information for a given F1 season. Use \code{.load_schedule()} for an uncached version.
+}
+\examples{
+# Load this year's schedule:
+load_schedule()
+
+# Load the schedule from 2007
+load_schedule(2007)
 }

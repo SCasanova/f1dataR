@@ -2,9 +2,9 @@
 % Please edit documentation in R/load_drivers.R
 \name{.load_drivers}
 \alias{.load_drivers}
-\title{Load Driver Info (not cached)}
+\title{Load Driver Info}
 \usage{
-.load_drivers(season = "current")
+.load_drivers(season = get_current_season())
 }
 \arguments{
 \item{season}{number from 1950 to current season (defaults to current season).}
@@ -15,7 +15,6 @@ last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 permanent number (for post-2014 drivers).
 }
 \description{
-Loads driver info for all participants in a given season.
-This function does not export, only the cached version.
+Loads driver info for all participants in a given season. Use \code{.load_drivers()} for an uncached version of this function.
 }
 \keyword{internal}

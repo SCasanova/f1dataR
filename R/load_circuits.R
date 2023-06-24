@@ -1,18 +1,14 @@
-#' Load Circuit Info (not cached)
+#' Load Circuit Info
 #'
-#' Loads circuit info for all circuits in a given season.
-#' This function does not export, only the cached version.
+#' Loads circuit info for all circuits in a given season. Use `.load_circuits()` for an uncached version of this function
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
-#' @return A tibble with one row per circuit
 #' @keywords internal
-
-.load_circuits <- function(season = 'current'){
+#' @return A tibble with one row per circuit
+.load_circuits <- function(season = get_current_season()){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current=get_current_season()))
   }
 
   url <- glue::glue('{season}/circuits.json?limit=40',
@@ -29,13 +25,13 @@
 
 }
 
-#' Load Ciruit Info
-#'
-#' Loads Circuit info for all participants in a given season.
-#'
-#' @param season number from 1950 to current season (defaults to current season).
-#' @return A tibble with with one row per circuit
-
+#' @inherit .load_circuits title description return params
 #' @export
-
+#' @examples
+#' #Load the circuits used this season:
+#' load_circuits()
+#'
+#' #Load the circuits used in 1972:
+#' load_circuits(1972)
+#'
 load_circuits <- memoise::memoise(.load_circuits)

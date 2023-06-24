@@ -2,25 +2,25 @@
 % Please edit documentation in R/load_standings.R
 \name{.load_standings}
 \alias{.load_standings}
-\title{Load Standings (not cached)}
+\title{Load Standings}
 \usage{
-.load_standings(season = "current", round = "last", type = "driver")
+.load_standings(season = get_current_season(), round = "last", type = "driver")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 2003 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent. Also accepts \code{'last'}.}
 
-\item{type}{select drivers or constructors championship data. Defaults to
-drivers}
+\item{type}{select \code{'driver'} or \code{'constructor'} championship data. Defaults to
+\code{'driver'}}
 }
 \value{
 A tibble with columns driver_id (or constructor_id), position,
-points, wins and constructorsId in the case of drivers championship.
+points, wins (and constructorsId in the case of drivers championship).
 }
 \description{
 Loads standings at the end of a given season and round for drivers' or
-constructors' championships.
+constructors' championships. Use \code{.load_standings()} for an uncached version of this function.
 }
 \keyword{internal}

@@ -7,10 +7,12 @@
 load_constructors()
 }
 \value{
-A dataframe with columns constructorId (unique and recurring),
-name, and nationality
+A tibble with one row per constructor
 }
 \description{
-Loads constructor info for all participants in a given season.
-This function does not export, only the cached version.
+Loads constructor info for all participants in a given season. Use \code{.load_constructors()}for an uncached version of this function
+}
+\examples{
+#Load the list of all constructors who have participated in a F1 race:
+load_constructors()
 }
