@@ -57,8 +57,9 @@
     janitor::clean_names()
 }
 
-#' @import .load_sprint title description params return
+#' @inherit .load_sprint title description params return
 #' @export
+#' @examples
 #' # Load a sprint result
 #' load_sprint(2021, 10)
 #'

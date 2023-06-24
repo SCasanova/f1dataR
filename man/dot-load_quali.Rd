@@ -2,12 +2,12 @@
 % Please edit documentation in R/load_quali.R
 \name{.load_quali}
 \alias{.load_quali}
-\title{Load Qualifying Results (not cached)}
+\title{Load Qualifying Results}
 \usage{
-.load_quali(season = "current", round = "last")
+.load_quali(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 2003 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}
@@ -16,6 +16,6 @@ to most recent.}
 A tibble with one row per driver
 }
 \description{
-Loads qualifying session results for a given season and round.
+Loads qualifying session results for a given season and round. Use \code{.load_quali()} for an uncached version.
 }
 \keyword{internal}

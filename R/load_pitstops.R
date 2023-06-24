@@ -1,13 +1,13 @@
 #' Load Pitstop Data
 #'
 #' Loads pit stop info (number, lap, time elapsed) for a given race
-#' in a season. Pit stop data is available from 2012 onward. 
+#' in a season. Pit stop data is available from 2012 onward.
 #' Call `.load_pitstops()` for an uncached version.
 #'
 #' @param season number from 2011 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
-#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, please use `round`. 
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, please use `round`.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
@@ -31,10 +31,10 @@
     janitor::clean_names()
 }
 
-#' @import .load_pitstops title description params return
+#' @inherit .load_pitstops title description params return
 #' @export
 #' @examples
 #' # Load pitstops from the first race of 2023:
 #' load_pistops(season = 2023, round = 1)
-#' 
+#'
 load_pitstops <- memoise::memoise(.load_pitstops)

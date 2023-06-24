@@ -52,12 +52,12 @@
    }
 }
 
-#' @import .load_schedule title description params return
+#' @inherit .load_schedule title description params return
 #' @export
 #' @examples
 #' # Load this year's schedule:
 #' load_schedule()
-#' 
+#'
 #' # Load the schedule from 2007
 #' load_schedule(2007)
 load_schedule <- memoise::memoise(.load_schedule)

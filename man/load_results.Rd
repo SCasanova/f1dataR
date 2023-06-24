@@ -4,17 +4,28 @@
 \alias{load_results}
 \title{Load Results}
 \usage{
-load_results(season = "current", round = "last")
+load_results(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season (or the word 'current') (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
-to most recent.}
+to most recent (via the word 'last').}
 }
 \value{
 A tibble with one row per driver
 }
 \description{
-Loads final race results for a given year and round.
+Loads final race results for a given year and round. Use \code{.load_results()} for an uncached version
+}
+\examples{
+# Load results from the third race of 2023
+load_results(2023, 3)
+
+# Load results from the first race of 1995
+load_results(1995, 1)
+
+# Load results from the last race of 1963
+load_results(1963, 'last')
+
 }

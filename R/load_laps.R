@@ -6,7 +6,7 @@
 #' @param season number from 1996 to current season (defaults to current season)
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent
-#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, select `round` 
+#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, select `round`
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with columns driver_id (unique and recurring), position
@@ -73,12 +73,12 @@ time_to_sec <- function(time){
   purrr::map_dbl(time, subfun)
 }
 
-#' @import .load_laps title description params return
+#' @inherit .load_laps title description params return
 #' @export
 #' @examples
 #' # Load laps from the last race of 2021
 #' load_laps(2021, 'last')
-#' 
+#'
 #' # Load laps from the third race of 1999
 #' load_laps(1999, 3)
 load_laps <- memoise::memoise(.load_laps)

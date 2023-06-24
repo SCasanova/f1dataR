@@ -4,10 +4,10 @@
 \alias{load_quali}
 \title{Load Qualifying Results}
 \usage{
-load_quali(season = "current", round = "last")
+load_quali(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 2003 to current season (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}
@@ -16,5 +16,12 @@ to most recent.}
 A tibble with one row per driver
 }
 \description{
-Loads qualifying session results for a given season and round.
+Loads qualifying session results for a given season and round. Use \code{.load_quali()} for an uncached version.
+}
+\examples{
+# Load quali from the first race of 2023:
+load_quali(2023, 1)
+
+# Load quali from the third race of 2004:
+load_quali(2004, 1)
 }

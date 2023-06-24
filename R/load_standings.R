@@ -44,12 +44,12 @@
   }
 }
 
-#' @import .load_standings title description params return
+#' @inherit .load_standings title description params return
 #' @export
-#' examples
+#' @examples
 #' # Get the driver standings at the end of 2021
 #' load_standings(2021, 'last', 'drivers')
-#' 
+#'
 #' # Get constructor standings at the end of 1997
 #' load_standings(1997, 'last', 'constructors')
 load_standings <- memoise::memoise(.load_standings)

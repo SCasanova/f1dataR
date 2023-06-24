@@ -1,10 +1,10 @@
-#' Load Circuit Info (not cached)
+#' Load Circuit Info
 #'
-#' Loads circuit info for all circuits in a given season.
-#' This function does not export, only the cached version.
+#' Loads circuit info for all circuits in a given season. Use `.load_circuits()` for an uncached version of this function
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
+#' @keywords internal
 #' @return A tibble with one row per circuit
 .load_circuits <- function(season = get_current_season()){
   if(season != 'current' & (season < 1950 | season > get_current_season())){
@@ -27,7 +27,7 @@
 
 }
 
-#' @inherit .load_circuits
+#' @inherit .load_circuits title description return params
 #' @export
 #' @examples
 #' #Load the circuits used this season:

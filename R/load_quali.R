@@ -46,12 +46,12 @@
 
 }
 
-#' @import .load_quali title description params return
+#' @inherit .load_quali title description params return
 #' @export
 #' @examples
 #' # Load quali from the first race of 2023:
 #' load_quali(2023, 1)
-#' 
+#'
 #' # Load quali from the third race of 2004:
 #' load_quali(2004, 1)
 load_quali <- memoise::memoise(.load_quali)

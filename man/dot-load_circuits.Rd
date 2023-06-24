@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_circuits.R
 \name{.load_circuits}
 \alias{.load_circuits}
-\title{Load Circuit Info (not cached)}
+\title{Load Circuit Info}
 \usage{
 .load_circuits(season = get_current_season())
 }
@@ -13,6 +13,6 @@
 A tibble with one row per circuit
 }
 \description{
-Loads circuit info for all circuits in a given season.
-This function does not export, only the cached version.
+Loads circuit info for all circuits in a given season. Use \code{.load_circuits()} for an uncached version of this function
 }
+\keyword{internal}

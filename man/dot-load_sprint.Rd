@@ -2,12 +2,12 @@
 % Please edit documentation in R/load_sprint.R
 \name{.load_sprint}
 \alias{.load_sprint}
-\title{Load Sprint Results (not cached)}
+\title{Load Sprint Results}
 \usage{
-.load_sprint(season = "current", round = "last")
+.load_sprint(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 1950 to current season  (defaults to current season).}
+\item{season}{number from 2021 to current season  (defaults to current season).}
 
 \item{round}{number from 1 to 23 (depending on season), and defaults
 to most recent.}
@@ -20,6 +20,6 @@ or NULL if no sprint exists for this season/round combo
 }
 \description{
 Loads final race results for a given year and round. Note not all rounds have
-sprint results
+sprint results. Use \code{.load_sprint()} for an uncached version of this function.
 }
 \keyword{internal}
