@@ -9,3 +9,4 @@
 ^data-raw$
 ^vignettes/\d{4}/*$
 ^fastf1_http_cache.sqlite$
+^LICENSE\.md$
