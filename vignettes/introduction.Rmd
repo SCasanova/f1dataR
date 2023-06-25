@@ -128,11 +128,11 @@ ver_can <- load_driver_telemetry(season = 2023,
                                  fastest_only = T) %>% 
   mutate(open_throttle = ifelse(throttle == 100, 'Yes', "No"))
 
-ggplot2::ggplot(ver_can, ggplot2::aes(x, y, color = as.factor(open_throttle), group = NA)) +
-  ggplot2::geom_path(linewidth = 4, lineend = 'round') +
-  ggplot2::scale_color_manual( values = c('white', 'red')) +
+ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
+  geom_path(linewidth = 4, lineend = 'round') +
+  scale_color_manual( values = c('white', 'red')) +
   theme_dark_f1() +
-      ggplot2::labs(
+      labs(
         title = 'Verstappen Flat Out',
         subtitle = 'Canada 2023 | Fastest Lap',
         color = 'Throttle 100%'
@@ -141,6 +141,34 @@ ggplot2::ggplot(ver_can, ggplot2::aes(x, y, color = as.factor(open_throttle), gr
 ```
 
 
+```{r}
+pit_data <- load_pitstops(2023, 4)
+
+driver_team <- load_results() %>% 
+  select(driver_id, constructor_id)
+
+constructors <-  constructor_data %>% 
+  select(constructor_id,constructor_color) %>% 
+  unique()
+
+pit_constructor <- pit_data %>% 
+  left_join(driver_team, by = 'driver_id') %>% 
+  group_by(constructor_id) %>% 
+  summarise(pit_time = mean(as.numeric(duration))) %>% 
+  left_join(constructors, by = "constructor_id")
+
+
+ggplot(pit_constructor, aes(x = constructor_id, y=pit_time, fill = constructor_id))+
+  geom_bar(stat = 'identity', fill = pit_constructor$constructor_color)+
+  theme_dark_f1(axis_marks = T)+
+  theme(
+    legend.position = 'none'
+  )+
+  labs(
+    x = 'Constructor',
+    y = "Average Pit Time (seconds)"
+  )
+```
 
 
 
