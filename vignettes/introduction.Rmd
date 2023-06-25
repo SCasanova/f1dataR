@@ -117,7 +117,7 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound))+
 ```
 
 
-Finally let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
+Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
 
 ```{r telem plotting}
 
@@ -140,6 +140,8 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
 
 ```
 
+
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results dataframe (to extract driver + team combos), and the constructor dataframe to get the colors for our plot.
 
 ```{r}
 pit_data <- load_pitstops(2023, 4)
