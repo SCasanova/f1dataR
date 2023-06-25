@@ -63,6 +63,7 @@ get_ergast_content<-function(url){
 #' @examples
 #' # Get the current season
 #' get_current_season()
+
 get_current_season <- memoise::memoise(.get_current_season)
 
 
