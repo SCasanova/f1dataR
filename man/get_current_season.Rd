@@ -16,3 +16,4 @@ Looks up current season from ergast, fallback to manual determination
 # Get the current season
 get_current_season()
 }
+\keyword{internal}

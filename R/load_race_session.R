@@ -28,7 +28,7 @@
 #' @examples
 #' \dontrun{
 #' Load the quali session from 2019 first round
-#' session<-load_race_session(season = 2019, round = 1, session = 'Q')
+#' session <- load_race_session(season = 2019, round = 1, session = 'Q')
 #' }
 load_race_session <- function(obj_name="session", season = get_current_season(), round =1, session = 'R', log_level = "WARNING", race = lifecycle::deprecated()){
   if (lifecycle::is_present(race)) {

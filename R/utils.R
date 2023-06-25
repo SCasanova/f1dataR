@@ -6,6 +6,7 @@
 #' @param url the complete Ergast URL to get
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
+
 get_ergast_content<-function(url){
   fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
@@ -39,6 +40,7 @@ get_ergast_content<-function(url){
 #' @description Looks up current season from ergast, fallback to manual determination
 #' @keywords internal
 #' @return Year (four digit number) representation of current season, as numeric.
+
 .get_current_season<-function(){
   tryCatch({
     url <- glue::glue('current.json?limit=30')
@@ -56,6 +58,7 @@ get_ergast_content<-function(url){
 }
 
 #' @inherit .get_current_season title description return
+#' @keywords internal
 #' @export
 #' @examples
 #' # Get the current season
@@ -67,10 +70,10 @@ get_current_season <- memoise::memoise(.get_current_season)
 #'
 #' @description
 #' Gets the current installed FastF1 version available (via `reticulate`) to the function.
-#'
 #' Displays a note if significantly out of date.
 #' @keywords internal
 #' @return integer for major version number (or NA if any error )
+
 .get_fastf1_version <- function(){
   ver<-reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%

@@ -19,7 +19,7 @@ consistent API."><meta property="og:image" content="https://scasanova.github.io/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -37,6 +37,9 @@ consistent API."><meta property="og:image" content="https://scasanova.github.io/
       <a href="../articles/introduction.html">Introduction</a>
     </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/scasanova/f1dataR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -75,10 +78,44 @@ consistent API.</p>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
-    <div id="details">
-    <h2>Details</h2>
-    <p>Receives season, race number, driver code, and an optional fastest lap only
-argument to output car telemetry for the selected situation.</p>
+    <div id="arguments">
+    <h2>Arguments</h2>
+    <dl><dt>season</dt>
+<dd><p>number from 2018 to current season (defaults to current season).</p></dd>
+
+
+<dt>round</dt>
+<dd><p>number from 1 to 23 (depending on season selected). Also accepts race name.</p></dd>
+
+
+<dt>session</dt>
+<dd><p>the code for the session to load Options are <code>'FP1'</code>, <code>'FP2'</code>, <code>'FP3'</code>,
+<code>'Q'</code>, <code>'S'</code>, <code>'SS'</code>, and <code>'R'</code>. Default is <code>'R'</code>, which refers to Race.</p></dd>
+
+
+<dt>driver</dt>
+<dd><p>three letter driver code (see load_drivers() for a list).</p></dd>
+
+
+<dt>fastest_only</dt>
+<dd><p>boolean value whether to pick all laps or only the fastest
+by the driver in that session.</p></dd>
+
+
+<dt>log_level</dt>
+<dd><p>Detail of logging from fastf1 to be displayed. Choice of:
+<code>'DEBUG'</code>, <code>'INFO'</code>, <code>'WARNING'</code>, <code>'ERROR'</code> and <code>'CRITICAL'</code>. See <a href="https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity" class="external-link">fastf1 documentation</a>.</p></dd>
+
+
+<dt>race</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> <code>race</code> is no longer supported, use <code>round</code>.</p></dd>
+
+</dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
+
+<p>A tibble with telemetry data for selected driver/session.</p>
     </div>
 
   </div>
