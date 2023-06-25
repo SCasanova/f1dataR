@@ -20,8 +20,8 @@
 #' @examples
 #' \dontrun{
 #' telem <- load_driver_telemetry(season = 2023,
-#'                                round = 'bahrain', s
-#'                                ession = 'Q',
+#'                                round = 'bahrain',
+#'                                session = 'Q',
 #'                                driver = 'HAM',
 #'                                fastest_only = TRUE)
 #' }
