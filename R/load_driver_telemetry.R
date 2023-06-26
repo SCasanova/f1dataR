@@ -7,12 +7,16 @@
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list).
-#' @param fastest_only boolean value whether to pick all laps or only the fastest
-#' by the driver in that session.
+#' @param drivers three letter driver code (see `load_drivers()` for a list)
+#' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
+#' or `all`.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
+#' @param fastest_only `r lifecycle::badge("deprecated")` `fastest_only` is no longer supported, indicated preferred
+#' laps in `laps`.
+#' @param driver `r lifecycle::badge("deprecated")` `driver` is no longer supported, indicated preferred
+#' driver in `drivers`.
 #' @importFrom magrittr "%>%"
 #' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
@@ -22,27 +26,62 @@
 #' telem <- load_driver_telemetry(season = 2023,
 #'                                round = 'bahrain',
 #'                                session = 'Q',
-#'                                driver = 'HAM',
-#'                                fastest_only = TRUE)
+#'                                drivers = 'HAM',
+#'                                laps = 'fastest')
 #' }
 #'
-load_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+load_driver_telemetry <- function(season = get_current_season(), round = 1, session = 'R', drivers, laps = 'fastest', log_level = "WARNING", race = lifecycle::deprecated(), fastest_only = lifecycle::deprecated(), driver = lifecycle::deprecated()){
+
+  #Lifecycles
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
+  if (lifecycle::is_present(fastest_only)) {
+    lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(fastest_only)", "load_driver_telemetry(laps)")
+    if(fastest_only){
+      lap = 'fastest'
+    }
+  }
+  if (lifecycle::is_present(driver)) {
+    lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(driver)", "load_driver_telemetry(drivers)")
+    drivers <- driver
+  }
+
+  # Param checks
+  if(!(laps %in% c('fastest', 'all'))){
+    if(is.numeric(laps)){
+      if(as.numeric(laps) != as.integer(laps)){
+        cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+      }
+    } else {
+      cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+    }
+  }
+
+
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
+
   if(get_fastf1_version() >= 3){
     add_v3_option <- '.add_driver_ahead()'
   } else {
     add_v3_option <- ''
   }
-  if(fastest_only){
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
-                                         driver = driver, opt = add_v3_option))
 
-  }else{
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
+  if(length(drivers) > 1){
+    driver <- glue::glue("pick_drivers(['{drivers}'])", drivers = paste(drivers, collapse  = "', '"))
+  } else {
+    driver <- glue::glue("pick_driver('{drivers}')", drivers = drivers)
+  }
+
+  if(laps == 'fastest'){
+    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.pick_fastest().get_telemetry().add_distance(){opt}",
+                                         driver = driver, opt = add_v3_option))
+  } else if (laps != 'all'){
+    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.pick_lap({laps}).get_telemetry().add_distance(){opt}",
+                                         driver = driver, laps = laps, opt = add_v3_option))
+  } else {
+    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
 
   }
@@ -53,7 +92,7 @@ load_driver_telemetry <- function(season = get_current_season(), round =1, sessi
   tel <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'tel'))
 
   tel %>%
-    dplyr::mutate(driverCode = driver) %>%
+    #dplyr::mutate(driverCode = driver) %>%
     tibble::tibble() %>%
     janitor::clean_names()
 }

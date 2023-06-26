@@ -49,7 +49,7 @@ for more details on the data returned by the python API.
 \examples{
 \dontrun{
 Load the quali session from 2019 first round
-session<-load_race_session(season = 2019, round = 1, session = 'Q')
+session <- load_race_session(season = 2019, round = 1, session = 'Q')
 }
 }
 \seealso{
