@@ -5,3 +5,4 @@ fastf1_http_cache.sqlite
 *.ff1pkl
 .Rhistory
 tests/testthat/tst_*
+f1dataR.Rproj
