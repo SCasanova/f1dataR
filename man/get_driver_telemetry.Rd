@@ -22,8 +22,7 @@ get_driver_telemetry(
 \item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
-\item{driver}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{driver} is no longer supported, indicated preferred
-driver in \code{drivers}.}
+\item{driver}{three letter driver code (see \code{load_drivers()} for a list)}
 
 \item{fastest_only}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{fastest_only} is no longer supported, indicated preferred
 laps in \code{laps}.}

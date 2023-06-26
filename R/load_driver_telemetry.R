@@ -7,7 +7,7 @@
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
-#' @param drivers three letter driver code (see `load_drivers()` for a list)
+#' @param driver three letter driver code (see `load_drivers()` for a list)
 #' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
 #' or `all`.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
@@ -15,8 +15,6 @@
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @param fastest_only `r lifecycle::badge("deprecated")` `fastest_only` is no longer supported, indicated preferred
 #' laps in `laps`.
-#' @param driver `r lifecycle::badge("deprecated")` `driver` is no longer supported, indicated preferred
-#' driver in `drivers`.
 #' @importFrom magrittr "%>%"
 #' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
@@ -24,13 +22,13 @@
 #' @examples
 #' \dontrun{
 #' telem <- load_driver_telemetry(season = 2023,
-#'                                round = 'bahrain',
+#'                                round = 'Bahrain',
 #'                                session = 'Q',
-#'                                drivers = 'HAM',
+#'                                driver = 'HAM',
 #'                                laps = 'fastest')
 #' }
 #'
-load_driver_telemetry <- function(season = get_current_season(), round = 1, session = 'R', drivers, laps = 'fastest', log_level = "WARNING", race = lifecycle::deprecated(), fastest_only = lifecycle::deprecated(), driver = lifecycle::deprecated()){
+load_driver_telemetry <- function(season = get_current_season(), round = 1, session = 'R', driver, laps = 'fastest', log_level = "WARNING", race = lifecycle::deprecated(), fastest_only = lifecycle::deprecated()){
 
   #Lifecycles
   if (lifecycle::is_present(race)) {
@@ -42,10 +40,6 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     if(fastest_only){
       lap = 'fastest'
     }
-  }
-  if (lifecycle::is_present(driver)) {
-    lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(driver)", "load_driver_telemetry(drivers)")
-    drivers <- driver
   }
 
   # Param checks
@@ -68,20 +62,14 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     add_v3_option <- ''
   }
 
-  if(length(drivers) > 1){
-    driver <- glue::glue("pick_drivers(['{drivers}'])", drivers = paste(drivers, collapse  = "', '"))
-  } else {
-    driver <- glue::glue("pick_driver('{drivers}')", drivers = drivers)
-  }
-
   if(laps == 'fastest'){
-    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.pick_fastest().get_telemetry().add_distance(){opt}",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
   } else if (laps != 'all'){
-    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.pick_lap({laps}).get_telemetry().add_distance(){opt}",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
                                          driver = driver, laps = laps, opt = add_v3_option))
   } else {
-    reticulate::py_run_string(glue::glue("tel = session.laps.{driver}.get_telemetry().add_distance(){opt}",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
 
   }
@@ -92,7 +80,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   tel <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'tel'))
 
   tel %>%
-    #dplyr::mutate(driverCode = driver) %>%
+    dplyr::mutate(driverCode = driver) %>%
     tibble::tibble() %>%
     janitor::clean_names()
 }
