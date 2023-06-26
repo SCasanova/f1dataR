@@ -56,7 +56,6 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     }
   }
 
-
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
 
   if(get_fastf1_version() >= 3){
@@ -71,7 +70,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   } else if (laps != 'all'){
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
                                          driver = driver, laps = laps, opt = add_v3_option))
-  } else if (get_fastf1_version() >= 3){
+  } else {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
 
