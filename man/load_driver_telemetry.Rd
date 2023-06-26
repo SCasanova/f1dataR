@@ -26,7 +26,7 @@ load_driver_telemetry(
 \item{driver}{three letter driver code (see \code{load_drivers()} for a list)}
 
 \item{laps}{which lap's telemetry to return. One of an integer lap number (<= total laps in the race), \code{fastest},
-or \code{all}.}
+or \code{all}. Note that integer lap choice requires \code{fastf1} version 3.0 or greater.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}

@@ -9,7 +9,7 @@
 #' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
 #' @param driver three letter driver code (see `load_drivers()` for a list)
 #' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
-#' or `all`.
+#' or `all`. Note that integer lap choice requires `fastf1` version 3.0 or greater.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
@@ -45,6 +45,9 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   # Param checks
   if(!(laps %in% c('fastest', 'all'))){
     if(is.numeric(laps)){
+      if(get_fastf1_version() < 3){
+        cli::cli_abort("{.var laps} can only be a lap number if using fastf1 v3.0 or higher")
+      }
       if(as.numeric(laps) != as.integer(laps)){
         cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
       }
@@ -68,7 +71,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   } else if (laps != 'all'){
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
                                          driver = driver, laps = laps, opt = add_v3_option))
-  } else {
+  } else if (get_fastf1_version() >= 3){
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
 
