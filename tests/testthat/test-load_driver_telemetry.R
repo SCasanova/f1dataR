@@ -33,5 +33,7 @@ test_that("driver telemetry", {
     expect_equal(telem_fast$time[[2]], 0.044)
   }
 
+  expect_warning(load_driver_telemetry(season = 2022, race = 'Brazil', session = 'S', driver = 'HAM'))
+  expect_warning(get_driver_telemetry(season = 2022, round = 'Brazil', session = 'S', driver = 'HAM'))
 
 })

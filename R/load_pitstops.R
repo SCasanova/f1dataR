@@ -18,7 +18,7 @@
     round <- race
   }
   if(season != 'current' & (season < 2011 | season > get_current_season())){
-    cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
+    cli::cli_abort('{.var season} must be between 2011 and {get_current_season()} (or use "current")')
   }
 
   url <- glue::glue('{season}/{round}/pitstops.json?limit=80',
