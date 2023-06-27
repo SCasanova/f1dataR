@@ -8,5 +8,7 @@ test_that("Pitstop Load works", {
   pitstop_2021_1_mem<-load_pitstops(2021, 1)
   expect_identical(pitstop_2021_1, pitstop_2021_1_mem)
 
-  expect_error(load_pitstops(3050, 1), "`season` must be between 1950 and *")
+  expect_error(load_pitstops(3050, 1), "`season` must be between 2011 and *")
+
+  expect_warning(load_pitstops(2021, race = 1))
 })

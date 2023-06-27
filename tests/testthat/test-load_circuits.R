@@ -8,5 +8,5 @@ test_that("load_ciruits works", {
   circuits_2021_mem<-load_circuits(2021)
   expect_identical(ciruits_2021, circuits_2021_mem)
 
-  expect_error(load_results(3050, 2), "`season` must be between 1950 and *")
+  expect_error(load_circuits(3050), "`season` must be between 1950 and *")
 })
