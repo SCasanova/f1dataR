@@ -9,9 +9,10 @@ load_driver_telemetry(
   round = 1,
   session = "R",
   driver,
-  fastest_only = FALSE,
+  laps = "fastest",
   log_level = "WARNING",
-  race = lifecycle::deprecated()
+  race = lifecycle::deprecated(),
+  fastest_only = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -22,15 +23,18 @@ load_driver_telemetry(
 \item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
-\item{driver}{three letter driver code (see load_drivers() for a list).}
+\item{driver}{three letter driver code (see \code{load_drivers()} for a list)}
 
-\item{fastest_only}{boolean value whether to pick all laps or only the fastest
-by the driver in that session.}
+\item{laps}{which lap's telemetry to return. One of an integer lap number (<= total laps in the race), \code{fastest},
+or \code{all}. Note that integer lap choice requires \code{fastf1} version 3.0 or greater.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}.}
+
+\item{fastest_only}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{fastest_only} is no longer supported, indicated preferred
+laps in \code{laps}.}
 }
 \value{
 A tibble with telemetry data for selected driver/session.
@@ -42,10 +46,10 @@ argument to output car telemetry for the selected situation.
 \examples{
 \dontrun{
 telem <- load_driver_telemetry(season = 2023,
-                               round = 'bahrain', s
-                               ession = 'Q',
+                               round = 'Bahrain',
+                               session = 'Q',
                                driver = 'HAM',
-                               fastest_only = TRUE)
+                               laps = 'fastest')
 }
 
 }

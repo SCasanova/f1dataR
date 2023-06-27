@@ -19,8 +19,8 @@ test_that("driver telemetry", {
   withr::local_options(f1dataR.cache = file.path(getwd(), "tst_telem"))
 
   # Tests
-  telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM")
-  telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", fastest_only = T)
+  telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 'all')
+  telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 'fastest')
 
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
@@ -32,6 +32,12 @@ test_that("driver telemetry", {
     expect_equal(telem_fast$session_time[[1]], 3518.595)
     expect_equal(telem_fast$time[[2]], 0.044)
   }
+  if(get_fastf1_version() >= 3){
+    telem_lap <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1)
+    expect_equal(telem_lap$time[[1]], 0)
+    expect_equal(telem_lap$speed[[1]], 0)
+  }
+
 
 
 })

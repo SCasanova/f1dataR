@@ -35,7 +35,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = 'R'
     round <- race
   }
 
-  driver_data <- load_driver_telemetry(season, round, session, driver, T) %>%
+  driver_data <- load_driver_telemetry(season, round, session, driver, 'fastest') %>%
     dplyr::mutate(x = .data$x - mean(range(.data$x, na.rm = T)),
                   y = .data$y - mean(range(.data$y, na.rm = T)))
 

@@ -7,12 +7,14 @@
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list).
-#' @param fastest_only boolean value whether to pick all laps or only the fastest
-#' by the driver in that session.
+#' @param driver three letter driver code (see `load_drivers()` for a list)
+#' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
+#' or `all`. Note that integer lap choice requires `fastf1` version 3.0 or greater.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
+#' @param fastest_only `r lifecycle::badge("deprecated")` `fastest_only` is no longer supported, indicated preferred
+#' laps in `laps`.
 #' @importFrom magrittr "%>%"
 #' @return A tibble with telemetry data for selected driver/session.
 #' @import reticulate
@@ -20,28 +22,55 @@
 #' @examples
 #' \dontrun{
 #' telem <- load_driver_telemetry(season = 2023,
-#'                                round = 'bahrain',
+#'                                round = 'Bahrain',
 #'                                session = 'Q',
 #'                                driver = 'HAM',
-#'                                fastest_only = TRUE)
+#'                                laps = 'fastest')
 #' }
 #'
-load_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+load_driver_telemetry <- function(season = get_current_season(), round = 1, session = 'R', driver, laps = 'fastest', log_level = "WARNING", race = lifecycle::deprecated(), fastest_only = lifecycle::deprecated()){
+
+  #Lifecycles
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
+  if (lifecycle::is_present(fastest_only)) {
+    lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(fastest_only)", "load_driver_telemetry(laps)")
+    if(fastest_only){
+      lap = 'fastest'
+    }
+  }
+
+  # Param checks
+  if(!(laps %in% c('fastest', 'all'))){
+    if(is.numeric(laps)){
+      if(get_fastf1_version() < 3){
+        cli::cli_abort("{.var laps} can only be a lap number if using fastf1 v3.0 or higher")
+      }
+      if(as.numeric(laps) != as.integer(laps)){
+        cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+      }
+    } else {
+      cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+    }
+  }
+
   load_race_session("session", season = season, round = round, session = session, log_level = log_level)
+
   if(get_fastf1_version() >= 3){
     add_v3_option <- '.add_driver_ahead()'
   } else {
     add_v3_option <- ''
   }
-  if(fastest_only){
+
+  if(laps == 'fastest'){
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
-
-  }else{
+  } else if (laps != 'all'){
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
+                                         driver = driver, laps = laps, opt = add_v3_option))
+  } else {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
                                          driver = driver, opt = add_v3_option))
 
