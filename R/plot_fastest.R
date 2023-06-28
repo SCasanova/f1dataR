@@ -28,12 +28,12 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = 'R'
   if(!requireNamespace('ggplot2', quietly = T)){
     stop("f1dataR::plot_fastest() requires ggplot2 package installation")
   }
-
-  message("If the session has not been loaded yet, this could take a minute\n\n")
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "plot_fastest(race)", "plot_fastest(round)")
     round <- race
   }
+
+  cli::cli_alert_info("If the session has not been loaded yet, this could take a minute\n\n")
 
   driver_data <- load_driver_telemetry(season, round, session, driver, 'fastest') %>%
     dplyr::mutate(x = .data$x - mean(range(.data$x, na.rm = T)),
