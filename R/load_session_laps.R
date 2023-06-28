@@ -28,14 +28,22 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     round <- race
   }
 
-  obj_name <- 'session_laps'
-  load_race_session(obj_name = obj_name, season = season, round = round, session = session, log_level = log_level)
-
   if(get_fastf1_version() < 3){
-    message("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
+    cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
   }
 
-  reticulate::py_run_string(glue::glue("laps={obj}.laps", obj = obj_name))
+  load_race_session(obj_name = 'session', season = season, round = round, session = session, log_level = log_level)
+
+  tryCatch({
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, retry
+      reticulate::py_run_string("session.t0_date")
+    }, error = function(e){
+      reticulate::py_run_string("session.load()")
+    }
+  )
+
+  reticulate::py_run_string("laps = session.laps")
   if(add_weather){
     reticulate::py_run_string(paste("import pandas as pd",
 

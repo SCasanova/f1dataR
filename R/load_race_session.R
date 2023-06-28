@@ -50,7 +50,7 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
   log_level <- match.arg(log_level, c('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL', TRUE), several.ok = FALSE)
   if(log_level == TRUE)
   if(log_level %in% c("DEBUG", "INFO")){
-    message("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster\n\n")
+    cli::cli_alert_info("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster.")
   }
 
   reticulate::py_run_string('import fastf1')
@@ -72,6 +72,15 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
   reticulate::py_run_string(py_string)
 
   session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
+
+  tryCatch({
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, retry
+      reticulate::py_run_string("session.t0_date")
+    }, error = function(e){
+      session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
+    }
+  )
 
   invisible(session[obj_name])
 }

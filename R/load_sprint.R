@@ -23,7 +23,7 @@
   data <- get_ergast_content(url)
 
   if(length(data$MRData$RaceTable$Races) == 0){
-    message(glue::glue("No Sprint data for season = {season}, round = {round}",
+    cli::cli_alert_warning(glue::glue("No Sprint data for season = {season}, round = {round}",
                        season = season, round = round))
     return(NULL)
   }
