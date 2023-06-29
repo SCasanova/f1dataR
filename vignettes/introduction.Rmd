@@ -22,12 +22,15 @@ dir.create(file.path(getwd(), "vignettes","vig_build_tmp"), recursive = TRUE)
 withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes","vig_build_tmp"))
 ```
 
+## Basics
+
 f1dataR serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
 
 
 
 The most sought-after aspect of F1 data is telemetry data. 
 Let's get Leclerc's fastest lap from the first race of 2022:
+
 ```{r telem}
 library(f1dataR)
 
@@ -36,7 +39,7 @@ load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
 
 Now let's use ggplot2 to visualize some of the data we have
 
-```{r simple_plot}
+```{r simple_plot, warning=FALSE, message=FALSE}
 library(dplyr)
 library(ggplot2)
 
@@ -65,7 +68,9 @@ ggplot(data, aes(distance, throttle, color = driver_code))+
 
 ```
 
-Now lets visualize speed and use the f1 dark theme for ggplot included in the package
+## Integrated plotting
+
+There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
 ```{r use_theme}
 ggplot(data, aes(distance, speed, color = driver_code))+
@@ -81,13 +86,13 @@ ggplot(data, aes(distance, speed, color = driver_code))+
 ```
 
 
-We can also use one of the plotting functions included in the package.
+Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
 ```{r use_builtin}
 plot_fastest(2022, 1, 'R', 'PER')
 ```
 
-
+## Combining several functions
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
