@@ -39,6 +39,8 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(fastest_only)", "load_driver_telemetry(laps)")
     if(fastest_only){
       lap = 'fastest'
+    } else{
+      lap = 'all'
     }
   }
 
