@@ -26,8 +26,6 @@ withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes","vig_build_t
 
 f1dataR serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
 
-
-
 The most sought-after aspect of F1 data is telemetry data. 
 Let's get Leclerc's fastest lap from the first race of 2022:
 
@@ -51,7 +49,7 @@ ggplot(lec, aes(distance, throttle))+
   theme_minimal()
 ```
 
-What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Perez
+What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
 ```{r triple_plot}
 ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
@@ -84,7 +82,6 @@ ggplot(data, aes(distance, speed, color = driver_code))+
     title = "Speed Comparison for Bahrain 2022"
   )
 ```
-
 
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
@@ -121,10 +118,9 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound))+
 
 ```
 
-
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
 
-```{r telem plotting}
+```{r telem_plotting}
 
 
 ver_can <- load_driver_telemetry(season = 2023, 
@@ -145,13 +141,12 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
 
 ```
 
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
 
-For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results dataframe (to extract driver + team combos), and the constructor dataframe to get the colors for our plot.
-
-```{r}
+```{r pitstop}
 pit_data <- load_pitstops(2023, 4)
 
-driver_team <- load_results() %>% 
+driver_team <- load_results(2023, 4) %>% 
   select(driver_id, constructor_id)
 
 constructors <-  constructor_data %>% 
@@ -176,8 +171,4 @@ ggplot(pit_constructor, aes(x = constructor_id, y=pit_time, fill = constructor_i
     y = "Average Pit Time (seconds)"
   )
 ```
-
-
-
-
 
