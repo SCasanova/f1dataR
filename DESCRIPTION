@@ -2,8 +2,15 @@ Package: f1dataR
 Title: F1 Data in R
 Version: 1.1.0
 Authors@R: 
-    c(person(given = "Santiago", family = "Casanova", role = c("aut", "cre"), email = "santiago.casanova@yahoo.com"),
-    person(given = "Philip", family = "Bulsink", role = "aut", email = "bulsinkp@gmail.com"), comment = c(ORCID = "0000-0001-9668-2429"))
+    c(person(given = "Santiago", 
+             family = "Casanova", 
+             role = c("aut", "cre"), 
+             email = "santiago.casanova@yahoo.com"),
+      person(given = "Philip", 
+             family = "Bulsink", 
+             role = "aut", 
+             email = "bulsinkp@gmail.com",
+             comment = c(ORCID = "0000-0001-9668-2429")))
 Description: A collection of functions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
 Config/reticulate:
   list(

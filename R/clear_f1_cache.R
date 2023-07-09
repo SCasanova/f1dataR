@@ -10,13 +10,15 @@
 #' clear_f1_cache()
 #' }
 #' @export
-clear_f1_cache <- function(){
-  if('fastf1' %in% reticulate::py_list_packages()$package){
+clear_f1_cache <- function() {
+  if ('fastf1' %in% reticulate::py_list_packages()$package) {
     reticulate::py_run_string('import fastf1')
-    if(get_fastf1_version() >= 3){
-      reticulate::py_run_string(glue::glue('fastf1.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
+    if (get_fastf1_version() >= 3) {
+      reticulate::py_run_string(glue::glue('fastf1.Cache.clear_cache("{cache_dir}")',
+                                           cache_dir = getOption('f1dataR.cache')))
     } else {
-      reticulate::py_run_string(glue::glue('fastf1.api.Cache.clear_cache("{cache_dir}")', cache_dir = getOption('f1dataR.cache')))
+      reticulate::py_run_string(glue::glue('fastf1.api.Cache.clear_cache("{cache_dir}")',
+                                           cache_dir = getOption('f1dataR.cache')))
     }
   }
 

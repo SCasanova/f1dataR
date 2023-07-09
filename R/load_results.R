@@ -9,8 +9,8 @@
 #' @importFrom rlang .data
 #' @keywords internal
 #' @return A tibble with one row per driver
-.load_results <- function(season = get_current_season(), round = 'last'){
-  if(season != 'current' & (season < 1950 | season > get_current_season())){
+.load_results <- function(season = get_current_season(), round = 'last') {
+  if (season != 'current' && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
 
@@ -20,7 +20,7 @@
 
   data <- data$MRData$RaceTable$Races$Results[[1]]
 
-  if(!('FastestLap' %in% colnames(data))){
+  if (!('FastestLap' %in% colnames(data))) {
     # all races from before 2004 will have no 'Fastest Lap' column,
     # but also 2021 round 12 (Belgian GP) where no racing laps were run
     data %>%
@@ -30,7 +30,7 @@
       dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  } else{
+  } else {
     data %>%
       tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = 'universal') %>%
       dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
@@ -45,7 +45,7 @@
         gap = "time...8",
         fastest_rank =  "rank",
         "laps",
-        fastest = "time...11" ,
+        fastest = "time...11",
         top_speed_kph = "speed",
       ) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%

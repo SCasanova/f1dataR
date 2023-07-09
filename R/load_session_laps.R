@@ -22,13 +22,14 @@
 #' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
 #'
-load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING", add_weather=F, race = lifecycle::deprecated()){
+load_session_laps <- function(season = get_current_season(), round = 1, session = 'R', log_level = "WARNING",
+                              add_weather = FALSE, race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_session_laps(race)", "load_session_laps(round)")
     round <- race
   }
 
-  if(get_fastf1_version() < 3){
+  if (get_fastf1_version() < 3) {
     cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
   }
 
@@ -38,13 +39,13 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
       # Only returns a value if session.load() has been successful
       # If it hasn't, retry
       reticulate::py_run_string("session.t0_date")
-    }, error = function(e){
+    }, error = function(e) {
       reticulate::py_run_string("session.load()")
     }
   )
 
   reticulate::py_run_string("laps = session.laps")
-  if(add_weather){
+  if (add_weather) {
     reticulate::py_run_string(paste("import pandas as pd",
 
                                     "weather_data = laps.get_weather_data()",
@@ -56,7 +57,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
                                     sep = "\n"))
   }
 
-  if(session == 'Q' & get_fastf1_version() >= 3){
+  if (session == 'Q' && get_fastf1_version() >= 3) {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
     reticulate::py_run_string(paste("q1, q2, q3 = laps.split_qualifying_sessions()",
                                     "q1len = len(q1.index)",
@@ -85,13 +86,13 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   laps <- laps %>%
     dplyr::mutate("Time" = .data$Time)
 
-  if(session == 'Q' & get_fastf1_version() >= 3){
+  if (session == 'Q' && get_fastf1_version() >= 3) {
     #pull the lengths of each Quali session from the python env.
     q1len <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'q1len'))
     q2len <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'q2len'))
     q3len <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'q3len'))
 
-    laps$SessionType = c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
+    laps$SessionType <- c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
   } else {
     laps$SessionType <- session
   }

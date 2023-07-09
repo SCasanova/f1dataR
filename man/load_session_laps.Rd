@@ -9,7 +9,7 @@ load_session_laps(
   round = 1,
   session = "R",
   log_level = "WARNING",
-  add_weather = F,
+  add_weather = FALSE,
   race = lifecycle::deprecated()
 )
 }

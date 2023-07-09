@@ -30,42 +30,43 @@
 #' Load the quali session from 2019 first round
 #' session <- load_race_session(season = 2019, round = 1, session = 'Q')
 #' }
-load_race_session <- function(obj_name="session", season = get_current_season(), round =1, session = 'R', log_level = "WARNING", race = lifecycle::deprecated()){
+load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = 'R',
+                              log_level = "WARNING", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_race_session(race)", "load_race_session(round)")
     round <- race
   }
-  if(season != 'current' & (season < 2018 | season > get_current_season())){
+  if (season != 'current' && (season < 2018 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2018 and {get_current_season()} (or use "current")')
     # stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
     #                 current = get_current_season()))
   }
-  if(!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS"))){
+  if (!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS"))) {
     cli::cli_abort('{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"')
   }
-  if(season == 'current'){
+  if (season == 'current') {
     season <- get_current_season()
   }
 
-  log_level <- match.arg(log_level, c('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL', TRUE), several.ok = FALSE)
-  if(log_level == TRUE)
-  if(log_level %in% c("DEBUG", "INFO")){
+  log_level <- match.arg(log_level, c('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'), several.ok = FALSE)
+
+  if (log_level %in% c("DEBUG", "INFO")) {
     cli::cli_alert_info("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster.")
   }
 
   reticulate::py_run_string('import fastf1')
-  if(get_fastf1_version() >= 3){
+  if (get_fastf1_version() >= 3) {
     reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   }
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = getOption('f1dataR.cache')))
 
-  py_string<-glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
-  if(is.numeric(round)){
-    py_string<-glue::glue("{py_string}{round}, '{session}')",
+  py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
+  if (is.numeric(round)) {
+    py_string <- glue::glue("{py_string}{round}, '{session}')",
                           py_string = py_string, round = round, session = session)
   } else {
     #Character race, so need quotes around it
-    py_string<-glue::glue("{py_string}'{round}', '{session}')",
+    py_string <- glue::glue("{py_string}'{round}', '{session}')",
                           py_string = py_string, round = round, session = session)
   }
 
@@ -77,7 +78,7 @@ load_race_session <- function(obj_name="session", season = get_current_season(),
       # Only returns a value if session.load() has been successful
       # If it hasn't, retry
       reticulate::py_run_string("session.t0_date")
-    }, error = function(e){
+    }, error = function(e) {
       session <- reticulate::py_run_string(glue::glue('{name}.load()', name = obj_name))
     }
   )

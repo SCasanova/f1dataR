@@ -14,12 +14,12 @@ knitr::opts_chunk$set(
 )
 
 #Use a local temporary cache and set back to user's info when finished vignette build
-withr::local_file(file.path(getwd(), "vignettes","vig_build_tmp"))
-if(dir.exists(file.path(getwd(), "vignettes","vig_build_tmp"))){
-  unlink(file.path(getwd(), "vignettes","vig_build_tmp"), recursive = T, force = T)
+withr::local_file(file.path(getwd(), "vignettes", "vig_build_tmp"))
+if (dir.exists(file.path(getwd(), "vignettes", "vig_build_tmp"))) {
+  unlink(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE, force = TRUE)
 }
-dir.create(file.path(getwd(), "vignettes","vig_build_tmp"), recursive = TRUE)
-withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes","vig_build_tmp"))
+dir.create(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE)
+withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes", "vig_build_tmp"))
 ```
 
 ## Basics
@@ -32,7 +32,7 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```{r telem}
 library(f1dataR)
 
-load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T)
+load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = TRUE)
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
@@ -41,27 +41,27 @@ Now let's use ggplot2 to visualize some of the data we have
 library(dplyr)
 library(ggplot2)
 
-lec <- load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = T) %>% 
+lec <- load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = TRUE) %>% 
   head(300)
 
-ggplot(lec, aes(distance, throttle))+
-  geom_line()+
+ggplot(lec, aes(distance, throttle)) +
+  geom_line() +
   theme_minimal()
 ```
 
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
 ```{r triple_plot}
-ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = T) %>% 
+ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = TRUE) %>% 
   head(300)
 
-per <- load_driver_telemetry(2022, 1, driver = 'PER', fastest_only = T) %>% 
+per <- load_driver_telemetry(2022, 1, driver = 'PER', fastest_only = TRUE) %>% 
   head(300)
 
-data <- bind_rows(lec,ham,per)
+data <- bind_rows(lec, ham, per)
 
-ggplot(data, aes(distance, throttle, color = driver_code))+
-  geom_line()+
+ggplot(data, aes(distance, throttle, color = driver_code)) +
+  geom_line() +
   theme_minimal()
 
 ```
@@ -71,13 +71,13 @@ ggplot(data, aes(distance, throttle, color = driver_code))+
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
 ```{r use_theme}
-ggplot(data, aes(distance, speed, color = driver_code))+
-  geom_line()+
-  theme_dark_f1()+
+ggplot(data, aes(distance, speed, color = driver_code)) +
+  geom_line() +
+  theme_dark_f1() +
   theme(
     axis.title = element_text(),
     axis.line = element_line(color = 'white'),
-  )+
+  ) +
   labs(
     title = "Speed Comparison for Bahrain 2022"
   )
@@ -101,20 +101,20 @@ laps <- load_session_laps(2023, 'Spain') %>%
   filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% 
   ungroup()
 
-ggplot(laps, aes(tyre_life, lap_time, color = compound))+
-  geom_line()+
-  geom_point()+
-  theme_dark_f1(axis_marks = T)+
+ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
+  geom_line() +
+  geom_point() +
+  theme_dark_f1(axis_marks = TRUE) +
   labs(
     color = "Tyre Compound",
     y = "Lap Time (Seconds)",
     x = "Tyre Life (Laps)"
-  )+
+  ) +
   scale_color_manual(
     values = c('white', 'yellow', 'red')
-  )+
-  scale_y_continuous(breaks = seq(75,85, 1))+
-  scale_x_continuous(breaks = seq(2,26, 4))
+  ) +
+  scale_y_continuous(breaks = seq(75, 85, 1)) +
+  scale_x_continuous(breaks = seq(2, 26, 4))
 
 ```
 
@@ -126,7 +126,7 @@ Now let's visualize the portion of the track where Verstappen had the throttle 1
 ver_can <- load_driver_telemetry(season = 2023, 
                                  round = 'Canada', 
                                  driver = 'VER',
-                                 fastest_only = T) %>% 
+                                 fastest_only = TRUE) %>% 
   mutate(open_throttle = ifelse(throttle == 100, 'Yes', "No"))
 
 ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
@@ -150,7 +150,7 @@ driver_team <- load_results(2023, 4) %>%
   select(driver_id, constructor_id)
 
 constructors <-  constructor_data %>% 
-  select(constructor_id,constructor_color) %>% 
+  select(constructor_id, constructor_color) %>% 
   unique()
 
 pit_constructor <- pit_data %>% 
@@ -160,12 +160,12 @@ pit_constructor <- pit_data %>%
   left_join(constructors, by = "constructor_id")
 
 
-ggplot(pit_constructor, aes(x = constructor_id, y=pit_time, fill = constructor_id))+
-  geom_bar(stat = 'identity', fill = pit_constructor$constructor_color)+
-  theme_dark_f1(axis_marks = T)+
+ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
+  geom_bar(stat = 'identity', fill = pit_constructor$constructor_color) +
+  theme_dark_f1(axis_marks = TRUE) +
   theme(
     legend.position = 'none'
-  )+
+  ) +
   labs(
     x = 'Constructor',
     y = "Average Pit Time (seconds)"

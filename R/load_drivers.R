@@ -8,18 +8,16 @@
 #' @return A tibble with columns driver_id (unique and recurring), first name,
 #' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 #' permanent number (for post-2014 drivers).
-.load_drivers <- function(season = get_current_season()){
-  if(season != 'current' & (season < 1950 | season > get_current_season())){
+.load_drivers <- function(season = get_current_season()) {
+  if (season != 'current' && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1950 and {current} (or use "current")',
-    #                 current=get_current_season()))
   }
 
   url <- glue::glue('{season}/drivers.json?limit=40',
                     season = season)
   data <- get_ergast_content(url)
 
-  if(season<2014){
+  if (season < 2014) {
     data$MRData$DriverTable$Drivers %>%
       dplyr::select("driverId",
                     "givenName",
@@ -28,7 +26,7 @@
                     "dateOfBirth") %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  } else{
+  } else {
     data$MRData$DriverTable$Drivers %>%
       dplyr::select("driverId",
                     "givenName",

@@ -7,27 +7,27 @@
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
 
-get_ergast_content<-function(url){
-  fullurl<-glue::glue("https://ergast.com/api/f1/{url}", url = url)
+get_ergast_content <- function(url) {
+  fullurl <- glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
-                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR','Version'])))
+                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR', 'Version'])))
 
   #Handle Ergast errors with more informative error codes.
-  if(res$status_code != 200 | rawToChar(res$content) == "Unable to select database"){
+  if (res$status_code != 200 || rawToChar(res$content) == "Unable to select database") {
     cli::cli_inform('Failure at Ergast with https:// connection. Retrying as http://.')
     # Try revert to not https mode
-    fullurl<-glue::glue("http://ergast.com/api/f1/{url}", url = url)
+    fullurl <- glue::glue("http://ergast.com/api/f1/{url}", url = url)
     res <- httr::GET(fullurl,
-                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR','Version'])))
+                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR', 'Version'])))
   }
 
 
   #Handle Ergast errors with more informative error codes.
-  if(res$status_code != 200){
+  if (res$status_code != 200) {
     cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.",
                     code = res$status_code))
   }
-  if(rawToChar(res$content) == "Unable to select database"){
+  if (rawToChar(res$content) == "Unable to select database") {
     cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
 
@@ -41,17 +41,17 @@ get_ergast_content<-function(url){
 #' @keywords internal
 #' @return Year (four digit number) representation of current season, as numeric.
 
-.get_current_season<-function(){
-  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m"))<3,
-                           as.numeric(strftime(Sys.Date(), "%Y"))-1,
+.get_current_season <- function() {
+  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+                           as.numeric(strftime(Sys.Date(), "%Y")) - 1,
                            as.numeric(strftime(Sys.Date(), "%Y")))
   tryCatch({
     url <- glue::glue('current.json?limit=30')
     data <- get_ergast_content(url)
     current_season <- as.numeric(data$MRData$RaceTable$season)
   },
-  error = function(e){
-    cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}", e=e))
+  error = function(e) {
+    cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}", e = e))
     cli::cli_inform("Falling back to manually determined 'current' season")
   })
   return(current_season)
@@ -67,6 +67,26 @@ get_ergast_content<-function(url){
 get_current_season <- memoise::memoise(.get_current_season)
 
 
+#' Convert Clock time to seconds
+#'
+#' This function converts clock format time (0:00.000) to seconds (0.000s)
+#'
+#' @param time character string with clock format (0:00.000)
+#' @importFrom magrittr "%>%"
+#' @return A numeric variable that represents that time in seconds
+time_to_sec <- function(time) {
+  subfun <- function(x) {
+    if (is.na(x)) {
+      NA
+    } else {
+      split <- x %>% stringr::str_split(':')
+      as.numeric(split[[1]][1]) * 60 + as.numeric(split[[1]][2])
+    }
+  }
+  purrr::map_dbl(time, subfun)
+}
+
+
 #' Get current FastF1 version
 #'
 #' @description
@@ -75,17 +95,17 @@ get_current_season <- memoise::memoise(.get_current_season)
 #' @keywords internal
 #' @return integer for major version number (or NA if any error )
 
-.get_fastf1_version <- function(){
-  ver<-reticulate::py_list_packages() %>%
+.get_fastf1_version <- function() {
+  ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
-  if(length(ver) == 0){
+  if (length(ver) == 0) {
     cli::cli_warn("Ensure fastf1 python package is installed.\nPlease run this to install the most recent version:\nreticulate::py_install('fastf1')")
     return(NA)
   }
-  if(as.integer(substr(ver, start = 1, 1)) >= 3){
+  if (as.integer(substr(ver, start = 1, 1)) >= 3) {
     return(3)
-  } else if(as.integer(substr(ver, start = 1, 1)) <= 2){
+  } else if (as.integer(substr(ver, start = 1, 1)) <= 2) {
     cli::cli_inform("The Python package fastf1 was updated to v3 recently.\nPlease update the version on your system by running:\nreticulate::py_install('fastf1')\nFuture versions of f1dataR may not support fastf1 < v3.0.0")
     return(2)
   } else {

@@ -31,8 +31,7 @@ An R package to access Formula 1 Data from the Ergast API and the official F1 da
 [![test-coverage](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://img.shields.io/codecov/c/github/SCasanova/f1dataR?label=codecov&logo=codecov)](https://app.codecov.io/gh/SCasanova/f1dataR?branch=main)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-
-
+[![CRAN status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
 <!-- badges: end -->
 
 ## Installation
@@ -57,14 +56,14 @@ This function loads lap-by-lap time data for all drivers in a given season
 and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.
 
 **Example:**
-```{r}
+```{r load_laps}
 library(f1dataR)
 load_laps()
 ```
 
 or
 
-```{r}
+```{r load_specific_laps}
 load_laps(2021, 15)
 ```
 
@@ -74,7 +73,7 @@ load_laps(2021, 15)
 
 When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds
 
-```{r}
+```{r load_telemetrys}
 load_driver_telemetry(2022, round = 4, driver = 'PER')
 
 load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
@@ -86,7 +85,7 @@ load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
 This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.
 
 
-```{r}
+```{r load_session_laps}
 load_session_laps(season = 2023, round = 4, add_weather = T)
 ```
 
@@ -94,7 +93,7 @@ load_session_laps(season = 2023, round = 4, add_weather = T)
 
 The cache directory for sessions can be set manually with the options function
 
-```{r, eval = F}
+```{r cache_example, eval = F}
 options(f1dataR.cache = 'path/to/directory')
 ```
 
@@ -119,6 +118,6 @@ Clears the cache for all functions in the package.
 
 The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.
 
-```{r}
+```{r constructor_example}
 constructor_data %>% colnames()
 ```

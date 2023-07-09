@@ -10,9 +10,9 @@
 #' @export
 
 
-theme_dark_f1 <- function(axis_marks = F){
-  if(axis_marks){
-    ggplot2::theme_gray()+
+theme_dark_f1 <- function(axis_marks = FALSE) {
+  if (axis_marks) {
+    ggplot2::theme_gray() +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
         axis.line = ggplot2::element_line(colour = 'white'),
@@ -29,7 +29,7 @@ theme_dark_f1 <- function(axis_marks = F){
         text = ggplot2::element_text(color = 'white')
       )
   } else {
-    ggplot2::theme_gray()+
+    ggplot2::theme_gray() +
       ggplot2::theme(
         panel.grid = ggplot2::element_blank(),
         axis.line = ggplot2::element_blank(),

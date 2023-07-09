@@ -9,8 +9,8 @@
 #' @importFrom rlang .data
 #' @keywords internal
 #' @return A tibble with one row per driver
-.load_quali <- function(season = get_current_season(), round = 'last'){
-   if(season != 'current' & (season < 2003 | season > get_current_season())){
+.load_quali <- function(season = get_current_season(), round = 'last') {
+   if (season != 'current' && (season < 2003 || season > get_current_season())) {
      cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
    }
 
@@ -19,7 +19,7 @@
   data <- get_ergast_content(url)
   data <- data$MRData$RaceTable$Races$QualifyingResults[[1]]
 
-  if(season < 2006){
+  if (season < 2006) {
     data %>%
       tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "Q1") %>%
@@ -28,8 +28,8 @@
       dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  } else{
-    if(season == 2015 & round == 16){
+  } else {
+    if (season == 2015 && round == 16) {
       data$Q3 <- NA
     }
     data %>%

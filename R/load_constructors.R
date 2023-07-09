@@ -5,7 +5,7 @@
 #' @importFrom magrittr "%>%"
 #' @keywords internal
 #' @return A tibble with one row per constructor
-.load_constructors <- function(){
+.load_constructors <- function() {
   url <- glue::glue('constructors.json?limit=300')
   data <- get_ergast_content(url)
 

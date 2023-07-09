@@ -12,12 +12,12 @@
 #' @keywords internal
 #' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins (and constructorsId in the case of drivers championship).
-.load_standings <- function(season = get_current_season(), round = 'last', type = 'driver'){
-  if(season != 'current' & (season < 2003 | season > get_current_season())){
+.load_standings <- function(season = get_current_season(), round = 'last', type = 'driver') {
+  if (season != 'current' && (season < 2003 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
   }
 
-  if(!(type %in% c('driver', 'constructor'))){
+  if (!(type %in% c('driver', 'constructor'))) {
     cli::cli_abort('{.var type} must be either "driver" or "constructor"')
   }
 
@@ -25,7 +25,7 @@
                     season = season, round = round, type = type)
   data <- get_ergast_content(url)
 
-  if(type == 'driver'){
+  if (type == 'driver') {
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
       tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select("driverId", "position", "points", "wins", "Constructors") %>%
@@ -35,7 +35,7 @@
       dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  } else if (type == 'constructor'){
+  } else if (type == 'constructor') {
     data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
       tidyr::unnest(cols = c("Constructor")) %>%
       suppressWarnings() %>%
