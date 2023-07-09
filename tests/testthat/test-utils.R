@@ -4,7 +4,12 @@ test_that("utility functions work", {
   expect_true(is.numeric(get_current_season()))
   expect_gte(get_current_season(), 2022)
 
-  #get_ergast_content() is inherently tested in load_x functions
+  #get_ergast_content() is inherently tested in load_x functions too
 
+  # Test internet failures
+  httptest::without_internet({
+    expect_gte(get_current_season(), 2022)
+  }
+  )
 
 })
