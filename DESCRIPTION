@@ -4,11 +4,15 @@ Version: 1.1.0
 Authors@R: 
     c(person(given = "Santiago",
            family = "Casanova",
-           role = c("aut", "cre"),
+           role = c("aut", "cre", "cph"),
            email = "santiago.casanova@yahoo.com"),
-    person(given = "Philip", family = "Bulsink", role = "aut", email = "bulsinkp@gmail.com"))
-Description: A collection of functions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
-Config/reticulate: 
+    person(given = "Philip", 
+          family = "Bulsink", 
+          role = "aut", 
+          email = "bulsinkp@gmail.com"))
+Description: A collection of functions that wrap Ergast API Formula 1 data and 
+      F1 official data via the fastf1 python library. 
+Config/reticulate:
   list(
     packages = list(
       list(package = "fastf1", pip = TRUE)
