@@ -113,16 +113,30 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
 #' @description
 #' `r lifecycle::badge("deprecated")`
 #'
-#' `load_driver_telemetry()` was renamed to `load_driver_telemetry()` to create a more
+#' `get_driver_telemetry()` was renamed to `load_driver_telemetry()` to create a more
 #' consistent API.
 #' @keywords internal
 #' @export
-get_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, fastest_only = FALSE,
-                                 log_level = "WARNING", race = lifecycle::deprecated()) {
-  lifecycle::deprecate_warn("1.0.0", "get_driver_telemetry()", "load_driver_telemetry()")
 
-  load_driver_telemetry(
-    season = season, round = round, session = session, driver = driver,
-    laps = ifelse(fastest_only, "fastest", "all"), log_level = log_level, race = race
+get_driver_telemetry <-
+  function(season = get_current_season(),
+           round = 1,
+           session = "R",
+           driver,
+           fastest_only = FALSE,
+           log_level = "WARNING",
+           race = lifecycle::deprecated()) {
+    lifecycle::deprecate_warn("1.1.0",
+                              "get_driver_telemetry()",
+                              "load_driver_telemetry()")
+
+    load_driver_telemetry(
+      season = season,
+      round = round,
+      session = session,
+      driver = driver,
+      laps = ifelse(fastest_only, "fastest", "all"),
+      log_level = log_level,
+      race = race
   )
 }

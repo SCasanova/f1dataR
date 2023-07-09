@@ -87,8 +87,12 @@ load_laps(2021, 15)
 ```
 
 
+<<<<<<< HEAD
 ### Driver Telemetry
 `load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
+=======
+`load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, laps = "fastest")`
+>>>>>>> 46fe320 (Remove `fastest_only` from examples and vignettes)
 
 When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds
 
@@ -112,7 +116,7 @@ load_driver_telemetry(2022, round = 4, driver = 'PER')
 #> # ℹ 6 more variables: y <dbl>, z <dbl>, distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>,
 #> #   driver_code <chr>
 
-load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
+load_driver_telemetry(2018, round = 7,'Q', 'HAM', laps = 'fastest')
 #> # A tibble: 534 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake   drs source  relative_distance status     x
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>               <dbl> <chr>  <dbl>
