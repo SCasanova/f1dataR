@@ -6,11 +6,13 @@
 #' @keywords internal
 #' @return A tibble with one row per constructor
 .load_constructors <- function() {
-  url <- glue::glue('constructors.json?limit=300')
+  url <- "constructors.json?limit=300"
   data <- get_ergast_content(url)
 
   return(data$MRData$ConstructorTable$Constructors %>%
-           dplyr::select("constructorId", "name", "nationality"))
+           dplyr::select("constructorId", "name", "nationality") %>%
+           janitor::clean_names()
+         )
 }
 
 #' @inherit .load_constructors title description return

@@ -10,15 +10,15 @@
 get_ergast_content <- function(url) {
   fullurl <- glue::glue("https://ergast.com/api/f1/{url}", url = url)
   res <- httr::GET(fullurl,
-                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR', 'Version'])))
+                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])))
 
   #Handle Ergast errors with more informative error codes.
   if (res$status_code != 200 || rawToChar(res$content) == "Unable to select database") {
-    cli::cli_inform('Failure at Ergast with https:// connection. Retrying as http://.')
+    cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
     # Try revert to not https mode
     fullurl <- glue::glue("http://ergast.com/api/f1/{url}", url = url)
     res <- httr::GET(fullurl,
-                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()['f1dataR', 'Version'])))
+                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])))
   }
 
 
@@ -46,7 +46,7 @@ get_ergast_content <- function(url) {
                            as.numeric(strftime(Sys.Date(), "%Y")) - 1,
                            as.numeric(strftime(Sys.Date(), "%Y")))
   tryCatch({
-    url <- glue::glue('current.json?limit=30')
+    url <- glue::glue("current.json?limit=30")
     data <- get_ergast_content(url)
     current_season <- as.numeric(data$MRData$RaceTable$season)
   },
@@ -79,7 +79,7 @@ time_to_sec <- function(time) {
     if (is.na(x)) {
       NA
     } else {
-      split <- x %>% stringr::str_split(':')
+      split <- x %>% stringr::str_split(":")
       as.numeric(split[[1]][1]) * 60 + as.numeric(split[[1]][2])
     }
   }

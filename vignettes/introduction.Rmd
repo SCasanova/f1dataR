@@ -32,7 +32,7 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```{r telem}
 library(f1dataR)
 
-load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = TRUE)
+load_driver_telemetry(2022, 1, driver = "LEC", fastest_only = TRUE)
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
@@ -41,7 +41,7 @@ Now let's use ggplot2 to visualize some of the data we have
 library(dplyr)
 library(ggplot2)
 
-lec <- load_driver_telemetry(2022, 1, driver = 'LEC', fastest_only = TRUE) %>% 
+lec <- load_driver_telemetry(2022, 1, driver = "LEC", fastest_only = TRUE) %>%
   head(300)
 
 ggplot(lec, aes(distance, throttle)) +
@@ -52,10 +52,10 @@ ggplot(lec, aes(distance, throttle)) +
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
 ```{r triple_plot}
-ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', fastest_only = TRUE) %>% 
+ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", fastest_only = TRUE) %>%
   head(300)
 
-per <- load_driver_telemetry(2022, 1, driver = 'PER', fastest_only = TRUE) %>% 
+per <- load_driver_telemetry(2022, 1, driver = "PER", fastest_only = TRUE) %>%
   head(300)
 
 data <- bind_rows(lec, ham, per)
@@ -76,7 +76,7 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
   theme_dark_f1() +
   theme(
     axis.title = element_text(),
-    axis.line = element_line(color = 'white'),
+    axis.line = element_line(color = "white"),
   ) +
   labs(
     title = "Speed Comparison for Bahrain 2022"
@@ -86,7 +86,7 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
 ```{r use_builtin}
-plot_fastest(2022, 1, 'R', 'PER')
+plot_fastest(2022, 1, "R", "PER")
 ```
 
 ## Combining several functions
@@ -94,11 +94,11 @@ plot_fastest(2022, 1, 'R', 'PER')
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
 ```{r session_laps}
-laps <- load_session_laps(2023, 'Spain') %>% 
-  filter(driver == 'PER') %>% 
-  group_by(compound) %>% 
+laps <- load_session_laps(2023, "Spain") %>%
+  filter(driver == "PER") %>%
+  group_by(compound) %>%
   # Remove in and out laps
-  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>% 
+  filter(tyre_life != 1 & tyre_life != max(tyre_life)) %>%
   ungroup()
 
 ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
@@ -111,7 +111,7 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
     x = "Tyre Life (Laps)"
   ) +
   scale_color_manual(
-    values = c('white', 'yellow', 'red')
+    values = c("white", "yellow", "red")
   ) +
   scale_y_continuous(breaks = seq(75, 85, 1)) +
   scale_x_continuous(breaks = seq(2, 26, 4))
@@ -123,20 +123,20 @@ Now let's visualize the portion of the track where Verstappen had the throttle 1
 ```{r telem_plotting}
 
 
-ver_can <- load_driver_telemetry(season = 2023, 
-                                 round = 'Canada', 
-                                 driver = 'VER',
-                                 fastest_only = TRUE) %>% 
-  mutate(open_throttle = ifelse(throttle == 100, 'Yes', "No"))
+ver_can <- load_driver_telemetry(season = 2023,
+                                 round = "Canada",
+                                 driver = "VER",
+                                 fastest_only = TRUE) %>%
+  mutate(open_throttle = ifelse(throttle == 100, "Yes", "No"))
 
 ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
-  geom_path(linewidth = 4, lineend = 'round') +
-  scale_color_manual( values = c('white', 'red')) +
+  geom_path(linewidth = 4, lineend = "round") +
+  scale_color_manual(values = c("white", "red")) +
   theme_dark_f1() +
       labs(
-        title = 'Verstappen Flat Out',
-        subtitle = 'Canada 2023 | Fastest Lap',
-        color = 'Throttle 100%'
+        title = "Verstappen Flat Out",
+        subtitle = "Canada 2023 | Fastest Lap",
+        color = "Throttle 100%"
       )
 
 ```
@@ -146,28 +146,28 @@ For a simpler visualization let's look at the average time it took each team to 
 ```{r pitstop}
 pit_data <- load_pitstops(2023, 4)
 
-driver_team <- load_results(2023, 4) %>% 
+driver_team <- load_results(2023, 4) %>%
   select(driver_id, constructor_id)
 
-constructors <-  constructor_data %>% 
-  select(constructor_id, constructor_color) %>% 
+constructors <-  constructor_data %>%
+  select(constructor_id, constructor_color) %>%
   unique()
 
-pit_constructor <- pit_data %>% 
-  left_join(driver_team, by = 'driver_id') %>% 
-  group_by(constructor_id) %>% 
-  summarise(pit_time = mean(as.numeric(duration))) %>% 
+pit_constructor <- pit_data %>%
+  left_join(driver_team, by = "driver_id") %>%
+  group_by(constructor_id) %>%
+  summarise(pit_time = mean(as.numeric(duration))) %>%
   left_join(constructors, by = "constructor_id")
 
 
 ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
-  geom_bar(stat = 'identity', fill = pit_constructor$constructor_color) +
+  geom_bar(stat = "identity", fill = pit_constructor$constructor_color) +
   theme_dark_f1(axis_marks = TRUE) +
   theme(
-    legend.position = 'none'
+    legend.position = "none"
   ) +
   labs(
-    x = 'Constructor',
+    x = "Constructor",
     y = "Average Pit Time (seconds)"
   )
 ```

@@ -1,6 +1,6 @@
 # helper function to skip tests if we don't have the fastf1 module
 skip_if_no_ff1 <- function() {
-  have_ff1 <- 'fastf1' %in% reticulate::py_list_packages()$package
+  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
   if (!have_ff1) {
     skip("fastf1 not available for testing")
   }
@@ -20,8 +20,8 @@ test_that("driver telemetry", {
   withr::local_options(f1dataR.cache = file.path(getwd(), "tst_telem"))
 
   # Tests
-  telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 'all')
-  telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 'fastest')
+  telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all")
+  telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "fastest")
 
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
@@ -40,7 +40,7 @@ test_that("driver telemetry", {
   }
 
 
-  expect_warning(load_driver_telemetry(season = 2022, race = 'Brazil', session = 'S', driver = 'HAM'))
-  expect_warning(get_driver_telemetry(season = 2022, round = 'Brazil', session = 'S', driver = 'HAM'))
+  expect_warning(load_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"))
+  expect_warning(get_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM"))
 
 })

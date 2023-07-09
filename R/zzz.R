@@ -16,12 +16,12 @@
   op <- options()
 
   #Make our own lost of options
-  op.package <- list(f1dataR.cache = getwd())
+  op_package <- list(f1dataR.cache = getwd())
 
   #IFF our options aren't already set, we'll include those in the new options to write
-  toset <- !(names(op.package) %in% names(op))
+  toset <- !(names(op_package) %in% names(op))
   if (any(toset)) {
-    options(op.package[toset])
+    options(op_package[toset])
   }
 
   invisible()

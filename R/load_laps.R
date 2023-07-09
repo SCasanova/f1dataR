@@ -11,23 +11,23 @@
 #' @keywords internal
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
-.load_laps <- function(season = get_current_season(), round = 'last', race = lifecycle::deprecated()) {
+.load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_laps(race)", "load_laps(round)")
     round <- race
   }
-  if (season != 'current' && (season < 1996 || season > get_current_season())) {
+  if (season != "current" && (season < 1996 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1996 and {get_current_season()} (or use "current")')
   }
 
-  url <- glue::glue('{season}/{round}/laps.json?limit=1000',
+  url <- glue::glue("{season}/{round}/laps.json?limit=1000",
                     season = season, round = round)
   data <- get_ergast_content(url)
 
   total <- data$MRData$total %>% as.numeric()
-  if (total - 1000 > 0 && total - 1000 <= 1000 ) {
+  if (total - 1000 > 0 && total - 1000 <= 1000) {
     lim <- total - 1000
-    url2 <- glue::glue('{season}/{round}/laps.json?limit={lim}&offset=1000',
+    url2 <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset=1000",
                        lim = lim, season = season, round = round)
     data2 <- get_ergast_content(url2)
 
@@ -37,7 +37,7 @@
   }
 
   laps <- tibble::tibble()
-  season_text <-  ifelse(season == 'current', get_current_season(), season)
+  season_text <- ifelse(season == "current", get_current_season(), season)
   for (i in seq_len(nrow(full))) {
     laps <- dplyr::bind_rows(laps,
                       full[[1]][i][[1]] %>%

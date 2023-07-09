@@ -9,11 +9,11 @@
 #' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 #' permanent number (for post-2014 drivers).
 .load_drivers <- function(season = get_current_season()) {
-  if (season != 'current' && (season < 1950 || season > get_current_season())) {
+  if (season != "current" && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
 
-  url <- glue::glue('{season}/drivers.json?limit=40',
+  url <- glue::glue("{season}/drivers.json?limit=40",
                     season = season)
   data <- get_ergast_content(url)
 
