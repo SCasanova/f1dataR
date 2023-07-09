@@ -84,7 +84,7 @@ load_laps(2021, 15)
 
 ### Driver Telemetry
 
-`load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)`
+`load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, laps = "fastest")`
 
 When the parameters for season (four digit year), round (number or GP
 name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three
@@ -113,7 +113,7 @@ load_driver_telemetry(2022, round = 4, driver = 'PER')
 #> #   distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>,
 #> #   driver_code <chr>, and abbreviated variable name ¹​throttle
 
-load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
+load_driver_telemetry(2018, round = 7,'Q', 'HAM', laps = 'fastest')
 #> # A tibble: 534 × 19
 #>    date                session_time  time   rpm speed n_gear throt…¹ brake   drs
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>   <dbl> <lgl> <dbl>
