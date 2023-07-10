@@ -9,12 +9,10 @@
 
 get_ergast_content <- function(url) {
   fullurl <- glue::glue("https://ergast.com/api/f1/{url}", url = url)
-  res <- rlang::try_fetch(httr::GET(fullurl,
-                                      httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])
-                                   )
-                          )
-                          
-
+  res <- rlang::try_fetch(httr::GET(
+    fullurl,
+    httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"]))
+  ))
   # Handle Ergast errors with more informative error codes.
   if (res$status_code != 200 || rawToChar(res$content) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
