@@ -126,7 +126,7 @@ get_driver_telemetry <-
            fastest_only = FALSE,
            log_level = "WARNING",
            race = lifecycle::deprecated()) {
-    lifecycle::deprecate_warn("1.1.0",
+    lifecycle::deprecate_warn("1.0.0",
                               "get_driver_telemetry()",
                               "load_driver_telemetry()")
 
