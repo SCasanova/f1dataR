@@ -9,9 +9,10 @@ get_driver_telemetry(
   round = 1,
   session = "R",
   driver,
-  fastest_only = FALSE,
+  laps = "fastest",
   log_level = "WARNING",
-  race = lifecycle::deprecated()
+  race = lifecycle::deprecated(),
+  fastest_only = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -24,13 +25,16 @@ get_driver_telemetry(
 
 \item{driver}{three letter driver code (see \code{load_drivers()} for a list)}
 
-\item{fastest_only}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{fastest_only} is no longer supported, indicated preferred
-laps in \code{laps}.}
+\item{laps}{which lap's telemetry to return. One of an integer lap number (<= total laps in the race), \code{fastest},
+or \code{all}. Note that integer lap choice requires \code{fastf1} version 3.0 or greater.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}.}
+
+\item{fastest_only}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{fastest_only} is no longer supported, indicated preferred
+laps in \code{laps}.}
 }
 \value{
 A tibble with telemetry data for selected driver/session.
