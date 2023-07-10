@@ -121,8 +121,6 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
 
 ```{r telem_plotting}
-
-
 ver_can <- load_driver_telemetry(season = 2023,
                                  round = "Canada",
                                  driver = "VER",

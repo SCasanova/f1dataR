@@ -48,22 +48,21 @@ and round. Round refers to race number. The defaults are current season and last
 
 ```r
 library(f1dataR)
-#> Loading required package: reticulate
 load_laps()
-#> # A tibble: 1,353 × 6
-#>    driver_id       position time       lap time_sec season
-#>    <chr>           <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 max_verstappen  1        1:17.639     1     77.6   2023
-#>  2 leclerc         2        1:19.336     1     79.3   2023
-#>  3 sainz           3        1:21.661     1     81.7   2023
-#>  4 hamilton        4        1:24.134     1     84.1   2023
-#>  5 norris          5        1:26.307     1     86.3   2023
-#>  6 alonso          6        1:28.176     1     88.2   2023
-#>  7 hulkenberg      7        1:29.694     1     89.7   2023
-#>  8 kevin_magnussen 8        1:31.308     1     91.3   2023
-#>  9 stroll          9        1:31.378     1     91.4   2023
-#> 10 gasly           10       1:32.369     1     92.4   2023
-#> # ℹ 1,343 more rows
+#> # A tibble: 970 × 6
+#>    driver_id      position time       lap time_sec season
+#>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
+#>  1 norris         1        1:36.551     1     96.6   2023
+#>  2 max_verstappen 2        1:37.167     1     97.2   2023
+#>  3 piastri        3        1:37.773     1     97.8   2023
+#>  4 leclerc        4        1:38.300     1     98.3   2023
+#>  5 russell        5        1:38.651     1     98.7   2023
+#>  6 sainz          6        1:39.284     1     99.3   2023
+#>  7 alonso         7        1:40.026     1    100.    2023
+#>  8 hamilton       8        1:40.664     1    101.    2023
+#>  9 gasly          9        1:41.014     1    101.    2023
+#> 10 albon          10       1:41.364     1    101.    2023
+#> # ℹ 960 more rows
 ```
 
 or
@@ -114,10 +113,6 @@ load_driver_telemetry(2022, round = 4, driver = 'PER')
 #> #   driver_code <chr>
 
 load_driver_telemetry(2018, round = 7,'Q', 'HAM', fastest_only = T)
-#> Warning: The `fastest_only` argument of `load_driver_telemetry()` is deprecated as of f1dataR 1.1.0.
-#> ℹ Please use the `laps` argument instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 #> # A tibble: 534 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake   drs source  relative_distance status     x
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>               <dbl> <chr>  <dbl>
