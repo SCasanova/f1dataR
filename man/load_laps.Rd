@@ -23,12 +23,12 @@ A tibble with columns driver_id (unique and recurring), position
 during lap, time (in clock form), lap number, time (in seconds), and season.
 }
 \description{
-Loads lap-by-lap time data for all drivers in a given season
+Loads basic lap-by-lap time data for all drivers in a given season
 and round. Lap time data is available from 1996 onward. Use \code{.load_laps()} for a uncached version.
 }
 \examples{
 # Load laps from the last race of 2021
-load_laps(2021, 'last')
+load_laps(2021, "last")
 
 # Load laps from the third race of 1999
 load_laps(1999, 3)

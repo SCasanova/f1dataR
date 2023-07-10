@@ -1,6 +1,6 @@
 #' Load Lap by Lap Time Data
 #'
-#' Loads lap-by-lap time data for all drivers in a given season
+#' @description Loads basic lap-by-lap time data for all drivers in a given season
 #' and round. Lap time data is available from 1996 onward. Use `.load_laps()` for a uncached version.
 #'
 #' @param season number from 1996 to current season (defaults to current season).
@@ -11,73 +11,56 @@
 #' @keywords internal
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
-.load_laps <- function(season = get_current_season(), round = 'last', race = lifecycle::deprecated()){
+.load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_laps(race)", "load_laps(round)")
     round <- race
   }
-  if(season != 'current' & (season < 1996 | season > get_current_season())){
+  if (season != "current" && (season < 1996 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1996 and {get_current_season()} (or use "current")')
-    # stop(glue::glue('Year must be between 1996 and {current} (or use "current")',
-    #                 current=get_current_season()))
   }
 
-  url <- glue::glue('{season}/{round}/laps.json?limit=1000',
-                    season = season, round = round)
+  url <- glue::glue("{season}/{round}/laps.json?limit=1000",
+    season = season, round = round
+  )
   data <- get_ergast_content(url)
 
   total <- data$MRData$total %>% as.numeric()
-  if(total-1000 >0 & total-1000 <= 1000 ){
-    lim <- total-1000
-
-    url2 <- glue::glue('{season}/{round}/laps.json?limit={lim}&offset=1000',
-                       lim = lim, season = season, round = round)
+  if (total - 1000 > 0 && total - 1000 <= 1000) {
+    lim <- total - 1000
+    url2 <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset=1000",
+      lim = lim, season = season, round = round
+    )
     data2 <- get_ergast_content(url2)
 
     full <- dplyr::bind_rows(data$MRData$RaceTable$Races$Laps[[1]][2], data2$MRData$RaceTable$Races$Laps[[1]][2])
-  } else{
+  } else {
     full <- data$MRData$RaceTable$Races$Laps[[1]][2]
   }
 
   laps <- tibble::tibble()
-  season_text <-  ifelse(season == 'current', get_current_season(), season)
-  for (i in 1:nrow(full)) {
-    laps <- dplyr::bind_rows(laps,
-                      full[[1]][i][[1]] %>%
-                        dplyr::mutate(lap = i,
-                               time_sec = time_to_sec(.data$time),
-                               season = season_text))
+  season_text <- ifelse(season == "current", get_current_season(), season)
+  for (i in seq_len(nrow(full))) {
+    laps <- dplyr::bind_rows(
+      laps,
+      full[[1]][i][[1]] %>%
+        dplyr::mutate(
+          lap = i,
+          time_sec = time_to_sec(.data$time),
+          season = season_text
+        )
+    )
   }
   laps %>%
     tibble::tibble() %>%
     janitor::clean_names()
-
-}
-
-#' Convert Clock time to seconds
-#'
-#' This function converts clock format time (0:00.000) to seconds (0.000s)
-#'
-#' @param time character string with clock format (0:00.000)
-#' @importFrom magrittr "%>%"
-#' @return A numeric variable that represents that time in seconds
-time_to_sec <- function(time){
-  subfun <- function(x){
-    if(is.na(x))
-      NA
-    else{
-      split <- x %>% stringr::str_split(':')
-      as.numeric(split[[1]][1])*60 + as.numeric(split[[1]][2])
-    }
-  }
-  purrr::map_dbl(time, subfun)
 }
 
 #' @inherit .load_laps title description params return
 #' @export
 #' @examples
 #' # Load laps from the last race of 2021
-#' load_laps(2021, 'last')
+#' load_laps(2021, "last")
 #'
 #' # Load laps from the third race of 1999
 #' load_laps(1999, 3)

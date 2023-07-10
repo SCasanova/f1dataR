@@ -4,7 +4,7 @@
 \alias{theme_dark_f1}
 \title{Dark F1-style Theme for ggplot}
 \usage{
-theme_dark_f1(axis_marks = F)
+theme_dark_f1(axis_marks = FALSE)
 }
 \arguments{
 \item{axis_marks}{True or false, whether axis line, ticks and title should

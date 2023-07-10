@@ -2,6 +2,9 @@
 #'
 #' @description Receives season, race number, driver code, and an optional fastest lap only
 #' argument to output car telemetry for the selected situation.
+#' Example usage of this code can be seen in the Introduction vignette (run
+#' `vignette('introduction', 'f1dataR')` to read). Multiple drivers' telemetry can be appended
+#' to one data frame by the user.
 #'
 #' @param season number from 2018 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
@@ -21,36 +24,39 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' telem <- load_driver_telemetry(season = 2023,
-#'                                round = 'Bahrain',
-#'                                session = 'Q',
-#'                                driver = 'HAM',
-#'                                laps = 'fastest')
+#' telem <- load_driver_telemetry(
+#'   season = 2023,
+#'   round = "Bahrain",
+#'   session = "Q",
+#'   driver = "HAM",
+#'   laps = "fastest"
+#' )
 #' }
 #'
-load_driver_telemetry <- function(season = get_current_season(), round = 1, session = 'R', driver, laps = 'fastest', log_level = "WARNING", race = lifecycle::deprecated(), fastest_only = lifecycle::deprecated()){
-
-  #Lifecycles
+load_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, laps = "fastest",
+                                  log_level = "WARNING", race = lifecycle::deprecated(),
+                                  fastest_only = lifecycle::deprecated()) {
+  # Lifecycles
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
   if (lifecycle::is_present(fastest_only)) {
     lifecycle::deprecate_warn("1.1.0", "load_driver_telemetry(fastest_only)", "load_driver_telemetry(laps)")
-    if(fastest_only){
-      lap = 'fastest'
-    } else{
-      lap = 'all'
+    if (fastest_only) {
+      laps <- "fastest"
+    } else {
+      laps <- "all"
     }
   }
 
   # Param checks
-  if(!(laps %in% c('fastest', 'all'))){
-    if(is.numeric(laps)){
-      if(get_fastf1_version() < 3){
+  if (!(laps %in% c("fastest", "all"))) {
+    if (is.numeric(laps)) {
+      if (get_fastf1_version() < 3) {
         cli::cli_abort("{.var laps} can only be a lap number if using fastf1 v3.0 or higher")
       }
-      if(as.numeric(laps) != as.integer(laps)){
+      if (as.numeric(laps) != as.integer(laps)) {
         cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
       }
     } else {
@@ -60,37 +66,42 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
 
   load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
 
-  tryCatch({
+  tryCatch(
+    {
       # Only returns a value if session.load() has been successful
       # If it hasn't, retry
       reticulate::py_run_string("session.t0_date")
-    }, error = function(e){
+    },
+    error = function(e) {
       reticulate::py_run_string("session.load()")
     }
   )
 
-  if(get_fastf1_version() >= 3){
-    add_v3_option <- '.add_driver_ahead()'
+  if (get_fastf1_version() >= 3) {
+    add_v3_option <- ".add_driver_ahead()"
   } else {
-    add_v3_option <- ''
+    add_v3_option <- ""
   }
 
-  if(laps == 'fastest'){
+  if (laps == "fastest") {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
-                                         driver = driver, opt = add_v3_option))
-  } else if (laps != 'all'){
+      driver = driver, opt = add_v3_option
+    ))
+  } else if (laps != "all") {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
-                                         driver = driver, laps = laps, opt = add_v3_option))
+      driver = driver, laps = laps, opt = add_v3_option
+    ))
   } else {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
-                                         driver = driver, opt = add_v3_option))
-
+      driver = driver, opt = add_v3_option
+    ))
   }
   py_env <- reticulate::py_run_string(paste("tel.SessionTime = tel.SessionTime.dt.total_seconds()",
-                                            "tel.Time = tel.Time.dt.total_seconds()",
-                                            sep = "\n"))
+    "tel.Time = tel.Time.dt.total_seconds()",
+    sep = "\n"
+  ))
 
-  tel <- reticulate::py_to_r(reticulate::py_get_item(py_env, 'tel'))
+  tel <- reticulate::py_to_r(reticulate::py_get_item(py_env, "tel"))
 
   tel %>%
     dplyr::mutate(driverCode = driver) %>%
@@ -106,7 +117,12 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
 #' consistent API.
 #' @keywords internal
 #' @export
-get_driver_telemetry <- function(season = get_current_season(), round =1, session = 'R', driver, fastest_only = FALSE, log_level="WARNING", race = lifecycle::deprecated()){
+get_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, fastest_only = FALSE,
+                                 log_level = "WARNING", race = lifecycle::deprecated()) {
   lifecycle::deprecate_warn("1.0.0", "get_driver_telemetry()", "load_driver_telemetry()")
-  load_driver_telemetry(season = season, round = round, session = session, driver = driver, fastest_only = fastest_only, log_level = log_level, race = race)
+
+  load_driver_telemetry(
+    season = season, round = round, session = session, driver = driver,
+    laps = ifelse(fastest_only, "fastest", "all"), log_level = log_level, race = race
+  )
 }

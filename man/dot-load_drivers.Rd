@@ -15,6 +15,7 @@ last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 permanent number (for post-2014 drivers).
 }
 \description{
-Loads driver info for all participants in a given season. Use \code{.load_drivers()} for an uncached version of this function.
+Loads driver info for all participants in a given season.
+Use \code{.load_drivers()} for an uncached version of this function.
 }
 \keyword{internal}

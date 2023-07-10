@@ -10,6 +10,7 @@
 A tibble with one row per constructor
 }
 \description{
-Loads constructor info for all participants in a given season. Use \code{.load_constructors()}for an uncached version of this function
+Loads constructor info for all participants in a given season.
+Use \code{.load_constructors()}for an uncached version of this function
 }
 \keyword{internal}

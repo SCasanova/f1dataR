@@ -42,14 +42,19 @@ A tibble with telemetry data for selected driver/session.
 \description{
 Receives season, race number, driver code, and an optional fastest lap only
 argument to output car telemetry for the selected situation.
+Example usage of this code can be seen in the Introduction vignette (run
+\code{vignette('introduction', 'f1dataR')} to read). Multiple drivers' telemetry can be appended
+to one data frame by the user.
 }
 \examples{
 \dontrun{
-telem <- load_driver_telemetry(season = 2023,
-                               round = 'Bahrain',
-                               session = 'Q',
-                               driver = 'HAM',
-                               laps = 'fastest')
+telem <- load_driver_telemetry(
+  season = 2023,
+  round = "Bahrain",
+  session = "Q",
+  driver = "HAM",
+  laps = "fastest"
+)
 }
 
 }
