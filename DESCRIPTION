@@ -4,7 +4,7 @@ Version: 1.1.0
 Authors@R: 
     c(person(given = "Santiago", 
              family = "Casanova", 
-             role = c("aut", "cre"), 
+             role = c("aut", "cre","cph"), 
              email = "santiago.casanova@yahoo.com"),
       person(given = "Philip", 
              family = "Bulsink", 
