@@ -35,7 +35,7 @@ A ggplot object that indicates grand prix, driver, time and selected
 color variable.
 }
 \description{
-Creates a ggplot object that details the fastest lap for a driver in a race.
+Creates a ggplot graphic that details the fastest lap for a driver in a race.
 Complete with a gearshift or speed analysis.
 }
 \examples{

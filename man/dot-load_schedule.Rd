@@ -13,6 +13,7 @@
 A tibble with one row per circuit in season
 }
 \description{
-Loads schedule information for a given F1 season. Use \code{.load_schedule()} for an uncached version.
+Loads schedule information for a given F1 season.
+Use \code{.load_schedule()} for an uncached version.
 }
 \keyword{internal}

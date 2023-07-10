@@ -13,6 +13,7 @@
 A tibble with one row per circuit
 }
 \description{
-Loads circuit info for all circuits in a given season. Use \code{.load_circuits()} for an uncached version of this function
+Loads circuit info for all circuits in a given season. Use \code{.load_circuits()}
+for an uncached version of this function
 }
 \keyword{internal}

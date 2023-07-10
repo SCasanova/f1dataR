@@ -16,7 +16,8 @@ to most recent. Also accepts \code{'last'}.}
 A tibble with one row per driver
 }
 \description{
-Loads final race results for a given year and round. Use \code{.load_results()} for an uncached version
+Loads final race results for a given year and round. Use \code{.load_results()}
+for an uncached version
 }
 \examples{
 # Load results from the third race of 2023

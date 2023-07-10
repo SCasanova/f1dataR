@@ -13,7 +13,8 @@ load_schedule(season = get_current_season())
 A tibble with one row per circuit in season
 }
 \description{
-Loads schedule information for a given F1 season. Use \code{.load_schedule()} for an uncached version.
+Loads schedule information for a given F1 season.
+Use \code{.load_schedule()} for an uncached version.
 }
 \examples{
 # Load this year's schedule:

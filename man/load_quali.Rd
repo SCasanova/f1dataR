@@ -16,7 +16,8 @@ to most recent.  Also accepts \code{'last'}.}
 A tibble with one row per driver
 }
 \description{
-Loads qualifying session results for a given season and round. Use \code{.load_quali()} for an uncached version.
+Loads qualifying session results for a given season and round.
+Use \code{.load_quali()} for an uncached version.
 }
 \examples{
 # Load quali from the first race of 2023:
