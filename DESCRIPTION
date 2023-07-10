@@ -12,7 +12,7 @@ Authors@R:
              email = "bulsinkp@gmail.com",
              comment = c(ORCID = "0000-0001-9668-2429")))
 Description: A collection of functions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
-Config/reticulate:
+Config/reticulate: 
   list(
     packages = list(
       list(package = "fastf1", pip = TRUE)
@@ -26,7 +26,7 @@ RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10),
     reticulate (>= 1.14),
-Imports:
+Imports: 
     glue,
     magrittr,
     tibble,
@@ -42,12 +42,13 @@ Imports:
     lifecycle,
     cli
 Suggests: 
-    rmarkdown,
-    knitr,
     ggplot2,
+    httptest,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0),
-    withr,
-    usethis
+    usethis,
+    withr
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
 BugReports: https://github.com/scasanova/f1dataR/issues
