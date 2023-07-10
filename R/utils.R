@@ -9,29 +9,34 @@
 
 get_ergast_content <- function(url) {
   fullurl <- glue::glue("https://ergast.com/api/f1/{url}", url = url)
-  res <- httr::GET(fullurl,
-                   httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])))
+  res <- httr::GET(
+    fullurl,
+    httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"]))
+  )
 
-  #Handle Ergast errors with more informative error codes.
+  # Handle Ergast errors with more informative error codes.
   if (res$status_code != 200 || rawToChar(res$content) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
     # Try revert to not https mode
     fullurl <- glue::glue("http://ergast.com/api/f1/{url}", url = url)
-    res <- httr::GET(fullurl,
-                     httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])))
+    res <- httr::GET(
+      fullurl,
+      httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"]))
+    )
   }
 
 
-  #Handle Ergast errors with more informative error codes.
+  # Handle Ergast errors with more informative error codes.
   if (res$status_code != 200) {
     cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.",
-                    code = res$status_code))
+      code = res$status_code
+    ))
   }
   if (rawToChar(res$content) == "Unable to select database") {
     cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
 
-  #presuming ergast is ok...
+  # presuming ergast is ok...
   return(jsonlite::fromJSON(rawToChar(res$content)))
 }
 
@@ -43,17 +48,20 @@ get_ergast_content <- function(url) {
 
 .get_current_season <- function() {
   current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
-                           as.numeric(strftime(Sys.Date(), "%Y")) - 1,
-                           as.numeric(strftime(Sys.Date(), "%Y")))
-  tryCatch({
-    url <- glue::glue("current.json?limit=30")
-    data <- get_ergast_content(url)
-    current_season <- as.numeric(data$MRData$RaceTable$season)
-  },
-  error = function(e) {
-    cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}", e = e))
-    cli::cli_inform("Falling back to manually determined 'current' season")
-  })
+    as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+    as.numeric(strftime(Sys.Date(), "%Y"))
+  )
+  tryCatch(
+    {
+      url <- glue::glue("current.json?limit=30")
+      data <- get_ergast_content(url)
+      current_season <- as.numeric(data$MRData$RaceTable$season)
+    },
+    error = function(e) {
+      cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}", e = e))
+      cli::cli_inform("Falling back to manually determined 'current' season")
+    }
+  )
   return(current_season)
 }
 
@@ -63,13 +71,12 @@ get_ergast_content <- function(url) {
 #' @examples
 #' # Get the current season
 #' get_current_season()
-
 get_current_season <- memoise::memoise(.get_current_season)
 
 
 #' Convert Clock time to seconds
 #'
-#' This function converts clock format time (0:00.000) to seconds (0.000s)
+#' @description This function converts clock format time (0:00.000) to seconds (0.000s)
 #'
 #' @param time character string with clock format (0:00.000)
 #' @importFrom magrittr "%>%"

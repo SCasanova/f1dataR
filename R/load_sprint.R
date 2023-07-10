@@ -19,22 +19,28 @@
   }
 
   url <- glue::glue("{season}/{round}/sprint.json?limit=40",
-                    season = season, round = round)
+    season = season, round = round
+  )
   data <- get_ergast_content(url)
 
   if (length(data$MRData$RaceTable$Races) == 0) {
     cli::cli_alert_warning(glue::glue("No Sprint data for season = {season}, round = {round}",
-                       season = season, round = round))
+      season = season, round = round
+    ))
     return(NULL)
   }
 
   data <- data$MRData$RaceTable$Races$SprintResults[[1]]
 
   data %>%
-    tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"),
-                  names_repair = "universal") %>%
-    tidyr::unnest(cols = c("Time"),
-                  names_repair = "universal") %>%
+    tidyr::unnest(
+      cols = c("Driver", "Constructor", "Time", "FastestLap"),
+      names_repair = "universal"
+    ) %>%
+    tidyr::unnest(
+      cols = c("Time"),
+      names_repair = "universal"
+    ) %>%
     suppressWarnings() %>%
     suppressMessages() %>%
     dplyr::select(

@@ -1,6 +1,7 @@
 #' Load Driver Info
 #'
-#' Loads driver info for all participants in a given season. Use `.load_drivers()` for an uncached version of this function.
+#' @description Loads driver info for all participants in a given season.
+#' Use `.load_drivers()` for an uncached version of this function.
 #'
 #' @param season number from 1950 to current season (defaults to current season).
 #' @importFrom magrittr "%>%"
@@ -14,39 +15,43 @@
   }
 
   url <- glue::glue("{season}/drivers.json?limit=40",
-                    season = season)
+    season = season
+  )
   data <- get_ergast_content(url)
 
   if (season < 2014) {
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select("driverId",
-                    "givenName",
-                    "familyName",
-                    "nationality",
-                    "dateOfBirth") %>%
+      dplyr::select(
+        "driverId",
+        "givenName",
+        "familyName",
+        "nationality",
+        "dateOfBirth"
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else {
     data$MRData$DriverTable$Drivers %>%
-      dplyr::select("driverId",
-                    "givenName",
-                    "familyName",
-                    "nationality",
-                    "dateOfBirth",
-                    "code",
-                    "permanentNumber") %>%
+      dplyr::select(
+        "driverId",
+        "givenName",
+        "familyName",
+        "nationality",
+        "dateOfBirth",
+        "code",
+        "permanentNumber"
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   }
-
 }
 
 #' @inherit .load_drivers title description params return
 #' @export
 #' @examples
-#' #Load the drivers appearing in this season's data:
+#' # Load the drivers appearing in this season's data:
 #' load_drivers()
 #'
-#' #Load the drivers who participated in the first year of Formula 1:
+#' # Load the drivers who participated in the first year of Formula 1:
 #' load_drivers(1950)
 load_drivers <- memoise::memoise(.load_drivers)

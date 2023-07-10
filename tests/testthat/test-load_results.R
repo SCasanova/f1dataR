@@ -12,7 +12,7 @@ test_that("Results Load works", {
   expect_equal(nrow(results_2003), 20)
   expect_equal(results_2003$driver_id[2], "montoya")
 
-  #Special Case:
+  # Special Case:
   results_2021_12 <- load_results(2021, 12)
   expect_equal(nrow(results_2021_1), nrow(results_2021_12))
   expect_equal(ncol(results_2003), ncol(results_2021_12))

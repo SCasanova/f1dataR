@@ -1,6 +1,7 @@
 #' Load Results
 #'
-#' Loads final race results for a given year and round. Use `.load_results()` for an uncached version
+#' @description Loads final race results for a given year and round. Use `.load_results()`
+#' for an uncached version
 #'
 #' @param season number from 1950 to current season (or the word 'current') (defaults to current season).
 #' @param round number from 1 to 23 (depending on season), and defaults
@@ -15,7 +16,8 @@
   }
 
   url <- glue::glue("{season}/{round}/results.json?limit=40",
-                    season = season, round = round)
+    season = season, round = round
+  )
   data <- get_ergast_content(url)
 
   data <- data$MRData$RaceTable$Races$Results[[1]]
@@ -34,8 +36,10 @@
     data %>%
       tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = "universal") %>%
       dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
-      tidyr::unnest(cols = c("Time", "AverageSpeed"),
-                    names_repair = "universal") %>%
+      tidyr::unnest(
+        cols = c("Time", "AverageSpeed"),
+        names_repair = "universal"
+      ) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::select(
@@ -43,7 +47,7 @@
         "constructorId",
         "points":"status",
         gap = "time...8",
-        fastest_rank =  "rank",
+        fastest_rank = "rank",
         "laps",
         fastest = "time...11",
         top_speed_kph = "speed",
@@ -64,6 +68,6 @@
 #' load_results(1995, 1)
 #'
 #' # Load results from the last race of 1963
-#' load_results(1963, 'last')
+#' load_results(1963, "last")
 #'
 load_results <- memoise::memoise(.load_results)

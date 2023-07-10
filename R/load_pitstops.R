@@ -1,6 +1,6 @@
 #' Load Pitstop Data
 #'
-#' Loads pit stop info (number, lap, time elapsed) for a given race
+#' @description Loads pit stop info (number, lap, time elapsed) for a given race
 #' in a season. Pit stop data is available from 2012 onward.
 #' Call `.load_pitstops()` for an uncached version.
 #'
@@ -12,7 +12,7 @@
 #' @keywords internal
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
 #' and stop duration
-.load_pitstops <- function(season = get_current_season(), round  = "last", race = lifecycle::deprecated()) {
+.load_pitstops <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_pitstops(race)", "load_pitstops(round)")
     round <- race
@@ -22,7 +22,8 @@
   }
 
   url <- glue::glue("{season}/{round}/pitstops.json?limit=80",
-                    season = season, round = round)
+    season = season, round = round
+  )
   data <- get_ergast_content(url)
   data$MRData$RaceTable$Races$PitStops[[1]] %>%
     tibble::as_tibble() %>%

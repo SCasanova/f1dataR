@@ -26,6 +26,6 @@ load_results(2023, 3)
 load_results(1995, 1)
 
 # Load results from the last race of 1963
-load_results(1963, 'last')
+load_results(1963, "last")
 
 }

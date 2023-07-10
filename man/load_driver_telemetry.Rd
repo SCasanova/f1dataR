@@ -48,11 +48,13 @@ to one data frame by the user.
 }
 \examples{
 \dontrun{
-telem <- load_driver_telemetry(season = 2023,
-                               round = 'Bahrain',
-                               session = 'Q',
-                               driver = 'HAM',
-                               laps = 'fastest')
+telem <- load_driver_telemetry(
+  season = 2023,
+  round = "Bahrain",
+  session = "Q",
+  driver = "HAM",
+  laps = "fastest"
+)
 }
 
 }

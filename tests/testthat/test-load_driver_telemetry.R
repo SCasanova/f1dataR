@@ -32,22 +32,32 @@ test_that("driver telemetry", {
     # v3 updated some telemetry calculations, so this handles v2 until it's retired
     expect_equal(telem_fast$session_time[[1]], 3518.595)
     expect_equal(telem_fast$time[[2]], 0.044)
-    expect_error(load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1),
-                 "can only be a lap number if using fastf1 v3.0 or higher")
+    expect_error(
+      load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1),
+      "can only be a lap number if using fastf1 v3.0 or higher"
+    )
   }
   if (get_fastf1_version() >= 3) {
     telem_lap <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1)
     expect_equal(telem_lap$time[[1]], 0)
     expect_equal(telem_lap$speed[[1]], 0)
-    expect_error(load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1.5),
-                 "* must be one of `fastest`, `all` or an integer value")
+    expect_error(
+      load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1.5),
+      "* must be one of `fastest`, `all` or an integer value"
+    )
   }
 
 
-  expect_warning(load_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
-                 "The `race` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.0.0.*")
-  expect_warning(get_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", fastest_only = FALSE),
-                 "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*")
-  expect_warning(get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
-                 "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*")
+  expect_warning(
+    load_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
+    "The `race` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.0.0.*"
+  )
+  expect_warning(
+    get_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", fastest_only = FALSE),
+    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
+  )
+  expect_warning(
+    get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
+    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
+  )
 })

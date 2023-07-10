@@ -1,6 +1,6 @@
 #' Load Lap by Lap Time Data
 #'
-#' Loads lap-by-lap time data for all drivers in a given season
+#' @description Loads basic lap-by-lap time data for all drivers in a given season
 #' and round. Lap time data is available from 1996 onward. Use `.load_laps()` for a uncached version.
 #'
 #' @param season number from 1996 to current season (defaults to current season).
@@ -21,14 +21,16 @@
   }
 
   url <- glue::glue("{season}/{round}/laps.json?limit=1000",
-                    season = season, round = round)
+    season = season, round = round
+  )
   data <- get_ergast_content(url)
 
   total <- data$MRData$total %>% as.numeric()
   if (total - 1000 > 0 && total - 1000 <= 1000) {
     lim <- total - 1000
     url2 <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset=1000",
-                       lim = lim, season = season, round = round)
+      lim = lim, season = season, round = round
+    )
     data2 <- get_ergast_content(url2)
 
     full <- dplyr::bind_rows(data$MRData$RaceTable$Races$Laps[[1]][2], data2$MRData$RaceTable$Races$Laps[[1]][2])
@@ -39,23 +41,26 @@
   laps <- tibble::tibble()
   season_text <- ifelse(season == "current", get_current_season(), season)
   for (i in seq_len(nrow(full))) {
-    laps <- dplyr::bind_rows(laps,
-                      full[[1]][i][[1]] %>%
-                        dplyr::mutate(lap = i,
-                               time_sec = time_to_sec(.data$time),
-                               season = season_text))
+    laps <- dplyr::bind_rows(
+      laps,
+      full[[1]][i][[1]] %>%
+        dplyr::mutate(
+          lap = i,
+          time_sec = time_to_sec(.data$time),
+          season = season_text
+        )
+    )
   }
   laps %>%
     tibble::tibble() %>%
     janitor::clean_names()
-
 }
 
 #' @inherit .load_laps title description params return
 #' @export
 #' @examples
 #' # Load laps from the last race of 2021
-#' load_laps(2021, 'last')
+#' load_laps(2021, "last")
 #'
 #' # Load laps from the third race of 1999
 #' load_laps(1999, 3)

@@ -1,6 +1,7 @@
 #' Load Constructor Info
 #'
-#' Loads constructor info for all participants in a given season. Use `.load_constructors()`for an uncached version of this function
+#' @description Loads constructor info for all participants in a given season.
+#' Use `.load_constructors()`for an uncached version of this function
 #'
 #' @importFrom magrittr "%>%"
 #' @keywords internal
@@ -10,14 +11,13 @@
   data <- get_ergast_content(url)
 
   return(data$MRData$ConstructorTable$Constructors %>%
-           dplyr::select("constructorId", "name", "nationality") %>%
-           janitor::clean_names()
-         )
+    dplyr::select("constructorId", "name", "nationality") %>%
+    janitor::clean_names())
 }
 
 #' @inherit .load_constructors title description return
 #' @export
 #' @examples
-#' #Load the list of all constructors who have participated in a F1 race:
+#' # Load the list of all constructors who have participated in a F1 race:
 #' load_constructors()
 load_constructors <- memoise::memoise(.load_constructors)

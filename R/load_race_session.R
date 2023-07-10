@@ -1,6 +1,6 @@
 #' Load Session Data
 #'
-#' Loads telemetry and general data from the official F1
+#' @description Loads telemetry and general data from the official F1
 #' data stream via the fastf1 python library. Data is available from
 #' 2018 onward.
 #'
@@ -27,8 +27,8 @@
 #' @seealso [load_session_laps()] [plot_fastest()]
 #' @examples
 #' \dontrun{
-#' Load the quali session from 2019 first round
-#' session <- load_race_session(season = 2019, round = 1, session = 'Q')
+#' # Load the quali session from 2019 first round
+#' session <- load_race_session(season = 2019, round = 1, session = "Q")
 #' }
 load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = "R",
                               log_level = "WARNING", race = lifecycle::deprecated()) {
@@ -63,22 +63,26 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
   if (is.numeric(round)) {
     py_string <- glue::glue("{py_string}{round}, '{session}')",
-                          py_string = py_string, round = round, session = session)
+      py_string = py_string, round = round, session = session
+    )
   } else {
-    #Character race, so need quotes around it
+    # Character race, so need quotes around it
     py_string <- glue::glue("{py_string}'{round}', '{session}')",
-                          py_string = py_string, round = round, session = session)
+      py_string = py_string, round = round, session = session
+    )
   }
 
   reticulate::py_run_string(py_string)
 
   session <- reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
 
-  tryCatch({
+  tryCatch(
+    {
       # Only returns a value if session.load() has been successful
       # If it hasn't, retry
       reticulate::py_run_string("session.t0_date")
-    }, error = function(e) {
+    },
+    error = function(e) {
       reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
     }
   )

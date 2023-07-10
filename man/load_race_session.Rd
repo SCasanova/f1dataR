@@ -40,16 +40,15 @@ A session object to be used in other functions invisibly.
 Loads telemetry and general data from the official F1
 data stream via the fastf1 python library. Data is available from
 2018 onward.
-}
-\details{
+
 The data loaded can optionally be assigned to a R variable, and then interrogated for
 session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1 documentation}
 for more details on the data returned by the python API.
 }
 \examples{
 \dontrun{
-Load the quali session from 2019 first round
-session <- load_race_session(season = 2019, round = 1, session = 'Q')
+# Load the quali session from 2019 first round
+session <- load_race_session(season = 2019, round = 1, session = "Q")
 }
 }
 \seealso{

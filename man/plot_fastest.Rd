@@ -41,6 +41,6 @@ Complete with a gearshift or speed analysis.
 \examples{
 \dontrun{
 # Plot Verstappen's fastest lap (speed) from Bahrain 2023:
-plot_fastest(2023, 1, 'R', 'VER', 'speed')
+plot_fastest(2023, 1, "R", "VER", "speed")
 }
 }

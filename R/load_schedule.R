@@ -1,6 +1,7 @@
 #' Load Schedule
 #'
-#' Loads schedule information for a given F1 season. Use `.load_schedule()` for an uncached version.
+#' @description Loads schedule information for a given F1 season.
+#' Use `.load_schedule()` for an uncached version.
 #'
 #' @param season number from 1950 to current season (defaults to current season). `'current'` also accepted.
 #' @importFrom magrittr "%>%"
@@ -21,13 +22,15 @@
       suppressWarnings() %>%
       suppressMessages() %>%
       tidyr::unnest(cols = c("location")) %>%
-      dplyr::select("season",
-                    "round",
-                    "race_name",
-                    "circuit_id",
-                    "circuit_name",
-                    "lat":"country",
-                    "date") %>%
+      dplyr::select(
+        "season",
+        "round",
+        "race_name",
+        "circuit_id",
+        "circuit_name",
+        "lat":"country",
+        "date"
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else {
@@ -37,17 +40,19 @@
       suppressWarnings() %>%
       suppressMessages() %>%
       tidyr::unnest(cols = c("location")) %>%
-      dplyr::select("season",
-                    "round",
-                    "race_name",
-                    "circuit_id",
-                    "circuit_name",
-                    "lat":"country",
-                    "date",
-                    "time") %>%
+      dplyr::select(
+        "season",
+        "round",
+        "race_name",
+        "circuit_id",
+        "circuit_name",
+        "lat":"country",
+        "date",
+        "time"
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-   }
+  }
 }
 
 #' @inherit .load_schedule title description params return

@@ -1,6 +1,6 @@
 #' Load Standings
 #'
-#' Loads standings at the end of a given season and round for drivers' or
+#' @description Loads standings at the end of a given season and round for drivers' or
 #' constructors' championships. Use `.load_standings()` for an uncached version of this function.
 #'
 #' @param season number from 2003 to current season (defaults to current season).
@@ -22,7 +22,8 @@
   }
 
   url <- glue::glue("{season}/{round}/{type}Standings.json?limit=40",
-                    season = season, round = round, type = type)
+    season = season, round = round, type = type
+  )
   data <- get_ergast_content(url)
 
   if (type == "driver") {
@@ -50,8 +51,8 @@
 #' @export
 #' @examples
 #' # Get the driver standings at the end of 2021
-#' load_standings(2021, 'last', 'driver')
+#' load_standings(2021, "last", "driver")
 #'
 #' # Get constructor standings at part way through 2004
-#' load_standings(2004, 5, 'constructor')
+#' load_standings(2004, 5, "constructor")
 load_standings <- memoise::memoise(.load_standings)
