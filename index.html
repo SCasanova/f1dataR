@@ -150,11 +150,7 @@
 <span><span class="co">#&gt;  9 ocon      9        1:51.098     1     111.   2021</span></span>
 <span><span class="co">#&gt; 10 raikkonen 10       1:51.778     1     112.   2021</span></span>
 <span><span class="co">#&gt; # ℹ 1,015 more rows</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="driver-telemetry">Driver Telemetry<a class="anchor" aria-label="anchor" href="#driver-telemetry"></a>
-</h3>
-<p><code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)</code></p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ### Driver Telemetry <code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)</code> ======= <code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, laps = "fastest")</code> &gt;&gt;&gt;&gt;&gt;&gt;&gt; 46fe320 (Remove <code>fastest_only</code> from examples and vignettes)</p>
 <p>When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, round <span class="op">=</span> <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">'PER'</span><span class="op">)</span></span>
@@ -175,7 +171,7 @@
 <span><span class="co">#&gt; # ℹ 6 more variables: y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   driver_code &lt;chr&gt;</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>,<span class="st">'Q'</span>, <span class="st">'HAM'</span>, fastest_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>,<span class="st">'Q'</span>, <span class="st">'HAM'</span>, laps <span class="op">=</span> <span class="st">'fastest'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source  relative_distance status     x</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;</span></span>
@@ -283,7 +279,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://twitter.com/BrotoFFCasanova" class="external-link">Santiago Casanova</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="https://twitter.com/BrotoFFCasanova" class="external-link">Santiago Casanova</a> <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 <li>
 <a href="https://twitter.com/pbulsink" class="external-link">Philip Bulsink</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9668-2429" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
