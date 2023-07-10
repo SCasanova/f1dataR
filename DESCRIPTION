@@ -9,7 +9,8 @@ Authors@R:
     person(given = "Philip", 
           family = "Bulsink", 
           role = "aut", 
-          email = "bulsinkp@gmail.com"))
+          email = "bulsinkp@gmail.com"),
+          comment = c(ORCID = "0000-0001-9668-2429"))
 Description: A collection of functions that wrap Ergast API Formula 1 data and 
       F1 official data via the fastf1 python library. 
 Config/reticulate:
