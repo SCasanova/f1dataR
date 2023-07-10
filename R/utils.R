@@ -45,19 +45,22 @@ get_ergast_content <- function(url) {
 #' @keywords internal
 #' @return Year (four digit number) representation of current season, as numeric.
 
-                          
-.get_current_season<-function(){
-  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m"))<3,
-                           as.numeric(strftime(Sys.Date(), "%Y"))-1,
-                           as.numeric(strftime(Sys.Date(), "%Y")))
-  tryCatch({
-    url <- "current.json?limit=30"
-    data <- get_ergast_content(url)
-    current_season <- as.numeric(data$MRData$RaceTable$season)
-  },
-  error = function(e){
-    cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}\nFalling back to manually determined 'current' season", e=e))
-  })
+
+.get_current_season <- function() {
+  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+    as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+    as.numeric(strftime(Sys.Date(), "%Y"))
+  )
+  tryCatch(
+    {
+      url <- "current.json?limit=30"
+      data <- get_ergast_content(url)
+      current_season <- as.numeric(data$MRData$RaceTable$season)
+    },
+    error = function(e) {
+      cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}\nFalling back to manually determined 'current' season", e = e))
+    }
+  )
   return(current_season)
 }
 
@@ -81,12 +84,22 @@ time_to_sec <- function(time) {
   subfun <- function(x) {
     if (is.na(x)) {
       NA
+    } else if (is.numeric(x)) {
+      x
     } else {
-      split <- x %>% stringr::str_split(":")
-      as.numeric(split[[1]][1]) * 60 + as.numeric(split[[1]][2])
+      split <- as.numeric(strsplit(x, ":",fixed=TRUE)[[1]])
+      if (length(split) == 3) {
+        split[1]*3600 + split[2]*60 + split[3]
+      } else if (length(split) == 2) {
+        split[1]*60 + split[2]
+      } else if (length(split) == 1) {
+        split
+      }
     }
   }
-  purrr::map_dbl(time, subfun)
+  v_tts <- Vectorize(subfun, USE.NAMES = FALSE)
+
+  v_tts(time)
 }
 
 
