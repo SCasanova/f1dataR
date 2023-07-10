@@ -79,7 +79,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
       # If it hasn't, retry
       reticulate::py_run_string("session.t0_date")
     }, error = function(e) {
-      session <- reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+      reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
     }
   )
 
