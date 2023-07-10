@@ -123,8 +123,9 @@ get_driver_telemetry <-
            round = 1,
            session = "R",
            driver,
-           fastest_only = FALSE,
+           laps = "fastest",
            log_level = "WARNING",
+           fastest_only = lifecycle::deprecated(),
            race = lifecycle::deprecated()) {
     lifecycle::deprecate_warn("1.0.0",
                               "get_driver_telemetry()",
