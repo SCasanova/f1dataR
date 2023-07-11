@@ -118,6 +118,7 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR">f1dataR</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: reticulate</span></span>
 <span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 970 × 6</span></span>
 <span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
@@ -132,7 +133,7 @@
 <span><span class="co">#&gt;  8 hamilton       8        1:40.664     1    101.    2023</span></span>
 <span><span class="co">#&gt;  9 gasly          9        1:41.014     1    101.    2023</span></span>
 <span><span class="co">#&gt; 10 albon          10       1:41.364     1    101.    2023</span></span>
-<span><span class="co">#&gt; # ℹ 960 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # … with 960 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">15</span><span class="op">)</span></span>
@@ -149,45 +150,52 @@
 <span><span class="co">#&gt;  8 perez     8        1:50.617     1     111.   2021</span></span>
 <span><span class="co">#&gt;  9 ocon      9        1:51.098     1     111.   2021</span></span>
 <span><span class="co">#&gt; 10 raikkonen 10       1:51.778     1     112.   2021</span></span>
-<span><span class="co">#&gt; # ℹ 1,015 more rows</span></span></code></pre></div>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ### Driver Telemetry <code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, fastest_only = FALSE)</code> ======= <code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, laps = "fastest")</code> &gt;&gt;&gt;&gt;&gt;&gt;&gt; 46fe320 (Remove <code>fastest_only</code> from examples and vignettes)</p>
+<span><span class="co">#&gt; # … with 1,015 more rows</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="driver-telemetry">Driver Telemetry<a class="anchor" aria-label="anchor" href="#driver-telemetry"></a>
+</h3>
+<p><code>load_driver_telemetry(season = 'current', race = 'last', session = 'R', driver, laps = "all")</code></p>
 <p>When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, round <span class="op">=</span> <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">'PER'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, round <span class="op">=</span> <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">"PER"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 592 × 19</span></span>
-<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source  relative_distance status     x</span></span>
-<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 2022-04-24 10:19:27        8308. 0     11221   282      7      100 FALSE     0 interp…        0.00000313 OnTra… -1538</span></span>
-<span><span class="co">#&gt;  2 2022-04-24 10:19:27        8308. 0.021 11221   283      7      100 FALSE     0 pos            0.000343   OnTra… -1555</span></span>
-<span><span class="co">#&gt;  3 2022-04-24 10:19:28        8308. 0.278 11221   284      7      100 FALSE     0 car            0.00451    OnTra… -1704</span></span>
-<span><span class="co">#&gt;  4 2022-04-24 10:19:28        8308. 0.401 11279   285      7      100 FALSE     0 pos            0.00651    OnTra… -1775</span></span>
-<span><span class="co">#&gt;  5 2022-04-24 10:19:28        8309. 0.678 11337   286      7      100 FALSE     0 car            0.0110     OnTra… -1993</span></span>
-<span><span class="co">#&gt;  6 2022-04-24 10:19:28        8309. 0.681 11376   287      7      100 FALSE     0 pos            0.0111     OnTra… -1997</span></span>
-<span><span class="co">#&gt;  7 2022-04-24 10:19:28        8309. 0.86  11416   288      7      100 FALSE     0 pos            0.0140     OnTra… -2189</span></span>
-<span><span class="co">#&gt;  8 2022-04-24 10:19:29        8309. 1.08  11456   289      7      100 FALSE     0 car            0.0176     OnTra… -2314</span></span>
-<span><span class="co">#&gt;  9 2022-04-24 10:19:29        8309. 1.18  11461   289      7      100 FALSE     0 pos            0.0193     OnTra… -2381</span></span>
-<span><span class="co">#&gt; 10 2022-04-24 10:19:29        8309. 1.24  11467   290      7      100 FALSE     0 car            0.0203     OnTra… -2429</span></span>
-<span><span class="co">#&gt; # ℹ 582 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 6 more variables: y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   driver_code &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throt…¹ brake   drs</span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 2022-04-24 09:19:27        8308. 0     11221   282      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  2 2022-04-24 09:19:27        8308. 0.021 11221   283      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  3 2022-04-24 09:19:28        8308. 0.278 11221   284      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  4 2022-04-24 09:19:28        8308. 0.401 11279   285      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  5 2022-04-24 09:19:28        8309. 0.678 11337   286      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  6 2022-04-24 09:19:28        8309. 0.681 11376   287      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  7 2022-04-24 09:19:28        8309. 0.86  11416   288      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  8 2022-04-24 09:19:29        8309. 1.08  11456   289      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt;  9 2022-04-24 09:19:29        8309. 1.18  11461   289      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt; 10 2022-04-24 09:19:29        8309. 1.24  11467   290      7     100 FALSE     0</span></span>
+<span><span class="co">#&gt; # … with 582 more rows, 10 more variables: source &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   driver_code &lt;chr&gt;, and abbreviated variable name ¹​throttle</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>,<span class="st">'Q'</span>, <span class="st">'HAM'</span>, laps <span class="op">=</span> <span class="st">'fastest'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>,<span class="st">'Q'</span>, <span class="st">'HAM'</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
-<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source  relative_distance status     x</span></span>
-<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 2018-06-09 14:59:18        3788. 0     10674   297      8      100 FALSE    12 interp…         0.0000273 OnTra…  3245</span></span>
-<span><span class="co">#&gt;  2 2018-06-09 14:59:18        3788. 0.016 10704   298      8      100 FALSE    12 car             0.000335  OnTra…  3250</span></span>
-<span><span class="co">#&gt;  3 2018-06-09 14:59:18        3788. 0.043 10762   299      8      100 FALSE    12 pos             0.000855  OnTra…  3258</span></span>
-<span><span class="co">#&gt;  4 2018-06-09 14:59:19        3788. 0.256 10820   301      8      100 FALSE    12 car             0.00497   OnTra…  3321</span></span>
-<span><span class="co">#&gt;  5 2018-06-09 14:59:19        3788. 0.343 10847   302      8      100 FALSE    12 pos             0.00667   OnTra…  3342</span></span>
-<span><span class="co">#&gt;  6 2018-06-09 14:59:19        3788. 0.496 10875   303      8      100 FALSE    12 car             0.00965   OnTra…  3365</span></span>
-<span><span class="co">#&gt;  7 2018-06-09 14:59:19        3789. 0.643 10921   303      8      100 FALSE    12 pos             0.0125    OnTra…  3380</span></span>
-<span><span class="co">#&gt;  8 2018-06-09 14:59:19        3789. 0.736 10967   304      8      100 FALSE    12 car             0.0143    OnTra…  3387</span></span>
-<span><span class="co">#&gt;  9 2018-06-09 14:59:19        3789. 0.943 10990   305      8      100 FALSE    12 pos             0.0184    OnTra…  3401</span></span>
-<span><span class="co">#&gt; 10 2018-06-09 14:59:19        3789. 0.976 11014   306      8      100 FALSE    12 car             0.0190    OnTra…  3402</span></span>
-<span><span class="co">#&gt; # ℹ 524 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 6 more variables: y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   driver_code &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throt…¹ brake   drs</span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 2018-06-09 13:59:18        3788. 0     10674   297      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  2 2018-06-09 13:59:18        3788. 0.016 10704   298      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  3 2018-06-09 13:59:18        3788. 0.043 10762   299      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  4 2018-06-09 13:59:19        3788. 0.256 10820   301      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  5 2018-06-09 13:59:19        3788. 0.343 10847   302      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  6 2018-06-09 13:59:19        3788. 0.496 10875   303      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  7 2018-06-09 13:59:19        3789. 0.643 10921   303      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  8 2018-06-09 13:59:19        3789. 0.736 10967   304      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt;  9 2018-06-09 13:59:19        3789. 0.943 10990   305      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt; 10 2018-06-09 13:59:19        3789. 0.976 11014   306      8     100 FALSE    12</span></span>
+<span><span class="co">#&gt; # … with 524 more rows, 10 more variables: source &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   driver_code &lt;chr&gt;, and abbreviated variable name ¹​throttle</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="lap-by-lap-information">Lap-by-Lap information<a class="anchor" aria-label="anchor" href="#lap-by-lap-information"></a>
@@ -196,28 +204,31 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_session_laps.html">load_session_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, add_weather <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
-<span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time sector1time sector2time sector3time</span></span>
-<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 3892. VER    1                 110.          1     1         697.        NaN        NaN          43.2        25.6</span></span>
-<span><span class="co">#&gt;  2 4000. VER    1                 108.          2     1         NaN         NaN         38.4        43.6        25.6</span></span>
-<span><span class="co">#&gt;  3 4108. VER    1                 108.          3     1         NaN         NaN         38.5        43.7        25.5</span></span>
-<span><span class="co">#&gt;  4 4215. VER    1                 107.          4     1         NaN         NaN         37.9        43.4        25.8</span></span>
-<span><span class="co">#&gt;  5 4322. VER    1                 107.          5     1         NaN         NaN         38.3        43.4        25.8</span></span>
-<span><span class="co">#&gt;  6 4430. VER    1                 107.          6     1         NaN         NaN         38.3        43.2        25.7</span></span>
-<span><span class="co">#&gt;  7 4537. VER    1                 107.          7     1         NaN         NaN         38.3        43.0        25.7</span></span>
-<span><span class="co">#&gt;  8 4643. VER    1                 107.          8     1         NaN         NaN         38.0        43.0        25.7</span></span>
-<span><span class="co">#&gt;  9 4750. VER    1                 107.          9     1         NaN         NaN         38.0        43.1        25.8</span></span>
-<span><span class="co">#&gt; 10 4861. VER    1                 111.         10     1         NaN        4860.        37.9        43.4        29.4</span></span>
-<span><span class="co">#&gt; # ℹ 952 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 28 more variables: sector1session_time &lt;dbl&gt;, sector2session_time &lt;dbl&gt;, sector3session_time &lt;dbl&gt;, speed_i1 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   speed_i2 &lt;dbl&gt;, speed_fl &lt;dbl&gt;, speed_st &lt;dbl&gt;, is_personal_best &lt;list&gt;, compound &lt;chr&gt;, tyre_life &lt;dbl&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt;     time driver driver_n…¹ lap_t…² lap_n…³ stint pit_o…⁴ pit_i…⁵ secto…⁶ secto…⁷</span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 3892. VER    1             110.       1     1    697.    NaN    NaN      43.2</span></span>
+<span><span class="co">#&gt;  2 4000. VER    1             108.       2     1    NaN     NaN     38.4    43.6</span></span>
+<span><span class="co">#&gt;  3 4108. VER    1             108.       3     1    NaN     NaN     38.5    43.7</span></span>
+<span><span class="co">#&gt;  4 4215. VER    1             107.       4     1    NaN     NaN     37.9    43.4</span></span>
+<span><span class="co">#&gt;  5 4322. VER    1             107.       5     1    NaN     NaN     38.3    43.4</span></span>
+<span><span class="co">#&gt;  6 4430. VER    1             107.       6     1    NaN     NaN     38.3    43.2</span></span>
+<span><span class="co">#&gt;  7 4537. VER    1             107.       7     1    NaN     NaN     38.3    43.0</span></span>
+<span><span class="co">#&gt;  8 4643. VER    1             107.       8     1    NaN     NaN     38.0    43.0</span></span>
+<span><span class="co">#&gt;  9 4750. VER    1             107.       9     1    NaN     NaN     38.0    43.1</span></span>
+<span><span class="co">#&gt; 10 4861. VER    1             111.      10     1    NaN    4860.    37.9    43.4</span></span>
+<span><span class="co">#&gt; # … with 952 more rows, 29 more variables: sector3time &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   sector1session_time &lt;dbl&gt;, sector2session_time &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   sector3session_time &lt;dbl&gt;, speed_i1 &lt;dbl&gt;, speed_i2 &lt;dbl&gt;, speed_fl &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   speed_st &lt;dbl&gt;, is_personal_best &lt;list&gt;, compound &lt;chr&gt;, …, and abbreviated</span></span>
+<span><span class="co">#&gt; #   variable names ¹​driver_number, ²​lap_time, ³​lap_number, ⁴​pit_out_time,</span></span>
+<span><span class="co">#&gt; #   ⁵​pit_in_time, ⁶​sector1time, ⁷​sector2time</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="cache-information">Cache information<a class="anchor" aria-label="anchor" href="#cache-information"></a>
 </h3>
 <p>The cache directory for sessions can be set manually with the options function</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>f1dataR.cache <span class="op">=</span> <span class="st">'path/to/directory'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>f1dataR.cache <span class="op">=</span> <span class="st">"path/to/directory"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="other-functions">Other functions<a class="anchor" aria-label="anchor" href="#other-functions"></a>
@@ -245,7 +256,8 @@
 <p>The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, logo and driver number logo.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">constructor_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "constructor_id"     "constructor_color"  "constructor_color2" "constructor_logo"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "constructor_id"     "constructor_color"  "constructor_color2"</span></span>
+<span><span class="co">#&gt; [4] "constructor_logo"</span></span></code></pre></div>
 </div>
 </div>
   </div>
