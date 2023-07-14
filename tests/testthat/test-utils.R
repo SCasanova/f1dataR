@@ -48,9 +48,10 @@ test_that("setup-fastf1 works", {
   capture.output(setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE))
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
 
-  if(!is.null(reticulate:::find_conda())){
+  if (!is.null(reticulate:::find_conda())) {
     # Workflow runners or CRAN tests might not have conda?
     expect_false("setup_conda" %in% reticulate::conda_list()$name)
+    # Because we set the venv earlier, reticulate won't let you set a second active env without restarting R
     expect_warning(setup_fastf1("setup_conda", conda = TRUE), "Previous request to `use_python*")
     expect_true("setup_conda" %in% reticulate::conda_list()$name)
   }

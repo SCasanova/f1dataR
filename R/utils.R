@@ -86,7 +86,7 @@ time_to_sec <- function(time) {
     } else if (is.numeric(x)) {
       x
     } else {
-      split <- as.numeric(strsplit(x, ":",fixed=TRUE)[[1]])
+      split <- as.numeric(strsplit(x, ":", fixed=TRUE)[[1]])
       if (length(split) == 3) {
         split[1]*3600 + split[2]*60 + split[3]
       } else if (length(split) == 2) {
@@ -157,7 +157,7 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' }
 #'
 
-setup_fastf1 <- function(envname = 'f1dataRenv', conda = FALSE) {
+setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
   if (conda == FALSE) {
     if (envname %in% reticulate::virtualenv_list()) {
       reticulate::use_virtualenv(envname)
@@ -165,7 +165,7 @@ setup_fastf1 <- function(envname = 'f1dataRenv', conda = FALSE) {
       cli::cli_abort("{.val envname} found in list of conda environments. Did you mean to use that?",
                      x = "Run the function again with {.param conda} = `TRUE`")
     } else {
-      reticulate::virtualenv_create(envname = envname, packages = c('numpy', 'fastf1'))
+      reticulate::virtualenv_create(envname = envname, packages = c("numpy", "fastf1"))
       reticulate::use_virtualenv(envname)
     }
   } else {
@@ -175,7 +175,7 @@ setup_fastf1 <- function(envname = 'f1dataRenv', conda = FALSE) {
       cli::cli_abort("{.val envname} found in list of virtualenv environments. Did you mean to use that?",
                      x = "Run the function again with {.param conda} = `FALSE`")
     } else {
-      reticulate::conda_create(envname = envname, packages = c('numpy', 'fastf1'))
+      reticulate::conda_create(envname = envname, packages = c("numpy", "fastf1"))
       reticulate::use_condaenv(envname)
     }
   }
