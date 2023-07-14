@@ -7,9 +7,12 @@
 setup_fastf1(envname = "f1dataRenv", conda = FALSE)
 }
 \arguments{
-\item{envname}{a name for the virtualenv or conda environment}
+\item{envname}{a name for the virtualenv or conda environment.
 
-\item{conda}{whether to use conda environments or virtualenvs. Default false (virtualenv)}
+For virtualenv, if a name is passed, \code{reticulate} will use/create the environment in the
+default location. Alternatively, if providing a full path, \code{reticulate} will use the specified location.}
+
+\item{conda}{whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)}
 }
 \description{
 Set up reticulate using some options from user (or defaults). Helps
