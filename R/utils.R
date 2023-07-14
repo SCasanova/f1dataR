@@ -139,8 +139,11 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' solve `fastf1` issues - see the Setup FastF1 Connection vignette for more info
 #' (run \code{vignette('setup_fastf1', 'f1dataR')}).
 #'
-#' @param envname a name for the virtualenv or conda environment
-#' @param conda whether to use conda environments or virtualenvs. Default false (virtualenv)
+#' @param envname a name for the virtualenv or conda environment.
+#'
+#' For virtualenv, if a name is passed, `reticulate` will use/create the environment in the
+#' default location. Alternatively, if providing a full path, `reticulate` will use the specified location.
+#' @param conda whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)
 #'
 #' @export
 #'
