@@ -9,7 +9,7 @@
 #' default is the current working directory.
 #'
 #' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
-#' 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR)}).
+#' 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 #'
 #' @param season number from 2018 to current season. Defaults to current season.
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.

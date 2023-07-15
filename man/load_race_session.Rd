@@ -46,7 +46,7 @@ session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1
 for more details on the data returned by the python API.
 
 If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
-'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR)}).
+'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 }
 \examples{
 \dontrun{

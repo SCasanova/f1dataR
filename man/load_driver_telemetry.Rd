@@ -47,7 +47,7 @@ Example usage of this code can be seen in the Introduction vignette (run
 to one data frame by the user.
 
 If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
-"Setup FastF1 Connection" vignette (run \code{vignette('setup_fastf1', 'f1dataR)}).
+"Setup FastF1 Connection" vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 }
 \examples{
 \dontrun{
