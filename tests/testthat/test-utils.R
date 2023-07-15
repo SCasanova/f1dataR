@@ -25,9 +25,10 @@ test_that("utility functions work", {
   expect_equal(time_to_sec("12.3456"), 12.3456)
   expect_equal(time_to_sec(12.345), 12.345)
 
-  expect_equal(time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
-                           c(12.345, 83.456, 45296.789, 12.3456))
-
+  expect_equal(
+    time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
+    c(12.345, 83.456, 45296.789, 12.3456)
+  )
 })
 
 test_that("setup-fastf1 works", {
