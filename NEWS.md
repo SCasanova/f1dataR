@@ -1,4 +1,4 @@
-# f1dataR 1.1.1
+# f1dataR 1.2.0
 
 * Added a helper function for setting up `fastf1` connection.
 * Improved testing coverage
