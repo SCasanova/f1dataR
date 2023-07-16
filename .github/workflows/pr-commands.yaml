@@ -11,7 +11,6 @@ name: Style and Doc
 
 jobs:
   document:
-    if: ${{ github.event.issue.pull_request && (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER') }}
     name: document
     runs-on: ubuntu-latest
     env:
@@ -65,7 +64,6 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   style:
-    if: ${{ github.event.issue.pull_request && (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER') }}
     name: style
     runs-on: ubuntu-latest
     env:
