@@ -170,3 +170,5 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
   )
 ```
 
+# Help
+If you're having trouble with `fastf1 is not available` errors, please check out the "Setup FastF1 Connection" vignette (`vignette("setup_fastf1", "f1dataR")`).
