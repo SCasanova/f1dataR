@@ -25,7 +25,7 @@ solve \code{fastf1} issues - see the Setup FastF1 Connection vignette for more i
 setup_fastf1()
 
 # setup with a preexisting conda environment, with a specified name
-setup_fastf1('example_conda_env', conda = TRUE)
+setup_fastf1("example_conda_env", conda = TRUE)
 }
 
 }

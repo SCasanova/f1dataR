@@ -130,9 +130,11 @@ get_driver_telemetry <-
            log_level = "WARNING",
            fastest_only = lifecycle::deprecated(),
            race = lifecycle::deprecated()) {
-    lifecycle::deprecate_warn("1.0.0",
-                              "get_driver_telemetry()",
-                              "load_driver_telemetry()")
+    lifecycle::deprecate_warn(
+      "1.0.0",
+      "get_driver_telemetry()",
+      "load_driver_telemetry()"
+    )
 
     load_driver_telemetry(
       season = season,
@@ -142,5 +144,5 @@ get_driver_telemetry <-
       laps = ifelse(fastest_only, "fastest", "all"),
       log_level = log_level,
       race = race
-  )
-}
+    )
+  }

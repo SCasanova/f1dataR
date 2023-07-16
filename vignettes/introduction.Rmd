@@ -32,7 +32,7 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```{r telem}
 library(f1dataR)
 
-load_driver_telemetry(2022, 1, driver = 'LEC', laps = "fastest")
+load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
@@ -41,7 +41,7 @@ Now let's use ggplot2 to visualize some of the data we have
 library(dplyr)
 library(ggplot2)
 
-lec <- load_driver_telemetry(2022, 1, driver = 'LEC', laps = "fastest") %>% 
+lec <- load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest") %>%
   head(300)
 
 ggplot(lec, aes(distance, throttle)) +
@@ -52,10 +52,10 @@ ggplot(lec, aes(distance, throttle)) +
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
 ```{r triple_plot}
-ham <- load_driver_telemetry(2022, 1, 'Q', driver = 'HAM', laps = "fastest") %>% 
+ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
-per <- load_driver_telemetry(2022, 1, driver = 'PER', laps = "fastest") %>% 
+per <- load_driver_telemetry(2022, 1, driver = "PER", laps = "fastest") %>%
   head(300)
 
 data <- bind_rows(lec, ham, per)
@@ -120,13 +120,13 @@ Now let's visualize the portion of the track where Verstappen had the throttle 1
 
 
 ```{r telem plotting}
-
-
-ver_can <- load_driver_telemetry(season = 2023, 
-                                 round = 'Canada', 
-                                 driver = 'VER',
-                                 laps = "fastest") %>% 
-  mutate(open_throttle = ifelse(throttle == 100, 'Yes', "No"))
+ver_can <- load_driver_telemetry(
+  season = 2023,
+  round = "Canada",
+  driver = "VER",
+  laps = "fastest"
+) %>%
+  mutate(open_throttle = ifelse(throttle == 100, "Yes", "No"))
 
 ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +

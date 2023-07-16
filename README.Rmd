@@ -79,7 +79,7 @@ When the parameters for season (four digit year), round (number or GP name), ses
 ```{r load_telemetries}
 load_driver_telemetry(2022, round = 4, driver = "PER")
 
-load_driver_telemetry(2018, round = 7,'Q', 'HAM', laps = "fastest")
+load_driver_telemetry(2018, round = 7, "Q", "HAM", laps = "fastest")
 ```
 
 ### Lap-by-Lap information

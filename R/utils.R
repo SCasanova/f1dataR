@@ -86,11 +86,11 @@ time_to_sec <- function(time) {
     } else if (is.numeric(x)) {
       x
     } else {
-      split <- as.numeric(strsplit(x, ":", fixed=TRUE)[[1]])
+      split <- as.numeric(strsplit(x, ":", fixed = TRUE)[[1]])
       if (length(split) == 3) {
-        split[1]*3600 + split[2]*60 + split[3]
+        split[1] * 3600 + split[2] * 60 + split[3]
       } else if (length(split) == 2) {
-        split[1]*60 + split[2]
+        split[1] * 60 + split[2]
       } else if (length(split) == 1) {
         split
       }
@@ -153,27 +153,28 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' setup_fastf1()
 #'
 #' # setup with a preexisting conda environment, with a specified name
-#' setup_fastf1('example_conda_env', conda = TRUE)
+#' setup_fastf1("example_conda_env", conda = TRUE)
 #' }
 #'
-
 setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
   if (conda == FALSE) {
     if (envname %in% reticulate::virtualenv_list()) {
       reticulate::use_virtualenv(envname)
-    } else if (envname %in% reticulate::conda_list()) {
+    } else if (envname %in% reticulate::conda_list()$name) {
       cli::cli_abort("{.val envname} found in list of conda environments. Did you mean to use that?",
-                     x = "Run the function again with {.param conda} = `TRUE`")
+        x = "Run the function again with {.param conda} = `TRUE`"
+      )
     } else {
       reticulate::virtualenv_create(envname = envname, packages = c("numpy", "fastf1"))
       reticulate::use_virtualenv(envname)
     }
   } else {
-    if (envname %in% reticulate::conda_list()) {
-      reticulate::use_virtualenv(envname)
+    if (envname %in% reticulate::conda_list()$name) {
+      reticulate::use_condaenv(envname)
     } else if (envname %in% reticulate::virtualenv_list()) {
-      cli::cli_abort("{.val envname} found in list of virtualenv environments. Did you mean to use that?",
-                     x = "Run the function again with {.param conda} = `FALSE`")
+      cli::cli_abort("{.val {envname}} found in list of virtualenv environments. Did you mean to use that?",
+        x = "Run the function again with {.param conda} = `FALSE`"
+      )
     } else {
       reticulate::conda_create(envname = envname, packages = c("numpy", "fastf1"))
       reticulate::use_condaenv(envname)

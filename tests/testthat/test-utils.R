@@ -43,21 +43,31 @@ test_that("setup-fastf1 works", {
   }
   dir.create(file.path(getwd(), "tst_setup"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(getwd(), "tst_setup"))
-  withr::local_envvar(.new = list("WORKON_HOME" = file.path(getwd(), "tst_setup")))
+  withr::local_envvar(.new = list(
+    "WORKON_HOME" = file.path(getwd(), "tst_setup"),
+    "RETICULATE_PYTHON" = NA
+  ))
+  withr::defer(reticulate::virtualenv_remove(file.path(getwd(), "tst_setup", "setup_venv"), confirm = FALSE))
 
   expect_false("setup_venv" %in% reticulate::virtualenv_list())
-  capture.output(setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE))
+  setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
+  expect_error(
+    setup_fastf1("setup_venv", conda = TRUE),
+    "* found in list of virtualenv environments. Did you mean to use that?"
+  )
 
   if (!is.null(reticulate:::find_conda())) {
-    # Workflow runners or CRAN tests might not have conda?
+    withr::defer(reticulate::conda_remove("setup_conda"))
+    # Workflow runners or CRAN tests might not have conda
     expect_false("setup_conda" %in% reticulate::conda_list()$name)
     # Because we set the venv earlier, reticulate won't let you set a second active env without restarting R
-    expect_warning(setup_fastf1("setup_conda", conda = TRUE), "Previous request to `use_python*")
+    expect_error(setup_fastf1("setup_conda", conda = TRUE), "*failed to initialize requested version of Python")
     expect_true("setup_conda" %in% reticulate::conda_list()$name)
-  }
 
-  # Cleanup
-  reticulate::virtualenv_remove(file.path(getwd(), "tst_setup", "setup_venv"), confirm = FALSE)
-  reticulate::conda_remove("setup_conda")
+    expect_error(
+      setup_fastf1("setup_conda", conda = FALSE),
+      "* found in list of conda environments. Did you mean to use that?"
+    )
+  }
 })

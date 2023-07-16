@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-
 ```
 
 # Introduction
@@ -66,7 +65,7 @@ If you're comfortable with virtual environments and/or have one already set up f
 fastf1, you can specify a virtualenv name/directory with the above function. If it's 
 a conda environment, setting the `conda` arguement as true will use `reticulate`s 
 interface for that in lieu of the one for virtualenv.
-```{r helper_demo, eval=FALSE}
+```{helper_demo, eval=FALSE}
 setup_fastf1(envname = [envname], conda = [T/F])
 ```
 
@@ -76,7 +75,7 @@ If you have repeat issues with the package failing to connect to your proper env
 then before calling `library(f1dataR)` or using specific functions through `::`, add the 
 following to your code (replacing the `envname` parameter with your actual envname):
 
-```{r reticulate_setup, eval = FALSE}
+```{reticulate_setup, eval = FALSE}
 reticulate::use_virtualenv(virtualenv = [envname])
 ```
 
