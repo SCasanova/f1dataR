@@ -9,6 +9,9 @@ on:
 
 name: Style and Doc
 
+permissions:
+  contents: write
+
 jobs:
   document:
     name: document
