@@ -6,13 +6,6 @@ skip_if_no_ff1 <- function() {
   }
 }
 
-skip_if_no_conda <- function() {
-  conda <- FALSE
-  tryCatch(conda <- ifelse(!is.null(reticulate:::find_conda()), TRUE, FALSE),
-           error = function(e) {FALSE})
-  return(conda)
-}
-
 test_that("utility functions work", {
   # current season function - also naturally tested in some load_x functions
   expect_true(is.numeric(get_current_season()))
@@ -60,7 +53,7 @@ test_that("setup-fastf1 works", {
   setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
 
-  if (skip_if_no_conda()) {
+  if (reticulate:::conda_installed()) {
     withr::defer(reticulate::conda_remove("setup_conda"))
     expect_error(
       setup_fastf1("setup_venv", conda = TRUE),
