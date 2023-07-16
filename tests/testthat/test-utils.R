@@ -6,6 +6,13 @@ skip_if_no_ff1 <- function() {
   }
 }
 
+skip_if_no_conda <- function() {
+  conda <- FALSE
+  tryCatch(conda <- ifelse(!is.null(reticulate:::find_conda()), TRUE, FALSE),
+           error = function(e) {FALSE})
+  return(conda)
+}
+
 test_that("utility functions work", {
   # current season function - also naturally tested in some load_x functions
   expect_true(is.numeric(get_current_season()))
@@ -52,13 +59,13 @@ test_that("setup-fastf1 works", {
   expect_false("setup_venv" %in% reticulate::virtualenv_list())
   setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
-  expect_error(
-    setup_fastf1("setup_venv", conda = TRUE),
-    "* found in list of virtualenv environments. Did you mean to use that?"
-  )
 
-  if (!is.null(reticulate:::find_conda())) {
+  if (skip_if_no_conda()) {
     withr::defer(reticulate::conda_remove("setup_conda"))
+    expect_error(
+      setup_fastf1("setup_venv", conda = TRUE),
+      "* found in list of virtualenv environments. Did you mean to use that?"
+    )
     # Workflow runners or CRAN tests might not have conda
     expect_false("setup_conda" %in% reticulate::conda_list()$name)
     # Because we set the venv earlier, reticulate won't let you set a second active env without restarting R
