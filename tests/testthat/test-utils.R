@@ -50,7 +50,13 @@ test_that("setup-fastf1 works", {
   withr::defer(reticulate::virtualenv_remove(file.path(getwd(), "tst_setup", "setup_venv"), confirm = FALSE))
 
   expect_false("setup_venv" %in% reticulate::virtualenv_list())
-  setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)
+  if(!reticulate::py_available()){
+    setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)
+  } else {
+    expect_error(setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE),
+                 "*cannot be used, as another version of Python*")
+  }
+
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
 
   if (reticulate:::conda_installed()) {
