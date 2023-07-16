@@ -3,7 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
-last_built: 2023-07-14T01:48Z
+  setup_fastf1: setup_fastf1.html
+last_built: 2023-07-16T19:52Z
 urls:
   reference: https://scasanova.github.io/f1dataR/reference
   article: https://scasanova.github.io/f1dataR/articles
