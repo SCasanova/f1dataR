@@ -57,7 +57,10 @@ test_that("driver telemetry", {
     "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
   )
   expect_warning(
-    get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
-    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
+    expect_warning(
+      get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
+      "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
+    ),
+    "The `race` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.0.0.*"
   )
 })

@@ -3,8 +3,11 @@
 #' @description Receives season, race number, driver code, and an optional fastest lap only
 #' argument to output car telemetry for the selected situation.
 #' Example usage of this code can be seen in the Introduction vignette (run
-#' `vignette('introduction', 'f1dataR')` to read). Multiple drivers' telemetry can be appended
+#' \code{vignette('introduction', 'f1dataR')} to read). Multiple drivers' telemetry can be appended
 #' to one data frame by the user.
+#'
+#' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
+#' "Setup FastF1 Connection" vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 #'
 #' @param season number from 2018 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
@@ -127,9 +130,11 @@ get_driver_telemetry <-
            log_level = "WARNING",
            fastest_only = lifecycle::deprecated(),
            race = lifecycle::deprecated()) {
-    lifecycle::deprecate_warn("1.0.0",
-                              "get_driver_telemetry()",
-                              "load_driver_telemetry()")
+    lifecycle::deprecate_warn(
+      "1.0.0",
+      "get_driver_telemetry()",
+      "load_driver_telemetry()"
+    )
 
     load_driver_telemetry(
       season = season,
@@ -139,5 +144,5 @@ get_driver_telemetry <-
       laps = ifelse(fastest_only, "fastest", "all"),
       log_level = log_level,
       race = race
-  )
-}
+    )
+  }

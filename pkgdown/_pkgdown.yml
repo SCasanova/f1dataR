@@ -19,6 +19,7 @@ reference:
     - time_to_sec
     - clear_f1_cache
     - constructor_data
+    - setup_fastf1
 
 authors:
   Santiago Casanova:

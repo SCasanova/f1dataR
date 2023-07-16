@@ -45,6 +45,9 @@ argument to output car telemetry for the selected situation.
 Example usage of this code can be seen in the Introduction vignette (run
 \code{vignette('introduction', 'f1dataR')} to read). Multiple drivers' telemetry can be appended
 to one data frame by the user.
+
+If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
+"Setup FastF1 Connection" vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 }
 \examples{
 \dontrun{
