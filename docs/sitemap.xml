@@ -16,6 +16,9 @@
     <loc>https://scasanova.github.io/f1dataR/articles/introduction.html</loc>
   </url>
   <url>
+    <loc>https://scasanova.github.io/f1dataR/articles/setup_fastf1.html</loc>
+  </url>
+  <url>
     <loc>https://scasanova.github.io/f1dataR/authors.html</loc>
   </url>
   <url>
@@ -131,6 +134,9 @@
   </url>
   <url>
     <loc>https://scasanova.github.io/f1dataR/reference/plot_fastest.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/setup_fastf1.html</loc>
   </url>
   <url>
     <loc>https://scasanova.github.io/f1dataR/reference/theme_dark_f1.html</loc>
