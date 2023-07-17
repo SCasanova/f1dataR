@@ -20,6 +20,6 @@ Use \code{.load_schedule()} for an uncached version.
 # Load this year's schedule:
 load_schedule()
 
-# Load the schedule from 2007
-load_schedule(2007)
+# Load the schedule from 2008
+load_schedule(2008)
 }
