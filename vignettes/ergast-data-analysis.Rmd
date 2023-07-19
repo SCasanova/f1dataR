@@ -32,11 +32,13 @@ Here are a few simple data analysis examples using Ergast's data.
 
  > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](http://ergast.com/mrd/terms/) for more informaiton.
 
-We can make multiple repeat calls to the same function (with the same arguements) as the `f1dataR` package automatically caches responses from Ergast. You'll see this taken advantage of in a few areas.
+We can make multiple repeat calls to the same function (with the same arguments) as the `f1dataR` package automatically caches responses from Ergast. You'll see this taken advantage of in a few areas.
 
 If you have example projects you want to share, please feel free to submit them as an issue or pull request to the `f1dataR` [repository on Github](https://github.com/scasanova/f1dataR).
 
-## Grid to Finish Position Corellation
+## Grid to Finish Position Correlation
+
+We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field. 
 
 ```{r grid_to_finish_one, message=FALSE}
 # Load the data
@@ -52,15 +54,15 @@ ggplot(results, aes(x = position, y = grid)) +
   xlab("Finish Position") + 
   ylab("Grid Position")
 ```
-Of course, this isn't an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead:
+
+Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
 ```{r grid_to_finish_season, message=FALSE}
 # Load the data
 results<-list_rbind(map(seq_len(17), .f = function(x){Sys.sleep(1);load_results(2022, x)})) %>%
   mutate(grid = as.numeric(grid),
          position = as.numeric(position)) %>%
-  filter(status %in% c('Finished', '+1 Lap', '+2 Laps', '+6 Laps')) %>%
-  filter(grid > 0)
+  filter(status %in% c('Finished', '+1 Lap', '+2 Laps', '+6 Laps'), grid > 0)
 
 ggplot(results, aes(y = position, x = grid)) +
   geom_point(color = "white", alpha = 0.2) + 
@@ -71,11 +73,15 @@ ggplot(results, aes(y = position, x = grid)) +
   xlab("Grid Position")
 ```
 
+As expected, this produces a much stronger signal confirming our earlier hypothesis.
+
 ```{r sleep1, eval = T, echo = F}
 Sys.sleep(1)
 ```
 
 ## Driver Points Progress
+
+Ergast contains the points for drivers' or constructors' championship races as of the end of every round in a season. We can pull a season's worth of data and compare the driver pace throughout the season, looking at both position or total points accumulation. We'll do that for 2021, which had good competition throughout the year for P1. 
 
 ```{r round_position}
 # Load the data
@@ -120,7 +126,8 @@ Sys.sleep(1)
 ```
 
 ## Driver Laptime Scatterplot
-We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in dataset.
+
+We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
 ```{r driver_laptime_scatterplot}
 # Load the laps data and select one driver (this time - Russell)
@@ -145,7 +152,7 @@ ggplot(rus, aes(x = lap, y = time_sec)) +
 
 We can see the most of Russell's laps were less than 110 seconds, with a safety car having occurred around lap 15 and VSC occurring near lap 38.
 
-With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in laptime easier to see (i.e. show only racing laps).
+With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in lap time easier to see (i.e. show only racing laps).
 
 ```{r drivers_laptimes}
 # Load the laps data (cached!) and filter
