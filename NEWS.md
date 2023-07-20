@@ -1,3 +1,7 @@
+# f1dataR 1.2.1
+
+* Added additional output column to `load_schedule()` to show Sprint Race date.
+
 # f1dataR 1.2.0
 
 * Added a helper function for setting up `fastf1` connection.
