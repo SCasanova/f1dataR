@@ -31,9 +31,10 @@
         "lat":"country",
         "date"
       ) %>%
+      dplyr::mutate("time" = NA_character_, "sprint_date" = NA_character_) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  } else {
+  } else if (season < 2021) {
     data$MRData$RaceTable$Races %>%
       tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
       janitor::clean_names() %>%
@@ -49,6 +50,30 @@
         "lat":"country",
         "date",
         "time"
+      ) %>%
+      dplyr::mutate("sprint_date" = NA_character_) %>%
+      tibble::as_tibble() %>%
+      janitor::clean_names()
+  } else {
+    data$MRData$RaceTable$Races %>%
+      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
+      janitor::clean_names() %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      tidyr::unnest(cols = c("location", "sprint"), names_sep = "_") %>%
+      dplyr::select(
+        "season",
+        "round",
+        "race_name",
+        "circuit_id",
+        "circuit_name",
+        "lat" = "location_lat",
+        "long" = "location_long",
+        "locality" = "location_locality",
+        "country" = "location_country",
+        "date",
+        "time",
+        "sprint_date"
       ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()

@@ -14,4 +14,9 @@ test_that("Schedule Load works", {
   expect_equal(schedule_1999$circuit_id[1], "albert_park")
 
   expect_error(load_schedule(3050), "`season` must be between 1950 and *")
+
+  schedule_2018 <- load_schedule(2018)
+  expect_true(all(is.na(schedule_1999$sprint_date)))
+  expect_true(all(is.na(schedule_2018$sprint_date)))
+  expect_equal(sum(!is.na(schedule_2021$sprint_date)), 3)
 })
