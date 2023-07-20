@@ -103,8 +103,8 @@ jobs:
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add man/\* NAMESPACE
-          git commit -m 'Document'
+          git add \*.R \vignettes\*.Rmd README.Rmd
+          git commit -m 'Style'
 
       - uses: r-lib/actions/pr-push@v2
         if: steps.verify_diff.outputs.changed == 'true'

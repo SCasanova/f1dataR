@@ -6,7 +6,7 @@
 #' @param season number from 1950 to current season (defaults to current season). `'current'` also accepted.
 #' @importFrom magrittr "%>%"
 #' @keywords internal
-#' @return A tibble with one row per circuit in season
+#' @return A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race
 .load_schedule <- function(season = get_current_season()) {
   if (season != "current" && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
@@ -35,7 +35,7 @@
       janitor::clean_names()
   } else {
     data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
+      tidyr::unnest(cols = c('Circuit'), names_repair = "universal") %>%
       janitor::clean_names() %>%
       suppressWarnings() %>%
       suppressMessages() %>%
@@ -58,7 +58,7 @@
 #' @inherit .load_schedule title description params return
 #' @export
 #' @examples
-#' # Load this year's schedule:
+#' # Load this year's schedule. Note the weekends which have sprints
 #' load_schedule()
 #'
 #' # Load the schedule from 2008
