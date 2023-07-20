@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
+    branches: [main, master]
 
 name: Style and Doc
 
@@ -57,7 +57,7 @@ jobs:
           git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: commit
-        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
@@ -65,7 +65,7 @@ jobs:
           git commit -m 'GH Actions Document'
 
       - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -97,7 +97,7 @@ jobs:
           git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: commit
-        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
@@ -105,6 +105,6 @@ jobs:
           git commit -m 'GH Actions Style'
 
       - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
