@@ -53,7 +53,13 @@ jobs:
         run: roxygen2::roxygenise()
         shell: Rscript {0}
 
+      - name: Changes Check
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: commit
+        if: steps.verify_diff.outputs.changed == 'true'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
@@ -61,6 +67,7 @@ jobs:
           git commit -m 'Document'
 
       - uses: r-lib/actions/pr-push@v2
+        if: steps.verify_diff.outputs.changed == 'true'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -86,13 +93,20 @@ jobs:
         run: styler::style_pkg()
         shell: Rscript {0}
 
+      - name: Changes Check
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: commit
+        if: steps.verify_diff.outputs.changed == 'true'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add \*.R
-          git commit -m 'Style'
+          git add man/\* NAMESPACE
+          git commit -m 'Document'
 
       - uses: r-lib/actions/pr-push@v2
+        if: steps.verify_diff.outputs.changed == 'true'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
