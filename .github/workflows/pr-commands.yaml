@@ -2,13 +2,15 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
-  workflow_dispatch:
+    branches:
+      - master
+      - main
+  push:
+    branches:
+      - master
+      - main
 
 name: Style and Doc
-
-permissions:
-  contents: write
 
 jobs:
   document:
@@ -59,15 +61,15 @@ jobs:
           git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: commit
-        if: steps.verify_diff.outputs.changed == 'true'
+        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git add man/\* NAMESPACE
-          git commit -m 'Document'
+          git commit -m 'GH Actions Document'
 
       - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true'
+        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -99,14 +101,14 @@ jobs:
           git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: commit
-        if: steps.verify_diff.outputs.changed == 'true'
+        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git add \*.R \vignettes\*.Rmd README.Rmd
-          git commit -m 'Style'
+          git commit -m 'GH Actions Style'
 
       - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true'
+        if: steps.verify_diff.outputs.changed == 'true' & github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
