@@ -3,12 +3,10 @@
 on:
   push:
     branches: [main, master]
-  workflow_dispatch:
+  pull_request:
+    branches: [main, master]
 
 name: Style and Doc
-
-permissions:
-  contents: write
 
 jobs:
   document:
@@ -53,14 +51,21 @@ jobs:
         run: roxygen2::roxygenise()
         shell: Rscript {0}
 
+      - name: Changes Check
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: commit
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git add man/\* NAMESPACE
-          git commit -m 'Document'
+          git commit -m 'GH Actions Document'
 
       - uses: r-lib/actions/pr-push@v2
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -86,13 +91,20 @@ jobs:
         run: styler::style_pkg()
         shell: Rscript {0}
 
+      - name: Changes Check
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+
       - name: commit
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         run: |
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add \*.R
-          git commit -m 'Style'
+          git add \*.R \vignettes\*.Rmd README.Rmd
+          git commit -m 'GH Actions Style'
 
       - uses: r-lib/actions/pr-push@v2
+        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
