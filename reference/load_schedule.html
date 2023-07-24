@@ -84,12 +84,12 @@ Use <code><a href="dot-load_schedule.html">.load_schedule()</a></code> for an un
     <h2>Value</h2>
     
 
-<p>A tibble with one row per circuit in season</p>
+<p>A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load this year's schedule:</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load this year's schedule. Note the weekends which have sprints</span></span></span>
 <span class="r-in"><span><span class="fu">load_schedule</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    season round race_name   circuit_id circuit_name lat   long  locality country</span>
