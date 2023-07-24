@@ -29,7 +29,7 @@ default is the current working directory.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL.'} See
-\href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+\href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}}
 }
@@ -42,7 +42,7 @@ data stream via the fastf1 python library. Data is available from
 2018 onward.
 
 The data loaded can optionally be assigned to a R variable, and then interrogated for
-session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1 documentation}
+session data streams. See the \href{https://docs.fastf1.dev/}{fastf1 documentation}
 for more details on the data returned by the python API.
 
 If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the

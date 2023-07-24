@@ -10,14 +10,14 @@ load_schedule(season = get_current_season())
 \item{season}{number from 1950 to current season (defaults to current season). \code{'current'} also accepted.}
 }
 \value{
-A tibble with one row per circuit in season
+A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race
 }
 \description{
 Loads schedule information for a given F1 season.
 Use \code{.load_schedule()} for an uncached version.
 }
 \examples{
-# Load this year's schedule:
+# Load this year's schedule. Note the weekends which have sprints
 load_schedule()
 
 # Load the schedule from 2008

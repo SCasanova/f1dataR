@@ -27,6 +27,4 @@ constructors' championships. Use \code{.load_standings()} for an uncached versio
 # Get the driver standings at the end of 2021
 load_standings(2021, "last", "driver")
 
-# Get constructor standings at part way through 2004
-load_standings(2004, 5, "constructor")
 }

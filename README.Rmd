@@ -34,11 +34,17 @@ An R package to access Formula 1 Data from the Ergast API and the official F1 da
 [![test-coverage](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://img.shields.io/codecov/c/github/SCasanova/f1dataR?label=codecov&logo=codecov)](https://app.codecov.io/gh/SCasanova/f1dataR?branch=main)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![CRAN status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
-<!-- badges: end -->
+<!--[![CRAN status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
+ badges: end -->
 
 ## Installation
 
+Install the stable version from CRAN:
+```{r eval = FALSE}
+install.packages("f1dataR")
+```
+
+or install the development version from GitHub:
 ```{r eval = FALSE}
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("SCasanova/f1dataR")
@@ -49,8 +55,8 @@ library(f1dataR)
 
 Data is pulled from:
 
-* [Ergast API](http://ergast.com/mrd/)
-* [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the [Fast F1 python library](https://theoehrly.github.io/Fast-F1/index.html)
+* [Ergast API](https://ergast.com/mrd/)
+* [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
 ## Functions
 

@@ -11,7 +11,8 @@ Authors@R:
              role = "aut", 
              email = "bulsinkp@gmail.com",
              comment = c(ORCID = "0000-0001-9668-2429")))
-Description: A collection of functions that wrap Ergast API Formula 1 data and F1 official data via the fastf1 python library. 
+Description: Obtain Formula 1 data via the 'Ergast API' and the official data 
+  stream via the 'fastf1' python library. 
 Config/reticulate: 
   list(
     packages = list(
@@ -49,6 +50,6 @@ Suggests:
     usethis,
     withr
 VignetteBuilder: knitr
-URL: https://scasanova.github.io/f1dataR, https://github.com/scasanova/f1dataR
+URL: https://scasanova.github.io/f1dataR/, https://github.com/scasanova/f1dataR/
 BugReports: https://github.com/scasanova/f1dataR/issues
 Config/testthat/edition: 3

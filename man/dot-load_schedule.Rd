@@ -10,7 +10,7 @@
 \item{season}{number from 1950 to current season (defaults to current season). \code{'current'} also accepted.}
 }
 \value{
-A tibble with one row per circuit in season
+A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race
 }
 \description{
 Loads schedule information for a given F1 season.
