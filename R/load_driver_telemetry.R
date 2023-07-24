@@ -17,7 +17,7 @@
 #' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
 #' or `all`. Note that integer lap choice requires `fastf1` version 3.0 or greater.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @param fastest_only `r lifecycle::badge("deprecated")` `fastest_only` is no longer supported, indicated preferred
 #' laps in `laps`.

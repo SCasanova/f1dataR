@@ -29,7 +29,7 @@ load_driver_telemetry(
 or \code{all}. Note that integer lap choice requires \code{fastf1} version 3.0 or greater.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}.}
 

@@ -30,7 +30,7 @@ library(ggplot2)
 # Sample Data Analysis
 Here are a few simple data analysis examples using Ergast's data. 
 
- > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](http://ergast.com/mrd/terms/) for more informaiton.
+ > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](https://ergast.com/mrd/terms/) for more informaiton.
 
 We can make multiple repeat calls to the same function (with the same arguments) as the `f1dataR` package automatically caches responses from Ergast. You'll see this taken advantage of in a few areas.
 

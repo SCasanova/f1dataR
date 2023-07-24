@@ -5,7 +5,7 @@
 #' 2018 onward.
 #'
 #' The data loaded can optionally be assigned to a R variable, and then interrogated for
-#' session data streams. See the \href{https://theoehrly.github.io/Fast-F1/}{fastf1 documentation}
+#' session data streams. See the \href{https://docs.fastf1.dev/}{fastf1 documentation}
 #' for more details on the data returned by the python API.
 #'
 #' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
@@ -22,7 +22,7 @@
 #' default is the current working directory.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL.'` See
-#' \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`
 #' @import reticulate
 #' @return A session object to be used in other functions invisibly.

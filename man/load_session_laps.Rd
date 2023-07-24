@@ -23,7 +23,7 @@ load_session_laps(
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See
-\href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
+\href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{add_weather}{Whether to add weather information to the laps. See
 \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather.}

@@ -17,7 +17,7 @@
 #' `'Q'`, `'S'`, `'SS'` and `'R'` Default is `'R'`, which refers to Race.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See
-#' \href{https://theoehrly.github.io/Fast-F1/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
 #' @param add_weather Whether to add weather information to the laps. See
 #' \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
