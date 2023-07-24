@@ -20,6 +20,8 @@ if (dir.exists(file.path(getwd(), "vignettes", "vig_build_tmp"))) {
 }
 dir.create(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE)
 withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes", "vig_build_tmp"))
+
+f1dataR::setup_fastf1()
 ```
 
 ## Basics
