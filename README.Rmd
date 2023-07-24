@@ -39,6 +39,12 @@ An R package to access Formula 1 Data from the Ergast API and the official F1 da
 
 ## Installation
 
+Install the stable version from CRAN:
+```{r eval = FALSE}
+install.packages("f1dataR")
+```
+
+or install the development version from GitHub:
 ```{r eval = FALSE}
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("SCasanova/f1dataR")

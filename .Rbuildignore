@@ -11,3 +11,4 @@
 ^fastf1_http_cache.sqlite$
 ^LICENSE\.md$
 ^\d{4}/*$
+^cran-comments\.md$
