@@ -1,18 +1,13 @@
 Package: f1dataR
 Title: F1 Data in R
 Version: 1.2.1
-Authors@R: 
-    c(person(given = "Santiago", 
-             family = "Casanova", 
-             role = c("aut", "cre","cph"), 
-             email = "santiago.casanova@yahoo.com"),
-      person(given = "Philip", 
-             family = "Bulsink", 
-             role = "aut", 
-             email = "bulsinkp@gmail.com",
-             comment = c(ORCID = "0000-0001-9668-2429")))
-Description: Obtain Formula 1 data via the 'Ergast API' and the official data 
-  stream via the 'fastf1' python library. 
+Authors@R: c(
+    person("Santiago", "Casanova", , "bulsinkp@gmail.com", role = c("aut", "cre", "cph")),
+    person("Philip", "Bulsink", , "bulsinkp@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0001-9668-2429"))
+  )
+Description: Obtain Formula 1 data via the 'Ergast API' and the unofficial data 
+  stream via the 'fastf1' 'Python' library.
 Config/reticulate: 
   list(
     packages = list(
