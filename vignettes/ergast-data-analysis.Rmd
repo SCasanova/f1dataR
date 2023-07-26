@@ -18,13 +18,11 @@ knitr::opts_chunk$set(
 
 This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data. 
 
-We'll load all the required libraries for our analysis and plot generation:
+We'll load all the required libraries for our data analysis:
 
 ```{r setup, message=FALSE}
 library(f1dataR)
 library(dplyr)
-library(purrr)
-library(ggplot2)
 ```
 
 # Sample Data Analysis
@@ -41,6 +39,8 @@ If you have example projects you want to share, please feel free to submit them 
 We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field. 
 
 ```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
+library(purrr)
+library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
   mutate(
