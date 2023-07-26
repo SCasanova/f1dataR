@@ -1,1 +1,1 @@
-library(httptest)
+require(httptest, quietly = TRUE)

@@ -13,10 +13,12 @@ test_that("utility functions work", {
 
   # get_ergast_content() is inherently tested in load_x functions too
 
-  # Test internet failures for get_current_season
-  httptest::without_internet({
-    expect_gte(get_current_season(), 2022)
-  })
+  if (require(httptest)) {
+    # Test internet failures for get_current_season
+    httptest::without_internet({
+      expect_gte(get_current_season(), 2022)
+    })
+  }
 
   # Test time format changes
   expect_equal(time_to_sec("12.345"), 12.345)
