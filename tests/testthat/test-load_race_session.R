@@ -1,11 +1,3 @@
-# helper function to skip tests if we don't have the fastf1 module
-skip_if_no_ff1 <- function() {
-  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
-  if (!have_ff1) {
-    skip("fastf1 not available for testing")
-  }
-}
-
 test_that("Load Session Works", {
   skip_if_no_ff1()
 
