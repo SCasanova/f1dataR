@@ -12,7 +12,7 @@ on:
   pull_request:
     branches: [main, master]
 
-name: R-CMD-check-hard
+name: check-hard
 
 jobs:
   R-CMD-check:
@@ -50,6 +50,7 @@ jobs:
             any::testthat
             any::knitr
             any::rmarkdown
+            any::markdown
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
