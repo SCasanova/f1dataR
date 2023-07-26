@@ -71,7 +71,7 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
 
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
-```{r use_theme, val=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE))}
+```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE))}
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
   theme_dark_f1() +
