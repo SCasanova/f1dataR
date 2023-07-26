@@ -3,7 +3,7 @@ title: "Ergast Data Analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Ergast Data Analysis}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -39,7 +39,6 @@ If you have example projects you want to share, please feel free to submit them 
 We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field. 
 
 ```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
-library(purrr)
 library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
@@ -60,6 +59,7 @@ ggplot(results, aes(x = position, y = grid)) +
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
 ```{r grid_to_finish_season, message=FALSE, eval=all(require('ggplot2', quietly = TRUE), require('purrr', quietly = TRUE))}
+library(purrr)
 # Load the data
 results <- list_rbind(map(seq_len(17), .f = function(x) {
   Sys.sleep(1)
