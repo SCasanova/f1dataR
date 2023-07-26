@@ -5,8 +5,6 @@ html_document:
        in_header: GAfile.html
 ---
 
-
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -45,6 +43,7 @@ install.packages("f1dataR")
 ```
 
 or install the development version from GitHub:
+
 ```{r eval = FALSE}
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("SCasanova/f1dataR")
@@ -94,7 +93,6 @@ load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
 
 This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.
 
-
 ```{r load_session_laps}
 load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 ```
@@ -104,10 +102,9 @@ load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 
 A built in plotting function that plots the circuit and a driver's fastest laps' `speed` or `gear` exists.
 
-```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+```{r plot, eval=require('ggplot2', quietly = TRUE), message=FALSE, warning=FALSE}
 plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "gear")
 ```
-
 
 ### Cache information
 
