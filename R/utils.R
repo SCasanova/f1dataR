@@ -157,10 +157,18 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' }
 #'
 setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
+  conda_exists <- function(){
+    tryCatch({
+      v<-reticulate::conda_version()
+      return(TRUE)
+    }, error = function(e){
+      return(FALSE)
+    })
+  }
   if (conda == FALSE) {
     if (envname %in% reticulate::virtualenv_list()) {
       reticulate::use_virtualenv(envname)
-    } else if (reticulate:::conda_installed() && envname %in% reticulate::conda_list()$name) {
+    } else if (conda_exists() && envname %in% reticulate::conda_list()$name) {
       cli::cli_abort("{.val envname} found in list of conda environments. Did you mean to use that?",
         x = "Run the function again with {.param conda} = `TRUE`"
       )
@@ -169,7 +177,7 @@ setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
       reticulate::use_virtualenv(envname)
     }
   } else {
-    if (!reticulate:::conda_installed()) {
+    if (!conda_exists()) {
       cli::cli_abort("Conda is not installed on your system.",
         i = "If you wish to use conda please run {.code reticulate::install_miniconda}."
       )
