@@ -3,7 +3,7 @@ title: "Ergast Data Analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Ergast Data Analysis}
-  %\VignetteEngine{knitr::knitr}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
