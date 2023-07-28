@@ -144,8 +144,7 @@ a way that works well for <code>f1dataR</code> to use it.</p>
 </h3>
 <p>To use all of the defaults and set up the <code>reticulate</code>
 package, you can use the below helper function.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/setup_fastf1.html">setup_fastf1</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="fu"><a href="../reference/setup_fastf1.html">setup_fastf1</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 <p>This will create a virtual environment using your system’s default
 Python version, and install <code>fastf1</code> in that python
 environment. It will also tell <code>reticulate</code> to use that
@@ -161,7 +160,7 @@ already set up for fastf1, you can specify a virtualenv name/directory
 with the above function. If it’s a conda environment, setting the
 <code>conda</code> arguement as true will use <code>reticulate</code>s
 interface for that in lieu of the one for virtualenv.</p>
-<pre class="helper_demo"><code>setup_fastf1(envname = [envname], conda = [T/F])</code></pre>
+<pre><code>setup_fastf1(envname = [envname], conda = [T/F])</code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -172,7 +171,7 @@ proper environment, then before calling <code><a href="https://scasanova.github.
 using specific functions through <code>::</code>, add the following to
 your code (replacing the <code>envname</code> parameter with your actual
 envname):</p>
-<pre class="reticulate_setup"><code>reticulate::use_virtualenv(virtualenv = [envname])</code></pre>
+<pre><code>reticulate::use_virtualenv(virtualenv = [envname])</code></pre>
 <p>If you’ve used conda environments, call
 <code><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">reticulate::use_condaenv()</a></code> instead.</p>
 </div>
