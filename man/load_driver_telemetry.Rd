@@ -50,14 +50,14 @@ If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' re
 "Setup FastF1 Connection" vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 }
 \examples{
-\dontrun{
-telem <- load_driver_telemetry(
-  season = 2023,
-  round = "Bahrain",
-  session = "Q",
-  driver = "HAM",
-  laps = "fastest"
-)
+if (interactive()) {
+  telem <- load_driver_telemetry(
+    season = 2023,
+    round = "Bahrain",
+    session = "Q",
+    driver = "HAM",
+    laps = "fastest"
+  )
 }
 
 }

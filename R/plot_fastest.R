@@ -19,9 +19,9 @@
 #' color variable.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Plot Verstappen's fastest lap (speed) from Bahrain 2023:
-#' plot_fastest(2023, 1, "R", "VER", "speed")
+#' if (interactive()) {
+#'   plot_fastest(2023, 1, "R", "VER", "speed")
 #' }
 plot_fastest <- function(season = get_current_season(), round = 1, session = "R", driver, color = "gear",
                          race = lifecycle::deprecated()) {
