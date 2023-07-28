@@ -26,6 +26,7 @@ test_that("utility functions work", {
 })
 
 test_that("setup-fastf1 works", {
+  skip_if_no_py()
   skip_if_no_ff1()
 
   # Set testing specific parameters - this disposes after the test finishes
