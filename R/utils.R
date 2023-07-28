@@ -157,13 +157,16 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' }
 #'
 setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
-  conda_exists <- function(){
-    tryCatch({
-      v<-reticulate::conda_version()
-      return(TRUE)
-    }, error = function(e){
-      return(FALSE)
-    })
+  conda_exists <- function() {
+    tryCatch(
+      {
+        v <- reticulate::conda_version()
+        return(TRUE)
+      },
+      error = function(e) {
+        return(FALSE)
+      }
+    )
   }
   if (conda == FALSE) {
     if (envname %in% reticulate::virtualenv_list()) {

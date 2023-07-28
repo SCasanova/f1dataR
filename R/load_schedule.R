@@ -36,7 +36,7 @@
       janitor::clean_names()
   } else if (season < 2021) {
     data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c('Circuit'), names_repair = "universal") %>%
+      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
       janitor::clean_names() %>%
       suppressWarnings() %>%
       suppressMessages() %>%
