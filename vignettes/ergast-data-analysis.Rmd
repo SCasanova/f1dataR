@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data. 
+This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd/). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data. 
 
 We'll load all the required libraries for our data analysis:
 
