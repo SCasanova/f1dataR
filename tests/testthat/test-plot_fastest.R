@@ -1,13 +1,6 @@
-# helper function to skip tests if we don't have the fastf1 module
-skip_if_no_ff1 <- function() {
-  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
-  if (!have_ff1) {
-    skip("fastf1 not available for testing")
-  }
-}
-
 test_that("graphics work", {
   skip_if_no_ff1()
+  skip_if_no_ggplot2()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file

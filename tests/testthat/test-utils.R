@@ -1,11 +1,3 @@
-# helper function to skip tests if we don't have the fastf1 module
-skip_if_no_ff1 <- function() {
-  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
-  if (!have_ff1) {
-    skip("fastf1 not available for testing")
-  }
-}
-
 test_that("utility functions work", {
   # current season function - also naturally tested in some load_x functions
   expect_true(is.numeric(get_current_season()))
@@ -13,10 +5,12 @@ test_that("utility functions work", {
 
   # get_ergast_content() is inherently tested in load_x functions too
 
-  # Test internet failures for get_current_season
-  httptest::without_internet({
-    expect_gte(get_current_season(), 2022)
-  })
+  if (require(httptest)) {
+    # Test internet failures for get_current_season
+    httptest::without_internet({
+      expect_gte(get_current_season(), 2022)
+    })
+  }
 
   # Test time format changes
   expect_equal(time_to_sec("12.345"), 12.345)
