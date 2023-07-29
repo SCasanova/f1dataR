@@ -58,13 +58,16 @@ ggplot(results, aes(x = position, y = grid)) +
 
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
-```{r grid_to_finish_season, message=FALSE, eval=all(require('ggplot2', quietly = TRUE), require('purrr', quietly = TRUE))}
-library(purrr)
+```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
 # Load the data
-results <- list_rbind(map(seq_len(17), .f = function(x) {
+results <- data.frame()
+for(i in seq_len(17)) {
   Sys.sleep(1)
-  load_results(2022, x)
-})) %>%
+  r <- load_results(2022, i)
+  results <- dplyr::bind_rows(results, r)
+}
+
+results <- results %>%
   mutate(
     grid = as.numeric(grid),
     position = as.numeric(position)
