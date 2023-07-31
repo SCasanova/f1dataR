@@ -47,7 +47,7 @@ There are a few options to get the `reticulate` set up in a way that works well 
 To use all of the defaults and set up the `reticulate` package, you can use the below 
 helper function. 
 
-```
+```r
 setup_fastf1()
 ```
 
@@ -60,10 +60,10 @@ environments read [this article (infoworld.com)](https://www.infoworld.com/artic
 
 If you're comfortable with virtual environments and/or have one already set up for 
 fastf1, you can specify a virtualenv name/directory with the above function. If it's 
-a conda environment, setting the `conda` arguement as true will use `reticulate`s 
+a Conda environment, setting the `conda` argument as true will use `reticulate`s 
 interface for that in lieu of the one for virtualenv.
 
-```
+```r
 setup_fastf1(envname = [envname], conda = [T/F])
 ```
 
@@ -73,8 +73,8 @@ If you have repeat issues with the package failing to connect to your proper env
 then before calling `library(f1dataR)` or using specific functions through `::`, add the 
 following to your code (replacing the `envname` parameter with your actual envname):
 
-```
+```r
 reticulate::use_virtualenv(virtualenv = [envname])
 ```
 
-If you've used conda environments, call `reticulate::use_condaenv()` instead.
+If you've used a Conda environment, call `reticulate::use_condaenv()` instead.

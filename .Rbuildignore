@@ -12,3 +12,5 @@
 ^LICENSE\.md$
 ^\d{4}/*$
 ^cran-comments\.md$
+^doc$
+^Meta$

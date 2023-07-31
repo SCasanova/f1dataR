@@ -7,7 +7,22 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 
+# Use a local temporary cache and set back to user's info when finished vignette build
+withr::local_file(file.path(getwd(), "vignettes", "vig_build_tmp"))
+if (dir.exists(file.path(getwd(), "vignettes", "vig_build_tmp"))) {
+  unlink(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE, force = TRUE)
+}
+dir.create(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE)
+withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes", "vig_build_tmp"))
+
+f1dataR::setup_fastf1()
+```
 
 ## Basics
 
@@ -16,33 +31,15 @@ vignette: >
 The most sought-after aspect of F1 data is telemetry data. 
 Let's get Leclerc's fastest lap from the first race of 2022:
 
-
-```r
+```{r telem}
 library(f1dataR)
 
 load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
-#> # A tibble: 706 × 19
-#>    date                session_time  time   rpm speed n_gear throttle brake   drs source       
-#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>        
-#>  1 2022-03-20 12:30:01        8941. 0     11301   280      7      100 FALSE     1 interpolation
-#>  2 2022-03-20 12:30:01        8941. 0.063 11321   281      7      100 FALSE     1 pos          
-#>  3 2022-03-20 12:30:01        8941. 0.185 11361   282      7      100 FALSE     1 car          
-#>  4 2022-03-20 12:30:01        8942. 0.385 11439   284      7      100 FALSE     1 car          
-#>  5 2022-03-20 12:30:01        8942. 0.463 11462   284      7      100 FALSE     1 pos          
-#>  6 2022-03-20 12:30:01        8942. 0.665 11485   285      7      100 FALSE     1 car          
-#>  7 2022-03-20 12:30:02        8942. 0.863 11529   286      7      100 FALSE     1 pos          
-#>  8 2022-03-20 12:30:02        8942. 0.946 11574   287      7      100 FALSE     1 car          
-#>  9 2022-03-20 12:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos          
-#> 10 2022-03-20 12:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car          
-#> # ℹ 696 more rows
-#> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
-#> #   driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
 
-
-```r
+```{r simple_plot, warning=FALSE, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
 library(dplyr)
 library(ggplot2)
 
@@ -54,12 +51,9 @@ ggplot(lec, aes(distance, throttle)) +
   theme_minimal()
 ```
 
-![plot of chunk simple_plot](figure/simple_plot-1.png)
-
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
-
-```r
+```{r triple_plot, eval=require('ggplot2', quietly = TRUE)}
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
@@ -73,14 +67,11 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
   theme_minimal()
 ```
 
-![plot of chunk triple_plot](figure/triple_plot-1.png)
-
 ## Integrated plotting
 
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
-
-```r
+```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE))}
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
   theme_dark_f1() +
@@ -93,24 +84,17 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
   )
 ```
 
-![plot of chunk use_theme](figure/use_theme-1.png)
-
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
-
-```r
+```{r use_builtin, eval=require('ggplot2', quietly = TRUE)}
 plot_fastest(2022, 1, "R", "PER")
-#> ℹ If the session has not been loaded yet, this could take a minute
 ```
-
-![plot of chunk use_builtin](figure/use_builtin-1.png)
 
 ## Combining several functions
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
-
-```r
+```{r session_laps, eval=require('ggplot2', quietly = TRUE)}
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -134,12 +118,9 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
   scale_x_continuous(breaks = seq(2, 26, 4))
 ```
 
-![plot of chunk session_laps](figure/session_laps-1.png)
-
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
 
-
-```r
+```{r telem_plotting, eval=require('ggplot2', quietly = TRUE)}
 ver_can <- load_driver_telemetry(
   season = 2023,
   round = "Canada",
@@ -159,12 +140,9 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
   )
 ```
 
-![plot of chunk telem_plotting](figure/telem_plotting-1.png)
-
 For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
 
-
-```r
+```{r pitstop, eval=require('ggplot2', quietly = TRUE)}
 pit_data <- load_pitstops(2023, 4)
 
 driver_team <- load_results(2023, 4) %>%
@@ -192,8 +170,6 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
     y = "Average Pit Time (seconds)"
   )
 ```
-
-![plot of chunk pitstop](figure/pitstop-1.png)
 
 # Help
 If you're having trouble with `fastf1 is not available` errors, please check out the "Setup FastF1 Connection" vignette (`vignette("setup_fastf1", "f1dataR")`).
