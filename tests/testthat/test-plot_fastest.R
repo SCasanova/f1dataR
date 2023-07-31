@@ -1,4 +1,5 @@
 test_that("graphics work", {
+  skip_if_no_py()
   skip_if_no_ff1()
   skip_if_no_ggplot2()
 

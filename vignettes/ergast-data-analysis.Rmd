@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data. 
+This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd/). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data. 
 
 We'll load all the required libraries for our data analysis:
 
@@ -58,13 +58,16 @@ ggplot(results, aes(x = position, y = grid)) +
 
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
-```{r grid_to_finish_season, message=FALSE, eval=all(require('ggplot2', quietly = TRUE), require('purrr', quietly = TRUE))}
-library(purrr)
+```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
 # Load the data
-results <- list_rbind(map(seq_len(17), .f = function(x) {
+results <- data.frame()
+for(i in seq_len(17)) {
   Sys.sleep(1)
-  load_results(2022, x)
-})) %>%
+  r <- load_results(2022, i)
+  results <- dplyr::bind_rows(results, r)
+}
+
+results <- results %>%
   mutate(
     grid = as.numeric(grid),
     position = as.numeric(position)
@@ -113,7 +116,7 @@ ggplot(points, aes(x = round, y = position, color = driver_id)) +
   ggtitle("Driver Position", subtitle = "Through 2021 season") +
   xlab("Round #") +
   ylab("Position") +
-  scale_y_reverse(breaks = 1:length(unique(points$position))) +
+  scale_y_reverse(breaks = seq_along(length(unique(points$position)))) +
   theme_dark_f1(axis_marks = TRUE)
 ```
 
@@ -153,7 +156,7 @@ racename <- paste(racename, "2022")
 # Plot the results
 ggplot(rus, aes(x = lap, y = time_sec)) +
   geom_point(color = constructor_data %>% filter(constructor_id == "mercedes") %>% pull(constructor_color)) +
-  theme_dark_f1(axis_marks = T) +
+  theme_dark_f1(axis_marks = TRUE) +
   ggtitle("Russell Lap times through the Grand Prix", subtitle = racename) +
   xlab("Lap Number") +
   ylab("Lap Time (s)")
@@ -173,7 +176,7 @@ laps <- load_laps(season = 2022, round = 2) %>%
   mutate(driver_id = factor(driver_id, unique(driver_id[order(driver_avg)])))
 
 ggplot(laps, aes(x = driver_id, y = time_sec)) +
-  geom_violin(trim = F) +
+  geom_violin(trim = FALSE) +
   geom_boxplot(width = 0.1) +
   theme_dark_f1(axis_marks = TRUE) +
   ggtitle("Driver Lap Times", subtitle = paste("Racing Laps Only -", racename)) +
@@ -196,7 +199,7 @@ quali <- load_quali(2023, 1)
 
 # Process the Data
 quali <- quali %>%
-  summarize(t_min = min(q1_sec, q2_sec, q3_sec, na.rm = T), .by = driver_id) %>%
+  summarize(t_min = min(q1_sec, q2_sec, q3_sec, na.rm = TRUE), .by = driver_id) %>%
   mutate(
     t_diff = t_min - min(t_min),
     driver_id = factor(driver_id, unique(driver_id[order(-t_min)]))

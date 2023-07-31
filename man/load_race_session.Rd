@@ -49,9 +49,9 @@ If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' re
 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 }
 \examples{
-\dontrun{
 # Load the quali session from 2019 first round
-session <- load_race_session(season = 2019, round = 1, session = "Q")
+if (interactive()) {
+  session <- load_race_session(season = 2019, round = 1, session = "Q")
 }
 }
 \seealso{

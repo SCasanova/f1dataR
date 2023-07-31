@@ -38,7 +38,6 @@ Suggests:
     ggplot2,
     httptest,
     knitr,
-    purrr,
     rmarkdown,
     testthat (>= 3.0.0),
     usethis,

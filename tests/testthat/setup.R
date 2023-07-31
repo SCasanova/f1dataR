@@ -14,3 +14,9 @@ skip_if_no_ggplot2 <- function() {
     testthat::skip("ggplot2 not available for testing")
   }
 }
+
+skip_if_no_py <- function() {
+  if (!reticulate::py_available(initialize = TRUE)) {
+    testthat::skip("Python not available for testing")
+  }
+}

@@ -26,14 +26,14 @@
 #' @import reticulate
 #' @export
 #' @examples
-#' \dontrun{
-#' telem <- load_driver_telemetry(
-#'   season = 2023,
-#'   round = "Bahrain",
-#'   session = "Q",
-#'   driver = "HAM",
-#'   laps = "fastest"
-#' )
+#' if (interactive()) {
+#'   telem <- load_driver_telemetry(
+#'     season = 2023,
+#'     round = "Bahrain",
+#'     session = "Q",
+#'     driver = "HAM",
+#'     laps = "fastest"
+#'   )
 #' }
 #'
 load_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, laps = "fastest",
