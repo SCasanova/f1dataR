@@ -7,7 +7,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  fig.width = 7,
+  fig.height = 4,
+  fig.path = "ergast-data-analysis-"
+)
+```
 
 # Introduction
 
@@ -15,8 +24,7 @@ This vignette provides a few demonstrations of possible data analysis projects u
 
 We'll load all the required libraries for our data analysis:
 
-
-```r
+```{r setup, message=FALSE}
 library(f1dataR)
 library(dplyr)
 ```
@@ -34,8 +42,7 @@ If you have example projects you want to share, please feel free to submit them 
 
 We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field.
 
-
-```r
+```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
 library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
@@ -53,15 +60,9 @@ ggplot(results, aes(x = position, y = grid)) +
   ylab("Grid Position")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="plot of chunk grid_to_finish_one" width="100%" />
-<p class="caption">plot of chunk grid_to_finish_one</p>
-</div>
-
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
-
-```r
+```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
 # Load the data
 results <- data.frame()
 for(i in seq_len(17)) {
@@ -86,21 +87,17 @@ ggplot(results, aes(y = position, x = grid)) +
   xlab("Grid Position")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="plot of chunk grid_to_finish_season" width="100%" />
-<p class="caption">plot of chunk grid_to_finish_season</p>
-</div>
-
 As expected, this produces a much stronger signal confirming our earlier hypothesis.
 
-
+```{r sleep1, eval = T, echo = F}
+Sys.sleep(1)
+```
 
 ## Driver Points Progress
 
 Ergast contains the points for drivers' or constructors' championship races as of the end of every round in a season. We can pull a season's worth of data and compare the driver pace throughout the season, looking at both position or total points accumulation. We'll do that for 2021, which had good competition throughout the year for P1.
 
-
-```r
+```{r round_position, eval=require('ggplot2', quietly = TRUE)}
 # Load the data
 points <- data.frame()
 for (rnd in seq_len(22)) {
@@ -127,15 +124,9 @@ ggplot(points, aes(x = round, y = position, color = driver_id)) +
   theme_dark_f1(axis_marks = TRUE)
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-round_position-1.png" alt="plot of chunk round_position" width="100%" />
-<p class="caption">plot of chunk round_position</p>
-</div>
-
 What may be more interesting is the total accumulation of points. For that we can change up the plot just a little bit.
 
-
-```r
+```{r rounds_points, eval=require('ggplot2', quietly = TRUE)}
 # Plot the Results
 ggplot(points, aes(x = round, y = points, color = driver_id)) +
   geom_line() +
@@ -146,19 +137,15 @@ ggplot(points, aes(x = round, y = points, color = driver_id)) +
   theme_dark_f1(axis_marks = TRUE)
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-rounds_points-1.png" alt="plot of chunk rounds_points" width="100%" />
-<p class="caption">plot of chunk rounds_points</p>
-</div>
-
-
+```{r sleep2, eval = T, echo = F}
+Sys.sleep(1)
+```
 
 ## Driver Laptime Scatterplot
 
 We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
-
-```r
+```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE)}
 # Load the laps data and select one driver (this time - Russell)
 rus <- load_laps(season = 2022, round = 2) %>%
   filter(driver_id == "russell")
@@ -179,17 +166,11 @@ ggplot(rus, aes(x = lap, y = time_sec)) +
   ylab("Lap Time (s)")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="plot of chunk driver_laptime_scatterplot" width="100%" />
-<p class="caption">plot of chunk driver_laptime_scatterplot</p>
-</div>
-
 We can see the most of Russell's laps were less than 110 seconds, with a safety car having occurred around lap 15 and VSC occurring near lap 38.
 
 With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in lap time easier to see (i.e. show only racing laps).
 
-
-```r
+```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE)}
 # Load the laps data (cached!) and filter
 laps <- load_laps(season = 2022, round = 2) %>%
   filter(time_sec < 105) %>%
@@ -208,19 +189,15 @@ ggplot(laps, aes(x = driver_id, y = time_sec)) +
   theme(axis.text.x = element_text(angle = 90))
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="plot of chunk drivers_laptimes" width="100%" />
-<p class="caption">plot of chunk drivers_laptimes</p>
-</div>
-
-
+```{r sleep3, eval = T, echo = F}
+Sys.sleep(1)
+```
 
 ## Compare Qualifying Times
 
 We can compare the qualifying times for all drivers from a Grand Prix. There's naturally a few ways to do this (pick each driver's fastest time, pick each driver's fastest time from the last session they participated in, etc), all with pros or cons. Rerunning this analysis with different ways of handling the data could produce different results!
 
-
-```r
+```{r quali_compare, eval=require('ggplot2', quietly = TRUE)}
 # Load the Data
 quali <- load_quali(2023, 1)
 
@@ -243,8 +220,3 @@ ggplot(quali, aes(x = driver_id, y = t_diff)) +
   xlab("Driver ID") +
   theme_dark_f1(axis_marks = TRUE)
 ```
-
-<div class="figure">
-<img src="ergast-data-analysis-quali_compare-1.png" alt="plot of chunk quali_compare" width="100%" />
-<p class="caption">plot of chunk quali_compare</p>
-</div>

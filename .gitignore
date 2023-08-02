@@ -6,3 +6,5 @@ fastf1_http_cache.sqlite
 .Rhistory
 tests/testthat/tst_*
 f1dataR.Rproj
+/doc/
+/Meta/
