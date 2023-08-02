@@ -5,7 +5,7 @@
 
 knitr::knit("vignettes/ergast-data-analysis.Rmd.orig", "vignettes/ergast-data-analysis.Rmd")
 knitr::knit("vignettes/introduction.Rmd.orig", "vignettes/introduction.Rmd")
-cat("Successfully compiled vignettes. Please move ./figure to ./vignettes/figure")
+cat("Successfully compiled vignettes. Please move figures to ./vignettes")
 
 # Optional
 # devtools::build_vignettes()

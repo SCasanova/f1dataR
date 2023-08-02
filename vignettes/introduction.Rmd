@@ -13,7 +13,7 @@ vignette: >
 
 `f1dataR` serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
 
-The most sought-after aspect of F1 data is telemetry data. 
+The most sought-after aspect of F1 data is telemetry data.
 Let's get Leclerc's fastest lap from the first race of 2022:
 
 
@@ -54,7 +54,10 @@ ggplot(lec, aes(distance, throttle)) +
   theme_minimal()
 ```
 
-![plot of chunk simple_plot](figure/simple_plot-1.png)
+<div class="figure">
+<img src="introduction-simple_plot-1.png" alt="plot of chunk simple_plot" width="100%" />
+<p class="caption">plot of chunk simple_plot</p>
+</div>
 
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
@@ -73,7 +76,10 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
   theme_minimal()
 ```
 
-![plot of chunk triple_plot](figure/triple_plot-1.png)
+<div class="figure">
+<img src="introduction-triple_plot-1.png" alt="plot of chunk triple_plot" width="100%" />
+<p class="caption">plot of chunk triple_plot</p>
+</div>
 
 ## Integrated plotting
 
@@ -93,7 +99,10 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
   )
 ```
 
-![plot of chunk use_theme](figure/use_theme-1.png)
+<div class="figure">
+<img src="introduction-use_theme-1.png" alt="plot of chunk use_theme" width="100%" />
+<p class="caption">plot of chunk use_theme</p>
+</div>
 
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
@@ -103,7 +112,10 @@ plot_fastest(2022, 1, "R", "PER")
 #> ℹ If the session has not been loaded yet, this could take a minute
 ```
 
-![plot of chunk use_builtin](figure/use_builtin-1.png)
+<div class="figure">
+<img src="introduction-use_builtin-1.png" alt="plot of chunk use_builtin" width="100%" />
+<p class="caption">plot of chunk use_builtin</p>
+</div>
 
 ## Combining several functions
 
@@ -134,7 +146,10 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
   scale_x_continuous(breaks = seq(2, 26, 4))
 ```
 
-![plot of chunk session_laps](figure/session_laps-1.png)
+<div class="figure">
+<img src="introduction-session_laps-1.png" alt="plot of chunk session_laps" width="100%" />
+<p class="caption">plot of chunk session_laps</p>
+</div>
 
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
 
@@ -159,7 +174,10 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
   )
 ```
 
-![plot of chunk telem_plotting](figure/telem_plotting-1.png)
+<div class="figure">
+<img src="introduction-telem_plotting-1.png" alt="plot of chunk telem_plotting" width="100%" />
+<p class="caption">plot of chunk telem_plotting</p>
+</div>
 
 For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
 
@@ -193,7 +211,10 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
   )
 ```
 
-![plot of chunk pitstop](figure/pitstop-1.png)
+<div class="figure">
+<img src="introduction-pitstop-1.png" alt="plot of chunk pitstop" width="100%" />
+<p class="caption">plot of chunk pitstop</p>
+</div>
 
 # Help
 If you're having trouble with `fastf1 is not available` errors, please check out the "Setup FastF1 Connection" vignette (`vignette("setup_fastf1", "f1dataR")`).

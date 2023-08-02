@@ -12,5 +12,7 @@
 ^LICENSE\.md$
 ^\d{4}/*$
 ^cran-comments\.md$
+^vignettes/ergast-data-analysis.Rmd.orig$
+^vignettes/introduction.Rmd.orig$
 ^doc$
 ^Meta$

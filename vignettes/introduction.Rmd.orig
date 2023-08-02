@@ -10,7 +10,11 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "100%",
+  fig.width = 7,
+  fig.height = 4,
+  fig.path = "introduction-"
 )
 
 # Use a local temporary cache and set back to user's info when finished vignette build
@@ -28,7 +32,7 @@ f1dataR::setup_fastf1()
 
 `f1dataR` serves as a tool to get neatly organized Formula 1 data into your R environment. Here we will go over the basic functions to understand how the package works.
 
-The most sought-after aspect of F1 data is telemetry data. 
+The most sought-after aspect of F1 data is telemetry data.
 Let's get Leclerc's fastest lap from the first race of 2022:
 
 ```{r telem}
