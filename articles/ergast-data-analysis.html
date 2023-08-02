@@ -154,7 +154,11 @@ that it produced a well mixed field.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"2020 Austrian Grand Prix Grid - Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Grid Position"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/grid_to_finish_one-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="plot of chunk grid_to_finish_one" width="100%"><p class="caption">
+plot of chunk grid_to_finish_one
+</p>
+</div>
 <p>Of course, this isn’t really an interesting plot for a single race.
 Naturally we expect that a better grid position yields a better finish
 position, but there’s so much variation in one race (including the
@@ -186,7 +190,11 @@ Pit Lane, where <code>grid</code> = 0).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"2020 F1 Season Grid - Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Grid Position"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/grid_to_finish_season-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="plot of chunk grid_to_finish_season" width="100%"><p class="caption">
+plot of chunk grid_to_finish_season
+</p>
+</div>
 <p>As expected, this produces a much stronger signal confirming our
 earlier hypothesis.</p>
 </div>
@@ -223,7 +231,11 @@ which had good competition throughout the year for P1.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">points</span><span class="op">$</span><span class="va">position</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/round_position-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-round_position-1.png" alt="plot of chunk round_position" width="100%"><p class="caption">
+plot of chunk round_position
+</p>
+</div>
 <p>What may be more interesting is the total accumulation of points. For
 that we can change up the plot just a little bit.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -235,7 +247,11 @@ that we can change up the plot just a little bit.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Round #"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Points"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/rounds_points-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-rounds_points-1.png" alt="plot of chunk rounds_points" width="100%"><p class="caption">
+plot of chunk rounds_points
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="driver-laptime-scatterplot">Driver Laptime Scatterplot<a class="anchor" aria-label="anchor" href="#driver-laptime-scatterplot"></a>
@@ -263,7 +279,11 @@ built-in data set.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Russell Lap times through the Grand Prix"</span>, subtitle <span class="op">=</span> <span class="va">racename</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Lap Number"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Lap Time (s)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/driver_laptime_scatterplot-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="plot of chunk driver_laptime_scatterplot" width="100%"><p class="caption">
+plot of chunk driver_laptime_scatterplot
+</p>
+</div>
 <p>We can see the most of Russell’s laps were less than 110 seconds,
 with a safety car having occurred around lap 15 and VSC occurring near
 lap 38.</p>
@@ -288,7 +308,11 @@ racing laps).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Driver ID"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Laptime (s)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/drivers_laptimes-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="plot of chunk drivers_laptimes" width="100%"><p class="caption">
+plot of chunk drivers_laptimes
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="compare-qualifying-times">Compare Qualifying Times<a class="anchor" aria-label="anchor" href="#compare-qualifying-times"></a>
@@ -321,7 +345,11 @@ results!</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Gap to Pole (s)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Driver ID"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ergast-data-analysis_files/figure-html/quali_compare-1.png" width="700"></p>
+<div class="figure">
+<img src="ergast-data-analysis-quali_compare-1.png" alt="plot of chunk quali_compare" width="100%"><p class="caption">
+plot of chunk quali_compare
+</p>
+</div>
 </div>
 </div>
   </div>
