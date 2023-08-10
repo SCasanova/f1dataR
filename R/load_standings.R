@@ -52,6 +52,10 @@
 #' @export
 #' @examples
 #' # Get the driver standings at the end of 2021
+#'
+#' if (interactive()) {
 #' load_standings(2021, "last", "driver")
+#' }
+#'
 #'
 load_standings <- memoise::memoise(.load_standings)
