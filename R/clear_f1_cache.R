@@ -5,6 +5,7 @@
 #' but the default is the current working directory.
 #'
 #' @import reticulate
+#' @return No return value, called to erase cached data
 #' @examples
 #' \dontrun{
 #' clear_f1_cache()

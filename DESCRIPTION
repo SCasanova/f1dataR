@@ -6,7 +6,7 @@ Authors@R: c(
     person("Philip", "Bulsink", , "bulsinkp@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0001-9668-2429"))
   )
-Description: Obtain Formula 1 data via the 'Ergast API' and the unofficial API via the 'fastf1' 'Python' library.
+Description: Obtain Formula 1 data via the 'Ergast API' <https://ergast.com/mrd/> and the unofficial API <https://www.formula1.com/en/f1-live.html> via the 'fastf1' 'Python' library <https://docs.fastf1.dev/>.
 Config/reticulate: 
   list(
     packages = list(

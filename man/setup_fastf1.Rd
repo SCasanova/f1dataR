@@ -14,6 +14,9 @@ default location. Alternatively, if providing a full path, \code{reticulate} wil
 
 \item{conda}{whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)}
 }
+\value{
+No return value, called to set up virtan enviroment for package
+}
 \description{
 Set up reticulate using some options from user (or defaults). Helps
 solve \code{fastf1} issues - see the Setup FastF1 Connection vignette for more info

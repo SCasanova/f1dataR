@@ -94,6 +94,7 @@ get_current_season <- memoise::memoise(.get_current_season)
 #' @param time character string with clock format (0:00.000)
 #' @importFrom magrittr "%>%"
 #' @return A numeric variable that represents that time in seconds
+
 time_to_sec <- function(time) {
   subfun <- function(x) {
     if (is.na(x)) {
@@ -161,6 +162,7 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' @param conda whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)
 #'
 #' @export
+#' @return No return value, called to set up virtan enviroment for package
 #'
 #' @examples
 #' \dontrun{
