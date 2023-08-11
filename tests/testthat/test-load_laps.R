@@ -1,4 +1,12 @@
 test_that("Lap Load works", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(getwd(), "tst_load_laps"))) {
+    unlink(file.path(getwd(), "tst_load_laps"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(getwd(), "tst_load_laps"))
+  dir.create(file.path(getwd(), "tst_load_laps"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_laps"))
+
   laps_2021_1 <- .load_laps(2021, 1)
 
   expect_equal(nrow(laps_2021_1), 1026)

@@ -1,4 +1,12 @@
 test_that("Results Load works", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(getwd(), "tst_load_results"))) {
+    unlink(file.path(getwd(), "tst_load_results"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(getwd(), "tst_load_results"))
+  dir.create(file.path(getwd(), "tst_load_results"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_results"))
+
   results_2021_1 <- .load_results(2021, 1)
 
   expect_equal(nrow(results_2021_1), 20)
