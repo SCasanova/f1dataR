@@ -6,6 +6,9 @@
 \usage{
 clear_f1_cache()
 }
+\value{
+No return value, called to erase cached data
+}
 \description{
 Clears the cache for f1dataR telemetry.
 Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
