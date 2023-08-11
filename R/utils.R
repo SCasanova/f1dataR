@@ -11,7 +11,7 @@ get_ergast_content <- function(url) {
 
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
-  # Caches requests at option = 'f1dataR.cache' location
+  # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
   # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
@@ -19,9 +19,16 @@ get_ergast_content <- function(url) {
     httr2::req_url_path_append(url) %>%
     httr2::req_retry(max_tries = 5) %>%
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
-    httr2::req_cache(path = file.path(getOption('f1dataR.cache'), 'f1dataR_http_cache')) %>%
     httr2::req_throttle(4/1) %>%
-    httr2::req_error(is_error = ~ FALSE) %>%
+    httr2::req_error(is_error = ~ FALSE)
+
+  if(!grepl('current|last|latest', url)) {
+    #Don't cache calls to 'current' or 'last' as we have no way of expiring them and they change from week to week
+    ergast_raw <- ergast_raw %>%
+      httr2::req_cache(path = file.path(getOption('f1dataR.cache'), 'f1dataR_http_cache'))
+  }
+
+  ergast_raw <- ergast_raw %>%
     httr2::req_perform()
 
   # Restart retries to ergast with http (instead of https)
