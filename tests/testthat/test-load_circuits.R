@@ -1,5 +1,4 @@
 test_that("load_ciruits works", {
-
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(getwd(), "tst_load_circuits"))) {
     unlink(file.path(getwd(), "tst_load_circuits"), recursive = TRUE, force = TRUE)

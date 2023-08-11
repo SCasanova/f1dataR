@@ -1,5 +1,4 @@
 test_that("utility functions work", {
-
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(getwd(), "tst_utils"))) {
     unlink(file.path(getwd(), "tst_utils"), recursive = TRUE, force = TRUE)

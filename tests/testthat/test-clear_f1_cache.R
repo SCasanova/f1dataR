@@ -13,9 +13,8 @@ test_that("Cache Clearing works for memoised functions", {
   expect_false(memoise::has_cache(load_schedule)())
   tmp <- load_schedule()
   expect_true(memoise::has_cache(load_schedule)())
-  expect_true(dir.exists(file.path(getOption('f1dataR.cache'), 'f1dataR_http_cache')))
+  expect_true(dir.exists(file.path(getOption("f1dataR.cache"), "f1dataR_http_cache")))
   clear_f1_cache()
   expect_false(memoise::has_cache(load_schedule)())
-  expect_false(dir.exists(file.path(getOption('f1dataR.cache'), 'f1dataR_http_cache')))
-
+  expect_false(dir.exists(file.path(getOption("f1dataR.cache"), "f1dataR_http_cache")))
 })
