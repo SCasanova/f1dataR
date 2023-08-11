@@ -17,5 +17,4 @@
 ^doc$
 ^Meta$
 ^CRAN-SUBMISSION$
-^*.rds$
 ^\f1dataR_http_cache\*$
