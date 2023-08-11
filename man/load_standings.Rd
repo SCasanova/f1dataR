@@ -25,6 +25,9 @@ constructors' championships. Use \code{.load_standings()} for an uncached versio
 }
 \examples{
 # Get the driver standings at the end of 2021
-load_standings(2021, "last", "driver")
+
+if (interactive()) {
+  load_standings(2021, "last", "driver")
+}
 
 }

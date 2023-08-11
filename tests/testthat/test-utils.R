@@ -1,4 +1,12 @@
 test_that("utility functions work", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(getwd(), "tst_utils"))) {
+    unlink(file.path(getwd(), "tst_utils"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(getwd(), "tst_utils"))
+  dir.create(file.path(getwd(), "tst_utils"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_utils"))
+
   # current season function - also naturally tested in some load_x functions
   expect_true(is.numeric(get_current_season()))
   expect_gte(get_current_season(), 2022)

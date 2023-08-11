@@ -8,35 +8,50 @@
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
 
 get_ergast_content <- function(url) {
-  fullurl <- glue::glue("https://ergast.com/api/f1/{url}", url = url)
-  res <- rlang::try_fetch(httr::GET(
-    fullurl,
-    httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"]))
-  ))
-  # Handle Ergast errors with more informative error codes.
-  if (res$status_code != 200 || rawToChar(res$content) == "Unable to select database") {
-    cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
-    # Try revert to not https mode
-    fullurl <- glue::glue("http://ergast.com/api/f1/{url}", url = url)
-    res <- httr::GET(
-      fullurl,
-      httr::user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"]))
-    )
+  # note:
+  # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
+  # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
+  # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
+  # Automatically retries at http if https fails after retries.
+
+  ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
+    httr2::req_url_path_append(url) %>%
+    httr2::req_retry(max_tries = 5) %>%
+    httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+    httr2::req_throttle(4 / 1) %>%
+    httr2::req_error(is_error = ~FALSE)
+
+  if (!grepl("current|last|latest", url)) {
+    # Don't cache calls to 'current' or 'last' as we have no way of expiring them and they change from week to week
+    ergast_raw <- ergast_raw %>%
+      httr2::req_cache(path = file.path(getOption("f1dataR.cache"), "f1dataR_http_cache"))
   }
 
+  ergast_raw <- ergast_raw %>%
+    httr2::req_perform()
 
-  # Handle Ergast errors with more informative error codes.
-  if (res$status_code != 200) {
-    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.",
-      code = res$status_code
+  # Restart retries to ergast with http (instead of https)
+  if (httr2::resp_is_error(ergast_raw) || httr2::resp_body_string(ergast_raw) == "Unable to select database") {
+    cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
+    ergast_raw <- ergast_raw %>%
+      httr2::req_url("http://ergast.com/api/f1") %>%
+      httr2::req_url_path_append(url) %>%
+      httr2::req_perform()
+  }
+
+  if (httr2::resp_is_error(ergast_raw)) {
+    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
+      code = httr2::resp_status(ergast_raw),
+      msg = httr2::resp_status_desc(ergast_raw)
     ))
   }
-  if (rawToChar(res$content) == "Unable to select database") {
+
+  if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
     cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
 
-  # presuming ergast is ok...
-  return(jsonlite::fromJSON(rawToChar(res$content)))
+  # else must be ok
+  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
 }
 
 #' Get Current Season core

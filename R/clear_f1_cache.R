@@ -26,6 +26,8 @@ clear_f1_cache <- function() {
     }
   }
 
+  unlink(file.path(getOption("f1dataR.cache"), "f1dataR_http_cache"), recursive = TRUE)
+
   memoise::forget(f1dataR::load_drivers)
   memoise::forget(f1dataR::load_laps)
   memoise::forget(f1dataR::load_pitstops)

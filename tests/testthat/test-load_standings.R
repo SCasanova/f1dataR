@@ -1,4 +1,11 @@
 test_that("load Standings works", {
+  if (dir.exists(file.path(getwd(), "tst_load_standings"))) {
+    unlink(file.path(getwd(), "tst_load_standings"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(getwd(), "tst_load_standings"))
+  dir.create(file.path(getwd(), "tst_load_standings"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_standings"))
+
   standings_2021 <- .load_standings(2021)
 
 
