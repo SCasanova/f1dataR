@@ -19,7 +19,7 @@ get_ergast_content <- function(url) {
     httr2::req_url_path_append(url) %>%
     httr2::req_retry(max_tries = 5) %>%
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
-    httr2::req_cache(path = getOption('f1dataR.cache')) %>%
+    httr2::req_cache(path = file.path(getOption('f1dataR.cache'), 'f1dataR_http_cache')) %>%
     httr2::req_throttle(4/1) %>%
     httr2::req_error(is_error = ~ FALSE) %>%
     httr2::req_perform()
