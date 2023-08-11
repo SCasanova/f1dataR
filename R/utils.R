@@ -44,7 +44,7 @@ get_ergast_content <- function(url) {
   }
 
   # else must be ok
-  return(httr2::resp_body_json(ergast_raw))
+  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
 }
 
 #' Get Current Season core
