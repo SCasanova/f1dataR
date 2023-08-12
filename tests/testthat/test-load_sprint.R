@@ -1,10 +1,10 @@
 test_that("sprint works", {
-  if (dir.exists(file.path(getwd(), "tst_load_sprint"))) {
-    unlink(file.path(getwd(), "tst_load_sprint"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_load_sprint"))) {
+    unlink(file.path(tempdir(), "tst_load_sprint"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_load_sprint"))
-  dir.create(file.path(getwd(), "tst_load_sprint"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_sprint"))
+  withr::local_file(file.path(tempdir(), "tst_load_sprint"))
+  dir.create(file.path(tempdir(), "tst_load_sprint"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_sprint"))
 
   # A sprint exists for season = 2021, round = 10
   sprint_2021_10 <- .load_sprint(2021, 10)

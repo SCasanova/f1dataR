@@ -5,19 +5,19 @@ test_that("Load Session Works", {
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
-  if (dir.exists(file.path(getwd(), "tst_session"))) {
-    unlink(file.path(getwd(), "tst_session"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_session"))) {
+    unlink(file.path(tempdir(), "tst_session"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_session"))
-  dir.create(file.path(getwd(), "tst_session"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_session"))
+  withr::local_file(file.path(tempdir(), "tst_session"))
+  dir.create(file.path(tempdir(), "tst_session"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session"))
 
   # Tests
 
   # test with all parameters but session provided
   expect_invisible(load_race_session("session", season = 2022, round = 1)) # , verbose = F))
   # validate the cache is there now
-  expect_true(file.exists(file.path(getwd(), "tst_session", "fastf1_http_cache.sqlite")))
+  expect_true(file.exists(file.path(tempdir(), "tst_session", "fastf1_http_cache.sqlite")))
 
   # test without race provided - loads from cache
   expect_invisible(load_race_session("session", season = 2022, session = "R")) # , verbose = F))
