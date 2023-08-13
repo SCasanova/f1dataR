@@ -22,11 +22,4 @@ or NULL if no sprint exists for this season/round combo
 Loads final race results for a given year and round. Note not all rounds have
 sprint results. Use \code{.load_sprint()} for an uncached version of this function.
 }
-\examples{
-# Load a sprint result
-load_sprint(2021, 10)
-
-# If a weekend doesn't have sprint race/quali results, it will return NULL
-load_sprint(2022, 1)
-
-}
+\keyword{internal}
