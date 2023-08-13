@@ -10,7 +10,7 @@
 #' @importFrom rlang .data
 #' @keywords internal
 #' @return A tibble with one row per driver
-.load_quali <- function(season = get_current_season(), round = "last") {
+load_quali <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2003 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
   }
@@ -48,13 +48,3 @@
       janitor::clean_names()
   }
 }
-
-#' @inherit .load_quali title description params return
-#' @export
-#' @examples
-#' # Load quali from the first race of 2023:
-#' load_quali(2023, 1)
-#'
-#' # Load quali from the third race of 2004:
-#' load_quali(2004, 1)
-load_quali <- memoise::memoise(.load_quali)

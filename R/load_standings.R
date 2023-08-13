@@ -13,7 +13,7 @@
 #' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins (and constructorsId in the case of drivers championship).
 
-.load_standings <- function(season = get_current_season(), round = "last", type = "driver") {
+load_standings <- function(season = get_current_season(), round = "last", type = "driver") {
   if (season != "current" && (season < 2003 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
   }
@@ -47,14 +47,3 @@
       janitor::clean_names()
   }
 }
-
-#' @inherit .load_standings title description params return
-#' @export
-#' @examples
-#' # Get the driver standings at the end of 2021
-#'
-#' if (interactive()) {
-#'   load_standings(2021, "last", "driver")
-#' }
-#'
-load_standings <- memoise::memoise(.load_standings)
