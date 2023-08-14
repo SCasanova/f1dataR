@@ -65,7 +65,14 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   if (get_fastf1_version() >= 3) {
     reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   }
-  reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = getOption("f1dataR.cache")))
+  if(tolower(Sys.info()["sysname"]) == 'windows'){
+    reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", 
+                                         cache_dir = gsub("\\\\", "/", getOption("f1dataR.cache"))))
+  } else{
+    reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", 
+                                         cache_dir = getOption("f1dataR.cache")))
+  }
+  
 
   py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
   if (is.numeric(round)) {
