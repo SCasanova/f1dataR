@@ -27,4 +27,3 @@ Loads pit stop info (number, lap, time elapsed) for a given race
 in a season. Pit stop data is available from 2012 onward.
 Call \code{.load_pitstops()} for an uncached version.
 }
-\keyword{internal}

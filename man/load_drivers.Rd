@@ -18,4 +18,3 @@ permanent number (for post-2014 drivers).
 Loads driver info for all participants in a given season.
 Use \code{.load_drivers()} for an uncached version of this function.
 }
-\keyword{internal}

@@ -8,7 +8,7 @@
 #' to most recent.  Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @keywords internal
+#' @export
 #' @return A tibble with one row per driver
 load_quali <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2003 || season > get_current_season())) {

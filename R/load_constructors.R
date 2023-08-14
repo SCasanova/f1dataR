@@ -4,7 +4,7 @@
 #' Use `.load_constructors()`for an uncached version of this function
 #'
 #' @importFrom magrittr "%>%"
-#' @keywords internal
+#' @export
 #' @return A tibble with one row per constructor
 load_constructors <- function() {
   url <- "constructors.json?limit=300"

@@ -23,4 +23,3 @@ points, wins (and constructorsId in the case of drivers championship).
 Loads standings at the end of a given season and round for drivers' or
 constructors' championships. Use \code{.load_standings()} for an uncached version of this function.
 }
-\keyword{internal}

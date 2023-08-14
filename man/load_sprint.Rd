@@ -22,4 +22,3 @@ or NULL if no sprint exists for this season/round combo
 Loads final race results for a given year and round. Note not all rounds have
 sprint results. Use \code{.load_sprint()} for an uncached version of this function.
 }
-\keyword{internal}

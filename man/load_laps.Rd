@@ -26,4 +26,3 @@ during lap, time (in clock form), lap number, time (in seconds), and season.
 Loads basic lap-by-lap time data for all drivers in a given season
 and round. Lap time data is available from 1996 onward. Use \code{.load_laps()} for a uncached version.
 }
-\keyword{internal}

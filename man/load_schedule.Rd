@@ -16,4 +16,3 @@ A tibble with one row per round in season. Indicates in sprint_date if a specifi
 Loads schedule information for a given F1 season.
 Use \code{.load_schedule()} for an uncached version.
 }
-\keyword{internal}

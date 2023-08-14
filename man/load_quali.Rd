@@ -19,4 +19,3 @@ A tibble with one row per driver
 Loads qualifying session results for a given season and round.
 Use \code{.load_quali()} for an uncached version.
 }
-\keyword{internal}

@@ -19,4 +19,3 @@ A tibble with one row per driver
 Loads final race results for a given year and round. Use \code{.load_results()}
 for an uncached version
 }
-\keyword{internal}
