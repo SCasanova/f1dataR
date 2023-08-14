@@ -3,11 +3,14 @@
 }
 
 .onAttach <- function(libname, pkgname) {
-  # Give instructions on how to set up cache directory
-  packageStartupMessage(
-    'f1dataR cache is set up on a temporary directory. It is recommended to use `options(f1dataR.cache = path/to/dir/)` to set a permanent cache'
-  )
   
+  if(getOption('f1dataR.cache') == tempdir()){
+    # Give instructions on how to set up cache directory
+    cli::cli_alert_info(
+      # packageStartupMessage(
+      '{.emph f1dataR} cache is set up on a temporary directory. It is recommended to use `options(f1dataR.cache = path/to/dir/)` to set a permanent cache'
+    )
+  }
   # Load preexisting session/user options
   op <- options()
   
