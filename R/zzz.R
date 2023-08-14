@@ -103,5 +103,8 @@
 }
 
 .onAttach <- function(libname, pkgname) {
-
+  # default to memory cache if not set
+  if (is.null(getOption("f1dataR.cache"))) {
+    options("f1dataR.cache" = "memory")
+  }
 }
