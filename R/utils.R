@@ -20,12 +20,6 @@ get_ergast_content <- function(url) {
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
 
-  if (!getOption("f1dataR.cache") %in% c("off", "memory")) {
-    # Don't cache calls to 'current' or 'last' as we have no way of expiring them and they change from week to week
-    ergast_raw <- ergast_raw %>%
-      httr2::req_cache(path = file.path(getOption("f1dataR.cache"), "f1dataR_http_cache"))
-  }
-
   ergast_raw <- ergast_raw %>%
     httr2::req_perform()
 
