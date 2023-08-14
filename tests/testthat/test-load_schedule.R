@@ -1,11 +1,11 @@
 test_that("Schedule Load works", {
   # Set testing specific parameters - this disposes after the test finishes
-  if (dir.exists(file.path(getwd(), "tst_load_schedule"))) {
-    unlink(file.path(getwd(), "tst_load_schedule"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_load_schedule"))) {
+    unlink(file.path(tempdir(), "tst_load_schedule"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_load_schedule"))
-  dir.create(file.path(getwd(), "tst_load_schedule"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_schedule"))
+  withr::local_file(file.path(tempdir(), "tst_load_schedule"))
+  dir.create(file.path(tempdir(), "tst_load_schedule"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_schedule"))
 
   schedule_2021 <- .load_schedule(2021)
 

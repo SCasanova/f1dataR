@@ -1,11 +1,11 @@
 test_that("utility functions work", {
   # Set testing specific parameters - this disposes after the test finishes
-  if (dir.exists(file.path(getwd(), "tst_utils"))) {
-    unlink(file.path(getwd(), "tst_utils"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_utils"))) {
+    unlink(file.path(tempdir(), "tst_utils"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_utils"))
-  dir.create(file.path(getwd(), "tst_utils"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_utils"))
+  withr::local_file(file.path(tempdir(), "tst_utils"))
+  dir.create(file.path(tempdir(), "tst_utils"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_utils"))
 
   # current season function - also naturally tested in some load_x functions
   expect_true(is.numeric(get_current_season()))
@@ -40,24 +40,24 @@ test_that("setup-fastf1 works", {
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
-  withr::local_file(file.path(getwd(), "tst_setup"))
-  if (dir.exists(file.path(getwd(), "tst_setup"))) {
-    unlink(file.path(getwd(), "tst_setup"), recursive = TRUE, force = TRUE)
+  withr::local_file(file.path(tempdir(), "tst_setup"))
+  if (dir.exists(file.path(tempdir(), "tst_setup"))) {
+    unlink(file.path(tempdir(), "tst_setup"), recursive = TRUE, force = TRUE)
   }
-  dir.create(file.path(getwd(), "tst_setup"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_setup"))
+  dir.create(file.path(tempdir(), "tst_setup"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_setup"))
   withr::local_envvar(.new = list(
-    "WORKON_HOME" = file.path(getwd(), "tst_setup"),
+    "WORKON_HOME" = file.path(tempdir(), "tst_setup"),
     "RETICULATE_PYTHON" = NA
   ))
-  withr::defer(reticulate::virtualenv_remove(file.path(getwd(), "tst_setup", "setup_venv"), confirm = FALSE))
+  withr::defer(reticulate::virtualenv_remove(file.path(tempdir(), "tst_setup", "setup_venv"), confirm = FALSE))
 
   expect_false("setup_venv" %in% reticulate::virtualenv_list())
 
   # Different testing environments may or may not have preexisting selected/activated python venv or condaenv.
   # This try(suppressWarnings()) set makes sure that the code is run, and we'll test for that which we care about
   # (namely the creation of the venv) afterwards
-  try(suppressWarnings(setup_fastf1(file.path(getwd(), "tst_setup", "setup_venv"), conda = FALSE)))
+  try(suppressWarnings(setup_fastf1(file.path(tempdir(), "tst_setup", "setup_venv"), conda = FALSE)))
 
   expect_true("setup_venv" %in% reticulate::virtualenv_list())
 
