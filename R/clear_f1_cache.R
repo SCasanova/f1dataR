@@ -19,11 +19,11 @@ clear_f1_cache <- function() {
       # check OS for path
         if (get_fastf1_version() >= 3) {
           reticulate::py_run_string(glue::glue("fastf1.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = stringr::str_replace(getOption("f1dataR.cache"), '\\', '/')
+                                               cache_dir = stringr::str_replace(getOption("f1dataR.cache"), '\\\\', '/')
           ))
         } else {
           reticulate::py_run_string(glue::glue("fastf1.api.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = stringr::str_replace(getOption("f1dataR.cache"), '\\', '/')
+                                               cache_dir = stringr::str_replace(getOption("f1dataR.cache"), '\\\\', '/')
           ))
         }
       } else{
