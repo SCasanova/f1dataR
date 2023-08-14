@@ -12,7 +12,7 @@
   op <- options()
   
   # Make our own list of options
-  op_package <- list(f1dataR.cache = getwd())
+  op_package <- list(f1dataR.cache = tempdir())
   
   # If our options aren't already set, we'll include those in the new options to write
   toset <- !(names(op_package) %in% names(op))
