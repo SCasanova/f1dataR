@@ -15,33 +15,20 @@ clear_f1_cache <- function() {
   if (reticulate::py_available(initialize = TRUE)) {
     if ("fastf1" %in% reticulate::py_list_packages()$package) {
       reticulate::py_run_string("import fastf1")
-      if(tolower(Sys.info()["sysname"]) == 'windows') {
-      # check OS for path
         if (get_fastf1_version() >= 3) {
           reticulate::py_run_string(glue::glue("fastf1.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = gsub("\\\\", "/", getOption("f1dataR.cache"))
+                                               cache_dir = normalizePath(getOption("f1dataR.cache"), winslash = '/') 
           ))
         } else {
           reticulate::py_run_string(glue::glue("fastf1.api.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = gsub("\\\\", "/", getOption("f1dataR.cache"))
+                                               cache_dir = normalizePath(getOption("f1dataR.cache"), winslash = '/') 
           ))
         }
-      } else{
-        if (get_fastf1_version() >= 3) {
-          reticulate::py_run_string(glue::glue("fastf1.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = getOption("f1dataR.cache")
-          ))
-        } else {
-          reticulate::py_run_string(glue::glue("fastf1.api.Cache.clear_cache('{cache_dir}')",
-                                               cache_dir = getOption("f1dataR.cache")
-          ))
-        }
-      }
       
     }
   }
 
-  unlink(file.path(getOption("f1dataR.cache"), "f1dataR_http_cache"), recursive = TRUE)
+  unlink(file.path(normalizePath(getOption("f1dataR.cache"), winslash = '/') , "f1dataR_http_cache"), recursive = TRUE)
 
   memoise::forget(f1dataR::load_drivers)
   memoise::forget(f1dataR::load_laps)

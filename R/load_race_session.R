@@ -57,21 +57,16 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
     cli::cli_alert_info("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster.")
   }
 
-  if (!dir.exists(getOption("f1dataR.cache"))) {
-    dir.create(getOption("f1dataR.cache"), recursive = TRUE)
+  if (!dir.exists(normalizePath(getOption("f1dataR.cache"), winslash = '/') )) {
+    dir.create(normalizePath(getOption("f1dataR.cache"), winslash = '/') , recursive = TRUE)
   }
 
   reticulate::py_run_string("import fastf1")
   if (get_fastf1_version() >= 3) {
     reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   }
-  if(tolower(Sys.info()["sysname"]) == 'windows'){
     reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", 
-                                         cache_dir = gsub("\\\\", "/", getOption("f1dataR.cache"))))
-  } else{
-    reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", 
-                                         cache_dir = getOption("f1dataR.cache")))
-  }
+                                         cache_dir = normalizePath(getOption("f1dataR.cache"), winslash = '/') ))
   
 
   py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
