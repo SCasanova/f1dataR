@@ -8,5 +8,4 @@ tests/testthat/tst_*
 f1dataR.Rproj
 /doc/
 /Meta/
-*.rds
-/f1dataR_http_cache/*
+/tst_*

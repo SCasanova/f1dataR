@@ -11,7 +11,7 @@
 #' @importFrom magrittr "%>%"
 #' @export
 #' @return A tibble with columns driver_id (or constructor_id), position,
-#' points, wins (and constructorsId in the case of drivers championship).
+#' points, wins (and constructors_id in the case of drivers championship).
 load_standings <- function(season = get_current_season(), round = "last", type = "driver") {
   if (season != "current" && (season < 2003 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')

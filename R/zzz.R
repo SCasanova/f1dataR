@@ -20,7 +20,7 @@
       dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
 
       # set the cachedir to our new location for fastf1 caching too
-      options("f1dataR.cache") <- cache_dir
+      options("f1dataR.cache" = cache_dir)
     }
     cache <- cachem::cache_disk(dir = memoise_option)
   } else if (memoise_option == "memory") {
@@ -104,7 +104,22 @@
 
 .onAttach <- function(libname, pkgname) {
   # default to memory cache if not set
-  if (is.null(getOption("f1dataR.cache"))) {
+  memoise_option <- getOption("f1dataR.cache")
+
+  if(is.null(memoise_option)){
+    memoise_option <- "memory"
     options("f1dataR.cache" = "memory")
   }
+
+  if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option))) {
+
+    packageStartupMessage("Note: f1dataR.cache is set to '",
+                          memoise_option,
+                          "' and should be one of c('memory','filesystem', 'off') or a filepath. \n",
+                          "Defaulting to 'memory'.")
+    options("f1dataR.cache" = "memory")
+  }
+
+  if(memoise_option == "off") packageStartupMessage("Note: f1dataR.cache is set to 'off' \n",
+                                                    "FastF1 will cache to discardable tempdir()")
 }

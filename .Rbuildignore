@@ -17,4 +17,4 @@
 ^doc$
 ^Meta$
 ^CRAN-SUBMISSION$
-^\f1dataR_http_cache\*$
+^\w*.pem$

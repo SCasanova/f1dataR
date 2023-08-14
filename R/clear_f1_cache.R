@@ -17,11 +17,11 @@ clear_f1_cache <- function() {
       reticulate::py_run_string("import fastf1")
       if (get_fastf1_version() >= 3) {
         reticulate::py_run_string(glue::glue("fastf1.Cache.clear_cache('{cache_dir}')",
-          cache_dir = getOption("f1dataR.cache")
+          cache_dir = normalizePath(getOption("f1dataR.cache"))
         ))
       } else {
         reticulate::py_run_string(glue::glue("fastf1.api.Cache.clear_cache('{cache_dir}')",
-          cache_dir = getOption("f1dataR.cache")
+          cache_dir = normalizePath(getOption("f1dataR.cache"))
         ))
       }
     }
