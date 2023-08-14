@@ -27,14 +27,20 @@ clear_f1_cache <- function() {
     }
   }
 
+  memoise::forget(f1dataR::load_circuits)
+  memoise::forget(f1dataR::load_constructors)
   memoise::forget(f1dataR::load_drivers)
+  memoise::forget(f1dataR::load_driver_telemetry)
   memoise::forget(f1dataR::load_laps)
   memoise::forget(f1dataR::load_pitstops)
-  memoise::forget(f1dataR::load_schedule)
   memoise::forget(f1dataR::load_quali)
   memoise::forget(f1dataR::load_results)
-  memoise::forget(f1dataR::load_standings)
-  memoise::forget(f1dataR::get_current_season)
-  memoise::forget(f1dataR::load_circuits)
+  memoise::forget(f1dataR::load_schedule)
+  memoise::forget(f1dataR::load_session_laps)
   memoise::forget(f1dataR::load_sprint)
+  memoise::forget(f1dataR::load_standings)
+
+  memoise::forget(f1dataR::get_current_season)
+  memoise::forget(f1dataR::plot_fastest)
+
 }

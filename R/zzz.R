@@ -65,11 +65,6 @@
       envir = rlang::ns_env("f1dataR")
     )
     assign(
-      x = "load_race_session",
-      value = memoise::memoise(load_race_session, ~ memoise::timeout(86400), cache = cache),
-      envir = rlang::ns_env("f1dataR")
-    )
-    assign(
       x = "load_results",
       value = memoise::memoise(load_results, ~ memoise::timeout(86400), cache = cache),
       envir = rlang::ns_env("f1dataR")
