@@ -70,7 +70,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   if(getOption("f1dataR.cache") %in% c("memory", "off", "filesystem")){
     f1dataRcache <- tempdir()
   } else {
-    f1dataRcache <- normalizePath(getOption("f1dataR.cache"))
+    f1dataRcache <- normalizePath(getOption("f1dataR.cache"), winslash = "/")
   }
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = f1dataRcache))
 
