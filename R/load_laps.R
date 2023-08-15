@@ -8,10 +8,10 @@
 #' to most recent.  Also accepts `'last'`.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @importFrom magrittr "%>%"
-#' @keywords internal
+#' @export
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
-.load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
+load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_warn("1.0.0", "load_laps(race)", "load_laps(round)")
     round <- race
@@ -55,13 +55,3 @@
     tibble::tibble() %>%
     janitor::clean_names()
 }
-
-#' @inherit .load_laps title description params return
-#' @export
-#' @examples
-#' # Load laps from the last race of 2021
-#' load_laps(2021, "last")
-#'
-#' # Load laps from the third race of 1999
-#' load_laps(1999, 3)
-load_laps <- memoise::memoise(.load_laps)

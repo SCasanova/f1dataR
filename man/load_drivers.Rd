@@ -18,10 +18,3 @@ permanent number (for post-2014 drivers).
 Loads driver info for all participants in a given season.
 Use \code{.load_drivers()} for an uncached version of this function.
 }
-\examples{
-# Load the drivers appearing in this season's data:
-load_drivers()
-
-# Load the drivers who participated in the first year of Formula 1:
-load_drivers(1950)
-}

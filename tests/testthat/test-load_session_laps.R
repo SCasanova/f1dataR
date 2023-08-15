@@ -12,7 +12,6 @@ test_that("load session laps works", {
   dir.create(file.path(tempdir(), "tst_session_laps"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session_laps"))
 
-
   laps <- load_session_laps(season = 2022, round = "bahrain")
   laps2 <- load_session_laps(season = 2022, round = "bahrain", add_weather = TRUE)
   lapsq <- load_session_laps(season = 2022, round = "bahrain", session = "Q")

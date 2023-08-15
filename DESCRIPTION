@@ -26,14 +26,16 @@ Imports:
     magrittr,
     tibble,
     jsonlite,
-    httr2, 
+    httr2,
     memoise,
     janitor,
-    dplyr, 
+    dplyr,
     tidyr,
     rlang,
     lifecycle,
-    cli
+    cli,
+    rappdirs,
+    cachem
 Suggests: 
     ggplot2,
     httptest,

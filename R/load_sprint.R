@@ -8,12 +8,12 @@
 #' to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @keywords internal
+#' @export
 #' @return A dataframetibble with columns driver_id, constructor_id, points awarded, finishing position,
 #' grid position, laps completed, race status (finished or otherwise), gap to
 #' first place, fastest lap, fastest lap time, fastest lap in seconds,
 #' or NULL if no sprint exists for this season/round combo
-.load_sprint <- function(season = get_current_season(), round = "last") {
+load_sprint <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2021 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2021 and {get_current_season()} (or use "current")')
   }
@@ -60,14 +60,3 @@
     tibble::as_tibble() %>%
     janitor::clean_names()
 }
-
-#' @inherit .load_sprint title description params return
-#' @export
-#' @examples
-#' # Load a sprint result
-#' load_sprint(2021, 10)
-#'
-#' # If a weekend doesn't have sprint race/quali results, it will return NULL
-#' load_sprint(2022, 1)
-#'
-load_sprint <- memoise::memoise(.load_sprint)

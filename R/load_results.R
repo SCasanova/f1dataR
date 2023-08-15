@@ -8,9 +8,9 @@
 #' to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @keywords internal
+#' @export
 #' @return A tibble with one row per driver
-.load_results <- function(season = get_current_season(), round = "last") {
+load_results <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
@@ -57,14 +57,3 @@
       janitor::clean_names()
   }
 }
-
-#' @inherit .load_results title description params return
-#' @export
-#' @examples
-#' # Load results from the third race of 2023
-#' load_results(2023, 3)
-#'
-#' # Load results from the last race of 1963
-#' load_results(1963, "last")
-#'
-load_results <- memoise::memoise(.load_results)

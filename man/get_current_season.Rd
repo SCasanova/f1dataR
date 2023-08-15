@@ -12,8 +12,3 @@ Year (four digit number) representation of current season, as numeric.
 \description{
 Looks up current season from ergast, fallback to manual determination
 }
-\examples{
-# Get the current season
-get_current_season()
-}
-\keyword{internal}

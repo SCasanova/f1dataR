@@ -6,7 +6,6 @@
 #' @param url the complete Ergast URL to get
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content
-
 get_ergast_content <- function(url) {
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
@@ -20,12 +19,6 @@ get_ergast_content <- function(url) {
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
-
-  if (!grepl("current|last|latest", url)) {
-    # Don't cache calls to 'current' or 'last' as we have no way of expiring them and they change from week to week
-    ergast_raw <- ergast_raw %>%
-      httr2::req_cache(path = file.path(normalizePath(getOption("f1dataR.cache"), winslash = '/') , "f1dataR_http_cache"))
-  }
 
   ergast_raw <- ergast_raw %>%
     httr2::req_perform()
@@ -57,10 +50,9 @@ get_ergast_content <- function(url) {
 #' Get Current Season core
 #'
 #' @description Looks up current season from ergast, fallback to manual determination
-#' @keywords internal
+#' @export
 #' @return Year (four digit number) representation of current season, as numeric.
-
-.get_current_season <- function() {
+get_current_season <- function() {
   current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
     as.numeric(strftime(Sys.Date(), "%Y")) - 1,
     as.numeric(strftime(Sys.Date(), "%Y"))
@@ -78,14 +70,6 @@ get_ergast_content <- function(url) {
   return(current_season)
 }
 
-#' @inherit .get_current_season title description return
-#' @keywords internal
-#' @export
-#' @examples
-#' # Get the current season
-#' get_current_season()
-get_current_season <- memoise::memoise(.get_current_season)
-
 
 #' Convert Clock time to seconds
 #'
@@ -94,7 +78,6 @@ get_current_season <- memoise::memoise(.get_current_season)
 #' @param time character string with clock format (0:00.000)
 #' @importFrom magrittr "%>%"
 #' @return A numeric variable that represents that time in seconds
-
 time_to_sec <- function(time) {
   subfun <- function(x) {
     if (is.na(x)) {
@@ -123,10 +106,9 @@ time_to_sec <- function(time) {
 #' @description
 #' Gets the current installed FastF1 version available (via `reticulate`) to the function.
 #' Displays a note if significantly out of date.
-#' @keywords internal
+#' @export
 #' @return integer for major version number (or NA if any error )
-
-.get_fastf1_version <- function() {
+get_fastf1_version <- function() {
   ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
@@ -144,26 +126,18 @@ time_to_sec <- function(time) {
   }
 }
 
-#' @inherit .get_fastf1_version title description return
-#' @keywords internal
-get_fastf1_version <- memoise::memoise(.get_fastf1_version)
-
 
 #' Setup fastf1 connection
 #'
 #' @description Set up reticulate using some options from user (or defaults). Helps
 #' solve `fastf1` issues - see the Setup FastF1 Connection vignette for more info
 #' (run \code{vignette('setup_fastf1', 'f1dataR')}).
-#'
 #' @param envname a name for the virtualenv or conda environment.
-#'
 #' For virtualenv, if a name is passed, `reticulate` will use/create the environment in the
 #' default location. Alternatively, if providing a full path, `reticulate` will use the specified location.
 #' @param conda whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)
-#'
 #' @export
 #' @return No return value, called to set up virtan enviroment for package
-#'
 #' @examples
 #' \dontrun{
 #' # setup fastf1 connection with all defaults
@@ -172,7 +146,6 @@ get_fastf1_version <- memoise::memoise(.get_fastf1_version)
 #' # setup with a preexisting conda environment, with a specified name
 #' setup_fastf1("example_conda_env", conda = TRUE)
 #' }
-#'
 setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
   conda_exists <- function() {
     tryCatch(

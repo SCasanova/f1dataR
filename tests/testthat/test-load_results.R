@@ -7,14 +7,11 @@ test_that("Results Load works", {
   dir.create(file.path(tempdir(), "tst_load_results"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_results"))
 
-  results_2021_1 <- .load_results(2021, 1)
+  results_2021_1 <- load_results(2021, 1)
 
   expect_equal(nrow(results_2021_1), 20)
   expect_equal(results_2021_1$driver_id[4], "norris")
   expect_equal(results_2021_1$position[1], "1")
-
-  results_2021_1_mem <- load_results(2021, 1)
-  expect_identical(results_2021_1, results_2021_1_mem)
 
   results_2003 <- load_results(2003, 1)
   expect_equal(nrow(results_2003), 20)

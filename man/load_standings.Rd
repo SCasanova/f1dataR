@@ -17,17 +17,9 @@ to most recent. Also accepts \code{'last'}.}
 }
 \value{
 A tibble with columns driver_id (or constructor_id), position,
-points, wins (and constructorsId in the case of drivers championship).
+points, wins (and constructors_id in the case of drivers championship).
 }
 \description{
 Loads standings at the end of a given season and round for drivers' or
 constructors' championships. Use \code{.load_standings()} for an uncached version of this function.
-}
-\examples{
-# Get the driver standings at the end of 2021
-
-if (interactive()) {
-  load_standings(2021, "last", "driver")
-}
-
 }

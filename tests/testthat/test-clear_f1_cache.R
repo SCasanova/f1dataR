@@ -1,4 +1,4 @@
-test_that("Cache Clearing works for memoised functions", {
+test_that("Cache Clearing works for memoised functions to file", {
   # Note: cache clearing for fastf1 is not our responsibility, it's performed
   # by a call to fastf1 itself.
 
@@ -13,8 +13,6 @@ test_that("Cache Clearing works for memoised functions", {
   expect_false(memoise::has_cache(load_schedule)())
   tmp <- load_schedule()
   expect_true(memoise::has_cache(load_schedule)())
-  expect_true(dir.exists(file.path(normalizePath(getOption("f1dataR.cache"), winslash = '/') , "f1dataR_http_cache")))
   clear_f1_cache()
   expect_false(memoise::has_cache(load_schedule)())
-  expect_false(dir.exists(file.path(normalizePath(getOption("f1dataR.cache"), winslash = '/') , "f1dataR_http_cache")))
 })
