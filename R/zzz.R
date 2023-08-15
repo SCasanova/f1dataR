@@ -101,20 +101,25 @@
   # default to memory cache if not set
   memoise_option <- getOption("f1dataR.cache")
 
-  if(is.null(memoise_option)){
+  if (is.null(memoise_option)) {
     memoise_option <- "memory"
     options("f1dataR.cache" = "memory")
   }
 
   if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option))) {
-
-    packageStartupMessage("Note: f1dataR.cache is set to '",
-                          memoise_option,
-                          "' and should be one of c('memory','filesystem', 'off') or a filepath. \n",
-                          "Defaulting to 'memory'.")
+    packageStartupMessage(
+      "Note: f1dataR.cache is set to '",
+      memoise_option,
+      "' and should be one of c('memory','filesystem', 'off') or a filepath. \n",
+      "Defaulting to 'memory'."
+    )
     options("f1dataR.cache" = "memory")
   }
 
-  if(memoise_option == "off") packageStartupMessage("Note: f1dataR.cache is set to 'off' \n",
-                                                    "FastF1 will cache to discardable tempdir()")
+  if (memoise_option == "off") {
+    packageStartupMessage(
+      "Note: f1dataR.cache is set to 'off' \n",
+      "FastF1 will cache to discardable tempdir()"
+    )
+  }
 }

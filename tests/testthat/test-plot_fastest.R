@@ -23,4 +23,8 @@ test_that("graphics work", {
 
   qualiplot <- plot_fastest(2022, 1, "Q", "HAM", "gear")
   expect_equal(qualiplot$label$title, "2022 Bahrain Grand Prix Qualifying")
+
+  qp_axis <- qualiplot + theme_dark_f1(axis_marks = TRUE)
+
+  expect_equal(qp_axis$labels, qualiplot$labels)
 })

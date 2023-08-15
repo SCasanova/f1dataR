@@ -67,7 +67,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   # only cache to tempdir if cache option is set to memory or off (includes filesystem in vector as a fallback error catch)
-  if(getOption("f1dataR.cache") %in% c("memory", "off", "filesystem")){
+  if (getOption("f1dataR.cache") %in% c("memory", "off", "filesystem")) {
     f1dataRcache <- tempdir()
   } else {
     f1dataRcache <- normalizePath(getOption("f1dataR.cache"), winslash = "/")
