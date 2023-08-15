@@ -10,9 +10,9 @@ clear_f1_cache()
 No return value, called to erase cached data
 }
 \description{
-Clears the cache for f1dataR telemetry.
+Clears the cache for f1dataR telemetry and Ergast API results.
 Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-but the default is the current working directory.
+but the default is but the default is a temporary directory.
 }
 \examples{
 \dontrun{

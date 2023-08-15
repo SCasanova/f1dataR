@@ -5,12 +5,12 @@ test_that("driver telemetry", {
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
-  withr::local_file(file.path(getwd(), "tst_telem"))
-  if (dir.exists(file.path(getwd(), "tst_telem"))) {
-    unlink(file.path(getwd(), "tst_telem"), recursive = TRUE, force = TRUE)
+  withr::local_file(file.path(tempdir(), "tst_telem"))
+  if (dir.exists(file.path(tempdir(), "tst_telem"))) {
+    unlink(file.path(tempdir(), "tst_telem"), recursive = TRUE, force = TRUE)
   }
-  dir.create(file.path(getwd(), "tst_telem"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_telem"))
+  dir.create(file.path(tempdir(), "tst_telem"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_telem"))
 
   # Tests
   telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all")
