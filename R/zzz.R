@@ -98,7 +98,7 @@
     )
   }
 }
-
+# nocov end
 
 .onAttach <- function(libname, pkgname) {
   # default to memory cache if not set
