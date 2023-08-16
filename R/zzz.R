@@ -1,3 +1,4 @@
+# nocov start
 .onLoad <- function(libname, pkgname) {
   reticulate::configure_environment(pkgname)
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
@@ -97,6 +98,7 @@
     )
   }
 }
+
 
 .onAttach <- function(libname, pkgname) {
   # default to memory cache if not set
