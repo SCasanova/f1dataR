@@ -2,6 +2,7 @@
 This is a resubmission. In this version we have:
 
 * Eliminated any use of `getwd()` within the package (functions, tests and vignettes)
+* Changed the caching process to give control to user (use `tempdir()` as default)
 
 * Added missing value parameters
 
