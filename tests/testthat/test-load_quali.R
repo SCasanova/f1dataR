@@ -1,20 +1,17 @@
 test_that("Quali Load works", {
   # Set testing specific parameters - this disposes after the test finishes
-  if (dir.exists(file.path(getwd(), "tst_load_quali"))) {
-    unlink(file.path(getwd(), "tst_load_quali"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_load_quali"))) {
+    unlink(file.path(tempdir(), "tst_load_quali"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_load_quali"))
-  dir.create(file.path(getwd(), "tst_load_quali"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_quali"))
+  withr::local_file(file.path(tempdir(), "tst_load_quali"))
+  dir.create(file.path(tempdir(), "tst_load_quali"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_quali"))
 
-  quali_2021_1 <- .load_quali(2021, 1)
+  quali_2021_1 <- load_quali(2021, 1)
 
   expect_equal(nrow(quali_2021_1), 20)
   expect_equal(quali_2021_1$driver_id[2], "hamilton")
   expect_equal(quali_2021_1$position[1], "1")
-
-  quali_2021_1_mem <- load_quali(2021, 1)
-  expect_identical(quali_2021_1, quali_2021_1_mem)
 
   quali_2004 <- load_quali(2004, 1)
   expect_equal(nrow(quali_2004), 20)

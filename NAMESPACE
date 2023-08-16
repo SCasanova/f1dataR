@@ -3,6 +3,7 @@
 export(clear_f1_cache)
 export(get_current_season)
 export(get_driver_telemetry)
+export(get_fastf1_version)
 export(load_circuits)
 export(load_constructors)
 export(load_driver_telemetry)

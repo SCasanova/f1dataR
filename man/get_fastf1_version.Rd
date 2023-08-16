@@ -13,4 +13,3 @@ integer for major version number (or NA if any error )
 Gets the current installed FastF1 version available (via \code{reticulate}) to the function.
 Displays a note if significantly out of date.
 }
-\keyword{internal}

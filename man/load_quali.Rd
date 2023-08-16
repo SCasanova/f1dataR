@@ -19,10 +19,3 @@ A tibble with one row per driver
 Loads qualifying session results for a given season and round.
 Use \code{.load_quali()} for an uncached version.
 }
-\examples{
-# Load quali from the first race of 2023:
-load_quali(2023, 1)
-
-# Load quali from the third race of 2004:
-load_quali(2004, 1)
-}

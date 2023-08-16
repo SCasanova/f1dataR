@@ -18,12 +18,12 @@ knitr::opts_chunk$set(
 )
 
 # Use a local temporary cache and set back to user's info when finished vignette build
-withr::local_file(file.path(getwd(), "vignettes", "vig_build_tmp"))
-if (dir.exists(file.path(getwd(), "vignettes", "vig_build_tmp"))) {
-  unlink(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE, force = TRUE)
+withr::local_file(file.path(tempdir(), "vignettes", "vig_build_tmp"))
+if (dir.exists(file.path(tempdir(), "vignettes", "vig_build_tmp"))) {
+  unlink(file.path(tempdir(), "vignettes", "vig_build_tmp"), recursive = TRUE, force = TRUE)
 }
-dir.create(file.path(getwd(), "vignettes", "vig_build_tmp"), recursive = TRUE)
-withr::local_options(f1dataR.cache = file.path(getwd(), "vignettes", "vig_build_tmp"))
+dir.create(file.path(tempdir(), "vignettes", "vig_build_tmp"), recursive = TRUE)
+withr::local_options(f1dataR.cache = file.path(tempdir(), "vignettes", "vig_build_tmp"))
 
 f1dataR::setup_fastf1()
 ```

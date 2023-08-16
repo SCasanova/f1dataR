@@ -1,18 +1,14 @@
 test_that("load Standings works", {
-  if (dir.exists(file.path(getwd(), "tst_load_standings"))) {
-    unlink(file.path(getwd(), "tst_load_standings"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_load_standings"))) {
+    unlink(file.path(tempdir(), "tst_load_standings"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_load_standings"))
-  dir.create(file.path(getwd(), "tst_load_standings"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_standings"))
+  withr::local_file(file.path(tempdir(), "tst_load_standings"))
+  dir.create(file.path(tempdir(), "tst_load_standings"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_standings"))
 
-  standings_2021 <- .load_standings(2021)
-
+  standings_2021 <- load_standings(2021)
 
   expect_equal(nrow(standings_2021), 21)
-
-  standings_2021_mem <- load_standings(2021)
-  expect_identical(standings_2021, standings_2021_mem)
 
   standings_2021_constructor <- load_standings(2021, type = "constructor")
   expect_equal(nrow(standings_2021_constructor), 10)

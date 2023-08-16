@@ -13,7 +13,3 @@ A tibble with one row per constructor
 Loads constructor info for all participants in a given season.
 Use \code{.load_constructors()}for an uncached version of this function
 }
-\examples{
-# Load the list of all constructors who have participated in a F1 race:
-load_constructors()
-}

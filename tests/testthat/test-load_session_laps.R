@@ -5,13 +5,12 @@ test_that("load session laps works", {
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
-  if (dir.exists(file.path(getwd(), "tst_session_laps"))) {
-    unlink(file.path(getwd(), "tst_session_laps"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_session_laps"))) {
+    unlink(file.path(tempdir(), "tst_session_laps"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_session_laps"))
-  dir.create(file.path(getwd(), "tst_session_laps"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_session_laps"))
-
+  withr::local_file(file.path(tempdir(), "tst_session_laps"))
+  dir.create(file.path(tempdir(), "tst_session_laps"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session_laps"))
 
   laps <- load_session_laps(season = 2022, round = "bahrain")
   laps2 <- load_session_laps(season = 2022, round = "bahrain", add_weather = TRUE)

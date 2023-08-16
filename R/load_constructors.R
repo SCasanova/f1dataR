@@ -4,9 +4,9 @@
 #' Use `.load_constructors()`for an uncached version of this function
 #'
 #' @importFrom magrittr "%>%"
-#' @keywords internal
+#' @export
 #' @return A tibble with one row per constructor
-.load_constructors <- function() {
+load_constructors <- function() {
   url <- "constructors.json?limit=300"
   data <- get_ergast_content(url)
 
@@ -14,10 +14,3 @@
     dplyr::select("constructorId", "name", "nationality") %>%
     janitor::clean_names())
 }
-
-#' @inherit .load_constructors title description return
-#' @export
-#' @examples
-#' # Load the list of all constructors who have participated in a F1 race:
-#' load_constructors()
-load_constructors <- memoise::memoise(.load_constructors)

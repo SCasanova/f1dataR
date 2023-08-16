@@ -19,11 +19,3 @@ A tibble with one row per driver
 Loads final race results for a given year and round. Use \code{.load_results()}
 for an uncached version
 }
-\examples{
-# Load results from the third race of 2023
-load_results(2023, 3)
-
-# Load results from the last race of 1963
-load_results(1963, "last")
-
-}

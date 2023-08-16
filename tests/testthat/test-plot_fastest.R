@@ -6,12 +6,12 @@ test_that("graphics work", {
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
-  if (dir.exists(file.path(getwd(), "tst_graphics"))) {
-    unlink(file.path(getwd(), "tst_graphics"), recursive = TRUE, force = TRUE)
+  if (dir.exists(file.path(tempdir(), "tst_graphics"))) {
+    unlink(file.path(tempdir(), "tst_graphics"), recursive = TRUE, force = TRUE)
   }
-  withr::local_file(file.path(getwd(), "tst_graphics"))
-  dir.create(file.path(getwd(), "tst_graphics"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(getwd(), "tst_graphics"))
+  withr::local_file(file.path(tempdir(), "tst_graphics"))
+  dir.create(file.path(tempdir(), "tst_graphics"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_graphics"))
   withr::local_seed(1234)
 
   # Snapshot Tests of graphics
@@ -23,4 +23,8 @@ test_that("graphics work", {
 
   qualiplot <- plot_fastest(2022, 1, "Q", "HAM", "gear")
   expect_equal(qualiplot$label$title, "2022 Bahrain Grand Prix Qualifying")
+
+  qp_axis <- qualiplot + theme_dark_f1(axis_marks = TRUE)
+
+  expect_equal(qp_axis$labels, qualiplot$labels)
 })
