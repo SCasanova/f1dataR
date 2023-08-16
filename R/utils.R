@@ -150,7 +150,7 @@ setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
   conda_exists <- function() {
     tryCatch(
       {
-        v <- reticulate::conda_version()
+        reticulate::conda_version()
         return(TRUE)
       },
       error = function(e) {

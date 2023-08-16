@@ -1,3 +1,4 @@
+# nocov start
 .onLoad <- function(libname, pkgname) {
   reticulate::configure_environment(pkgname)
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
@@ -5,11 +6,12 @@
   memoise_option <- getOption("f1dataR.cache", default = "memory")
 
   if (!memoise_option %in% c("memory", "filesystem", "off")) {
-    if (!dir.exists(memoise_option)) {
-      cli::cli_alert_warning("Option 'f1dataR.cache' was set to {cache}.
-                             It should be one of c('memory', 'filesystem', 'off') or
-                             a valid path. Reverting to 'memory'.")
+    if (!dir.exists(normalizePath(memoise_option, mustWork = FALSE))) {
+      cli::cli_alert_warning("Option 'f1dataR.cache' was set to {memoise_option}.
+                             It should be one of c('memory', 'filesystem', 'off') or a valid/existing path.
+                             Reverting to 'memory'.")
       memoise_option <- "memory"
+      options("f1dataR.cache" = "memory")
     }
   }
 
@@ -97,6 +99,7 @@
   }
 }
 
+
 .onAttach <- function(libname, pkgname) {
   # default to memory cache if not set
   memoise_option <- getOption("f1dataR.cache")
@@ -106,7 +109,7 @@
     options("f1dataR.cache" = "memory")
   }
 
-  if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option))) {
+  if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option, mustWork = FALSE))) {
     packageStartupMessage(
       "Note: f1dataR.cache is set to '",
       memoise_option,
@@ -124,7 +127,7 @@
   } else {
     packageStartupMessage(
       "Note: f1dataR.cache is set to 'off' \n",
-      "FastF1 will cache to discardable tempdir()"
+      "Session specific FastF1 functions will still cache to discardable temporary directory."
     )
   }
 }
