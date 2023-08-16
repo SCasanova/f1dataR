@@ -110,7 +110,8 @@
   }
 
   if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option, mustWork = FALSE))) {
-    packageStartupMessage(
+    cli::cli_alert(
+    # packageStartupMessage(
       "Note: f1dataR.cache is set to '",
       memoise_option,
       "' and should be one of c('memory','filesystem', 'off') or a filepath. \n",
@@ -120,12 +121,14 @@
   }
 
   if (memoise_option != "off") {
-    packageStartupMessage(
+    cli::cli_alert(
+    # packageStartupMessage(
       "Note: f1dataR will cache for up to 24 hours, \n",
       "or until the end of the R session."
     )
   } else {
-    packageStartupMessage(
+    cli::cli_alert(
+    # packageStartupMessage(
       "Note: f1dataR.cache is set to 'off' \n",
       "Session specific FastF1 functions will still cache to discardable temporary directory."
     )
