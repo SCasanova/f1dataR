@@ -20,6 +20,8 @@ reference:
     - clear_f1_cache
     - constructor_data
     - setup_fastf1
+    - get_current_season
+    - get_fastf1_version
 
 authors:
   Santiago Casanova:

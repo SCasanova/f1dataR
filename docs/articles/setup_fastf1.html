@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -57,6 +57,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/ergast-data-analysis.html">Ergast Data Analysis</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -155,22 +158,22 @@ article (infoworld.com)</a>.</p>
 </h3>
 <p>If you’re comfortable with virtual environments and/or have one
 already set up for fastf1, you can specify a virtualenv name/directory
-with the above function. If it’s a conda environment, setting the
-<code>conda</code> arguement as true will use <code>reticulate</code>s
+with the above function. If it’s a Conda environment, setting the
+<code>conda</code> argument as true will use <code>reticulate</code>s
 interface for that in lieu of the one for virtualenv.</p>
-<pre class="helper_demo"><code>setup_fastf1(envname = [envname], conda = [T/F])</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">setup_fastf1</span>(<span class="at">envname =</span> [envname], <span class="at">conda =</span> [T<span class="sc">/</span>F])</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="routinerepeat-issues">Routine/Repeat Issues<a class="anchor" aria-label="anchor" href="#routinerepeat-issues"></a>
 </h2>
 <p>If you have repeat issues with the package failing to connect to your
-proper environment, then before calling <code><a href="https://scasanova.github.io/f1dataR">library(f1dataR)</a></code> or
+proper environment, then before calling <code><a href="https://scasanova.github.io/f1dataR/">library(f1dataR)</a></code> or
 using specific functions through <code>::</code>, add the following to
 your code (replacing the <code>envname</code> parameter with your actual
 envname):</p>
-<pre class="reticulate_setup"><code>reticulate::use_virtualenv(virtualenv = [envname])</code></pre>
-<p>If you’ve used conda environments, call
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_virtualenv</span>(<span class="at">virtualenv =</span> [envname])</span></code></pre></div>
+<p>If you’ve used a Conda environment, call
 <code><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">reticulate::use_condaenv()</a></code> instead.</p>
 </div>
   </div>

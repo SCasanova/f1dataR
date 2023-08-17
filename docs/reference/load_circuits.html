@@ -18,7 +18,7 @@ for an uncached version of this function"><meta property="og:image" content="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -33,6 +33,9 @@ for an uncached version of this function"><meta property="og:image" content="htt
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/ergast-data-analysis.html">Ergast Data Analysis</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -63,7 +66,7 @@ for an uncached version of this function"><meta property="og:image" content="htt
     </div>
 
     <div class="ref-description">
-    <p>Loads circuit info for all circuits in a given season. Use <code><a href="dot-load_circuits.html">.load_circuits()</a></code>
+    <p>Loads circuit info for all circuits in a given season. Use <code>.load_circuits()</code>
 for an uncached version of this function</p>
     </div>
 
@@ -84,46 +87,6 @@ for an uncached version of this function</p>
 <p>A tibble with one row per circuit</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the circuits used this season:</span></span></span>
-<span class="r-in"><span><span class="fu">load_circuits</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    circuit_id  circuit_name                   lat      long     locality country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> albert_park Albert Park Grand Prix Circuit -37.8497 144.968  Melbour… Austra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> americas    Circuit of the Americas        30.1328  -97.6411 Austin   USA    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bahrain     Bahrain International Circuit  26.0325  50.5106  Sakhir   Bahrain</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> baku        Baku City Circuit              40.3725  49.8533  Baku     Azerba…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> catalunya   Circuit de Barcelona-Catalunya 41.57    2.26111  Montmeló Spain  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> hungaroring Hungaroring                    47.5789  19.2486  Budapest Hungary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> interlagos  Autódromo José Carlos Pace     -23.7036 -46.6997 São Pau… Brazil </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> jeddah      Jeddah Corniche Circuit        21.6319  39.1044  Jeddah   Saudi …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> losail      Losail International Circuit   25.49    51.4542  Al Daay… Qatar  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> marina_bay  Marina Bay Street Circuit      1.2914   103.864  Marina … Singap…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 12 more rows</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load the circuits used in 1972:</span></span></span>
-<span class="r-in"><span><span class="fu">load_circuits</span><span class="op">(</span><span class="fl">1972</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    circuit_id    circuit_name                  lat      long     local…¹ country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> brands_hatch  Brands Hatch                  51.3569  0.263056 Kent    UK     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> charade       Charade Circuit               45.7472  3.03889  Clermo… France </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> galvez        Autódromo Juan y Oscar Gálvez -34.6943 -58.4593 Buenos… Argent…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> jarama        Jarama                        40.6171  -3.58558 Madrid  Spain  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> kyalami       Kyalami                       -25.9894 28.0767  Midrand South …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> monaco        Circuit de Monaco             43.7347  7.42056  Monte-… Monaco </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> monza         Autodromo Nazionale di Monza  45.6156  9.28111  Monza   Italy  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mosport       Mosport International Raceway 44.0481  -78.6756 Ontario Canada </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> nivelles      Nivelles-Baulers              50.6211  4.32694  Brusse… Belgium</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> nurburgring   Nürburgring                   50.3356  6.9475   Nürburg Germany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> red_bull_ring Red Bull Ring                 47.2197  14.7647  Spielb… Austria</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> watkins_glen  Watkins Glen                  42.3369  -76.9272 New Yo… USA    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​locality</span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

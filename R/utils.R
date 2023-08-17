@@ -47,7 +47,7 @@ get_ergast_content <- function(url) {
   return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
 }
 
-#' Get Current Season core
+#' Get Current Season
 #'
 #' @description Looks up current season from ergast, fallback to manual determination
 #' @export

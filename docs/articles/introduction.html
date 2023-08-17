@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -57,6 +57,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/ergast-data-analysis.html">Ergast Data Analysis</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -107,27 +110,25 @@ to understand how the package works.</p>
 <p>The most sought-after aspect of F1 data is telemetry data. Let’s get
 Leclerc’s fastest lap from the first race of 2022:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR">f1dataR</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: reticulate</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span>, driver <span class="op">=</span> <span class="st">"LEC"</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 706 × 19</span></span></span>
-<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throt…¹ brake   drs</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>941. 0     <span style="text-decoration: underline;">11</span>301   280      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>941. 0.063 <span style="text-decoration: underline;">11</span>321   281      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>941. 0.185 <span style="text-decoration: underline;">11</span>361   282      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>942. 0.385 <span style="text-decoration: underline;">11</span>439   284      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>942. 0.463 <span style="text-decoration: underline;">11</span>462   284      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 2022-03-20 <span style="color: #949494;">10:30:01</span>        <span style="text-decoration: underline;">8</span>942. 0.665 <span style="text-decoration: underline;">11</span>485   285      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 2022-03-20 <span style="color: #949494;">10:30:02</span>        <span style="text-decoration: underline;">8</span>942. 0.863 <span style="text-decoration: underline;">11</span>529   286      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 2022-03-20 <span style="color: #949494;">10:30:02</span>        <span style="text-decoration: underline;">8</span>942. 0.946 <span style="text-decoration: underline;">11</span>574   287      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2022-03-20 <span style="color: #949494;">10:30:02</span>        <span style="text-decoration: underline;">8</span>942. 1.00  <span style="text-decoration: underline;">11</span>589   287      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 2022-03-20 <span style="color: #949494;">10:30:02</span>        <span style="text-decoration: underline;">8</span>942. 1.15  <span style="text-decoration: underline;">11</span>605   288      7     100 FALSE     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 696 more rows, 10 more variables: source &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   driver_code &lt;chr&gt;, and abbreviated variable name ¹​throttle</span></span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 706 × 19</span></span>
+<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source       </span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;        </span></span>
+<span><span class="co">#&gt;  1 2022-03-20 12:30:01        8941. 0     11301   280      7      100 FALSE     1 interpolation</span></span>
+<span><span class="co">#&gt;  2 2022-03-20 12:30:01        8941. 0.063 11321   281      7      100 FALSE     1 pos          </span></span>
+<span><span class="co">#&gt;  3 2022-03-20 12:30:01        8941. 0.185 11361   282      7      100 FALSE     1 car          </span></span>
+<span><span class="co">#&gt;  4 2022-03-20 12:30:01        8942. 0.385 11439   284      7      100 FALSE     1 car          </span></span>
+<span><span class="co">#&gt;  5 2022-03-20 12:30:01        8942. 0.463 11462   284      7      100 FALSE     1 pos          </span></span>
+<span><span class="co">#&gt;  6 2022-03-20 12:30:01        8942. 0.665 11485   285      7      100 FALSE     1 car          </span></span>
+<span><span class="co">#&gt;  7 2022-03-20 12:30:02        8942. 0.863 11529   286      7      100 FALSE     1 pos          </span></span>
+<span><span class="co">#&gt;  8 2022-03-20 12:30:02        8942. 0.946 11574   287      7      100 FALSE     1 car          </span></span>
+<span><span class="co">#&gt;  9 2022-03-20 12:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos          </span></span>
+<span><span class="co">#&gt; 10 2022-03-20 12:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car          </span></span>
+<span><span class="co">#&gt; # ℹ 696 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 9 more variables: relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, driver_code &lt;chr&gt;</span></span></code></pre></div>
 <p>Now let’s use ggplot2 to visualize some of the data we have</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -139,7 +140,11 @@ Leclerc’s fastest lap from the first race of 2022:</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">lec</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">distance</span>, <span class="va">throttle</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/simple_plot-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-simple_plot-1.png" alt="plot of chunk simple_plot" width="100%"><p class="caption">
+plot of chunk simple_plot
+</p>
+</div>
 <p>What if we get more drivers involved. Let’s also get the Qualifying
 data from Hamilton and Pérez</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -154,7 +159,11 @@ data from Hamilton and Pérez</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">distance</span>, <span class="va">throttle</span>, color <span class="op">=</span> <span class="va">driver_code</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/triple_plot-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-triple_plot-1.png" alt="plot of chunk triple_plot" width="100%"><p class="caption">
+plot of chunk triple_plot
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="integrated-plotting">Integrated plotting<a class="anchor" aria-label="anchor" href="#integrated-plotting"></a>
@@ -174,14 +183,22 @@ our previous data.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Speed Comparison for Bahrain 2022"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/use_theme-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-use_theme-1.png" alt="plot of chunk use_theme" width="100%"><p class="caption">
+plot of chunk use_theme
+</p>
+</div>
 <p>Another built-in function is <code><a href="../reference/plot_fastest.html">plot_fastest()</a></code> that can
 plot the speed or gear changes throughout the fastest lap for a
 driver/race.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span>, <span class="st">"R"</span>, <span class="st">"PER"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> If the session has not been loaded yet, this could take a minute</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/use_builtin-1.png" width="700"></p>
+<span><span class="co">#&gt; ℹ If the session has not been loaded yet, this could take a minute</span></span></code></pre></div>
+<div class="figure">
+<img src="introduction-use_builtin-1.png" alt="plot of chunk use_builtin" width="100%"><p class="caption">
+plot of chunk use_builtin
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="combining-several-functions">Combining several functions<a class="anchor" aria-label="anchor" href="#combining-several-functions"></a>
@@ -211,7 +228,11 @@ in the Spanish GP.</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">75</span>, <span class="fl">85</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">26</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/session_laps-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-session_laps-1.png" alt="plot of chunk session_laps" width="100%"><p class="caption">
+plot of chunk session_laps
+</p>
+</div>
 <p>Now let’s visualize the portion of the track where Verstappen had the
 throttle 100% open in the 2023 Canadian GP.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -232,7 +253,11 @@ throttle 100% open in the 2023 Canadian GP.</p>
 <span>    subtitle <span class="op">=</span> <span class="st">"Canada 2023 | Fastest Lap"</span>,</span>
 <span>    color <span class="op">=</span> <span class="st">"Throttle 100%"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/telem%20plotting-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-telem_plotting-1.png" alt="plot of chunk telem_plotting" width="100%"><p class="caption">
+plot of chunk telem_plotting
+</p>
+</div>
 <p>For a simpler visualization let’s look at the average time it took
 each team to pit in round 4 of 2023. For this we will have to load the
 pit data, the results data (to extract driver + team combos), and the
@@ -264,7 +289,11 @@ constructor data to get the colors for our plot.</p>
 <span>    x <span class="op">=</span> <span class="st">"Constructor"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Average Pit Time (seconds)"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="introduction_files/figure-html/pitstop-1.png" width="700"></p>
+<div class="figure">
+<img src="introduction-pitstop-1.png" alt="plot of chunk pitstop" width="100%"><p class="caption">
+plot of chunk pitstop
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="help">Help<a class="anchor" aria-label="anchor" href="#help"></a>

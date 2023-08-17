@@ -18,7 +18,7 @@ Use .load_schedule() for an uncached version."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -33,6 +33,9 @@ Use .load_schedule() for an uncached version."><meta property="og:image" content
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/ergast-data-analysis.html">Ergast Data Analysis</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -64,7 +67,7 @@ Use .load_schedule() for an uncached version."><meta property="og:image" content
 
     <div class="ref-description">
     <p>Loads schedule information for a given F1 season.
-Use <code><a href="dot-load_schedule.html">.load_schedule()</a></code> for an uncached version.</p>
+Use <code>.load_schedule()</code> for an uncached version.</p>
     </div>
 
     <div id="ref-usage">
@@ -81,55 +84,9 @@ Use <code><a href="dot-load_schedule.html">.load_schedule()</a></code> for an un
     <h2>Value</h2>
     
 
-<p>A tibble with one row per circuit in season</p>
+<p>A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load this year's schedule:</span></span></span>
-<span class="r-in"><span><span class="fu">load_schedule</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    season round race_n…¹ circu…² circu…³ lat   long  local…⁴ country date  time </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023   1     Bahrain… bahrain Bahrai… 26.0… 50.5… Sakhir  Bahrain 2023… 15:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023   2     Saudi A… jeddah  Jeddah… 21.6… 39.1… Jeddah  Saudi … 2023… 17:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023   3     Austral… albert… Albert… -37.… 144.… Melbou… Austra… 2023… 05:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023   4     Azerbai… baku    Baku C… 40.3… 49.8… Baku    Azerba… 2023… 11:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023   5     Miami G… miami   Miami … 25.9… -80.… Miami   USA     2023… 19:3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023   6     Monaco … monaco  Circui… 43.7… 7.42… Monte-… Monaco  2023… 13:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023   7     Spanish… catalu… Circui… 41.57 2.26… Montme… Spain   2023… 13:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023   8     Canadia… villen… Circui… 45.5  -73.… Montre… Canada  2023… 18:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023   9     Austria… red_bu… Red Bu… 47.2… 14.7… Spielb… Austria 2023… 13:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023   10    British… silver… Silver… 52.0… -1.0… Silver… UK      2023… 14:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 12 more rows, and abbreviated variable names ¹​race_name, ²​circuit_id,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ³​circuit_name, ⁴​locality</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load the schedule from 2007</span></span></span>
-<span class="r-in"><span><span class="fu">load_schedule</span><span class="op">(</span><span class="fl">2007</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    season round race_n…¹ circu…² circu…³ lat   long  local…⁴ country date  time </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2007   1     Austral… albert… Albert… -37.… 144.… Melbou… Austra… 2007… 03:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2007   2     Malaysi… sepang  Sepang… 2.76… 101.… Kuala … Malays… 2007… 07:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2007   3     Bahrain… bahrain Bahrai… 26.0… 50.5… Sakhir  Bahrain 2007… 11:3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2007   4     Spanish… catalu… Circui… 41.57 2.26… Montme… Spain   2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2007   5     Monaco … monaco  Circui… 43.7… 7.42… Monte-… Monaco  2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2007   6     Canadia… villen… Circui… 45.5  -73.… Montre… Canada  2007… 17:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2007   7     United … indian… Indian… 39.7… -86.… Indian… USA     2007… 17:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2007   8     French … magny_… Circui… 46.8… 3.16… Magny … France  2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2007   9     British… silver… Silver… 52.0… -1.0… Silver… UK      2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2007   10    Europea… nurbur… Nürbur… 50.3… 6.94… Nürburg Germany 2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2007   11    Hungari… hungar… Hungar… 47.5… 19.2… Budape… Hungary 2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2007   12    Turkish… istanb… Istanb… 40.9… 29.4… Istanb… Turkey  2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2007   13    Italian… monza   Autodr… 45.6… 9.28… Monza   Italy   2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2007   14    Belgian… spa     Circui… 50.4… 5.97… Spa     Belgium 2007… 12:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 2007   15    Japanes… fuji    Fuji S… 35.3… 138.… Oyama   Japan   2007… 04:3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 2007   16    Chinese… shangh… Shangh… 31.3… 121.… Shangh… China   2007… 06:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 2007   17    Brazili… interl… Autódr… -23.… -46.… São Pa… Brazil  2007… 16:0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable names ¹​race_name, ²​circuit_id, ³​circuit_name,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ⁴​locality</span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
