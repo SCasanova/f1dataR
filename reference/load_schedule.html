@@ -18,7 +18,7 @@ Use .load_schedule() for an uncached version."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ Use .load_schedule() for an uncached version."><meta property="og:image" content
 
     <div class="ref-description">
     <p>Loads schedule information for a given F1 season.
-Use <code><a href="dot-load_schedule.html">.load_schedule()</a></code> for an uncached version.</p>
+Use <code>.load_schedule()</code> for an uncached version.</p>
     </div>
 
     <div id="ref-usage">
@@ -87,52 +87,6 @@ Use <code><a href="dot-load_schedule.html">.load_schedule()</a></code> for an un
 <p>A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load this year's schedule. Note the weekends which have sprints</span></span></span>
-<span class="r-in"><span><span class="fu">load_schedule</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    season round race_name   circuit_id circuit_name lat   long  locality country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2023   1     Bahrain Gr… bahrain    Bahrain Int… 26.0… 50.5… Sakhir   Bahrain</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2023   2     Saudi Arab… jeddah     Jeddah Corn… 21.6… 39.1… Jeddah   Saudi …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2023   3     Australian… albert_pa… Albert Park… -37.… 144.… Melbour… Austra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2023   4     Azerbaijan… baku       Baku City C… 40.3… 49.8… Baku     Azerba…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2023   5     Miami Gran… miami      Miami Inter… 25.9… -80.… Miami    USA    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2023   6     Monaco Gra… monaco     Circuit de … 43.7… 7.42… Monte-C… Monaco </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2023   7     Spanish Gr… catalunya  Circuit de … 41.57 2.26… Montmeló Spain  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2023   8     Canadian G… villeneuve Circuit Gil… 45.5  -73.… Montreal Canada </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2023   9     Austrian G… red_bull_… Red Bull Ri… 47.2… 14.7… Spielbe… Austria</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2023   10    British Gr… silversto… Silverstone… 52.0… -1.0… Silvers… UK     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: date &lt;chr&gt;, time &lt;chr&gt;, sprint_date &lt;chr&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load the schedule from 2008</span></span></span>
-<span class="r-in"><span><span class="fu">load_schedule</span><span class="op">(</span><span class="fl">2008</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    season round race_name   circuit_id circuit_name lat   long  locality country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2008   1     Australian… albert_pa… Albert Park… -37.… 144.… Melbour… Austra…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2008   2     Malaysian … sepang     Sepang Inte… 2.76… 101.… Kuala L… Malays…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2008   3     Bahrain Gr… bahrain    Bahrain Int… 26.0… 50.5… Sakhir   Bahrain</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2008   4     Spanish Gr… catalunya  Circuit de … 41.57 2.26… Montmeló Spain  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2008   5     Turkish Gr… istanbul   Istanbul Pa… 40.9… 29.4… Istanbul Turkey </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2008   6     Monaco Gra… monaco     Circuit de … 43.7… 7.42… Monte-C… Monaco </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2008   7     Canadian G… villeneuve Circuit Gil… 45.5  -73.… Montreal Canada </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2008   8     French Gra… magny_cou… Circuit de … 46.8… 3.16… Magny C… France </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2008   9     British Gr… silversto… Silverstone… 52.0… -1.0… Silvers… UK     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2008   10    German Gra… hockenhei… Hockenheimr… 49.3… 8.56… Hockenh… Germany</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2008   11    Hungarian … hungarori… Hungaroring  47.5… 19.2… Budapest Hungary</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2008   12    European G… valencia   Valencia St… 39.4… -0.3… Valencia Spain  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2008   13    Belgian Gr… spa        Circuit de … 50.4… 5.97… Spa      Belgium</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2008   14    Italian Gr… monza      Autodromo N… 45.6… 9.28… Monza    Italy  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 2008   15    Singapore … marina_bay Marina Bay … 1.29… 103.… Marina … Singap…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 2008   16    Japanese G… fuji       Fuji Speedw… 35.3… 138.… Oyama    Japan  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 2008   17    Chinese Gr… shanghai   Shanghai In… 31.3… 121.… Shanghai China  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> 2008   18    Brazilian … interlagos Autódromo J… -23.… -46.… São Pau… Brazil </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: date &lt;chr&gt;, time &lt;chr&gt;, sprint_date &lt;chr&gt;</span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

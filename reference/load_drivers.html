@@ -18,7 +18,7 @@ Use .load_drivers() for an uncached version of this function."><meta property="o
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ Use .load_drivers() for an uncached version of this function."><meta property="o
 
     <div class="ref-description">
     <p>Loads driver info for all participants in a given season.
-Use <code><a href="dot-load_drivers.html">.load_drivers()</a></code> for an uncached version of this function.</p>
+Use <code>.load_drivers()</code> for an uncached version of this function.</p>
     </div>
 
     <div id="ref-usage">
@@ -89,44 +89,6 @@ last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
 permanent number (for post-2014 drivers).</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load the drivers appearing in this season's data:</span></span></span>
-<span class="r-in"><span><span class="fu">load_drivers</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id       given_name family_name nationality date_of_birth code </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> albon           Alexander  Albon       Thai        1996-03-23    ALB  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> alonso          Fernando   Alonso      Spanish     1981-07-29    ALO  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bottas          Valtteri   Bottas      Finnish     1989-08-28    BOT  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> de_vries        Nyck       de Vries    Dutch       1995-02-06    DEV  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> gasly           Pierre     Gasly       French      1996-02-07    GAS  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> hamilton        Lewis      Hamilton    British     1985-01-07    HAM  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> hulkenberg      Nico       Hülkenberg  German      1987-08-19    HUL  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> leclerc         Charles    Leclerc     Monegasque  1997-10-16    LEC  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> kevin_magnussen Kevin      Magnussen   Danish      1992-10-05    MAG  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> norris          Lando      Norris      British     1999-11-13    NOR  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: permanent_number &lt;chr&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load the drivers who participated in the first year of Formula 1:</span></span></span>
-<span class="r-in"><span><span class="fu">load_drivers</span><span class="op">(</span><span class="fl">1950</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 40 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id    given_name family_name  nationality date_of_birth</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> ader         Walt       Ader         American    1913-12-15   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> agabashian   Fred       Agabashian   American    1913-08-21   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ascari       Alberto    Ascari       Italian     1918-07-13   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> banks        Henry      Banks        American    1913-06-14   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> bettenhausen Tony       Bettenhausen American    1916-09-12   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> biondetti    Clemente   Biondetti    Italian     1898-08-18   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> bira         Prince     Bira         Thai        1914-07-15   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> bonetto      Felice     Bonetto      Italian     1903-06-09   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> branca       Toni       Branca       Swiss       1916-09-15   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> walt_brown   Walt       Brown        American    1911-12-30   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 30 more rows</span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

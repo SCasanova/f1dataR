@@ -18,7 +18,7 @@ sprint results. Use .load_sprint() for an uncached version of this function."><m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ sprint results. Use .load_sprint() for an uncached version of this function."><m
 
     <div class="ref-description">
     <p>Loads final race results for a given year and round. Note not all rounds have
-sprint results. Use <code><a href="dot-load_sprint.html">.load_sprint()</a></code> for an uncached version of this function.</p>
+sprint results. Use <code>.load_sprint()</code> for an uncached version of this function.</p>
     </div>
 
     <div id="ref-usage">
@@ -95,42 +95,6 @@ first place, fastest lap, fastest lap time, fastest lap in seconds,
 or NULL if no sprint exists for this season/round combo</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load a sprint result</span></span></span>
-<span class="r-in"><span><span class="fu">load_sprint</span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id       constructor_id points position grid  laps  status gap   lap  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> max_verstappen  red_bull       3      1        2     17    Finis… 25:3… 14   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> hamilton        mercedes       2      2        1     17    Finis… +1.4… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> bottas          mercedes       1      3        3     17    Finis… +7.5… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> leclerc         ferrari        0      4        4     17    Finis… +11.… 16   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> norris          mclaren        0      5        6     17    Finis… +24.… 16   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> ricciardo       mclaren        0      6        7     17    Finis… +30.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> alonso          alpine         0      7        11    17    Finis… +43.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> vettel          aston_martin   0      8        10    17    Finis… +44.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> russell         williams       0      9        8     17    Finis… +46.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> ocon            alpine         0      10       13    17    Finis… +47.… 16   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> sainz           ferrari        0      11       9     17    Finis… +47.… 10   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> gasly           alphatauri     0      12       12    17    Finis… +48.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> raikkonen       alfa           0      13       17    17    Finis… +50.… 12   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> stroll          aston_martin   0      14       15    17    Finis… +52.… 12   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> giovinazzi      alfa           0      15       14    17    Finis… +53.… 14   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> tsunoda         alphatauri     0      16       16    17    Finis… +53.… 14   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> latifi          williams       0      17       18    17    Finis… +55.… 17   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> mick_schumacher haas           0      18       19    17    Finis… +1:0… 15   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> mazepin         haas           0      19       20    17    Finis… +1:1… 3    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> perez           red_bull       0      20       5     16    Vibra… <span style="color: #BB0000;">NA</span>    6    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: fastest &lt;chr&gt;, time_sec &lt;dbl&gt;</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># If a weekend doesn't have sprint race/quali results, it will return NULL</span></span></span>
-<span class="r-in"><span><span class="fu">load_sprint</span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No Sprint data for season = 2022, round = 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

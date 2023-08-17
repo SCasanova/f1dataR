@@ -18,7 +18,7 @@ constructors' championships. Use .load_standings() for an uncached version of th
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@ constructors' championships. Use .load_standings() for an uncached version of th
 
     <div class="ref-description">
     <p>Loads standings at the end of a given season and round for drivers' or
-constructors' championships. Use <code><a href="dot-load_standings.html">.load_standings()</a></code> for an uncached version of this function.</p>
+constructors' championships. Use <code>.load_standings()</code> for an uncached version of this function.</p>
     </div>
 
     <div id="ref-usage">
@@ -95,19 +95,9 @@ to most recent. Also accepts <code>'last'</code>.</p></dd>
     
 
 <p>A tibble with columns driver_id (or constructor_id), position,
-points, wins (and constructorsId in the case of drivers championship).</p>
+points, wins (and constructors_id in the case of drivers championship).</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Get the driver standings at the end of 2021</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">load_standings</span><span class="op">(</span><span class="fl">2021</span>, <span class="st">"last"</span>, <span class="st">"driver"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

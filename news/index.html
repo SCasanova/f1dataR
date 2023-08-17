@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
       </span>
     </div>
 
@@ -63,6 +63,15 @@
       <small>Source: <a href="https://github.com/scasanova/f1dataR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="development version" id="f1datar-development-version">f1dataR (development version)<a class="anchor" aria-label="anchor" href="#f1datar-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.3.0" id="f1datar-130">f1dataR 1.3.0<small>2023-08-17</small><a class="anchor" aria-label="anchor" href="#f1datar-130"></a></h2>
+<ul><li>Updated documentation per requirements after CRAN review</li>
+<li>Changed caching behavior per requirements after CRAN review. If you previously had set a cache directory <code>options("f1dataR.cache" = [dir])</code> there will be no change. If you had previously not specified a cache directory, the package used to use the result of <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code>, so you can force that directory. New users can specify a default file cache location by setting <code>options("f1dataR.cache" = "filesystem")</code> or specify any other (existing) directory by setting the option.</li>
+</ul><p>Cache will otherwise use memory as a default until the end of the R session or for 24h (whichever comes first). Caching can be turned off by setting the option to “off”</p>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2.1" id="f1datar-121">f1dataR 1.2.1<a class="anchor" aria-label="anchor" href="#f1datar-121"></a></h2>
 <ul><li>Added additional output column to <code><a href="../reference/load_schedule.html">load_schedule()</a></code> to show Sprint Race date.</li>
