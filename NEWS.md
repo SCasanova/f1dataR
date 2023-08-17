@@ -1,3 +1,5 @@
+# f1dataR (development version)
+
 # f1dataR 1.3.0
 
 * Updated documentation per requirements after CRAN review
