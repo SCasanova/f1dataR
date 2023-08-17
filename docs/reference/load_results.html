@@ -18,7 +18,7 @@ for an uncached version"><meta property="og:image" content="https://scasanova.gi
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
       </span>
     </div>
 
@@ -33,6 +33,9 @@ for an uncached version"><meta property="og:image" content="https://scasanova.gi
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/ergast-data-analysis.html">Ergast Data Analysis</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
@@ -63,7 +66,7 @@ for an uncached version"><meta property="og:image" content="https://scasanova.gi
     </div>
 
     <div class="ref-description">
-    <p>Loads final race results for a given year and round. Use <code><a href="dot-load_results.html">.load_results()</a></code>
+    <p>Loads final race results for a given year and round. Use <code>.load_results()</code>
 for an uncached version</p>
     </div>
 
@@ -89,72 +92,6 @@ to most recent. Also accepts <code>'last'</code>.</p></dd>
 <p>A tibble with one row per driver</p>
     </div>
 
-    <div id="ref-examples">
-    <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load results from the third race of 2023</span></span></span>
-<span class="r-in"><span><span class="fu">load_results</span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 20 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id     const…¹ points posit…² grid  laps  status gap   faste…³ fastest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> max_verstapp… red_bu… 25     1       1     58    Finis… 2:32… 2       1:20.3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> hamilton      merced… 18     2       3     58    Finis… +0.1… 5       1:20.6…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> alonso        aston_… 15     3       4     58    Finis… +0.7… 4       1:20.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> stroll        aston_… 12     4       6     58    Finis… +3.0… 6       1:20.9…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> perez         red_bu… 11     5       0     58    Finis… +3.3… 1       1:20.2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> norris        mclaren 8      6       13    58    Finis… +3.7… 9       1:21.1…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> hulkenberg    haas    6      7       10    58    Finis… +4.9… 8       1:21.1…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> piastri       mclaren 4      8       16    58    Finis… +5.3… 12      1:21.3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> zhou          alfa    2      9       17    58    Finis… +5.7… 16      1:21.8…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> tsunoda       alphat… 1      10      12    58    Finis… +6.0… 15      1:21.7…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> bottas        alfa    0      11      0     58    Finis… +6.5… 17      1:22.2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> sainz         ferrari 0      12      5     58    Finis… +6.5… 3       1:20.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> gasly         alpine  0      13      9     56    Colli… <span style="color: #BB0000;">NA</span>    7       1:20.9…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> ocon          alpine  0      14      11    56    Colli… <span style="color: #BB0000;">NA</span>    11      1:21.2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> de_vries      alphat… 0      15      15    56    Colli… <span style="color: #BB0000;">NA</span>    10      1:21.1…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> sargeant      willia… 0      16      18    56    Colli… <span style="color: #BB0000;">NA</span>    13      1:21.4…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> kevin_magnus… haas    0      17      14    52    Accid… <span style="color: #BB0000;">NA</span>    14      1:21.6…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> russell       merced… 0      18      2     17    Engine <span style="color: #BB0000;">NA</span>    18      1:22.6…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> albon         willia… 0      19      8     6     Accid… <span style="color: #BB0000;">NA</span>    19      1:23.3…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">20</span> leclerc       ferrari 0      20      7     0     Colli… <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 2 more variables: top_speed_kph &lt;chr&gt;, time_sec &lt;dbl&gt;, and abbreviated</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   variable names ¹​constructor_id, ²​position, ³​fastest_rank</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load results from the first race of 1995</span></span></span>
-<span class="r-in"><span><span class="fu">load_results</span><span class="op">(</span><span class="fl">1995</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 26 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id          constructor_id position points grid  laps  status   gap   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> michael_schumacher benetton       1        10     2     71    Finished 1:38:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> coulthard          williams       2        6      3     71    Finished +11.0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> berger             ferrari        3        4      5     70    +1 Lap   <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> hakkinen           mclaren        4        3      7     70    +1 Lap   <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> alesi              ferrari        5        2      6     70    +1 Lap   <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> blundell           mclaren        6        1      9     70    +1 Lap   <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> salo               tyrrell        7        0      12    69    +2 Laps  <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> suzuki             ligier         8        0      15    69    +2 Laps  <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> montermini         pacific        9        0      22    65    +6 Laps  <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> diniz              forti          10       0      25    64    +7 Laps  <span style="color: #BB0000;">NA</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 16 more rows</span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Load results from the last race of 1963</span></span></span>
-<span class="r-in"><span><span class="fu">load_results</span><span class="op">(</span><span class="fl">1963</span>, <span class="st">"last"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 23 × 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    driver_id     constructor_id position points grid  laps  status   gap      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> clark         lotus-climax   1        9      1     85    Finished 2:10:36.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> gurney        brabham        2        6      3     85    Finished +1:06.8  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> hill          brm            3        4      6     84    +1 Lap   <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mclaren       cooper-climax  4        3      9     84    +1 Lap   <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> bandini       ferrari        5        2      5     84    +1 Lap   <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> bonnier       cooper-climax  6        1      11    83    +2 Laps  <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> maggs         cooper-climax  7        0      10    82    +3 Laps  <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> trevor_taylor lotus-climax   8        0      8     81    +4 Laps  <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> love          cooper-climax  9        0      13    80    +5 Laps  <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> beaufort      porsche        10       0      20    79    +6 Laps  <span style="color: #BB0000;">NA</span>       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 13 more rows</span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
