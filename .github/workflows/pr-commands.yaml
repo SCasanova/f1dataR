@@ -34,40 +34,13 @@ jobs:
           extra-packages: any::roxygen2
           needs: pr-document
 
-      - name: setup r-reticulate venv
-        shell: Rscript {0}
-        run: |
-          python_packages <- c("numpy", "fastf1")
-
-          library(reticulate)
-          virtualenv_create("r-reticulate", Sys.which("python"))
-          virtualenv_install("r-reticulate", python_packages)
-
-          path_to_python <- virtualenv_python("r-reticulate")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
-
-      - name: Document
-        run: roxygen2::roxygenise()
-        shell: Rscript {0}
-
-      - name: Changes Check
-        id: verify_diff
-        run: |
-          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: commit
-        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
-        run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add man/\* NAMESPACE
-          git commit -m 'GH Actions Document'
-
-      - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
+      - name: Create Pull Request
+        id: cpr_doc
+        uses: peter-evans/create-pull-request@v5
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Document Package
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
 
   style:
     name: style
@@ -91,20 +64,11 @@ jobs:
         run: styler::style_pkg()
         shell: Rscript {0}
 
-      - name: Changes Check
-        id: verify_diff
-        run: |
-          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-
-      - name: commit
-        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
-        run: |
-          git config --local user.name "$GITHUB_ACTOR"
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git add \*.R \vignettes\*.Rmd README.Rmd
-          git commit -m 'GH Actions Style'
-
-      - uses: r-lib/actions/pr-push@v2
-        if: steps.verify_diff.outputs.changed == 'true' && github.event_name == 'push'
+       - name: Create Pull Request
+        id: cpr_style
+        uses: peter-evans/create-pull-request@v5
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Style Package
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+
