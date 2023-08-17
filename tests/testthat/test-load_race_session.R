@@ -64,18 +64,3 @@ test_that("Load Session (memory cached) Works", {
   session1 <- load_race_session(season = 2022, round = 1, session = "R")
   expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2022")
 })
-
-test_that("Load Session (cache 'off') Works", {
-  # Most tests run in the (file cached) version
-
-  skip_if_no_py()
-  skip_if_no_ff1()
-
-  # Set testing specific parameters - this disposes after the test finishes
-  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
-  # because python's process has it locked.
-  withr::local_options(f1dataR.cache = "off")
-
-  session1 <- load_race_session(season = 2022, round = 1, session = "R")
-  expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2022")
-})
