@@ -120,7 +120,7 @@
   }
 
   if (memoise_option != "off") {
-    if (interactive()){
+    if (interactive()) {
       packageStartupMessage(
         "Note: f1dataR will cache for up to 24 hours, \n",
         "or until the end of the R session."

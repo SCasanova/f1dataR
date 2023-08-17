@@ -46,8 +46,10 @@ test_that("Load Session (file cached) Works", {
 
   expect_warning(load_race_session(season = 2022, race = "Bahrain", session = "R"))
 
-  expect_message(load_race_session(season = 2022, round = 1, session = "R", log_level = "INFO"),
-                 "The first time a session is loaded, some time is required. Please*")
+  expect_message(
+    load_race_session(season = 2022, round = 1, session = "R", log_level = "INFO"),
+    "The first time a session is loaded, some time is required. Please*"
+  )
 })
 
 test_that("Load Session (memory cached) Works", {
