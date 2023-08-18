@@ -149,5 +149,5 @@ jobs:
           needs: website
 
       - name: Test pkgdown
-        run: pkgdown::check_missing_topics()
+        run: pkgdown:::check_missing_topics()
         shell: Rscript {0}
