@@ -1,11 +1,15 @@
 #' Get Ergast Content
 #'
 #' @description Gets ergast content and returns the processed json object if
-#' no Ergast errors are found.
+#' no Ergast errors are found. This will automatically fall back from https://
+#' to http:// if ergast suffers errors, and will automatically retry up to 5
+#' times by each protocol
 #'
-#' @param url the complete Ergast URL to get
+#' @param url the Ergast URL tail to get from the API (for example,
+#' `"current.json?limit=30"` is called from `get_current_season()`).
 #' @keywords internal
-#' @return the result of `jsonlite::fromJSON` called on ergast's return content
+#' @return the result of `jsonlite::fromJSON` called on ergast's return content.
+#' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
@@ -13,7 +17,7 @@ get_ergast_content <- function(url) {
   # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
-  ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
+  ergast_raw<-httr2::request("https://ergast.com/api/f1") %>%
     httr2::req_url_path_append(url) %>%
     httr2::req_retry(max_tries = 5) %>%
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
