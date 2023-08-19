@@ -21,6 +21,7 @@ reference:
     - setup_fastf1
     - get_current_season
     - get_fastf1_version
+    - constructor_data
 
 authors:
   Santiago Casanova:
