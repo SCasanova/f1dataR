@@ -136,6 +136,9 @@ get_driver_telemetry <-
       "load_driver_telemetry()"
     )
 
+    # default fastest only to TRUE
+    fastest_only <- ifelse(lifecycle::is_present(fastest_only), fastest_only, TRUE)
+
     load_driver_telemetry(
       season = season,
       round = round,

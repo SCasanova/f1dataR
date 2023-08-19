@@ -35,15 +35,15 @@ Imports:
     lifecycle,
     cli,
     rappdirs,
-    cachem
+    cachem,
+    withr
 Suggests: 
     ggplot2,
     httptest,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    usethis,
-    withr
+    usethis
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR/, https://github.com/scasanova/f1dataR/
 BugReports: https://github.com/scasanova/f1dataR/issues

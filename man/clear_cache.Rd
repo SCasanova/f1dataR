@@ -2,9 +2,12 @@
 % Please edit documentation in R/clear_f1_cache.R
 \name{clear_f1_cache}
 \alias{clear_f1_cache}
-\title{Clear f1fastR Cache}
+\alias{clear_cache}
+\title{Clear f1dataR Cache}
 \usage{
 clear_f1_cache()
+
+clear_cache()
 }
 \value{
 No return value, called to erase cached data
@@ -13,6 +16,8 @@ No return value, called to erase cached data
 Clears the cache for f1dataR telemetry and Ergast API results.
 Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 but the default is a temporary directory.
+
+You can also call the alias \code{clear_cache()} for the same result
 }
 \examples{
 \dontrun{
