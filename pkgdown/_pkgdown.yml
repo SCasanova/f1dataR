@@ -18,6 +18,7 @@ reference:
     - theme_dark_f1
     - time_to_sec
     - clear_f1_cache
+    - change_cache
     - setup_fastf1
     - get_current_season
     - get_fastf1_version
