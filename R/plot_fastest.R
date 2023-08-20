@@ -119,9 +119,9 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 #' correct_track_ratio(fast_plot)
 #' }
-correct_track_ratio <- function(trackplot, x = 'x', y = 'y') {
-  plotdata<-trackplot$data
-  lim_min <- min(min(plotdata[,'x'], na.rm = TRUE), min(plotdata$y, na.rm = TRUE))
+correct_track_ratio <- function(trackplot, x = "x", y = "y") {
+  plotdata <- trackplot$data
+  lim_min <- min(min(plotdata[, "x"], na.rm = TRUE), min(plotdata$y, na.rm = TRUE))
   lim_max <- max(max(plotdata$x, na.rm = TRUE), max(plotdata$y, na.rm = TRUE))
 
   trackplot <- trackplot +
@@ -129,6 +129,6 @@ correct_track_ratio <- function(trackplot, x = 'x', y = 'y') {
     ggplot2::scale_y_continuous(limits = c(lim_min, lim_max)) +
     ggplot2::coord_fixed()
 
-  grid:::grid.rect(gp=grid::gpar(fill="grey10", col="grey10"))
-  ggplot2:::plot.ggplot(trackplot, newpage=FALSE)
+  grid:::grid.rect(gp = grid::gpar(fill = "grey10", col = "grey10"))
+  ggplot2:::plot.ggplot(trackplot, newpage = FALSE)
 }

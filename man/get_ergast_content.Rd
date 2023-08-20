@@ -7,13 +7,17 @@
 get_ergast_content(url)
 }
 \arguments{
-\item{url}{the complete Ergast URL to get}
+\item{url}{the Ergast URL tail to get from the API (for example,
+\code{"current.json?limit=30"} is called from \code{get_current_season()}).}
 }
 \value{
-the result of \code{jsonlite::fromJSON} called on ergast's return content
+the result of \code{jsonlite::fromJSON} called on ergast's return content.
+Further processing is performed by specific functions
 }
 \description{
 Gets ergast content and returns the processed json object if
-no Ergast errors are found.
+no Ergast errors are found. This will automatically fall back from https://
+to http:// if ergast suffers errors, and will automatically retry up to 5
+times by each protocol
 }
 \keyword{internal}
