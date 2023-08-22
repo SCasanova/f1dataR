@@ -3,6 +3,7 @@
 export(change_cache)
 export(clear_cache)
 export(clear_f1_cache)
+export(correct_track_ratio)
 export(get_current_season)
 export(get_driver_telemetry)
 export(get_fastf1_version)

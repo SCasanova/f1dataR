@@ -52,7 +52,7 @@ test_that("load_ciruits (bad path cache) works", {
 
 test_that("load_ciruits (filesystem cache) works", {
   # Set testing specific parameters - this disposes after the test finishes
-  change_cache(cache = 'filesystem')
+  change_cache(cache = "filesystem")
 
   ciruits_2021 <- load_circuits(2021)
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{get_current_season}
 \alias{get_current_season}
-\title{Get Current Season core}
+\title{Get Current Season}
 \usage{
 get_current_season()
 }

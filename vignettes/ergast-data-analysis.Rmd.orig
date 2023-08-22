@@ -13,9 +13,13 @@ knitr::opts_chunk$set(
   comment = "#>",
   out.width = "100%",
   fig.width = 7,
-  fig.height = 4,
-  fig.path = "ergast-data-analysis-"
+  fig.height = 5,
+  fig.path = "ergast-data-analysis-",
+  dpi = 300,
+  dev = "png"
 )
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+withr::local_timezone("UTC")
 ```
 
 # Introduction
@@ -42,7 +46,7 @@ If you have example projects you want to share, please feel free to submit them 
 
 We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field.
 
-```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
+```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
@@ -62,7 +66,7 @@ ggplot(results, aes(x = position, y = grid)) +
 
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
-```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
+```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 # Load the data
 results <- data.frame()
 for(i in seq_len(17)) {
@@ -97,7 +101,7 @@ Sys.sleep(1)
 
 Ergast contains the points for drivers' or constructors' championship races as of the end of every round in a season. We can pull a season's worth of data and compare the driver pace throughout the season, looking at both position or total points accumulation. We'll do that for 2021, which had good competition throughout the year for P1.
 
-```{r round_position, eval=require('ggplot2', quietly = TRUE)}
+```{r round_position, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 # Load the data
 points <- data.frame()
 for (rnd in seq_len(22)) {
@@ -126,7 +130,7 @@ ggplot(points, aes(x = round, y = position, color = driver_id)) +
 
 What may be more interesting is the total accumulation of points. For that we can change up the plot just a little bit.
 
-```{r rounds_points, eval=require('ggplot2', quietly = TRUE)}
+```{r rounds_points, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 # Plot the Results
 ggplot(points, aes(x = round, y = points, color = driver_id)) +
   geom_line() +
@@ -145,7 +149,7 @@ Sys.sleep(1)
 
 We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
-```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE)}
+```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 # Load the laps data and select one driver (this time - Russell)
 rus <- load_laps(season = 2022, round = 2) %>%
   filter(driver_id == "russell")
@@ -170,7 +174,7 @@ We can see the most of Russell's laps were less than 110 seconds, with a safety 
 
 With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in lap time easier to see (i.e. show only racing laps).
 
-```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE)}
+```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 # Load the laps data (cached!) and filter
 laps <- load_laps(season = 2022, round = 2) %>%
   filter(time_sec < 105) %>%

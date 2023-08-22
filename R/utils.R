@@ -17,7 +17,7 @@ get_ergast_content <- function(url) {
   # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
-  ergast_raw<-httr2::request("https://ergast.com/api/f1") %>%
+  ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
     httr2::req_url_path_append(url) %>%
     httr2::req_retry(max_tries = 5) %>%
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%

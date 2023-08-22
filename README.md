@@ -106,16 +106,16 @@ load_driver_telemetry(season = 2022, round = 4, driver = "PER")
 #> # A tibble: 592 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl>
-#>  1 2022-04-24 09:19:27        8308. 0     11221   282      7      100 FALSE
-#>  2 2022-04-24 09:19:27        8308. 0.021 11221   283      7      100 FALSE
-#>  3 2022-04-24 09:19:28        8308. 0.278 11221   284      7      100 FALSE
-#>  4 2022-04-24 09:19:28        8308. 0.401 11279   285      7      100 FALSE
-#>  5 2022-04-24 09:19:28        8309. 0.678 11337   286      7      100 FALSE
-#>  6 2022-04-24 09:19:28        8309. 0.681 11376   287      7      100 FALSE
-#>  7 2022-04-24 09:19:28        8309. 0.86  11416   288      7      100 FALSE
-#>  8 2022-04-24 09:19:29        8309. 1.08  11456   289      7      100 FALSE
-#>  9 2022-04-24 09:19:29        8309. 1.18  11461   289      7      100 FALSE
-#> 10 2022-04-24 09:19:29        8309. 1.24  11467   290      7      100 FALSE
+#>  1 2022-04-24 14:19:27        8308. 0     11221   282      7      100 FALSE
+#>  2 2022-04-24 14:19:27        8308. 0.021 11221   283      7      100 FALSE
+#>  3 2022-04-24 14:19:28        8308. 0.278 11221   284      7      100 FALSE
+#>  4 2022-04-24 14:19:28        8308. 0.401 11279   285      7      100 FALSE
+#>  5 2022-04-24 14:19:28        8309. 0.678 11337   286      7      100 FALSE
+#>  6 2022-04-24 14:19:28        8309. 0.681 11376   287      7      100 FALSE
+#>  7 2022-04-24 14:19:28        8309. 0.86  11416   288      7      100 FALSE
+#>  8 2022-04-24 14:19:29        8309. 1.08  11456   289      7      100 FALSE
+#>  9 2022-04-24 14:19:29        8309. 1.18  11461   289      7      100 FALSE
+#> 10 2022-04-24 14:19:29        8309. 1.24  11467   290      7      100 FALSE
 #> # ℹ 582 more rows
 #> # ℹ 11 more variables: drs <dbl>, source <chr>, relative_distance <dbl>,
 #> #   status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
@@ -125,16 +125,16 @@ load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
 #> # A tibble: 534 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl>
-#>  1 2018-06-09 13:59:18        3788. 0     10674   297      8      100 FALSE
-#>  2 2018-06-09 13:59:18        3788. 0.016 10704   298      8      100 FALSE
-#>  3 2018-06-09 13:59:18        3788. 0.043 10762   299      8      100 FALSE
-#>  4 2018-06-09 13:59:19        3788. 0.256 10820   301      8      100 FALSE
-#>  5 2018-06-09 13:59:19        3788. 0.343 10847   302      8      100 FALSE
-#>  6 2018-06-09 13:59:19        3788. 0.496 10875   303      8      100 FALSE
-#>  7 2018-06-09 13:59:19        3789. 0.643 10921   303      8      100 FALSE
-#>  8 2018-06-09 13:59:19        3789. 0.736 10967   304      8      100 FALSE
-#>  9 2018-06-09 13:59:19        3789. 0.943 10990   305      8      100 FALSE
-#> 10 2018-06-09 13:59:19        3789. 0.976 11014   306      8      100 FALSE
+#>  1 2018-06-09 18:59:18        3788. 0     10674   297      8      100 FALSE
+#>  2 2018-06-09 18:59:18        3788. 0.016 10704   298      8      100 FALSE
+#>  3 2018-06-09 18:59:18        3788. 0.043 10762   299      8      100 FALSE
+#>  4 2018-06-09 18:59:19        3788. 0.256 10820   301      8      100 FALSE
+#>  5 2018-06-09 18:59:19        3788. 0.343 10847   302      8      100 FALSE
+#>  6 2018-06-09 18:59:19        3788. 0.496 10875   303      8      100 FALSE
+#>  7 2018-06-09 18:59:19        3789. 0.643 10921   303      8      100 FALSE
+#>  8 2018-06-09 18:59:19        3789. 0.736 10967   304      8      100 FALSE
+#>  9 2018-06-09 18:59:19        3789. 0.943 10990   305      8      100 FALSE
+#> 10 2018-06-09 18:59:19        3789. 0.976 11014   306      8      100 FALSE
 #> # ℹ 524 more rows
 #> # ℹ 11 more variables: drs <dbl>, source <chr>, relative_distance <dbl>,
 #> #   status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
@@ -182,6 +182,12 @@ plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "g
 ```
 
 <img src="man/figures/README-plot-1.png" width="100%" />
+
+Two helper functions exist as well. The first, `theme_dark_f1()` assists
+with colour schemes similar to that used in other F1 graphics. The
+second, `correct_track_ratio()` is a function that fixes track ratio
+issues that appear when you create images similar to that above from
+`plot_fastest()`. Please refer to their documentation for usage.
 
 ### Cache information
 

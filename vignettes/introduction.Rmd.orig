@@ -13,9 +13,13 @@ knitr::opts_chunk$set(
   comment = "#>",
   out.width = "100%",
   fig.width = 7,
-  fig.height = 4,
-  fig.path = "introduction-"
+  fig.height = 5,
+  fig.path = "introduction-",
+  dpi = 300,
+  dev = "png"
 )
+
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)
 
 # Use a local temporary cache and set back to user's info when finished vignette build
 withr::local_file(file.path(tempdir(), "vignettes", "vig_build_tmp"))
@@ -24,7 +28,7 @@ if (dir.exists(file.path(tempdir(), "vignettes", "vig_build_tmp"))) {
 }
 dir.create(file.path(tempdir(), "vignettes", "vig_build_tmp"), recursive = TRUE)
 withr::local_options(f1dataR.cache = file.path(tempdir(), "vignettes", "vig_build_tmp"))
-
+withr::local_timezone("UTC")
 f1dataR::setup_fastf1()
 ```
 
@@ -43,7 +47,7 @@ load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
 
 Now let's use ggplot2 to visualize some of the data we have
 
-```{r simple_plot, warning=FALSE, message=FALSE, eval=require('ggplot2', quietly = TRUE)}
+```{r simple_plot, warning=FALSE, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 library(dplyr)
 library(ggplot2)
 
@@ -57,7 +61,7 @@ ggplot(lec, aes(distance, throttle)) +
 
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
-```{r triple_plot, eval=require('ggplot2', quietly = TRUE)}
+```{r triple_plot, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
@@ -75,10 +79,10 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
 
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
-```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE))}
+```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE)), optipng = ''}
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
-  theme_dark_f1() +
+  theme_dark_f1(axis_marks = TRUE) +
   theme(
     axis.title = element_text(),
     axis.line = element_line(color = "white"),
@@ -90,7 +94,7 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
 
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
-```{r use_builtin, eval=require('ggplot2', quietly = TRUE)}
+```{r use_builtin, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 plot_fastest(2022, 1, "R", "PER")
 ```
 
@@ -98,7 +102,7 @@ plot_fastest(2022, 1, "R", "PER")
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
-```{r session_laps, eval=require('ggplot2', quietly = TRUE)}
+```{r session_laps, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -122,9 +126,10 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
   scale_x_continuous(breaks = seq(2, 26, 4))
 ```
 
-Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
+Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP. Note that
+we'll pass the plot through the helper function `correct_track_ratio()` to ensure the plotted track has correct dimensions (and a few other tweaks for pretty plotting). Alternatively, you can call `ggplot2::coord_fixed()` while building track plots to ensure the `x` & `y` ratios are equal.
 
-```{r telem_plotting, eval=require('ggplot2', quietly = TRUE)}
+```{r telem_plotting, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 ver_can <- load_driver_telemetry(
   season = 2023,
   round = "Canada",
@@ -133,7 +138,7 @@ ver_can <- load_driver_telemetry(
 ) %>%
   mutate(open_throttle = ifelse(throttle == 100, "Yes", "No"))
 
-ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
+throttle_plot <- ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   scale_color_manual(values = c("white", "red")) +
   theme_dark_f1() +
@@ -142,11 +147,13 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
     subtitle = "Canada 2023 | Fastest Lap",
     color = "Throttle 100%"
   )
+
+correct_track_ratio(throttle_plot)
 ```
 
 For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
 
-```{r pitstop, eval=require('ggplot2', quietly = TRUE)}
+```{r pitstop, eval=require('ggplot2', quietly = TRUE), optipng = ''}
 pit_data <- load_pitstops(2023, 4)
 
 driver_team <- load_results(2023, 4) %>%
