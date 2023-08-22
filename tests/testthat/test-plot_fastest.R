@@ -28,3 +28,7 @@ test_that("graphics work", {
 
   expect_equal(qp_axis$labels, qualiplot$labels)
 })
+
+test_that("Plot_fastest works", {
+  expect_error(correct_track_ratio("bob"), "`trackplot` must be a `ggplot` object")
+})

@@ -7,18 +7,18 @@
 correct_track_ratio(trackplot, x = "x", y = "y", background = "grey10")
 }
 \arguments{
+\item{trackplot}{A GGPlot object, ideally showing a track layout for ratio correction}
+
 \item{x, y}{Names of columns in the original data used for the plot's x and y values.
 Defaults to 'x' and 'y'}
 
 \item{background}{Background colour to use for filling out the plot edges. Defaults to
 \code{"grey10"} which is the default background colour if you use \code{\link[f1dataR]{theme_dark_f1}()}
 to theme your plots.}
-
-\item{plot}{A GGPlot object.}
 }
 \value{
-a ggplot object with \code{\link[ggplot2]{scale_x_continuous}} and \code{\link[ggplot2]{scale_y_continuous}} set to the
-same limits to produce an image with shared x and y limits and with \code{\link[ggplot2]{coord_fixed}}
+a ggplot object with \code{ggplot2::scale_x_continuous()} and \code{ggplot2::scale_y_continuous()} set to the
+same limits to produce an image with shared x and y limits and with \code{ggplot2::coord_fixed()} set.
 }
 \description{
 Correct Track Ratios helps ensure that ggplot objects are plotted with 1:1 unit ratio.
@@ -29,7 +29,7 @@ Note that this leaves the plot object on a dark background, any plot borders wil
 }
 \examples{
 \dontrun{
-# Note that plot_fastest plots have already been ratio corrected
+# Note that plot_fastest plots have already been ratio correctedF
 fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 correct_track_ratio(fast_plot)
 }

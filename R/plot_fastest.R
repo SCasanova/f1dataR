@@ -105,29 +105,36 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #'
 #' Note that this leaves the plot object on a dark background, any plot borders will be maintained
 #'
-#' @param plot A GGPlot object.
+#' @param trackplot A GGPlot object, ideally showing a track layout for ratio correction
 #' @param x,y Names of columns in the original data used for the plot's x and y values.
 #' Defaults to 'x' and 'y'
 #' @param background Background colour to use for filling out the plot edges. Defaults to
 #' `"grey10"` which is the default background colour if you use \code{\link[f1dataR]{theme_dark_f1}()}
 #' to theme your plots.
 #'
-#' @return a ggplot object with \code{\link[ggplot2]{scale_x_continuous}} and \code{\link[ggplot2]{scale_y_continuous}} set to the
-#' same limits to produce an image with shared x and y limits and with \code{\link[ggplot2]{coord_fixed}}
+#' @return a ggplot object with `ggplot2::scale_x_continuous()` and `ggplot2::scale_y_continuous()` set to the
+#' same limits to produce an image with shared x and y limits and with `ggplot2::coord_fixed()` set.
 #'
 #' @export
 #' @examples
 #' \dontrun{
-#' # Note that plot_fastest plots have already been ratio corrected
+#' # Note that plot_fastest plots have already been ratio correctedF
 #' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 #' correct_track_ratio(fast_plot)
 #' }
 correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey10") {
+  if (!"ggplot" %in% class(trackplot)){
+    cli::cli_abort("{.var trackplot} must be a `ggplot` object")
+  }
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    cli::cli_abort("f1dataR::correct_track_ratio() requires ggplot2 package installation")
+  }
+
   plotdata <- trackplot$data
 
   # centre the data
-  trackplot$data[[x]] <- trackplot$data[[x]] - median(trackplot$data[[x]], na.rm = TRUE)
-  trackplot$data[[y]] <- trackplot$data[[y]] - median(trackplot$data[[y]], na.rm = TRUE)
+  trackplot$data[[x]] <- trackplot$data[[x]] - stats::median(trackplot$data[[x]], na.rm = TRUE)
+  trackplot$data[[y]] <- trackplot$data[[y]] - stats::median(trackplot$data[[y]], na.rm = TRUE)
 
   # determine limits and apply to plot
   lim_min <- min(min(trackplot$data[[x]], na.rm = TRUE), min(trackplot$data[[y]], na.rm = TRUE))
@@ -139,6 +146,6 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
     ggplot2::coord_fixed()
 
   # ensure the letterbox filler is a nice colour
-  grid:::grid.rect(gp = grid::gpar(fill = background, col = background))
-  ggplot2:::plot.ggplot(trackplot, newpage = FALSE)
+  grid::grid.rect(gp = grid::gpar(fill = background, col = background))
+  ggplot2::plot.ggplot(trackplot, newpage = FALSE)
 }
