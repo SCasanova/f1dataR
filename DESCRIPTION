@@ -24,13 +24,10 @@ Depends:
 Imports: 
     glue,
     magrittr,
-    tibble,
     jsonlite,
     httr2,
     memoise,
-    janitor,
     dplyr,
-    tidyr,
     rlang,
     lifecycle,
     cli,
