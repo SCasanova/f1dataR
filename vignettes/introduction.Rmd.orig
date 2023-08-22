@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.path = "introduction-",
   dpi = 300,
-  fig.retina = 2,
   dev = "png"
 )
 

@@ -147,5 +147,5 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
 
   # ensure the letterbox filler is a nice colour
   grid::grid.rect(gp = grid::gpar(fill = background, col = background))
-  ggplot2::plot.ggplot(trackplot, newpage = FALSE)
+  plot(trackplot, newpage = FALSE)
 }
