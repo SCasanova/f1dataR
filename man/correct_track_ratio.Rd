@@ -4,11 +4,15 @@
 \alias{correct_track_ratio}
 \title{Correct Track Ratios}
 \usage{
-correct_track_ratio(trackplot, x = "x", y = "y")
+correct_track_ratio(trackplot, x = "x", y = "y", background = "grey10")
 }
 \arguments{
 \item{x, y}{Names of columns in the original data used for the plot's x and y values.
 Defaults to 'x' and 'y'}
+
+\item{background}{Background colour to use for filling out the plot edges. Defaults to
+\code{"grey10"} which is the default background colour if you use \code{\link[f1dataR]{theme_dark_f1}()}
+to theme your plots.}
 
 \item{plot}{A GGPlot object.}
 }

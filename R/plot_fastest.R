@@ -108,6 +108,9 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' @param plot A GGPlot object.
 #' @param x,y Names of columns in the original data used for the plot's x and y values.
 #' Defaults to 'x' and 'y'
+#' @param background Background colour to use for filling out the plot edges. Defaults to
+#' `"grey10"` which is the default background colour if you use \code{\link[f1dataR]{theme_dark_f1}()}
+#' to theme your plots.
 #'
 #' @return a ggplot object with \code{\link[ggplot2]{scale_x_continuous}} and \code{\link[ggplot2]{scale_y_continuous}} set to the
 #' same limits to produce an image with shared x and y limits and with \code{\link[ggplot2]{coord_fixed}}
@@ -119,16 +122,23 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 #' correct_track_ratio(fast_plot)
 #' }
-correct_track_ratio <- function(trackplot, x = "x", y = "y") {
+correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey10") {
   plotdata <- trackplot$data
-  lim_min <- min(min(plotdata[, "x"], na.rm = TRUE), min(plotdata$y, na.rm = TRUE))
-  lim_max <- max(max(plotdata$x, na.rm = TRUE), max(plotdata$y, na.rm = TRUE))
+
+  # centre the data
+  trackplot$data[[x]] <- trackplot$data[[x]] - median(trackplot$data[[x]], na.rm = TRUE)
+  trackplot$data[[y]] <- trackplot$data[[y]] - median(trackplot$data[[y]], na.rm = TRUE)
+
+  # determine limits and apply to plot
+  lim_min <- min(min(trackplot$data[[x]], na.rm = TRUE), min(trackplot$data[[y]], na.rm = TRUE))
+  lim_max <- max(max(trackplot$data[[x]], na.rm = TRUE), max(trackplot$data[[y]], na.rm = TRUE))
 
   trackplot <- trackplot +
     ggplot2::scale_x_continuous(limits = c(lim_min, lim_max)) +
     ggplot2::scale_y_continuous(limits = c(lim_min, lim_max)) +
     ggplot2::coord_fixed()
 
-  grid:::grid.rect(gp = grid::gpar(fill = "grey10", col = "grey10"))
+  # ensure the letterbox filler is a nice colour
+  grid:::grid.rect(gp = grid::gpar(fill = background, col = background))
   ggplot2:::plot.ggplot(trackplot, newpage = FALSE)
 }
