@@ -28,7 +28,7 @@ if (dir.exists(file.path(tempdir(), "vignettes", "vig_build_tmp"))) {
 }
 dir.create(file.path(tempdir(), "vignettes", "vig_build_tmp"), recursive = TRUE)
 withr::local_options(f1dataR.cache = file.path(tempdir(), "vignettes", "vig_build_tmp"))
-
+withr::local_timezone("UTC")
 f1dataR::setup_fastf1()
 ```
 

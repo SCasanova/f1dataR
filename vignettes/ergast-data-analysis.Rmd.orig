@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   dev = "png"
 )
 knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+withr::local_timezone("UTC")
 ```
 
 # Introduction

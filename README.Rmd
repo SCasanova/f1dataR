@@ -23,6 +23,7 @@ options(
   pillar.min_title_width = 5
 )
 library(f1dataR)
+withr::local_timezone("UTC")
 ```
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
