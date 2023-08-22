@@ -35,8 +35,8 @@ load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
 #>  9 2022-03-20 12:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos          
 #> 10 2022-03-20 12:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car          
 #> # ℹ 696 more rows
-#> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
-#> #   driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>
+#> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>,
+#> #   distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
@@ -89,7 +89,7 @@ There are a couple of functions in the package that help with plotting. The firs
 ```r
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
-  theme_dark_f1() +
+  theme_dark_f1(axis_marks = TRUE) +
   theme(
     axis.title = element_text(),
     axis.line = element_line(color = "white"),
@@ -151,7 +151,8 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
 <p class="caption">plot of chunk session_laps</p>
 </div>
 
-Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP.
+Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP. Note that
+we'll pass the plot through the helper function `correct_track_ratio()` to ensure the plotted track has correct dimensions (and a few other tweaks for pretty plotting). Alternatively, you can call `ggplot2::coord_fixed()` while building track plots to ensure the `x` & `y` ratios are equal.
 
 
 ```r
@@ -163,7 +164,7 @@ ver_can <- load_driver_telemetry(
 ) %>%
   mutate(open_throttle = ifelse(throttle == 100, "Yes", "No"))
 
-ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
+throttle_plot <- ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   scale_color_manual(values = c("white", "red")) +
   theme_dark_f1() +
@@ -172,6 +173,8 @@ ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), group = NA)) +
     subtitle = "Canada 2023 | Fastest Lap",
     color = "Throttle 100%"
   )
+
+correct_track_ratio(throttle_plot)
 ```
 
 <div class="figure">
