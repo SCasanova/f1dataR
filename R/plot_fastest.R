@@ -123,7 +123,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' correct_track_ratio(fast_plot)
 #' }
 correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey10") {
-  if (!"ggplot" %in% class(trackplot)){
+  if (!"ggplot" %in% class(trackplot)) {
     cli::cli_abort("{.var trackplot} must be a `ggplot` object")
   }
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
