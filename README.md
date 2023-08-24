@@ -14,6 +14,8 @@ coverage](https://img.shields.io/codecov/c/github/SCasanova/f1dataR?label=codeco
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
+[![CRAN
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
 <!--badges: end -->
 
 ## Installation
