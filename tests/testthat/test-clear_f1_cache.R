@@ -41,8 +41,6 @@ test_that("load_ciruits (memory cache) works", {
   expect_equal(nrow(ciruits_2021), 21)
   expect_equal(ciruits_2021$circuit_id[3], "baku")
   expect_equal(ciruits_2021$locality[1], "Austin")
-
-
 })
 
 
