@@ -102,7 +102,7 @@
 
 .onAttach <- function(libname, pkgname) {
   # default to memory cache if not set
-  memoise_option <- getOption("f1dataR.cache")
+  memoise_option <- getOption("f1dataR.cache", default = "memory")
 
   if (is.null(memoise_option)) {
     memoise_option <- "memory"
