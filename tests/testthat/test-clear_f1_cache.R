@@ -32,15 +32,15 @@ test_that("load_ciruits (off cache) works", {
 
 test_that("load_ciruits (memory cache) works", {
   # Set testing specific parameters - this disposes after the test finishes
-  change_cache("memory")
+  withr::local_options("f1dataR.cache" = NULL)
+  change_cache("memory", persist = TRUE)
+  expect_equal(getOption("f1dataR.cache"), "memory")
 
   ciruits_2021 <- load_circuits(2021)
 
   expect_equal(nrow(ciruits_2021), 21)
   expect_equal(ciruits_2021$circuit_id[3], "baku")
   expect_equal(ciruits_2021$locality[1], "Austin")
-
-  expect_equal(getOption("f1dataR.cache"), "memory")
 })
 
 
@@ -52,6 +52,7 @@ test_that("load_ciruits (bad path cache) works", {
 
 test_that("load_ciruits (filesystem cache) works", {
   # Set testing specific parameters - this disposes after the test finishes
+  withr::local_options("f1dataR.cache" = NULL)
   change_cache(cache = "filesystem")
 
   ciruits_2021 <- load_circuits(2021)
