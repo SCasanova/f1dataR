@@ -31,10 +31,19 @@
     <loc>https://scasanova.github.io/f1dataR/news/index.html</loc>
   </url>
   <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/change_cache.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/clear_cache.html</loc>
+  </url>
+  <url>
     <loc>https://scasanova.github.io/f1dataR/reference/clear_f1_cache.html</loc>
   </url>
   <url>
     <loc>https://scasanova.github.io/f1dataR/reference/constructor_data.html</loc>
+  </url>
+  <url>
+    <loc>https://scasanova.github.io/f1dataR/reference/correct_track_ratio.html</loc>
   </url>
   <url>
     <loc>https://scasanova.github.io/f1dataR/reference/dot-get_current_season.html</loc>
