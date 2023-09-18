@@ -1,5 +1,10 @@
 # f1dataR (development version)
 
+* Added a function `correct_track_ratio()` to ensure plotted tracks have proper x & y ratios (#89, #179)
+  * Updated `plot_fastest()` to use `correct_track_ratio()`
+* Added a function to help switch between cache choices (#170, #171)
+  * Ensured cache option had default (`"memory"`) (#181, #183)
+
 # f1dataR 1.3.0
 
 * Updated documentation per requirements after CRAN review
