@@ -46,6 +46,10 @@ jobs:
         with:
           python-version: ${{ matrix.config.py }}
 
+      - name: setup python3-venv
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get install python3-venv
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
