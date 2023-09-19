@@ -20,8 +20,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10),
-    reticulate (>= 1.14),
-    reticulate (< 1.32)
+    reticulate (>= 1.14)
 Imports: 
     glue,
     magrittr,
