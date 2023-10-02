@@ -123,7 +123,7 @@ get_fastf1_version <- function() {
   if (as.integer(substr(ver, start = 1, 1)) >= 3) {
     return(3)
   } else if (as.integer(substr(ver, start = 1, 1)) <= 2) {
-    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code reticulate::py_install('fastf1')}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
+    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
     return(2)
   } else {
     return(NA)
@@ -133,7 +133,7 @@ get_fastf1_version <- function() {
 
 #' Setup fastf1 connection
 #'
-#' @description Installs or optionally updates `fastf1` python package in the current active Python
+#' @description Installs or optionally updates `fastf1` Python package in the current active Python
 #' environment/virtualenv/conda env.
 #'
 #' More information on how to manage complex environment needs can be read in the
@@ -156,6 +156,7 @@ get_fastf1_version <- function() {
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
+    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg fastf1}f")
     virtualenv_remove(envname)
   }
 

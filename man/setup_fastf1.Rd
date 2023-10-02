@@ -22,7 +22,7 @@ any issues experienced by \code{fastf1} related to package dependencies.}
 No return value, called to install or update \code{fastf1} Python package.
 }
 \description{
-Installs or optionally updates \code{fastf1} python package in the current active Python
+Installs or optionally updates \code{fastf1} Python package in the current active Python
 environment/virtualenv/conda env.
 
 More information on how to manage complex environment needs can be read in the
