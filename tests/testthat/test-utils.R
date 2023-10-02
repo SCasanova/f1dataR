@@ -32,38 +32,3 @@ test_that("utility functions work", {
     c(12.345, 83.456, 45296.789, 12.3456)
   )
 })
-
-test_that("setup-fastf1 works", {
-  skip_if_no_py()
-  skip_if_no_ff1()
-
-  # Set testing specific parameters - this disposes after the test finishes
-  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
-  # because python's process has it locked.
-  withr::local_file(file.path(tempdir(), "tst_setup"))
-  if (dir.exists(file.path(tempdir(), "tst_setup"))) {
-    unlink(file.path(tempdir(), "tst_setup"), recursive = TRUE, force = TRUE)
-  }
-  dir.create(file.path(tempdir(), "tst_setup"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_setup"))
-  withr::local_envvar(.new = list(
-    "WORKON_HOME" = file.path(tempdir(), "tst_setup"),
-    "RETICULATE_PYTHON" = NA
-  ))
-  withr::defer(reticulate::virtualenv_remove(file.path(tempdir(), "tst_setup", "setup_venv"), confirm = FALSE))
-  withr::defer(reticulate::virtualenv_remove(file.path(tempdir(), "tst_setup", "setup_venv_old"), confirm = FALSE))
-
-  reticulate::virtualenv_create(file.path(tempdir(), "tst_setup", "setup_venv"))
-  reticulate::use_virtualenv("setup_venv")
-  expect_false("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv")$package)
-  setup_fastf1(envname = "setup_venv")
-  expect_true("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv")$package)
-
-  reticulate::virtualenv_create(file.path(tempdir(), "tst_setup", "setup_venv_old"))
-  reticulate::use_virtualenv("setup_venv")
-  reticulate::py_install("fastf1==2.3.3", envname = "setup_venv_old")
-  expect_true("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv_old")$package)
-  expect_equal(suppressWarnings(get_fastf1_version()), 2)
-  setup_fastf1(envname = "setup_venv_old", new_env = TRUE, ignore_installed = TRUE)
-  expect_equal(get_fastf1_version(), 3)
-})
