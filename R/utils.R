@@ -150,7 +150,7 @@ get_fastf1_version <- function(envname = "f1dataR_env") {
 #' setup_fastf1()
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
-  if(new_env && virtualenv_exists(envname)){
+  if (new_env && virtualenv_exists(envname)) {
     virtualenv_remove(envname)
   }
 

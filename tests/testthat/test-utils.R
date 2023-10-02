@@ -66,5 +66,4 @@ test_that("setup-fastf1 works", {
   expect_equal(suppressWarnings(get_fastf1_version("setup_venv_old")), 2)
   setup_fastf1(envname = "setup_venv_old", new_env = TRUE, ignore_installed = TRUE)
   expect_equal(get_fastf1_version("setup_venv_old"), 3)
-
 })
