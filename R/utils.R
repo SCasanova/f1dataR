@@ -142,12 +142,17 @@ get_fastf1_version <- function() {
 #' \link[reticulate]{`conda-tools`}
 #' @param ... Additional parameters to pass to \link[reticulate]{py_install}
 #' @param envname Optionally pass an environment name used. Defaults to package default of `f1dataR_env`.
+#' @param new_env Whether or not to completely remove and recreate the environment provided in `envname`. This will fix
+#' any issues experienced by `fastf1` related to package dependencies.
 #' @export
 #' @return No return value, called to install or update `fastf1` Python package.
 #' @examples
 #' \dontrun{
 #' # Install fastf1 into the currently active Python environment
 #' setup_fastf1()
+#'
+#' # Reinstall fastf1 and recreate the environment.
+#' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
