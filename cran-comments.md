@@ -1,15 +1,11 @@
 ## Resubmission
 This is a resubmission. In this version we have:
 
-* Fixed an undiscovered bug in previous sumbission
+* Added freedom to the usesr's python enviroment
 
-* Eliminated any use of `getwd()` within the package (functions, tests and vignettes)
+* Advanced lifecycle on deprecations
 
-* Changed the caching process to give control to user (use `tempdir()` as default)
-
-* Added missing value parameters
-
-* Added API references to DESCRIPTION
+* Added a helper function for plot outputs
 
 ## R CMD check results
 

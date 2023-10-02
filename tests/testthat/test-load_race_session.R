@@ -44,7 +44,7 @@ test_that("Load Session (file cached) Works", {
   )
   expect_error(load_race_session(season = 2022, round = 1, session = "R", log_level = "ZZZ"))
 
-  expect_warning(load_race_session(season = 2022, race = "Bahrain", session = "R"))
+  expect_error(load_race_session(season = 2022, race = "Bahrain", session = "R"))
 
   expect_message(
     load_race_session(season = 2022, round = 1, session = "R", log_level = "INFO"),

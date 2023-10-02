@@ -13,7 +13,7 @@
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("1.0.0", "load_laps(race)", "load_laps(round)")
+    lifecycle::deprecate_stop("1.4.0", "load_laps(race)", "load_laps(round)")
     round <- race
   }
   if (season != "current" && (season < 1996 || season > get_current_season())) {

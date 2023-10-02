@@ -32,5 +32,5 @@ test_that("load session laps works", {
   expect_equal(nrow(lapsq), nrow(lapsqw))
   expect_equal(min(lapsq$lap_time, na.rm = TRUE), min(lapsqw$lap_time, na.rm = TRUE))
 
-  expect_warning(load_session_laps(season = 2022, race = "bahrain", session = "Q"))
+  expect_error(load_session_laps(season = 2022, race = "bahrain", session = "Q"))
 })

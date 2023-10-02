@@ -40,26 +40,23 @@ test_that("driver telemetry", {
     )
   }
 
-  expect_warning(
+  expect_error(
     load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
-    "The `fastest_only` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.1.0.*"
+    "The `fastest_only` argument of `load_driver_telemetry\\(\\)` was deprecated in f1dataR 1.4.0 and is now defunct.*"
   )
 
-  expect_warning(
+  expect_error(
     load_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM"),
-    "The `race` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.0.0.*"
+    "The `race` argument of `load_driver_telemetry\\(\\)` was deprecated in f1dataR 1.4.0 and is now defunct.*"
   )
 
-  expect_warning(
+  expect_error(
     get_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM"),
-    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
+    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.4.0 and is now defunct.*"
   )
 
-  expect_warning(
-    expect_warning(
-      get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
-      "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.0.0.*"
-    ),
-    "The `race` argument of `load_driver_telemetry\\(\\)` is deprecated as of f1dataR 1.0.0.*"
+  expect_error(
+    get_driver_telemetry(season = 2022, race = "Brazil", session = "S", driver = "HAM", fastest_only = TRUE),
+    "`get_driver_telemetry\\(\\)` was deprecated in f1dataR 1.4.0 and is now defunct.*"
   )
 })

@@ -1,4 +1,4 @@
-# f1dataR (development version)
+# f1dataR 1.4.0
 
 * Added a function `correct_track_ratio()` to ensure plotted tracks have proper x & y ratios (#89, #179)
   * Updated `plot_fastest()` to use `correct_track_ratio()`

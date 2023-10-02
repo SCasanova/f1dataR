@@ -15,5 +15,5 @@ test_that("Pitstop Load works", {
 
   expect_error(load_pitstops(3050, 1), "`season` must be between 2011 and *")
 
-  expect_warning(load_pitstops(2021, race = 1))
+  expect_error(load_pitstops(2021, race = 1))
 })
