@@ -14,7 +14,7 @@
 #' and stop duration
 load_pitstops <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.3.1", "load_pitstops(race)", "load_pitstops(round)")
+    lifecycle::deprecate_stop("1.4.0", "load_pitstops(race)", "load_pitstops(round)")
     round <- race
   }
   if (season != "current" && (season < 2011 || season > get_current_season())) {

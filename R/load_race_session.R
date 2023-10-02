@@ -36,7 +36,7 @@
 load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = "R",
                               log_level = "WARNING", race = lifecycle::deprecated()) {
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.3.1", "load_race_session(race)", "load_race_session(round)")
+    lifecycle::deprecate_stop("1.4.0", "load_race_session(race)", "load_race_session(round)")
     round <- race
   }
   if (season != "current" && (season < 2018 || season > get_current_season())) {
