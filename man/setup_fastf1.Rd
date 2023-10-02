@@ -26,7 +26,7 @@ Installs or optionally updates \code{fastf1} Python package in the current activ
 environment/virtualenv/conda env.
 
 More information on how to manage complex environment needs can be read in the
-\link[reticulate docs]{https://rstudio.github.io/reticulate/articles/python_dependencies.html} , and tools for
+\href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
 managing virtual environments are documented in  \link[reticulate]{\code{virtualenv-tools}} and
 \link[reticulate]{\code{conda-tools}}
 }
