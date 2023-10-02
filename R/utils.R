@@ -137,7 +137,7 @@ get_fastf1_version <- function() {
 #' environment/virtualenv/conda env.
 #'
 #' More information on how to manage complex environment needs can be read in the
-#' \link[reticulate docs]{https://rstudio.github.io/reticulate/articles/python_dependencies.html} , and tools for
+#' \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
 #' managing virtual environments are documented in  \link[reticulate]{`virtualenv-tools`} and
 #' \link[reticulate]{`conda-tools`}
 #' @param ... Additional parameters to pass to \link[reticulate]{py_install}
