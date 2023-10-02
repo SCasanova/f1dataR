@@ -130,6 +130,7 @@ get_fastf1_version <- function() {
   }
 }
 
+# nocov start
 
 #' Setup fastf1 connection
 #'
@@ -163,3 +164,16 @@ setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envna
   cli::cli_inform("Installing {.pkg fastf1} in current Python environment: {.var {envname}}.")
   reticulate::py_install("fastf1", envname = envname, ...)
 }
+
+
+#' @noRd
+dummy <- function(){
+  #this function creates and cleans a dummy table to clear r cmd check notes for
+  #janitor, tibble and tidyr
+  dummy<-tibble::tibble("Dummy" = c(1:5, NA)) %>%
+    janitor::clean_names() %>%
+    tidyr::drop_na()
+  invisible(NULL)
+}
+
+# nocov end
