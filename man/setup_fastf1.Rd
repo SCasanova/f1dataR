@@ -4,29 +4,38 @@
 \alias{setup_fastf1}
 \title{Setup fastf1 connection}
 \usage{
-setup_fastf1(envname = "f1dataRenv", conda = FALSE)
+setup_fastf1(
+  ...,
+  envname = "f1dataR_env",
+  new_env = identical(envname, "f1dataR_env")
+)
 }
 \arguments{
-\item{envname}{a name for the virtualenv or conda environment.
-For virtualenv, if a name is passed, \code{reticulate} will use/create the environment in the
-default location. Alternatively, if providing a full path, \code{reticulate} will use the specified location.}
+\item{...}{Additional parameters to pass to \link[reticulate]{py_install}}
 
-\item{conda}{whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)}
+\item{envname}{Optionally pass an environment name used. Defaults to package default of \code{f1dataR_env}.}
+
+\item{new_env}{Whether or not to completely remove and recreate the environment provided in \code{envname}. This will fix
+any issues experienced by \code{fastf1} related to package dependencies.}
 }
 \value{
-No return value, called to set up virtan enviroment for package
+No return value, called to install or update \code{fastf1} Python package.
 }
 \description{
-Set up reticulate using some options from user (or defaults). Helps
-solve \code{fastf1} issues - see the Setup FastF1 Connection vignette for more info
-(run \code{vignette('setup_fastf1', 'f1dataR')}).
+Installs or optionally updates \code{fastf1} Python package in the current active Python
+environment/virtualenv/conda env.
+
+More information on how to manage complex environment needs can be read in the
+\href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
+managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
+\link[reticulate]{conda-tools}
 }
 \examples{
 \dontrun{
-# setup fastf1 connection with all defaults
+# Install fastf1 into the currently active Python environment
 setup_fastf1()
 
-# setup with a preexisting conda environment, with a specified name
-setup_fastf1("example_conda_env", conda = TRUE)
+# Reinstall fastf1 and recreate the environment.
+setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 }
 }

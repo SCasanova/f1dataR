@@ -117,77 +117,63 @@ get_fastf1_version <- function() {
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if (length(ver) == 0) {
-    cli::cli_warn("Ensure fastf1 python package is installed.\nPlease run this to install the most recent version:\nreticulate::py_install('fastf1')")
+    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.\nPlease run this to install the most recent version:\n{.code setup_fastf1()}")
     return(NA)
   }
   if (as.integer(substr(ver, start = 1, 1)) >= 3) {
     return(3)
   } else if (as.integer(substr(ver, start = 1, 1)) <= 2) {
-    cli::cli_inform("The Python package fastf1 was updated to v3 recently.\nPlease update the version on your system by running:\nreticulate::py_install('fastf1')\nFuture versions of f1dataR may not support fastf1 < v3.0.0")
+    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
     return(2)
   } else {
     return(NA)
   }
 }
 
+# nocov start
 
 #' Setup fastf1 connection
 #'
-#' @description Set up reticulate using some options from user (or defaults). Helps
-#' solve `fastf1` issues - see the Setup FastF1 Connection vignette for more info
-#' (run \code{vignette('setup_fastf1', 'f1dataR')}).
-#' @param envname a name for the virtualenv or conda environment.
-#' For virtualenv, if a name is passed, `reticulate` will use/create the environment in the
-#' default location. Alternatively, if providing a full path, `reticulate` will use the specified location.
-#' @param conda whether to use conda environments or virtualenvs. Default FALSE (i.e. virtualenv)
+#' @description Installs or optionally updates `fastf1` Python package in the current active Python
+#' environment/virtualenv/conda env.
+#'
+#' More information on how to manage complex environment needs can be read in the
+#' \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
+#' managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
+#' \link[reticulate]{conda-tools}
+#' @param ... Additional parameters to pass to \link[reticulate]{py_install}
+#' @param envname Optionally pass an environment name used. Defaults to package default of `f1dataR_env`.
+#' @param new_env Whether or not to completely remove and recreate the environment provided in `envname`. This will fix
+#' any issues experienced by `fastf1` related to package dependencies.
 #' @export
-#' @return No return value, called to set up virtan enviroment for package
+#' @return No return value, called to install or update `fastf1` Python package.
 #' @examples
 #' \dontrun{
-#' # setup fastf1 connection with all defaults
+#' # Install fastf1 into the currently active Python environment
 #' setup_fastf1()
 #'
-#' # setup with a preexisting conda environment, with a specified name
-#' setup_fastf1("example_conda_env", conda = TRUE)
+#' # Reinstall fastf1 and recreate the environment.
+#' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 #' }
-setup_fastf1 <- function(envname = "f1dataRenv", conda = FALSE) {
-  conda_exists <- function() {
-    tryCatch(
-      {
-        reticulate::conda_version()
-        return(TRUE)
-      },
-      error = function(e) {
-        return(FALSE)
-      }
-    )
+setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
+  if (new_env && virtualenv_exists(envname)) {
+    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg fastf1}f")
+    virtualenv_remove(envname)
   }
-  if (conda == FALSE) {
-    if (envname %in% reticulate::virtualenv_list()) {
-      reticulate::use_virtualenv(envname)
-    } else if (conda_exists() && envname %in% reticulate::conda_list()$name) {
-      cli::cli_abort("{.val envname} found in list of conda environments. Did you mean to use that?",
-        x = "Run the function again with {.param conda} = `TRUE`"
-      )
-    } else {
-      reticulate::virtualenv_create(envname = envname, packages = c("numpy", "fastf1"))
-      reticulate::use_virtualenv(envname)
-    }
-  } else {
-    if (!conda_exists()) {
-      cli::cli_abort("Conda is not installed on your system.",
-        i = "If you wish to use conda please run {.code reticulate::install_miniconda}."
-      )
-    }
-    if (envname %in% reticulate::conda_list()$name) {
-      reticulate::use_condaenv(envname)
-    } else if (envname %in% reticulate::virtualenv_list()) {
-      cli::cli_abort("{.val {envname}} found in list of virtualenv environments. Did you mean to use that?",
-        x = "Run the function again with {.param conda} = `FALSE`"
-      )
-    } else {
-      reticulate::conda_create(envname = envname, packages = c("numpy", "fastf1"))
-      reticulate::use_condaenv(envname)
-    }
-  }
+
+  cli::cli_inform("Installing {.pkg fastf1} in current Python environment: {.var {envname}}.")
+  reticulate::py_install("fastf1", envname = envname, ...)
 }
+
+
+#' @noRd
+dummy <- function() {
+  # this function creates and cleans a dummy table to clear r cmd check notes for
+  # janitor, tibble and tidyr
+  dummy <- tibble::tibble("Dummy" = c(1:5, NA)) %>%
+    janitor::clean_names() %>%
+    tidyr::drop_na()
+  invisible(NULL)
+}
+
+# nocov end

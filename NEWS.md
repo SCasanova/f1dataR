@@ -4,6 +4,8 @@
   * Updated `plot_fastest()` to use `correct_track_ratio()`
 * Added a function to help switch between cache choices (#170, #171)
   * Ensured cache option had default (`"memory"`) (#181, #183)
+* Simplified Python package `fastf1` installation (#187).
+  * Virtualenv and Conda environment management is up to the user now
 
 # f1dataR 1.3.0
 

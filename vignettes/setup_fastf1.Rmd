@@ -20,7 +20,7 @@ This vignette briefly describes setting up the `f1dataR` package to work properl
 the Python package [`FastF1`](https://docs.fastf1.dev/). This guide may help resolve some issues
 that might arise when you get the following warning or error messages:
 
-- `Ensure fastf1 python package is installed. Please run this to install the most recent version: reticulate::py_install('fastf1')`
+- `Ensure fastf1 python package is installed. Please run this to install the most recent version: setup_fastf1()`
 - `Error in if (get_fastf1_version() < 3) { :` 
    `missing value where TRUE/FALSE needed`
 
@@ -55,26 +55,14 @@ This will create a virtual environment using your system's default Python versio
 and install `fastf1` in that python environment. It will also tell `reticulate` to use that
 environment instead of just running in your main system. For more information on Python 
 environments read [this article (infoworld.com)](https://www.infoworld.com/article/3239675/virtualenv-and-venv-python-virtual-environments-explained.html). 
-
-## With a specific virtual environment (or conda environment)
-
-If you're comfortable with virtual environments and/or have one already set up for 
-fastf1, you can specify a virtualenv name/directory with the above function. If it's 
-a Conda environment, setting the `conda` argument as true will use `reticulate`s 
-interface for that in lieu of the one for virtualenv.
-
-```r
-setup_fastf1(envname = [envname], conda = [T/F])
-```
-
-# Routine/Repeat Issues
+# Repeat/Recurring Issues
 
 If you have repeat issues with the package failing to connect to your proper environment, 
-then before calling `library(f1dataR)` or using specific functions through `::`, add the 
-following to your code (replacing the `envname` parameter with your actual envname):
+you can force a complete recreation of the virtual environment by calling:
 
 ```r
-reticulate::use_virtualenv(virtualenv = [envname])
+setup_fastf1(new_env = TRUE)
 ```
 
-If you've used a Conda environment, call `reticulate::use_condaenv()` instead.
+If you've configured the package to use a custom environment name, the above function will require that name supplied as
+the `envname` parameter.
