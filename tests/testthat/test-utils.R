@@ -51,35 +51,20 @@ test_that("setup-fastf1 works", {
     "RETICULATE_PYTHON" = NA
   ))
   withr::defer(reticulate::virtualenv_remove(file.path(tempdir(), "tst_setup", "setup_venv"), confirm = FALSE))
+  withr::defer(reticulate::virtualenv_remove(file.path(tempdir(), "tst_setup", "setup_venv_old"), confirm = FALSE))
 
-  expect_false("setup_venv" %in% reticulate::virtualenv_list())
+  reticulate::virtualenv_create(file.path(tempdir(), "tst_setup", "setup_venv"))
+  reticulate::use_virtualenv("setup_venv")
+  expect_false("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv")$package)
+  setup_fastf1(envname = "setup_venv")
+  expect_true("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv")$package)
 
-  # Different testing environments may or may not have preexisting selected/activated python venv or condaenv.
-  # This try(suppressWarnings()) set makes sure that the code is run, and we'll test for that which we care about
-  # (namely the creation of the venv) afterwards
-  try(suppressWarnings(setup_fastf1(file.path(tempdir(), "tst_setup", "setup_venv"), conda = FALSE)))
+  reticulate::virtualenv_create(file.path(tempdir(), "tst_setup", "setup_venv_old"))
+  reticulate::use_virtualenv("setup_venv")
+  reticulate::py_install("fastf1==2.3.3", envname = "setup_venv_old")
+  expect_true("fastf1" %in% reticulate::py_list_packages(envname = "setup_venv_old")$package)
+  expect_equal(suppressWarnings(get_fastf1_version("setup_venv_old")), 2)
+  setup_fastf1(envname = "setup_venv_old", new_env = TRUE, ignore_installed = TRUE)
+  expect_equal(get_fastf1_version("setup_venv_old"), 3)
 
-  expect_true("setup_venv" %in% reticulate::virtualenv_list())
-
-  if (reticulate:::conda_installed()) {
-    # Workflow runners or CRAN tests might not have conda
-
-    withr::defer(reticulate::conda_remove("setup_conda"))
-
-    expect_error(
-      setup_fastf1("setup_venv", conda = TRUE),
-      "* found in list of virtualenv environments. Did you mean to use that?"
-    )
-    expect_false("setup_conda" %in% reticulate::conda_list()$name)
-
-    # Because we set the venv earlier, reticulate won't let you set a second active env without restarting R.
-    # Alternatively, we can wrap this in 'try' also.
-    expect_error(setup_fastf1("setup_conda", conda = TRUE), "*failed to initialize requested version of Python")
-    expect_true("setup_conda" %in% reticulate::conda_list()$name)
-
-    expect_error(
-      setup_fastf1("setup_conda", conda = FALSE),
-      "* found in list of conda environments. Did you mean to use that?"
-    )
-  }
 })

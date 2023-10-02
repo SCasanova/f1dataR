@@ -1,5 +1,6 @@
 # nocov start
 .onLoad <- function(libname, pkgname) {
+  reticulate::use_virtualenv("f1dataR_env", required = FALSE)
   reticulate::configure_environment(pkgname)
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
 
