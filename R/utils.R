@@ -167,10 +167,10 @@ setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envna
 
 
 #' @noRd
-dummy <- function(){
-  #this function creates and cleans a dummy table to clear r cmd check notes for
-  #janitor, tibble and tidyr
-  dummy<-tibble::tibble("Dummy" = c(1:5, NA)) %>%
+dummy <- function() {
+  # this function creates and cleans a dummy table to clear r cmd check notes for
+  # janitor, tibble and tidyr
+  dummy <- tibble::tibble("Dummy" = c(1:5, NA)) %>%
     janitor::clean_names() %>%
     tidyr::drop_na()
   invisible(NULL)
