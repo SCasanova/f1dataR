@@ -41,7 +41,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
                                   fastest_only = lifecycle::deprecated()) {
   # Lifecycles
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("1.0.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
+    lifecycle::deprecate_stop("1.3.1", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
   }
   if (lifecycle::is_present(fastest_only)) {

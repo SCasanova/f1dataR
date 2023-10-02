@@ -29,7 +29,9 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
     cli::cli_abort("f1dataR::plot_fastest() requires ggplot2 package installation")
   }
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_warn("1.0.0", "plot_fastest(race)", "plot_fastest(round)")
+    lifecycle::deprecate_stop("1.3.1", 
+                              "plot_fastest(race)", 
+                              "plot_fastest(round)")
     round <- race
   }
 
