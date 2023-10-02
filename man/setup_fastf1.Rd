@@ -27,8 +27,8 @@ environment/virtualenv/conda env.
 
 More information on how to manage complex environment needs can be read in the
 \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
-managing virtual environments are documented in  \link[reticulate]{\code{virtualenv-tools}} and
-\link[reticulate]{\code{conda-tools}}
+managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
+\link[reticulate]{conda-tools}
 }
 \examples{
 \dontrun{

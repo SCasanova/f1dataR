@@ -138,8 +138,8 @@ get_fastf1_version <- function() {
 #'
 #' More information on how to manage complex environment needs can be read in the
 #' \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
-#' managing virtual environments are documented in  \link[reticulate]{`virtualenv-tools`} and
-#' \link[reticulate]{`conda-tools`}
+#' managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
+#' \link[reticulate]{conda-tools}
 #' @param ... Additional parameters to pass to \link[reticulate]{py_install}
 #' @param envname Optionally pass an environment name used. Defaults to package default of `f1dataR_env`.
 #' @param new_env Whether or not to completely remove and recreate the environment provided in `envname`. This will fix
