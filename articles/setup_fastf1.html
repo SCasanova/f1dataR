@@ -109,7 +109,7 @@ package to work properly with with the Python package <a href="https://docs.fast
 help resolve some issues that might arise when you get the following
 warning or error messages:</p>
 <ul>
-<li><code>Ensure fastf1 python package is installed. Please run this to install the most recent version: reticulate::py_install('fastf1')</code></li>
+<li><code>Ensure fastf1 python package is installed. Please run this to install the most recent version: setup_fastf1()</code></li>
 <li>
 <code>Error in if (get_fastf1_version() &lt; 3) { :</code>
 <code>missing value where TRUE/FALSE needed</code>
@@ -151,30 +151,16 @@ Python version, and install <code>fastf1</code> in that python
 environment. It will also tell <code>reticulate</code> to use that
 environment instead of just running in your main system. For more
 information on Python environments read <a href="https://www.infoworld.com/article/3239675/virtualenv-and-venv-python-virtual-environments-explained.html" class="external-link">this
-article (infoworld.com)</a>.</p>
-</div>
-<div class="section level3">
-<h3 id="with-a-specific-virtual-environment-or-conda-environment">With a specific virtual environment (or conda environment)<a class="anchor" aria-label="anchor" href="#with-a-specific-virtual-environment-or-conda-environment"></a>
-</h3>
-<p>If you’re comfortable with virtual environments and/or have one
-already set up for fastf1, you can specify a virtualenv name/directory
-with the above function. If it’s a Conda environment, setting the
-<code>conda</code> argument as true will use <code>reticulate</code>s
-interface for that in lieu of the one for virtualenv.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setup_fastf1</span>(<span class="at">envname =</span> [envname], <span class="at">conda =</span> [T<span class="sc">/</span>F])</span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="routinerepeat-issues">Routine/Repeat Issues<a class="anchor" aria-label="anchor" href="#routinerepeat-issues"></a>
-</h2>
+article (infoworld.com)</a>. # Repeat/Recurring Issues</p>
 <p>If you have repeat issues with the package failing to connect to your
-proper environment, then before calling <code><a href="https://scasanova.github.io/f1dataR/">library(f1dataR)</a></code> or
-using specific functions through <code>::</code>, add the following to
-your code (replacing the <code>envname</code> parameter with your actual
-envname):</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_virtualenv</span>(<span class="at">virtualenv =</span> [envname])</span></code></pre></div>
-<p>If you’ve used a Conda environment, call
-<code><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">reticulate::use_condaenv()</a></code> instead.</p>
+proper environment, you can force a complete recreation of the virtual
+environment by calling:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/setup_fastf1.html">setup_fastf1</a></span><span class="op">(</span>new_env <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>If you’ve configured the package to use a custom environment name,
+the above function will require that name supplied as the
+<code>envname</code> parameter.</p>
+</div>
 </div>
   </div>
 
