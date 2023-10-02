@@ -112,8 +112,8 @@ time_to_sec <- function(time) {
 #' Displays a note if significantly out of date.
 #' @export
 #' @return integer for major version number (or NA if any error )
-get_fastf1_version <- function(envname = "f1dataR_env") {
-  ver <- reticulate::py_list_packages(envname) %>%
+get_fastf1_version <- function() {
+  ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if (length(ver) == 0) {
