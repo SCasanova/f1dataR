@@ -2,6 +2,7 @@
 
 # f1dataR 1.4.0
 
+* Fully deprecated `round` and `fastest_only` arguments
 * Added a function `correct_track_ratio()` to ensure plotted tracks have proper x & y ratios (#89, #179)
   * Updated `plot_fastest()` to use `correct_track_ratio()`
 * Added a function to help switch between cache choices (#170, #171)
