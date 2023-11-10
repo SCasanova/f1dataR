@@ -81,9 +81,9 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   )
 
   if (get_fastf1_version() < 3) {
-    add_v3_option <- ".add_driver_ahead()"
-  } else {
     add_v3_option <- ""
+  } else {
+    add_v3_option <- ".add_driver_ahead()"
   }
 
   if (laps == "fastest") {
