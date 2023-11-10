@@ -120,14 +120,14 @@ get_fastf1_version <- function() {
     cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.\nPlease run this to install the most recent version:\n{.code setup_fastf1()}")
     return(NA)
   }
-  if (as.integer(substr(ver, start = 1, 1)) >= 3) {
-    return(3)
-  } else if (as.integer(substr(ver, start = 1, 1)) <= 2) {
+  major <- as.integer(substr(ver, start = 1, stop = 1))
+  minor <- as.integer(substr(ver, start = 3, stop = 3))
+  if (major < 3) {
+    lifecycle::deprecate_warn("1.4.1", what = I("fastf1 version < 3.1"), with = I("fastf1 version >= 3.1"),
+                              details = c("Hard deprecation will occur between 2023 and 2024 F1 seasons"))
     cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
-    return(2)
-  } else {
-    return(NA)
   }
+  return(list(major = major, minor = minor))
 }
 
 # nocov start
