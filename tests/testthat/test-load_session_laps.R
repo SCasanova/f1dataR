@@ -23,7 +23,7 @@ test_that("load session laps works", {
   expect_equal(laps$time, laps2$time)
   expect_true(!is.na(laps$time[1]))
   expect_equal(nrow(laps), nrow(laps2))
-  if (get_fastf1_version() >= 3) {
+  if (get_fastf1_version()$major >= 3) {
     expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
     expect_true(all(c("Q1", "Q2", "Q3") %in% unique(lapsq$session_type)))
   }

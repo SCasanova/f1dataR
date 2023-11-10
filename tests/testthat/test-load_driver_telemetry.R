@@ -18,7 +18,7 @@ test_that("driver telemetry", {
 
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
-  if (get_fastf1_version() >= 3) {
+  if (get_fastf1_version()$major >= 3) {
     expect_equal(telem_fast$session_time[[1]], 3518.641)
     expect_equal(telem_fast$time[[2]], 0.086)
   } # else {
@@ -30,7 +30,7 @@ test_that("driver telemetry", {
   #     "can only be a lap number if using fastf1 v3.0 or higher"
   #   )
   # }
-  if (get_fastf1_version() >= 3) {
+  if (get_fastf1_version()$major >= 3) {
     telem_lap <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1)
     expect_equal(telem_lap$time[[1]], 0)
     expect_equal(telem_lap$speed[[1]], 0)

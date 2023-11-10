@@ -69,7 +69,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   reticulate::py_run_string("import fastf1")
-  if (get_fastf1_version() >= 3) {
+  if (get_fastf1_version()$major >= 3) {
     reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   }
 
