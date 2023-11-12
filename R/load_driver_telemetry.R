@@ -56,7 +56,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   # Param checks
   if (!(laps %in% c("fastest", "all"))) {
     if (is.numeric(laps)) {
-      if (get_fastf1_version() < 3) {
+      if (get_fastf1_version()$major < 3) {
         cli::cli_abort("{.var laps} can only be a lap number if using fastf1 v3.0 or higher")
       }
       if (as.numeric(laps) != as.integer(laps)) {
@@ -80,7 +80,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     }
   )
 
-  if (get_fastf1_version() < 3) {
+  if (get_fastf1_version()$major < 3) {
     add_v3_option <- ""
   } else {
     add_v3_option <- ".add_driver_ahead()"

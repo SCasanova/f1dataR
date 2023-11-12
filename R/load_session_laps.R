@@ -32,7 +32,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     round <- race
   }
 
-  if (get_fastf1_version() < 3) {
+  if (get_fastf1_version()$major < 3) {
     cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
   }
 
@@ -60,7 +60,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     ))
   }
 
-  if (session == "Q" && get_fastf1_version() >= 3) {
+  if (session == "Q" && get_fastf1_version()$major >= 3) {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
     reticulate::py_run_string(paste("q1, q2, q3 = laps.split_qualifying_sessions()",
       "q1len = len(q1.index)",
@@ -91,7 +91,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   laps <- laps %>%
     dplyr::mutate("Time" = .data$Time)
 
-  if (session == "Q" && get_fastf1_version() >= 3) {
+  if (session == "Q" && get_fastf1_version()$major >= 3) {
     # pull the lengths of each Quali session from the python env.
     q1len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q1len"))
     q2len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q2len"))
