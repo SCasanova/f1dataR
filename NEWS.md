@@ -1,5 +1,11 @@
 # f1dataR (development version)
 
+# f1dataR 1.4.1
+
+* Fixed a bug with cache options (#194, #195, #197)
+* Fixed a build bug
+* Began deprecation of support for FastF1 v < 3.1.0
+
 # f1dataR 1.4.0
 
 * Fully deprecated `round` and `fastest_only` arguments
