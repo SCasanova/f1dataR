@@ -122,6 +122,7 @@ get_fastf1_version <- function() {
   }
   major <- as.integer(unlist(strsplit(ver, ".", fixed = T))[1])
   minor <- as.integer(unlist(strsplit(ver, ".", fixed = T))[2])
+  if (major < 3 | (major == 3 & minor < 1)) {
     lifecycle::deprecate_warn("1.4.1",
       what = I("fastf1 version < 3.1"), with = I("fastf1 version >= 3.1"),
       details = c("Hard deprecation will occur between 2023 and 2024 F1 seasons")
