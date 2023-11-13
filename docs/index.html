@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -132,20 +132,20 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 815 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 1,106 × 6</span></span>
 <span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 perez          1        1:53.295     1     113.   2023</span></span>
-<span><span class="co">#&gt;  2 leclerc        2        1:54.584     1     115.   2023</span></span>
-<span><span class="co">#&gt;  3 hamilton       3        1:55.210     1     115.   2023</span></span>
-<span><span class="co">#&gt;  4 max_verstappen 4        1:55.659     1     116.   2023</span></span>
-<span><span class="co">#&gt;  5 sainz          5        1:57.901     1     118.   2023</span></span>
-<span><span class="co">#&gt;  6 alonso         6        1:58.270     1     118.   2023</span></span>
-<span><span class="co">#&gt;  7 norris         7        1:58.832     1     119.   2023</span></span>
-<span><span class="co">#&gt;  8 tsunoda        8        1:59.555     1     120.   2023</span></span>
-<span><span class="co">#&gt;  9 stroll         9        2:00.096     1     120.   2023</span></span>
-<span><span class="co">#&gt; 10 albon          10       2:00.359     1     120.   2023</span></span>
-<span><span class="co">#&gt; # ℹ 805 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 max_verstappen 1        1:59.857     1     120.   2023</span></span>
+<span><span class="co">#&gt;  2 norris         2        2:01.881     1     122.   2023</span></span>
+<span><span class="co">#&gt;  3 hamilton       3        2:04.866     1     125.   2023</span></span>
+<span><span class="co">#&gt;  4 alonso         4        2:07.301     1     127.   2023</span></span>
+<span><span class="co">#&gt;  5 stroll         5        2:08.727     1     129.   2023</span></span>
+<span><span class="co">#&gt;  6 russell        6        2:11.238     1     131.   2023</span></span>
+<span><span class="co">#&gt;  7 perez          7        2:13.140     1     133.   2023</span></span>
+<span><span class="co">#&gt;  8 sainz          8        2:14.431     1     134.   2023</span></span>
+<span><span class="co">#&gt;  9 ocon           9        2:15.909     1     136.   2023</span></span>
+<span><span class="co">#&gt; 10 piastri        10       2:17.108     1     137.   2023</span></span>
+<span><span class="co">#&gt; # ℹ 1,096 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, round <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
@@ -173,6 +173,20 @@
 <p>When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, round <span class="op">=</span> <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">"PER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: fastf1 version &lt; 3.1 was deprecated in f1dataR 1.4.1.</span></span>
+<span><span class="co">#&gt; ℹ Please use fastf1 version &gt;= 3.1 instead.</span></span>
+<span><span class="co">#&gt; ℹ Hard deprecation will occur between 2023 and 2024 F1 seasons</span></span>
+<span><span class="co">#&gt; ℹ The deprecated feature was likely used in the f1dataR package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at &lt;https://github.com/scasanova/f1dataR/issues&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
 <span><span class="co">#&gt; # A tibble: 592 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt;</span></span>
@@ -192,6 +206,12 @@
 <span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, …</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>, <span class="st">"Q"</span>, <span class="st">"HAM"</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
 <span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake</span></span>
 <span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt;</span></span>
@@ -219,6 +239,12 @@
 <p>This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_session_laps.html">load_session_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, add_weather <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
+<span><span class="co">#&gt; The Python package fastf1 was updated to v3 recently. Please update the version</span></span>
+<span><span class="co">#&gt; on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of</span></span>
+<span><span class="co">#&gt; f1dataR may not support fastf1&lt;3.0.0.</span></span>
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
 <span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span></span>

@@ -1,11 +1,8 @@
 ## Resubmission
-This is a resubmission. In this version we have:
+This is a re submission. In this version we have:
 
-* Added freedom to the usesr's python enviroment
-
-* Advanced lifecycle on deprecations
-
-* Added a helper function for plot outputs
+* Fixed a bug when loading certain functions
+* Started deprecation process on an older version of a python dependency 
 
 ## R CMD check results
 
