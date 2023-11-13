@@ -56,20 +56,20 @@ season and last race. Lap data is limited to 1996-present.
 
 ``` r
 load_laps()
-#> # A tibble: 815 × 6
+#> # A tibble: 1,106 × 6
 #>    driver_id      position time       lap time_sec season
 #>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 perez          1        1:53.295     1     113.   2023
-#>  2 leclerc        2        1:54.584     1     115.   2023
-#>  3 hamilton       3        1:55.210     1     115.   2023
-#>  4 max_verstappen 4        1:55.659     1     116.   2023
-#>  5 sainz          5        1:57.901     1     118.   2023
-#>  6 alonso         6        1:58.270     1     118.   2023
-#>  7 norris         7        1:58.832     1     119.   2023
-#>  8 tsunoda        8        1:59.555     1     120.   2023
-#>  9 stroll         9        2:00.096     1     120.   2023
-#> 10 albon          10       2:00.359     1     120.   2023
-#> # ℹ 805 more rows
+#>  1 max_verstappen 1        1:59.857     1     120.   2023
+#>  2 norris         2        2:01.881     1     122.   2023
+#>  3 hamilton       3        2:04.866     1     125.   2023
+#>  4 alonso         4        2:07.301     1     127.   2023
+#>  5 stroll         5        2:08.727     1     129.   2023
+#>  6 russell        6        2:11.238     1     131.   2023
+#>  7 perez          7        2:13.140     1     133.   2023
+#>  8 sainz          8        2:14.431     1     134.   2023
+#>  9 ocon           9        2:15.909     1     136.   2023
+#> 10 piastri        10       2:17.108     1     137.   2023
+#> # ℹ 1,096 more rows
 ```
 
 or
@@ -105,6 +105,20 @@ this will improve to only a couple of seconds
 
 ``` r
 load_driver_telemetry(season = 2022, round = 4, driver = "PER")
+#> Warning: fastf1 version < 3.1 was deprecated in f1dataR 1.4.1.
+#> ℹ Please use fastf1 version >= 3.1 instead.
+#> ℹ Hard deprecation will occur between 2023 and 2024 F1 seasons
+#> ℹ The deprecated feature was likely used in the f1dataR package.
+#>   Please report the issue at <https://github.com/scasanova/f1dataR/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
 #> # A tibble: 592 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl>
@@ -124,6 +138,12 @@ load_driver_telemetry(season = 2022, round = 4, driver = "PER")
 #> #   driver_ahead <chr>, distance_to_driver_ahead <dbl>, …
 
 load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
 #> # A tibble: 534 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl>
@@ -152,6 +172,12 @@ tyres, weather (optional), and more for every lap of the GP and driver.
 
 ``` r
 load_session_laps(season = 2023, round = 4, add_weather = TRUE)
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
+#> The Python package fastf1 was updated to v3 recently. Please update the version
+#> on your system by running: `setup_fastf1(newenv = TRUE)` Future versions of
+#> f1dataR may not support fastf1<3.0.0.
 #> # A tibble: 962 × 39
 #>     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time
 #>    <dbl> <chr>  <chr>            <dbl>      <dbl> <dbl>        <dbl>       <dbl>
