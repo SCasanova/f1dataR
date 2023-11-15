@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: Access Formula 1 Data
-Version: 1.4.1
+Version: 1.4.1.9000
 Authors@R: c(
     person("Santiago", "Casanova", , "santiago.casanova@yahoo.com", role = c("aut", "cre", "cph")),
     person("Philip", "Bulsink", , "bulsinkp@gmail.com", role = "aut",
