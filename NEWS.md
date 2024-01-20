@@ -1,5 +1,7 @@
 # f1dataR (development version)
 
+* Added `load_circuit_details` (#210)
+
 # f1dataR 1.4.1
 
 * Fixed a bug with cache options (#194, #195, #197)

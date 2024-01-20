@@ -38,6 +38,11 @@
       envir = rlang::ns_env("f1dataR")
     )
     assign(
+      x = "load_circuit_details",
+      value = memoise::memoise(load_circuit_details, ~ memoise::timeout(86400), cache = cache),
+      envir = rlang::ns_env("f1dataR")
+    )
+    assign(
       x = "load_constructors",
       value = memoise::memoise(load_constructors, ~ memoise::timeout(86400), cache = cache),
       envir = rlang::ns_env("f1dataR")
