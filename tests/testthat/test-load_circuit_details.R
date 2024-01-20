@@ -9,7 +9,7 @@ test_that("load circuit details works", {
     unlink(file.path(tempdir(), "tst_circuit_details"), recursive = TRUE, force = TRUE)
   }
   withr::local_file(file.path(tempdir(), "tst_circuit_details"))
-  dir.create(file.path(tempdir(), "tst_circuit_detailss"), recursive = TRUE)
+  dir.create(file.path(tempdir(), "tst_circuit_details"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_circuit_details"))
 
   circuit_details <- load_circuit_details(2023, 'bahrain')
