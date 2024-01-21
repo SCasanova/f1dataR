@@ -36,8 +36,8 @@
 #' @export
 load_circuit_details <- function(season = get_current_season(), round = 1, log_level = "WARNING") {
 
-  if (get_fastf1_version()$major < 3) {
-    cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
+  if (get_fastf1_version()$major < 3 | (get_fastf1_version$major == 3 & get_fastf1_version$minor < 1)) {
+    cli::cli_abort("An old version of FastF1 is in use. FastF1 verison 3.1.0 or later.")
   }
 
   load_race_session(obj_name = "session", season = season, round = round, session = 'R', log_level = log_level)

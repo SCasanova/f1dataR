@@ -12,6 +12,10 @@ test_that("load circuit details works", {
   dir.create(file.path(tempdir(), "tst_circuit_details"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_circuit_details"))
 
+  if (get_fastf1_version()$major < 3 | (get_fastf1_version$major == 3 & get_fastf1_version$minor < 1)) {
+    testthat::skip("Testing circuit details requires FastF1 v 3.1.0 or greater")
+  }
+
   circuit_details <- load_circuit_details(2023, 'bahrain')
   expect_type(circuit_details, "list")
   expect_length(circuit_details, 4)
