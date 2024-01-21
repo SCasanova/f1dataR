@@ -35,6 +35,7 @@ clear_f1_cache <- function() {
   }
 
   memoise::forget(f1dataR::load_circuits)
+  memoise::forget(f1dataR::load_circuit_details)
   memoise::forget(f1dataR::load_constructors)
   memoise::forget(f1dataR::load_drivers)
   memoise::forget(f1dataR::load_driver_telemetry)
