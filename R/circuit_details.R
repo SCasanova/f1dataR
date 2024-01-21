@@ -36,11 +36,11 @@
 #' @export
 load_circuit_details <- function(season = get_current_season(), round = 1, log_level = "WARNING") {
 
-  if (get_fastf1_version()$major < 3 | (get_fastf1_version$major == 3 & get_fastf1_version$minor < 1)) {
+  if (get_fastf1_version()$major < 3 || (get_fastf1_version()$major == 3 && get_fastf1_version()$minor < 1)) {
     cli::cli_abort("An old version of FastF1 is in use. FastF1 verison 3.1.0 or later.")
   }
 
-  load_race_session(obj_name = "session", season = season, round = round, session = 'R', log_level = log_level)
+  load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
 
   tryCatch(
     {
@@ -53,7 +53,7 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
     }
   )
 
-  py_env<-reticulate::py_run_string("circuit_info = session.get_circuit_info()")
+  py_env <- reticulate::py_run_string("circuit_info = session.get_circuit_info()")
 
   circuit_info <- reticulate::py_to_r(reticulate::py_get_item(py_env, "circuit_info"))
 
