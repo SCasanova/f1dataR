@@ -62,7 +62,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
 
   if (session == "Q" && get_fastf1_version()$major >= 3) {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
-    reticulate::py_run_string(paste("q1, q2, q3 = laps.split_qualifying_sessions()",
+    reticulate::py_run_string(paste("q1, q2, q3 = session.laps.split_qualifying_sessions()",
       "q1len = len(q1.index)",
       "q2len = len(q2.index)",
       "q3len = len(q3.index)",

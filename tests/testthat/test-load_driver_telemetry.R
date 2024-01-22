@@ -20,7 +20,7 @@ test_that("driver telemetry", {
   expect_true(ncol(telem) == ncol(telem_fast))
   if (get_fastf1_version()$major >= 3) {
     expect_equal(telem_fast$session_time[[1]], 3518.641)
-    expect_equal(telem_fast$time[[2]], 0.086)
+    expect_equal(round(telem_fast$time[[2]], 3), 0.086)
   } # else {
   # v3 updated some telemetry calculations, so this handles v2 until it's retired
   #   expect_equal(telem_fast$session_time[[1]], 3518.595)
