@@ -209,7 +209,7 @@ jobs:
   R-CMD-check-dev-ff1:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) old fastf1
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) dev fastf1
 
     strategy:
       fail-fast: false
