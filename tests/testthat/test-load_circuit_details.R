@@ -39,5 +39,4 @@ test_that("load circuit details works", {
   # Check rotation value
   expect_type(circuit_details[[4]], "double")
   expect_true(circuit_details[[4]] >= 0 & circuit_details[[4]] <= 360)
-
 })

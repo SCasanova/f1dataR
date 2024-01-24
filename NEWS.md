@@ -1,6 +1,8 @@
-# f1dataR (development version)
+# f1dataR 1.5.0
 
 * Added `load_circuit_details` (#210)
+* Strengthened package testing (#212, #216)
+* Bugfixes (#216)
 
 # f1dataR 1.4.1
 
