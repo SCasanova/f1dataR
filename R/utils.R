@@ -105,6 +105,27 @@ time_to_sec <- function(time) {
 }
 
 
+#' Check FastF1 Version
+#'
+#' @description
+#' This function checks the version of `FastF1` and ensures it's at or above the minimum supported version for
+#' `f1dataR` (currently requires 3.1.0 or better).
+#'
+#' This function is a light wrapper around get_fastf1_version()
+#'
+#' @return True/False value, where True indicates the version of FastF1 is at or above the minimum level.
+#'
+#' @keywords internal
+check_ff1_version <- function() {
+  version<-get_fastf1_version()
+  if(version$major < 3 | (version$major == 3 & version$minor < 1)){
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
+}
+
+
 #' Get current FastF1 version
 #'
 #' @description
