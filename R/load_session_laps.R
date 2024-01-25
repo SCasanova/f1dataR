@@ -27,15 +27,18 @@
 #'
 load_session_laps <- function(season = get_current_season(), round = 1, session = "R", log_level = "WARNING",
                               add_weather = FALSE, race = lifecycle::deprecated()) {
+  # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_session_laps(race)", "load_session_laps(round)")
     round <- race
   }
-
-  if (get_fastf1_version()$major < 3) {
-    cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
+  if (!check_ff1_version()) {
+    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+                             i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}")
+                             )
   }
 
+  # Function Code
   load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
 
   tryCatch(

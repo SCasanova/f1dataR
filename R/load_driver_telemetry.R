@@ -39,7 +39,7 @@
 load_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, laps = "fastest",
                                   log_level = "WARNING", race = lifecycle::deprecated(),
                                   fastest_only = lifecycle::deprecated()) {
-  # Lifecycles
+  # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
     round <- race
@@ -52,7 +52,13 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
       laps <- "all"
     }
   }
+  if (!check_ff1_version()) {
+    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+                     i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}")
+    )
+  }
 
+  # Function Code
   # Param checks
   if (!(laps %in% c("fastest", "all"))) {
     if (is.numeric(laps)) {
