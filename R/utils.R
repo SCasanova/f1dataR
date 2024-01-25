@@ -180,11 +180,11 @@ get_fastf1_version <- function() {
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg fastf1}f")
+    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
     virtualenv_remove(envname)
   }
 
-  cli::cli_inform("Installing {.pkg fastf1} in current Python environment: {.var {envname}}.")
+  cli::cli_inform("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
   reticulate::py_install("fastf1", envname = envname, ...)
 }
 
