@@ -1,7 +1,7 @@
 ## Resubmission
-This is a minor version update.
+This is a major version update.
 
-This version fixes a small bug (brought forward by underlying Python package updates) and provides additional user capabilities.
+This update includes deprecation of support for older versions of the Python package wrapped in our code. This is done as the new Python version is required for increasing numbers of the functions in use.
 
 ## R CMD check results
 

@@ -1,5 +1,7 @@
 # f1dataR (development version)
 
+* Deprecated support for FastF1 v < 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (#198)
+
 # f1dataR 1.5.0
 
 * Added `load_circuit_details` (#210)
