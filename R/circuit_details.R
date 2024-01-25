@@ -38,8 +38,8 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
   # Deprecation Checks
   if (!check_ff1_version()) {
     cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
-                     i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}")
-    )
+      i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
+    ))
   }
 
   # Function Code

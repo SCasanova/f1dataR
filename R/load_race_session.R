@@ -35,18 +35,18 @@
 #' }
 load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = "R",
                               log_level = "WARNING", race = lifecycle::deprecated()) {
-  #Deprecation Checks
+  # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_race_session(race)", "load_race_session(round)")
     round <- race
   }
   if (!check_ff1_version()) {
     cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
-                     i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}")
-    )
+      i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
+    ))
   }
 
-  #Function Code
+  # Function Code
   if (season != "current" && (season < 2018 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2018 and {get_current_season()} (or use "current")')
     # stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
