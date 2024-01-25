@@ -117,8 +117,8 @@ time_to_sec <- function(time) {
 #'
 #' @keywords internal
 check_ff1_version <- function() {
-  version<-get_fastf1_version()
-  if(version$major < 3 | (version$major == 3 & version$minor < 1)){
+  version <- get_fastf1_version()
+  if (version$major < 3 | (version$major == 3 & version$minor < 1)) {
     return(FALSE)
   } else {
     return(TRUE)
