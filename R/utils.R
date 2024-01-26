@@ -113,15 +113,18 @@ time_to_sec <- function(time) {
 #'
 #' This function is a light wrapper around get_fastf1_version()
 #'
-#' @return True/False value, where True indicates the version of FastF1 is at or above the minimum level.
+#' @return Invisibly `TRUE` if not raising an error for unsupported `FastF1` version.
 #'
 #' @keywords internal
 check_ff1_version <- function() {
-  version <- get_fastf1_version()
-  if (version$major < 3 | (version$major == 3 & version$minor < 1)) {
-    return(FALSE)
+  version<-get_fastf1_version()
+  if(version$major < 3 | (version$major == 3 & version$minor < 1)){
+    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+                     x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
+                     i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
+    ))
   } else {
-    return(TRUE)
+    invisible(TRUE)
   }
 }
 
@@ -143,13 +146,7 @@ get_fastf1_version <- function() {
   }
   major <- as.integer(unlist(strsplit(ver, ".", fixed = T))[1])
   minor <- as.integer(unlist(strsplit(ver, ".", fixed = T))[2])
-  if (major < 3 | (major == 3 & minor < 1)) {
-    lifecycle::deprecate_warn("1.4.1",
-      what = I("fastf1 version < 3.1"), with = I("fastf1 version >= 3.1"),
-      details = c("Hard deprecation will occur between 2023 and 2024 F1 seasons")
-    )
-    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
-  }
+
   return(list(major = major, minor = minor))
 }
 

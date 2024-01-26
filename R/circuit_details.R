@@ -36,11 +36,7 @@
 #' @export
 load_circuit_details <- function(season = get_current_season(), round = 1, log_level = "WARNING") {
   # Deprecation Checks
-  if (!check_ff1_version()) {
-    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
-      i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
-    ))
-  }
+  check_ff1_version()
 
   # Function Code
   load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
