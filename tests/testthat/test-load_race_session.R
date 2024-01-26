@@ -14,11 +14,13 @@ test_that("Load Session (file cached) Works", {
 
   # Tests
 
-  #Ensure failure if old ff1, then skip
+  # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if(ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)){
-    expect_error(session <- load_race_session(season = 2022, round = 1),
-                 "An old version of FastF1 is in use")
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
     skip("Skipping load_race_session as FastF1 is out of date.")
   }
 
@@ -71,11 +73,13 @@ test_that("Load Session (memory cached) Works", {
   # because python's process has it locked.
   withr::local_options(f1dataR.cache = "memory")
 
-  #Ensure failure if old ff1, then skip
+  # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if(ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)){
-    expect_error(session <- load_race_session(season = 2022, round = 1),
-                 "An old version of FastF1 is in use")
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
     skip("Skipping load_race_session (memory cache) test as FastF1 is out of date.")
   }
 

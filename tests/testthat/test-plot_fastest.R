@@ -14,11 +14,13 @@ test_that("graphics work", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_graphics"))
   withr::local_seed(1234)
 
-  #Ensure failure if old ff1, then skip
+  # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if(ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)){
-    expect_error(session <- load_race_session(season = 2022, round = 1),
-                 "An old version of FastF1 is in use")
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
     skip("Skipping graphics tests as FastF1 is out of date.")
   }
 
