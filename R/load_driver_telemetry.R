@@ -58,9 +58,6 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   # Param checks
   if (!(laps %in% c("fastest", "all"))) {
     if (is.numeric(laps)) {
-      if (get_fastf1_version()$major < 3) {
-        cli::cli_abort("{.var laps} can only be a lap number if using fastf1 v3.0 or higher")
-      }
       if (as.numeric(laps) != as.integer(laps)) {
         cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
       }
@@ -82,23 +79,17 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
     }
   )
 
-  if (get_fastf1_version()$major < 3) {
-    add_v3_option <- ""
-  } else {
-    add_v3_option <- ".add_driver_ahead()"
-  }
-
   if (laps == "fastest") {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance(){opt}",
-      driver = driver, opt = add_v3_option
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",
+      driver = driver
     ))
   } else if (laps != "all") {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance(){opt}",
-      driver = driver, laps = laps, opt = add_v3_option
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_lap({laps}).get_telemetry().add_distance().add_driver_ahead()",
+      driver = driver, laps = laps
     ))
   } else {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance(){opt}",
-      driver = driver, opt = add_v3_option
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').get_telemetry().add_distance().add_driver_ahead()",
+      driver = driver
     ))
   }
   py_env <- reticulate::py_run_string(paste("tel.SessionTime = tel.SessionTime.dt.total_seconds()",
