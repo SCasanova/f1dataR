@@ -7,7 +7,7 @@
 check_ff1_version()
 }
 \value{
-True/False value, where True indicates the version of FastF1 is at or above the minimum level.
+Invisibly \code{TRUE} if not raising an error for unsupported \code{FastF1} version.
 }
 \description{
 This function checks the version of \code{FastF1} and ensures it's at or above the minimum supported version for
