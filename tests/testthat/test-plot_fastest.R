@@ -54,5 +54,13 @@ test_that("graphics work", {
 })
 
 test_that("correct_track_ratio works", {
+  # Ensure caught failure if no ggplot2, then skip remainder
+  if (!require("ggplot2", quietly = TRUE)) {
+    expect_error(
+      correct_track_ratio("bob"),
+      "requires ggplot2 package installation"
+    )
+    testthat::skip("ggplot2 not available for testing graphics")
+  }
   expect_error(correct_track_ratio("bob"), "`trackplot` must be a `ggplot` object")
 })
