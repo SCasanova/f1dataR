@@ -38,7 +38,6 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_race_session(race)", "load_race_session(round)")
-    round <- race
   }
   check_ff1_version()
 
