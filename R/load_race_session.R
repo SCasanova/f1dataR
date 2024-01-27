@@ -72,10 +72,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   reticulate::py_run_string("import fastf1")
-  if (get_fastf1_version()$major >= 3) {
-    reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
-  }
-
+  reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = f1datar_cache))
 
   py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
