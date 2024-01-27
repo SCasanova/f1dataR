@@ -128,6 +128,69 @@ jobs:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
 
+  test-coverage-hard:
+    # NOTE: This workflow only directly installs "hard" dependencies, i.e. Depends,
+    # Imports, and LinkingTo dependencies. Notably, Suggests dependencies are never
+    # installed, with the exception of testthat, knitr, and rmarkdown. The cache is
+    # never used to avoid accidentally restoring a cache containing a suggested
+    # dependency.
+
+    runs-on: ubuntu-latest
+
+    name: Test coverage - HARD
+
+    strategy:
+      fail-fast: false
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          dependencies: '"hard"'
+          cache: false
+          extra-packages: |
+            any::rcmdcheck
+            any::testthat
+            any::knitr
+            any::rmarkdown
+            any::markdown
+            any::covr
+          needs: coverage
+
+      - name: Test coverage
+        run: |
+          covr::codecov(
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+          )
+        shell: Rscript {0}
+
+      - name: Show testthat output
+        if: always()
+        run: |
+          ## --------------------------------------------------------------------
+          find ${{ runner.temp }}/package -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-test-failures
+          path: ${{ runner.temp }}/package
+
   test-pkgdown-ok:
     name: Test pkgdown ok
     runs-on: ubuntu-latest
