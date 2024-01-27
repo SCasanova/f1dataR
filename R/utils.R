@@ -116,7 +116,7 @@ time_to_sec <- function(time) {
 #' @return invisible TRUE, no real return, called for effect
 #'
 #' @keywords internal
-check_ff1_session_loaded <- function(session_name = "session"){
+check_ff1_session_loaded <- function(session_name = "session") {
   tryCatch(
     {
       # Only returns a value if session.load() has been successful
