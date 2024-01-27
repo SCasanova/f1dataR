@@ -28,6 +28,8 @@ get_ergast_content <- function(url) {
     httr2::req_perform()
 
   # Restart retries to ergast with http (instead of https)
+  # No testing penalty for ergast functioning correct
+  # nocov start
   if (httr2::resp_is_error(ergast_raw) || httr2::resp_body_string(ergast_raw) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
     ergast_raw <- ergast_raw %>%
@@ -46,6 +48,7 @@ get_ergast_content <- function(url) {
   if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
     cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
+  # nocov end
 
   # else must be ok
   return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
