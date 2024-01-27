@@ -15,8 +15,10 @@ test_that("graphics work", {
 
   # Ensure caught failure if no ggplot2, then skip remainder
   if (!require("ggplot2", quietly = TRUE)) {
-    expect_error(plot_fastest(season = 2022, round = 1, session = "R", driver = "HAM", color = "gear"),
-                 "f1dataR::plot_fastest() requires ggplot2 package installation")
+    expect_error(
+      plot_fastest(season = 2022, round = 1, session = "R", driver = "HAM", color = "gear"),
+      "f1dataR::plot_fastest() requires ggplot2 package installation"
+    )
     testthat::skip("ggplot2 not available for testing graphics")
   }
 
@@ -30,9 +32,11 @@ test_that("graphics work", {
     skip("Skipping graphics tests as FastF1 is out of date.")
   }
 
-  #Check deprecation
-  expect_error(plot_fastest(season = 2022, race = 1, session = "R", driver = "HAM", color = "gear"),
-               "was deprecated in f1dataR")
+  # Check deprecation
+  expect_error(
+    plot_fastest(season = 2022, race = 1, session = "R", driver = "HAM", color = "gear"),
+    "was deprecated in f1dataR"
+  )
 
   # Snapshot Tests of graphics
   gear <- plot_fastest(2022, 1, "R", "HAM", "gear")
