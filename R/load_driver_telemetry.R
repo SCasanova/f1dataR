@@ -61,17 +61,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   }
 
   load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
-
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
-    },
-    error = function(e) {
-      reticulate::py_run_string("session.load()")
-    }
-  )
+  check_ff1_session_loaded(session_name = "session")
 
   if (laps == "fastest") {
     reticulate::py_run_string(glue::glue("tel = session.laps.pick_driver('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",

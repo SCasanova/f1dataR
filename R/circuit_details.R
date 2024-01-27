@@ -40,17 +40,7 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
 
   # Function Code
   load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
-
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
-    },
-    error = function(e) {
-      reticulate::py_run_string("session.load()")
-    }
-  )
+  check_ff1_session_loaded(session_name = "session")
 
   py_env <- reticulate::py_run_string("circuit_info = session.get_circuit_info()")
 

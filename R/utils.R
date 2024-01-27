@@ -105,6 +105,32 @@ time_to_sec <- function(time) {
 }
 
 
+#' Check FastF1 Session Loaded
+#'
+#' @description Used to verify that the fastf1 session is loaded before trying to work with it.
+#'
+#' Prevents errors in automated processing code.
+#'
+#' @param session_name Name of the python session object. For internal functions, typically `session`.
+#'
+#' @return invisible TRUE, no real return, called for effect
+#'
+#' @keywords internal
+check_ff1_session_loaded <- function(session_name = "session"){
+  tryCatch(
+    {
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, retry
+      reticulate::py_run_string(glue::glue("{session_name}.t0_date", session_name = session_name))
+    },
+    error = function(e) {
+      reticulate::py_run_string(glue::glue("{session_name}.load()", session_name = session_name))
+    }
+  )
+  invisible(TRUE)
+}
+
+
 #' Check FastF1 Version
 #'
 #' @description

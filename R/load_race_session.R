@@ -91,16 +91,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
 
   session <- reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
 
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
-    },
-    error = function(e) {
-      reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
-    }
-  )
+  check_ff1_session_loaded(session_name = obj_name)
 
   invisible(session[obj_name])
 }
