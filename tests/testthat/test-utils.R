@@ -13,7 +13,7 @@ test_that("utility functions work", {
 
   # get_ergast_content() is inherently tested in load_x functions too
 
-  if (require(httptest)) {
+  if (requireNamespace('httptest', quietly = TRUE)) {
     # Test internet failures for get_current_season
     httptest::without_internet({
       expect_gte(get_current_season(), 2022)
