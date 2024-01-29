@@ -27,27 +27,15 @@
 #'
 load_session_laps <- function(season = get_current_season(), round = 1, session = "R", log_level = "WARNING",
                               add_weather = FALSE, race = lifecycle::deprecated()) {
+  # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_session_laps(race)", "load_session_laps(round)")
-    round <- race
   }
+  check_ff1_version()
 
-  if (get_fastf1_version()$major < 3) {
-    cli::cli_alert_warning("An old version of FastF1 is in use. Additional data is provided if using FastF1 v3.0.0 or later.")
-  }
-
+  # Function Code
   load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
-
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
-    },
-    error = function(e) {
-      reticulate::py_run_string("session.load()")
-    }
-  )
+  check_ff1_session_loaded(session_name = "session")
 
   reticulate::py_run_string("laps = session.laps")
   if (add_weather) {
@@ -60,7 +48,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     ))
   }
 
-  if (session == "Q" && get_fastf1_version()$major >= 3) {
+  if (session == "Q") {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
     reticulate::py_run_string(paste("q1, q2, q3 = session.laps.split_qualifying_sessions()",
       "q1len = len(q1.index)",
@@ -91,7 +79,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   laps <- laps %>%
     dplyr::mutate("Time" = .data$Time)
 
-  if (session == "Q" && get_fastf1_version()$major >= 3) {
+  if (session == "Q") {
     # pull the lengths of each Quali session from the python env.
     q1len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q1len"))
     q2len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q2len"))

@@ -1,7 +1,6 @@
 test_that("graphics work", {
   skip_if_no_py()
   skip_if_no_ff1()
-  skip_if_no_ggplot2()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -13,6 +12,31 @@ test_that("graphics work", {
   dir.create(file.path(tempdir(), "tst_graphics"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_graphics"))
   withr::local_seed(1234)
+
+  # Ensure caught failure if no ggplot2, then skip remainder
+  if (!require("ggplot2", quietly = TRUE)) {
+    expect_error(
+      plot_fastest(season = 2022, round = 1, session = "R", driver = "HAM", color = "gear"),
+      "f1dataR::plot_fastest() requires ggplot2 package installation"
+    )
+    testthat::skip("ggplot2 not available for testing graphics")
+  }
+
+  # Ensure caught failure if old ff1, then skip remainder
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
+    skip("Skipping graphics tests as FastF1 is out of date.")
+  }
+
+  # Check deprecation
+  expect_error(
+    plot_fastest(season = 2022, race = 1, session = "R", driver = "HAM", color = "gear"),
+    "was deprecated in f1dataR"
+  )
 
   # Snapshot Tests of graphics
   gear <- plot_fastest(2022, 1, "R", "HAM", "gear")
@@ -29,6 +53,14 @@ test_that("graphics work", {
   expect_equal(qp_axis$labels, qualiplot$labels)
 })
 
-test_that("Plot_fastest works", {
+test_that("correct_track_ratio works", {
+  # Ensure caught failure if no ggplot2, then skip remainder
+  if (!require("ggplot2", quietly = TRUE)) {
+    expect_error(
+      correct_track_ratio("bob"),
+      "requires ggplot2 package installation"
+    )
+    testthat::skip("ggplot2 not available for testing graphics")
+  }
   expect_error(correct_track_ratio("bob"), "`trackplot` must be a `ggplot` object")
 })

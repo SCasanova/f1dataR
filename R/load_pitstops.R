@@ -13,14 +13,17 @@
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
 #' and stop duration
 load_pitstops <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
+  # Deprecation check
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_pitstops(race)", "load_pitstops(round)")
-    round <- race
   }
+
+  # Parameter Check
   if (season != "current" && (season < 2011 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2011 and {get_current_season()} (or use "current")')
   }
 
+  # Function Code
   url <- glue::glue("{season}/{round}/pitstops.json?limit=80",
     season = season, round = round
   )

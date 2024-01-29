@@ -25,18 +25,17 @@
 #' }
 plot_fastest <- function(season = get_current_season(), round = 1, session = "R", driver, color = "gear",
                          race = lifecycle::deprecated()) {
+  # Package Checks
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     cli::cli_abort("f1dataR::plot_fastest() requires ggplot2 package installation")
   }
+
+  # Deprecation Check
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop(
-      "1.4.0",
-      "plot_fastest(race)",
-      "plot_fastest(round)"
-    )
-    round <- race
+    lifecycle::deprecate_stop("1.4.0", "plot_fastest(race)", "plot_fastest(round)")
   }
 
+  # Function Code
   cli::cli_alert_info("If the session has not been loaded yet, this could take a minute\n\n")
 
   driver_data <- load_driver_telemetry(season, round, session, driver, "fastest") %>%
@@ -127,11 +126,11 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' correct_track_ratio(fast_plot)
 #' }
 correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey10") {
-  if (!"ggplot" %in% class(trackplot)) {
-    cli::cli_abort("{.var trackplot} must be a `ggplot` object")
-  }
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     cli::cli_abort("f1dataR::correct_track_ratio() requires ggplot2 package installation")
+  }
+  if (!"ggplot" %in% class(trackplot)) {
+    cli::cli_abort("{.var trackplot} must be a `ggplot` object")
   }
 
   plotdata <- trackplot$data

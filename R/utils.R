@@ -28,6 +28,8 @@ get_ergast_content <- function(url) {
     httr2::req_perform()
 
   # Restart retries to ergast with http (instead of https)
+  # No testing penalty for ergast functioning correct
+  # nocov start
   if (httr2::resp_is_error(ergast_raw) || httr2::resp_body_string(ergast_raw) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
     ergast_raw <- ergast_raw %>%
@@ -46,6 +48,7 @@ get_ergast_content <- function(url) {
   if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
     cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
   }
+  # nocov end
 
   # else must be ok
   return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
@@ -105,6 +108,56 @@ time_to_sec <- function(time) {
 }
 
 
+#' Check FastF1 Session Loaded
+#'
+#' @description Used to verify that the fastf1 session is loaded before trying to work with it.
+#'
+#' Prevents errors in automated processing code.
+#'
+#' @param session_name Name of the python session object. For internal functions, typically `session`.
+#'
+#' @return invisible TRUE, no real return, called for effect
+#'
+#' @keywords internal
+check_ff1_session_loaded <- function(session_name = "session") {
+  tryCatch(
+    {
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, retry
+      reticulate::py_run_string(glue::glue("{session_name}.t0_date", session_name = session_name))
+    },
+    error = function(e) {
+      reticulate::py_run_string(glue::glue("{session_name}.load()", session_name = session_name))
+    }
+  )
+  invisible(TRUE)
+}
+
+
+#' Check FastF1 Version
+#'
+#' @description
+#' This function checks the version of `FastF1` and ensures it's at or above the minimum supported version for
+#' `f1dataR` (currently requires 3.1.0 or better).
+#'
+#' This function is a light wrapper around get_fastf1_version()
+#'
+#' @return Invisibly `TRUE` if not raising an error for unsupported `FastF1` version.
+#'
+#' @keywords internal
+check_ff1_version <- function() {
+  version <- get_fastf1_version()
+  if (version$major < 3 | (version$major == 3 & version$minor < 1)) {
+    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+      x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
+      i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
+    ))
+  } else {
+    invisible(TRUE)
+  }
+}
+
+
 #' Get current FastF1 version
 #'
 #' @description
@@ -122,13 +175,7 @@ get_fastf1_version <- function() {
   }
   major <- as.integer(unlist(strsplit(ver, ".", fixed = T))[1])
   minor <- as.integer(unlist(strsplit(ver, ".", fixed = T))[2])
-  if (major < 3 | (major == 3 & minor < 1)) {
-    lifecycle::deprecate_warn("1.4.1",
-      what = I("fastf1 version < 3.1"), with = I("fastf1 version >= 3.1"),
-      details = c("Hard deprecation will occur between 2023 and 2024 F1 seasons")
-    )
-    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
-  }
+
   return(list(major = major, minor = minor))
 }
 
@@ -159,11 +206,11 @@ get_fastf1_version <- function() {
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg fastf1}f")
+    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
     virtualenv_remove(envname)
   }
 
-  cli::cli_inform("Installing {.pkg fastf1} in current Python environment: {.var {envname}}.")
+  cli::cli_inform("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
   reticulate::py_install("fastf1", envname = envname, ...)
 }
 
