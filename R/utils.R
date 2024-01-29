@@ -11,10 +11,17 @@
 #' @return the result of `jsonlite::fromJSON` called on ergast's return content.
 #' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
+  # Function Deprecation Warning
+  lifecycle::deprecate_soft("at the end of 2024", "get_ergast_content()",
+                            details = c("i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
+                                        " " = "This package will update with a replacement when one is available."))
+
+  #Function Code
+
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
-  # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
+  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
   ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%

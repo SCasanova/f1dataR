@@ -1,5 +1,7 @@
 # f1dataR (development version)
 
+* Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.
+
 # f1dataR 1.5.0
 
 * Added `load_circuit_details` (#210)
