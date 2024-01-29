@@ -13,6 +13,16 @@ test_that("driver telemetry", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_telem"))
 
   # Tests
+  # Ensure failure if old ff1, then skip
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all"),
+      "An old version of FastF1 is in use"
+    )
+    skip("Skipping load_driver_telemetry tests as FastF1 is out of date.")
+  }
+
   telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all")
   telem_fast <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "fastest")
 

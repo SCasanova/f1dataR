@@ -14,6 +14,16 @@ test_that("Load Session (file cached) Works", {
 
   # Tests
 
+  # Ensure failure if old ff1, then skip
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
+    skip("Skipping load_race_session as FastF1 is out of date.")
+  }
+
   # test with all parameters but session provided
   expect_invisible(load_race_session(season = 2022, round = 1))
   # validate the cache is there now
@@ -62,6 +72,16 @@ test_that("Load Session (memory cached) Works", {
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
   withr::local_options(f1dataR.cache = "memory")
+
+  # Ensure failure if old ff1, then skip
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+    expect_error(
+      session <- load_race_session(season = 2022, round = 1),
+      "An old version of FastF1 is in use"
+    )
+    skip("Skipping load_race_session (memory cache) test as FastF1 is out of date.")
+  }
 
   session1 <- load_race_session(season = 2022, round = 1, session = "R")
   expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2022")
