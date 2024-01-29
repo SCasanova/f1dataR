@@ -13,10 +13,13 @@
 get_ergast_content <- function(url) {
   # Function Deprecation Warning
   lifecycle::deprecate_soft("at the end of 2024", "get_ergast_content()",
-                            details = c("i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
-                                        " " = "This package will update with a replacement when one is available."))
+    details = c(
+      "i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
+      " " = "This package will update with a replacement when one is available."
+    )
+  )
 
-  #Function Code
+  # Function Code
 
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
