@@ -93,7 +93,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="f1datar-">f1dataR <img src="reference/figures/logo.png" align="right" width="25%" min-width="120px"><a class="anchor" aria-label="anchor" href="#f1datar-"></a>
 </h1></div>
-<p>An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the fastf1 Python library.</p>
+<p>An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the FastF1 Python library.</p>
 <!-- badges: start -->
 
 <div class="section level2">
@@ -105,7 +105,7 @@
 <p>or install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SCasanova/f1dataR"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SCasanova/f1dataR"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -118,6 +118,7 @@
 <a href="https://www.formula1.com/en/f1-live.html" class="external-link">F1 Data Stream</a> via the <a href="https://docs.fastf1.dev/index.html" class="external-link">Fast F1 python library</a>
 </li>
 </ul>
+<p>Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. When a new data source is identified the package will be migrated to that source.</p>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
@@ -132,20 +133,20 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 815 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 1,157 × 6</span></span>
 <span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 perez          1        1:53.295     1     113.   2023</span></span>
-<span><span class="co">#&gt;  2 leclerc        2        1:54.584     1     115.   2023</span></span>
-<span><span class="co">#&gt;  3 hamilton       3        1:55.210     1     115.   2023</span></span>
-<span><span class="co">#&gt;  4 max_verstappen 4        1:55.659     1     116.   2023</span></span>
-<span><span class="co">#&gt;  5 sainz          5        1:57.901     1     118.   2023</span></span>
-<span><span class="co">#&gt;  6 alonso         6        1:58.270     1     118.   2023</span></span>
-<span><span class="co">#&gt;  7 norris         7        1:58.832     1     119.   2023</span></span>
-<span><span class="co">#&gt;  8 tsunoda        8        1:59.555     1     120.   2023</span></span>
-<span><span class="co">#&gt;  9 stroll         9        2:00.096     1     120.   2023</span></span>
-<span><span class="co">#&gt; 10 albon          10       2:00.359     1     120.   2023</span></span>
-<span><span class="co">#&gt; # ℹ 805 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 max_verstappen 1        1:32.190     1     92.2   2023</span></span>
+<span><span class="co">#&gt;  2 leclerc        2        1:33.119     1     93.1   2023</span></span>
+<span><span class="co">#&gt;  3 piastri        3        1:33.882     1     93.9   2023</span></span>
+<span><span class="co">#&gt;  4 norris         4        1:34.309     1     94.3   2023</span></span>
+<span><span class="co">#&gt;  5 russell        5        1:34.776     1     94.8   2023</span></span>
+<span><span class="co">#&gt;  6 tsunoda        6        1:35.435     1     95.4   2023</span></span>
+<span><span class="co">#&gt;  7 alonso         7        1:36.044     1     96.0   2023</span></span>
+<span><span class="co">#&gt;  8 gasly          8        1:36.636     1     96.6   2023</span></span>
+<span><span class="co">#&gt;  9 hamilton       9        1:37.227     1     97.2   2023</span></span>
+<span><span class="co">#&gt; 10 perez          10       1:37.745     1     97.7   2023</span></span>
+<span><span class="co">#&gt; # ℹ 1,147 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, round <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
@@ -222,16 +223,16 @@
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
 <span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time</span></span>
 <span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 3892. VER    1                 110.          1     1         697.        NaN </span></span>
-<span><span class="co">#&gt;  2 4000. VER    1                 108.          2     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  3 4108. VER    1                 108.          3     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  4 4215. VER    1                 107.          4     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  5 4322. VER    1                 107.          5     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  6 4430. VER    1                 107.          6     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  7 4537. VER    1                 107.          7     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  8 4643. VER    1                 107.          8     1         NaN         NaN </span></span>
-<span><span class="co">#&gt;  9 4750. VER    1                 107.          9     1         NaN         NaN </span></span>
-<span><span class="co">#&gt; 10 4861. VER    1                 111.         10     1         NaN        4860.</span></span>
+<span><span class="co">#&gt;  1 3892. VER    1                 110.          1     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  2 4000. VER    1                 108.          2     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  3 4108. VER    1                 108.          3     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  4 4215. VER    1                 107.          4     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  5 4322. VER    1                 107.          5     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  6 4430. VER    1                 107.          6     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  7 4537. VER    1                 107.          7     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  8 4643. VER    1                 107.          8     1          NaN        NaN </span></span>
+<span><span class="co">#&gt;  9 4750. VER    1                 107.          9     1          NaN        NaN </span></span>
+<span><span class="co">#&gt; 10 4861. VER    1                 111.         10     1          NaN       4860.</span></span>
 <span><span class="co">#&gt; # ℹ 952 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 31 more variables: sector1time &lt;dbl&gt;, sector2time &lt;dbl&gt;, sector3time &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   sector1session_time &lt;dbl&gt;, sector2session_time &lt;dbl&gt;,</span></span>
@@ -287,7 +288,7 @@
 <div class="section level2">
 <h2 id="loaded-data">Loaded Data<a class="anchor" aria-label="anchor" href="#loaded-data"></a>
 </h2>
-<p>The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, and links to team logos.</p>
+<p>The package also includes a static data frame for all current Constructors. Complete with team colors, and links to team logos.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">constructor_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "constructor_id"     "constructor_color"  "constructor_color2"</span></span>
