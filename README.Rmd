@@ -28,7 +28,7 @@ withr::local_timezone("UTC")
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
-An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the fastf1 Python library.
+An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the FastF1 Python library.
 
 <!-- badges: start -->
 
@@ -61,6 +61,8 @@ Data is pulled from:
 
 * [Ergast API](https://ergast.com/mrd/)
 * [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the [Fast F1 python library](https://docs.fastf1.dev/index.html)
+
+Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. When a new data source is identified the package will be migrated to that source.
 
 ## Functions
 
@@ -142,7 +144,7 @@ Clears the cache for all functions in the package.
 
 ## Loaded Data
 
-The package also includes a static data frame for all current drivers and their respective constructors. Complete with team colors, and links to team logos.
+The package also includes a static data frame for all current Constructors. Complete with team colors, and links to team logos.
 
 ```{r constructor_example}
 constructor_data %>% colnames()

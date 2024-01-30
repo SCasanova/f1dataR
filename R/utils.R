@@ -1,20 +1,35 @@
 #' Get Ergast Content
 #'
-#' @description Gets ergast content and returns the processed json object if
+#' @description Gets Ergast content and returns the processed json object if
 #' no Ergast errors are found. This will automatically fall back from https://
-#' to http:// if ergast suffers errors, and will automatically retry up to 5
+#' to http:// if Ergast suffers errors, and will automatically retry up to 5
 #' times by each protocol
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Note the Ergast Motor Racing Database API will shut down at the end of 2024.
+#' This function willbe replaced with a new data-source when one is made available.
 #'
 #' @param url the Ergast URL tail to get from the API (for example,
 #' `"current.json?limit=30"` is called from `get_current_season()`).
 #' @keywords internal
-#' @return the result of `jsonlite::fromJSON` called on ergast's return content.
+#' @return the result of `jsonlite::fromJSON` called on Ergast's return content.
 #' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
+  # Function Deprecation Warning
+  lifecycle::deprecate_soft("at the end of 2024", "get_ergast_content()",
+    details = c(
+      "i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
+      " " = "This package will update with a replacement when one is available."
+    )
+  )
+
+  # Function Code
+
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
-  # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
+  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
   ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
