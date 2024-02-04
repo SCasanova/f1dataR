@@ -121,7 +121,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 #' @export
 #' @examples
 #' \dontrun{
-#' # Note that plot_fastest plots have already been ratio correctedF
+#' # Note that plot_fastest plots have already been ratio corrected
 #' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 #' correct_track_ratio(fast_plot)
 #' }
@@ -133,19 +133,20 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
     cli::cli_abort("{.var trackplot} must be a `ggplot` object")
   }
 
-  plotdata <- trackplot$data
+  # determine limits and apply plot to square around them
+  xrange <- range(trackplot$data$x, na.rm = TRUE)
+  yrange <- range(trackplot$data$y, na.rm = TRUE)
+  maxdiff <- max(abs(xrange[2] - xrange[1]), abs(yrange[2] - yrange[1]), na.rm = TRUE)
 
-  # centre the data
-  trackplot$data[[x]] <- trackplot$data[[x]] - stats::median(trackplot$data[[x]], na.rm = TRUE)
-  trackplot$data[[y]] <- trackplot$data[[y]] - stats::median(trackplot$data[[y]], na.rm = TRUE)
+  xmid <- mean(xrange)
+  ymid <- mean(yrange)
 
-  # determine limits and apply to plot
-  lim_min <- min(min(trackplot$data[[x]], na.rm = TRUE), min(trackplot$data[[y]], na.rm = TRUE))
-  lim_max <- max(max(trackplot$data[[x]], na.rm = TRUE), max(trackplot$data[[y]], na.rm = TRUE))
+  newxlim <- c(xmid - 0.5*maxdiff, xmid + 0.5*maxdiff)
+  newylim <- c(ymid - 0.5*maxdiff, ymid + 0.5*maxdiff)
 
   trackplot <- trackplot +
-    ggplot2::scale_x_continuous(limits = c(lim_min, lim_max)) +
-    ggplot2::scale_y_continuous(limits = c(lim_min, lim_max)) +
+    ggplot2::scale_x_continuous(limits = newxlim) +
+    ggplot2::scale_y_continuous(limits = newylim) +
     ggplot2::coord_fixed()
 
   # ensure the letterbox filler is a nice colour
