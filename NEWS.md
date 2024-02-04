@@ -3,6 +3,8 @@
 * Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.
 * Deprecated support for FastF1 v < 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (#198)
 * Code cleanup (removed old inaccessible code, centralized repeated steps to functions, etc.)
+* Named items in list returned bu `load_circuit_details()`
+* Changed the way that `correct_track_ratio()` works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.
 
 # f1dataR 1.5.0
 
