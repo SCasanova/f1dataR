@@ -145,9 +145,7 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
   newylim <- c(ymid - 0.5*maxdiff, ymid + 0.5*maxdiff)
 
   trackplot <- trackplot +
-    ggplot2::scale_x_continuous(limits = newxlim) +
-    ggplot2::scale_y_continuous(limits = newylim) +
-    ggplot2::coord_fixed()
+    ggplot2::coord_fixed(xlim = newxlim, ylim = newylim)
 
   # ensure the letterbox filler is a nice colour
   grid::grid.rect(gp = grid::gpar(fill = background, col = background))

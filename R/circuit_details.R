@@ -61,7 +61,7 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
   rotation <- circuit_info$rotation
 
   return(list(
-    "corners" = corners, "marhsal_posts" = marshal_post, "marshal_sectors" = marshal_sectors,
+    "corners" = corners, "marshal_posts" = marshal_post, "marshal_sectors" = marshal_sectors,
     "rotation" = rotation
   ))
 }
