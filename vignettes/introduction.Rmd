@@ -22,21 +22,21 @@ library(f1dataR)
 
 load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
 #> # A tibble: 706 × 19
-#>    date                session_time  time   rpm speed n_gear throttle brake   drs source       
-#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>        
-#>  1 2022-03-20 16:30:01        8941. 0     11301   280      7      100 FALSE     1 interpolation
-#>  2 2022-03-20 16:30:01        8941. 0.063 11321   281      7      100 FALSE     1 pos          
-#>  3 2022-03-20 16:30:01        8941. 0.185 11361   282      7      100 FALSE     1 car          
-#>  4 2022-03-20 16:30:01        8942. 0.385 11439   284      7      100 FALSE     1 car          
-#>  5 2022-03-20 16:30:01        8942. 0.463 11462   284      7      100 FALSE     1 pos          
-#>  6 2022-03-20 16:30:01        8942. 0.665 11485   285      7      100 FALSE     1 car          
-#>  7 2022-03-20 16:30:02        8942. 0.863 11529   286      7      100 FALSE     1 pos          
-#>  8 2022-03-20 16:30:02        8942. 0.946 11574   287      7      100 FALSE     1 car          
-#>  9 2022-03-20 16:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos          
-#> 10 2022-03-20 16:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car          
+#>    date                session_time  time   rpm speed n_gear throttle brake   drs source    relative_distance
+#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>                 <dbl>
+#>  1 2022-03-20 16:30:01        8941. 0     11301   280      7      100 FALSE     1 interpol…        0.00000868
+#>  2 2022-03-20 16:30:01        8941. 0.063 11321   281      7      100 FALSE     1 pos              0.000929  
+#>  3 2022-03-20 16:30:01        8941. 0.185 11361   282      7      100 FALSE     1 car              0.00272   
+#>  4 2022-03-20 16:30:01        8942. 0.385 11439   284      7      100 FALSE     1 car              0.00566   
+#>  5 2022-03-20 16:30:01        8942. 0.463 11462   284      7      100 FALSE     1 pos              0.00681   
+#>  6 2022-03-20 16:30:01        8942. 0.665 11485   285      7      100 FALSE     1 car              0.00980   
+#>  7 2022-03-20 16:30:02        8942. 0.863 11529   286      7      100 FALSE     1 pos              0.0127    
+#>  8 2022-03-20 16:30:02        8942. 0.946 11574   287      7      100 FALSE     1 car              0.0140    
+#>  9 2022-03-20 16:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos              0.0148    
+#> 10 2022-03-20 16:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car              0.0170    
 #> # ℹ 696 more rows
-#> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>,
-#> #   distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>
+#> # ℹ 8 more variables: status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>, driver_ahead <chr>,
+#> #   distance_to_driver_ahead <dbl>, driver_code <chr>
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
