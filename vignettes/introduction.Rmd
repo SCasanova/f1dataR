@@ -20,21 +20,21 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```r
 library(f1dataR)
 
-load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
-#> # A tibble: 706 × 19
+load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
+#> # A tibble: 697 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake   drs source    relative_distance
 #>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>                 <dbl>
-#>  1 2022-03-20 16:30:01        8941. 0     11301   280      7      100 FALSE     1 interpol…        0.00000868
-#>  2 2022-03-20 16:30:01        8941. 0.063 11321   281      7      100 FALSE     1 pos              0.000929  
-#>  3 2022-03-20 16:30:01        8941. 0.185 11361   282      7      100 FALSE     1 car              0.00272   
-#>  4 2022-03-20 16:30:01        8942. 0.385 11439   284      7      100 FALSE     1 car              0.00566   
-#>  5 2022-03-20 16:30:01        8942. 0.463 11462   284      7      100 FALSE     1 pos              0.00681   
-#>  6 2022-03-20 16:30:01        8942. 0.665 11485   285      7      100 FALSE     1 car              0.00980   
-#>  7 2022-03-20 16:30:02        8942. 0.863 11529   286      7      100 FALSE     1 pos              0.0127    
-#>  8 2022-03-20 16:30:02        8942. 0.946 11574   287      7      100 FALSE     1 car              0.0140    
-#>  9 2022-03-20 16:30:02        8942. 1.00  11589   287      7      100 FALSE     1 pos              0.0148    
-#> 10 2022-03-20 16:30:02        8942. 1.15  11605   288      7      100 FALSE     1 car              0.0170    
-#> # ℹ 696 more rows
+#>  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpol…        0.00000636
+#>  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos              0.00128   
+#>  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car              0.00232   
+#>  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos              0.00587   
+#>  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car              0.00599   
+#>  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos              0.0120    
+#>  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car              0.0122    
+#>  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car              0.0147    
+#>  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos              0.0158    
+#> 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos              0.0205    
+#> # ℹ 687 more rows
 #> # ℹ 8 more variables: status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>, driver_ahead <chr>,
 #> #   distance_to_driver_ahead <dbl>, driver_code <chr>
 ```
@@ -46,7 +46,7 @@ Now let's use ggplot2 to visualize some of the data we have
 library(dplyr)
 library(ggplot2)
 
-lec <- load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest") %>%
+lec <- load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest") %>%
   head(300)
 
 ggplot(lec, aes(distance, throttle)) +
@@ -55,8 +55,8 @@ ggplot(lec, aes(distance, throttle)) +
 ```
 
 <div class="figure">
-<img src="introduction-simple_plot-1.png" alt="plot of chunk simple_plot" width="100%" />
-<p class="caption">plot of chunk simple_plot</p>
+<img src="introduction-simple_plot-1.png" alt="Plot of lap distance vs throttle percentage for Leclerc at the 2022 Bahrain Grand Prix Qualifying session (specifically his fastest lap)" width="100%" />
+<p class="caption">Plot of lap distance vs throttle percentage for Leclerc at the 2022 Bahrain Grand Prix Qualifying session (specifically his fastest lap)</p>
 </div>
 
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
@@ -66,7 +66,7 @@ What if we get more drivers involved. Let's also get the Qualifying data from Ha
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
-per <- load_driver_telemetry(2022, 1, driver = "PER", laps = "fastest") %>%
+per <- load_driver_telemetry(2022, 1, "Q", driver = "PER", laps = "fastest") %>%
   head(300)
 
 data <- bind_rows(lec, ham, per)
@@ -77,8 +77,8 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
 ```
 
 <div class="figure">
-<img src="introduction-triple_plot-1.png" alt="plot of chunk triple_plot" width="100%" />
-<p class="caption">plot of chunk triple_plot</p>
+<img src="introduction-triple_plot-1.png" alt="Throttle percent by distance for Leclerc, Hamilton and Perez from 2022 Bahrain Grand Prix Qualifying session" width="100%" />
+<p class="caption">Throttle percent by distance for Leclerc, Hamilton and Perez from 2022 Bahrain Grand Prix Qualifying session</p>
 </div>
 
 ## Integrated plotting
@@ -100,8 +100,8 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
 ```
 
 <div class="figure">
-<img src="introduction-use_theme-1.png" alt="plot of chunk use_theme" width="100%" />
-<p class="caption">plot of chunk use_theme</p>
+<img src="introduction-use_theme-1.png" alt="Throttle percent by distance for the three drivers, with f1dataR theme applied" width="100%" />
+<p class="caption">Throttle percent by distance for the three drivers, with f1dataR theme applied</p>
 </div>
 
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
@@ -109,13 +109,7 @@ Another built-in function is `plot_fastest()` that can plot the speed or gear ch
 
 ```r
 plot_fastest(2022, 1, "R", "PER")
-#> ℹ If the session has not been loaded yet, this could take a minute
 ```
-
-<div class="figure">
-<img src="introduction-use_builtin-1.png" alt="plot of chunk use_builtin" width="100%" />
-<p class="caption">plot of chunk use_builtin</p>
-</div>
 
 ## Combining several functions
 
@@ -147,8 +141,8 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
 ```
 
 <div class="figure">
-<img src="introduction-session_laps-1.png" alt="plot of chunk session_laps" width="100%" />
-<p class="caption">plot of chunk session_laps</p>
+<img src="introduction-tire_life-1.png" alt="Average laptime per tire type and age at Spanish Grand Prix 2023" width="100%" />
+<p class="caption">Average laptime per tire type and age at Spanish Grand Prix 2023</p>
 </div>
 
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP. Note that
@@ -178,11 +172,11 @@ correct_track_ratio(throttle_plot)
 ```
 
 <div class="figure">
-<img src="introduction-telem_plotting-1.png" alt="plot of chunk telem_plotting" width="100%" />
-<p class="caption">plot of chunk telem_plotting</p>
+<img src="introduction-telem_plotting-1.png" alt="Verstappen fastest lab in the Canadian Grand Prix 2023, showing full throttle sections" width="100%" />
+<p class="caption">Verstappen fastest lab in the Canadian Grand Prix 2023, showing full throttle sections</p>
 </div>
 
-For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
 
 
 ```r
@@ -201,7 +195,6 @@ pit_constructor <- pit_data %>%
   summarise(pit_time = mean(as.numeric(duration))) %>%
   left_join(constructors, by = "constructor_id")
 
-
 ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
   geom_bar(stat = "identity", fill = pit_constructor$constructor_color) +
   theme_dark_f1(axis_marks = TRUE) +
@@ -211,12 +204,13 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
   labs(
     x = "Constructor",
     y = "Average Pit Time (seconds)"
-  )
+  ) +
+  ggtitle("Average time in pit lane for each team", subtitle = "Azerbijan Grand Prix 2023")
 ```
 
 <div class="figure">
-<img src="introduction-pitstop-1.png" alt="plot of chunk pitstop" width="100%" />
-<p class="caption">plot of chunk pitstop</p>
+<img src="introduction-pitstop-1.png" alt="Average time in pits for each team at the 2023 Azerbaijan Grand Prix" width="100%" />
+<p class="caption">Average time in pits for each team at the 2023 Azerbaijan Grand Prix</p>
 </div>
 
 # Help

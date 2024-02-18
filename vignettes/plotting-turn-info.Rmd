@@ -2,7 +2,7 @@
 title: "Plotting with FastF1 Circuit Information"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ergast Data Analysis}
+  %\VignetteIndexEntry{Plotting with FastF1 Circuit Information}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,7 +23,7 @@ library(ggplot2)
 ```
 
 # Telemetry Plotting
-As in our Introduction vignette, we'll start by working with telemetry data. 
+As in our Introduction vignette, we'll start by working with telemetry data.
 
 
 ```r
@@ -59,8 +59,8 @@ telem_plot_speed
 ```
 
 <div class="figure">
-<img src="plotting-turn-info-telem_plot-1.png" alt="plot of chunk telem_plot" width="100%" />
-<p class="caption">plot of chunk telem_plot</p>
+<img src="plotting-turn-info-telem_plot-1.png" alt="Speed by Distance for Leclerc, Hamilton and Perez after qualifying best laps" width="100%" />
+<p class="caption">Speed by Distance for Leclerc, Hamilton and Perez after qualifying best laps</p>
 </div>
 
 Now, to add the corner numbers to a plot like this, we'll have to retrieve those from FastF1.
@@ -89,8 +89,8 @@ telem_plot_speed +
 ```
 
 <div class="figure">
-<img src="plotting-turn-info-telem_with_corners-1.png" alt="plot of chunk telem_with_corners" width="100%" />
-<p class="caption">plot of chunk telem_with_corners</p>
+<img src="plotting-turn-info-telem_with_corners-1.png" alt="Speed by distance plot as above, but with turn numbres added" width="100%" />
+<p class="caption">Speed by distance plot as above, but with turn numbres added</p>
 </div>
 Of course, these labels overlap slightly for turns close together (1-3, 5-7, 9-10, 14-15). Other packages such as `ggrepel` can handle these situations better, but are not the point of this demonstration.
 
@@ -112,7 +112,7 @@ gear_plot <- ggplot(ver, aes(x, y, color = as.factor(n_gear), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   ggplot2::scale_color_manual(
     name = "Gear",
-    values = c("1" = "#BC3C29", "2" = "#0072B5", "3" = "#E18727", "4" = "#20854E", 
+    values = c("1" = "#BC3C29", "2" = "#0072B5", "3" = "#E18727", "4" = "#20854E",
                "5" = "#7876B1", "6" = "#6F99AD", "7" = "#FFDC91", "8" = "#EE4C97"),
     aesthetics = c("color", "fill")
   ) +
@@ -130,26 +130,18 @@ labelled_gear_plot <- gear_plot +
     color = "#9A9A9A"
   ), show.legend = FALSE)
 
-labelled_gear_plot <- correct_track_ratio(labelled_gear_plot)
+correct_track_ratio(labelled_gear_plot)
 ```
 
 <div class="figure">
-<img src="plotting-turn-info-basic_track_plot-1.png" alt="plot of chunk basic_track_plot" width="100%" />
-<p class="caption">plot of chunk basic_track_plot</p>
+<img src="plotting-turn-info-basic_track_plot-1.png" alt="Gear selected by Verstappen during his Silverstone fastest qualifying lap" width="100%" />
+<p class="caption">Gear selected by Verstappen during his Silverstone fastest qualifying lap</p>
 </div>
 
-```r
-labelled_gear_plot
-```
+Like before, the plot has some issues with overlap. But this time, beyond using `ggrepel`, we have the data provided to move the labels in a 'pretty' way.
 
-<div class="figure">
-<img src="plotting-turn-info-basic_track_plot-2.png" alt="plot of chunk basic_track_plot" width="100%" />
-<p class="caption">plot of chunk basic_track_plot</p>
-</div>
+The data returned by `get_circuit_data()` includes an extra column (`angle`) that can be used to determine an adequate shift angle for the label. With that data, and some careful math, we can move the labels to where we want them.
 
-Like before, the plot has some issues with overlap. But this time, beyond using `ggrepel`, we have the data provided to move the labels in a 'pretty' way. 
-
-The data returned by `get_circuit_data()` includes an extra column (`angle`) that can be used to determine an adequate shift angle for the label. With that data, and some careful math, we can move the labels to where we want them. 
 
 ```r
 labelx <- function(x, angle, distance = 750){
@@ -165,7 +157,7 @@ silverstone_circuit$corners$labx <- labelx(silverstone_circuit$corners$x, silver
 silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silverstone_circuit$corners$angle )
 ```
 
-With those new label x and y points calculated, we can replot the labels, this time adding short segments to connect each label and turn. 
+With those new label x and y points calculated, we can replot the labels slightly offset from the track.
 
 
 ```r
@@ -174,24 +166,15 @@ labelled_gear_plot2 <- gear_plot +
     label = paste0(silverstone_circuit$corners$number, silverstone_circuit$corners$letter),
     y = silverstone_circuit$corners$laby,
     x = silverstone_circuit$corners$labx,
-    color = "white", 
+    color = "white",
   ), size = 3, label.padding = unit(0.15, "lines"), show.legend = FALSE)
 
-labelled_gear_plot2 <- correct_track_ratio(labelled_gear_plot2)
+correct_track_ratio(labelled_gear_plot2)
 ```
 
 <div class="figure">
-<img src="plotting-turn-info-relabelled_gear_plot-1.png" alt="plot of chunk relabelled_gear_plot" width="100%" />
-<p class="caption">plot of chunk relabelled_gear_plot</p>
-</div>
-
-```r
-labelled_gear_plot2
-```
-
-<div class="figure">
-<img src="plotting-turn-info-relabelled_gear_plot-2.png" alt="plot of chunk relabelled_gear_plot" width="100%" />
-<p class="caption">plot of chunk relabelled_gear_plot</p>
+<img src="plotting-turn-info-relabelled_gear_plot-1.png" alt="Plot showing gear in use by Vertappen around Silversone, with corner labels applied" width="100%" />
+<p class="caption">Plot showing gear in use by Vertappen around Silversone, with corner labels applied</p>
 </div>
 
 Further exploration (including label repelling) is left to the reader.

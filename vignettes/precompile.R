@@ -15,7 +15,7 @@ vig_images<-list.files(pattern = "(ergast-data-analysis|introduction|plotting-tu
 file.copy(paste0("./", vig_images),
           paste0("./vignettes/", vig_images), overwrite = T)
 unlink(vig_images)
-# If you have the optimpng tool installed on your system run this to reduce png size
+# If you have the optipng tool installed on your system run this to reduce png size
 # xfun::optipng("./vignettes/")
 
 # Optional
