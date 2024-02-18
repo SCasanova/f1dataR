@@ -5,6 +5,7 @@
 * Code cleanup (removed old inaccessible code, centralized repeated steps to functions, etc.)
 * Named items in list returned bu `load_circuit_details()`
 * Changed the way that `correct_track_ratio()` works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.
+* Added Vignette describing some `load_circuit_details()` usage.
 
 # f1dataR 1.5.0
 
