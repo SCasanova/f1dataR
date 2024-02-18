@@ -141,8 +141,8 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
   xmid <- mean(xrange)
   ymid <- mean(yrange)
 
-  newxlim <- c(xmid - 0.5*maxdiff, xmid + 0.5*maxdiff)
-  newylim <- c(ymid - 0.5*maxdiff, ymid + 0.5*maxdiff)
+  newxlim <- c(xmid - 0.5 * maxdiff, xmid + 0.5 * maxdiff)
+  newylim <- c(ymid - 0.5 * maxdiff, ymid + 0.5 * maxdiff)
 
   trackplot <- trackplot +
     ggplot2::coord_fixed(xlim = newxlim, ylim = newylim)
