@@ -134,8 +134,9 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
   }
 
   # determine limits and apply plot to square around them
-  xrange <- range(trackplot$data$x, na.rm = TRUE)
-  yrange <- range(trackplot$data$y, na.rm = TRUE)
+  # expand by 500 units to add buffer for labels made with `load_circuit_details()`
+  xrange <- range(trackplot$data$x, na.rm = TRUE) + c(-500, 500)
+  yrange <- range(trackplot$data$y, na.rm = TRUE) + c(-500, 500)
   maxdiff <- max(abs(xrange[2] - xrange[1]), abs(yrange[2] - yrange[1]), na.rm = TRUE)
 
   xmid <- mean(xrange)
