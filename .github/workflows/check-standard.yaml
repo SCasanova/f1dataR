@@ -57,6 +57,7 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
+          # Install numpy and fastf1
           python_packages <- c("numpy", "fastf1")
 
           library(reticulate)
@@ -144,6 +145,7 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
+          # Install specific fastf1 (and the required urllib version)
           python_packages <- c("urllib3==1.26.15", "fastf1==2.3.3")
 
           library(reticulate)
@@ -244,6 +246,7 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
+          # Only install numpy
           python_packages <- c("numpy")
 
           library(reticulate)
@@ -260,4 +263,4 @@ jobs:
 
       - uses: r-lib/actions/check-r-package@v2
         with:
-          upload-snapshots: true
+          upload-snapshots: trueS
