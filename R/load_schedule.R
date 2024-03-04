@@ -43,15 +43,8 @@ load_schedule <- function(season = get_current_season()) {
     }
   }
 
-  if (!("time" %in% colnames(data))) {
-    data <- data %>%
-      dplyr::mutate("time" = NA_character_)
-  }
-
-  if (!("sprint_date" %in% colnames(data))) {
-    data <- data %>%
-      dplyr::mutate("sprint_date" = NA_character_)
-  }
+  data<-add_col_if_absent(data, "time", NA_character_)
+  data<-add_col_if_absent(data, "sprint_date", NA_character_)
 
   data <- data %>%
     janitor::clean_names() %>%
