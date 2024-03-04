@@ -43,8 +43,8 @@ load_schedule <- function(season = get_current_season()) {
     }
   }
 
-  data<-add_col_if_absent(data, "time", NA_character_)
-  data<-add_col_if_absent(data, "sprint_date", NA_character_)
+  data <- add_col_if_absent(data, "time", NA_character_)
+  data <- add_col_if_absent(data, "sprint_date", NA_character_)
 
   data <- data %>%
     janitor::clean_names() %>%

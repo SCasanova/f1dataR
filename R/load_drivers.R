@@ -23,10 +23,10 @@ load_drivers <- function(season = get_current_season()) {
     return(NULL)
   }
 
-  data<-data$MRData$DriverTable$Drivers
+  data <- data$MRData$DriverTable$Drivers
 
-  data<-add_col_if_absent(data, "code", NA_character_)
-  data<-add_col_if_absent(data, "permanentNumber", NA_integer_)
+  data <- add_col_if_absent(data, "code", NA_character_)
+  data <- add_col_if_absent(data, "permanentNumber", NA_integer_)
 
   data %>%
     dplyr::select(
@@ -40,5 +40,4 @@ load_drivers <- function(season = get_current_season()) {
     ) %>%
     tibble::as_tibble() %>%
     janitor::clean_names()
-
 }

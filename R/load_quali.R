@@ -27,8 +27,8 @@ load_quali <- function(season = get_current_season(), round = "last") {
 
   data <- data$MRData$RaceTable$Races$QualifyingResults[[1]]
 
-  data<-add_col_if_absent(data, "Q2", NA_character_)
-  data<-add_col_if_absent(data, "Q3", NA_character_)
+  data <- add_col_if_absent(data, "Q2", NA_character_)
+  data <- add_col_if_absent(data, "Q3", NA_character_)
 
   data <- data %>%
     tidyr::unnest(cols = c("Driver")) %>%

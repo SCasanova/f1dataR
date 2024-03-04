@@ -196,11 +196,11 @@ get_fastf1_version <- function() {
   return(list(major = major, minor = minor))
 }
 
-add_col_if_absent<-function(data, column, na_type = NA){
+add_col_if_absent <- function(data, column, na_type = NA) {
   stopifnot(is.na(na_type))
   stopifnot("data.frame" %in% class(data))
-  if(!(column %in% colnames(data))){
-    data[,column]<-na_type
+  if (!(column %in% colnames(data))) {
+    data[, column] <- na_type
   }
   return(dplyr::as_tibble(data))
 }

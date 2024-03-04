@@ -14,9 +14,9 @@ test_that("utility functions work", {
   # get_ergast_content() is inherently tested in load_x functions too
 
   # Test add_col_if_absent()
-  testdf<-tibble::tibble("a" = 1:5, "b" = letters[1:5])
-  testdf2<-testdf
-  testdf2$col1<-NA
+  testdf <- tibble::tibble("a" = 1:5, "b" = letters[1:5])
+  testdf2 <- testdf
+  testdf2$col1 <- NA
   expect_equal(testdf2, add_col_if_absent(testdf, "col1"))
   expect_equal(testdf, add_col_if_absent(testdf, "a", NA_real_))
 
@@ -41,4 +41,3 @@ test_that("utility functions work", {
     c(12.345, 83.456, 45296.789, 12.3456)
   )
 })
-
