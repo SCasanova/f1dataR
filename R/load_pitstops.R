@@ -28,6 +28,11 @@ load_pitstops <- function(season = get_current_season(), round = "last", race = 
     season = season, round = round
   )
   data <- get_ergast_content(url)
+
+  if(is.null(data)){
+    return(NULL)
+  }
+
   data$MRData$RaceTable$Races$PitStops[[1]] %>%
     tibble::as_tibble() %>%
     janitor::clean_names()

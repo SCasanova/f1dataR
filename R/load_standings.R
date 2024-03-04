@@ -24,7 +24,12 @@ load_standings <- function(season = get_current_season(), round = "last", type =
   url <- glue::glue("{season}/{round}/{type}Standings.json?limit=40",
     season = season, round = round, type = type
   )
+
   data <- get_ergast_content(url)
+
+  if(is.null(data)){
+    return(NULL)
+  }
 
   if (type == "driver") {
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%

@@ -10,6 +10,10 @@ load_constructors <- function() {
   url <- "constructors.json?limit=300"
   data <- get_ergast_content(url)
 
+  if(is.null(data)){
+    return(NULL)
+  }
+
   return(data$MRData$ConstructorTable$Constructors %>%
     dplyr::select("constructorId", "name", "nationality") %>%
     janitor::clean_names())

@@ -20,6 +20,10 @@ load_results <- function(season = get_current_season(), round = "last") {
   )
   data <- get_ergast_content(url)
 
+  if(is.null(data)){
+    return(NULL)
+  }
+
   data <- data$MRData$RaceTable$Races$Results[[1]]
 
   if (!("FastestLap" %in% colnames(data))) {

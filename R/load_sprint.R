@@ -21,7 +21,12 @@ load_sprint <- function(season = get_current_season(), round = "last") {
   url <- glue::glue("{season}/{round}/sprint.json?limit=40",
     season = season, round = round
   )
+
   data <- get_ergast_content(url)
+
+  if(is.null(data)){
+    return(NULL)
+  }
 
   if (length(data$MRData$RaceTable$Races) == 0) {
     cli::cli_alert_warning(glue::glue("No Sprint data for season = {season}, round = {round}",

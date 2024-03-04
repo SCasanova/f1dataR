@@ -19,6 +19,11 @@ load_quali <- function(season = get_current_season(), round = "last") {
     season = season, round = round
   )
   data <- get_ergast_content(url)
+
+  if(is.null(data)){
+    return(NULL)
+  }
+
   data <- data$MRData$RaceTable$Races$QualifyingResults[[1]]
 
   if (season < 2006) {

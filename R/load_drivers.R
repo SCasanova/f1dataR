@@ -19,6 +19,10 @@ load_drivers <- function(season = get_current_season()) {
   )
   data <- get_ergast_content(url)
 
+  if(is.null(data)){
+    return(NULL)
+  }
+
   if (season < 2014) {
     data$MRData$DriverTable$Drivers %>%
       dplyr::select(

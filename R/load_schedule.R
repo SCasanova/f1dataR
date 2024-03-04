@@ -13,7 +13,12 @@ load_schedule <- function(season = get_current_season()) {
   }
 
   url <- glue::glue("{season}.json?limit=30", season = season)
+
   data <- get_ergast_content(url)
+  if(is.null(data)){
+    return(NULL)
+  }
+
 
   if (season < 2005) {
     data$MRData$RaceTable$Races %>%
