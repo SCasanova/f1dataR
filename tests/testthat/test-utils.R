@@ -19,6 +19,9 @@ test_that("utility functions work", {
   testdf2$col1<-NA
   expect_equal(testdf2, add_col_if_absent(testdf, "col1"))
   expect_equal(testdf, add_col_if_absent(testdf, "a", NA_real_))
+  expect_error(add_col_if_absent(testdf, c('col1', 'col2')))
+  expect_error(add_col_if_absent(testdf, "col1", 0))
+  expect_error(add_col_if_absent(list(a=1:5), "col1", NA_real_))
 
   # add_col_if_absent is also inherently tested in many load_x functions too
 

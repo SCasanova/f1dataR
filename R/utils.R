@@ -196,11 +196,31 @@ get_fastf1_version <- function() {
   return(list(major = major, minor = minor))
 }
 
-add_col_if_absent<-function(data, column, na_type = NA){
-  stopifnot(is.na(na_type))
-  stopifnot("data.frame" %in% class(data))
-  if(!(column %in% colnames(data))){
-    data[,column]<-na_type
+
+#' Add Column if Absent
+#'
+#' @description Adds a column (with the name specified in column_name) of NA values to a data.frame or tibble. If that
+#' column already exists, no change will be made to data. NA value type (character, integer, real, logical)
+#' may be specified.
+#'
+#' @param data a data.frame or tibble to which a column may be added
+#' @param column_name the name of the column to be added if it doesn't exist
+#' @param na_type the type of NA value to use for the column values. Default to basic `NA`
+#'
+#' @return the data.frame as provided (converted to tibble)
+#' @keywords internal
+add_col_if_absent<-function(data, column_name, na_type = NA){
+  if(!is.na(na_type)){
+    cli::cli_abort(x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_}).")
+  }
+  if(!("data.frame" %in% class(data))){
+    cli::cli_abort(x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}.")
+  }
+  if(!length(column_name) == 1 | class(column_name) != "character"){
+    cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
+  }
+  if(!(column_name %in% colnames(data))){
+    data[,column_name]<-na_type
   }
   return(dplyr::as_tibble(data))
 }
