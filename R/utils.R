@@ -209,17 +209,17 @@ get_fastf1_version <- function() {
 #'
 #' @return the data.frame as provided (converted to tibble)
 #' @keywords internal
-add_col_if_absent<-function(data, column_name, na_type = NA){
-  if(!is.na(na_type)){
+add_col_if_absent <- function(data, column_name, na_type = NA) {
+  if (!is.na(na_type)) {
     cli::cli_abort(x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_}).")
   }
-  if(!("data.frame" %in% class(data))){
+  if (!("data.frame" %in% class(data))) {
     cli::cli_abort(x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}.")
   }
-  if(!length(column_name) == 1 | class(column_name) != "character"){
+  if (!length(column_name) == 1 | class(column_name) != "character") {
     cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
   }
-  if(!(column_name %in% colnames(data))) {
+  if (!(column_name %in% colnames(data))) {
     data[, column_name] <- na_type
   }
   return(dplyr::as_tibble(data))
