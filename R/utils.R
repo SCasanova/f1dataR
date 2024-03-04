@@ -54,14 +54,16 @@ get_ergast_content <- function(url) {
   }
 
   if (httr2::resp_is_error(ergast_raw)) {
-    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
+    cli::cli_alert(x = glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
       code = httr2::resp_status(ergast_raw),
       msg = httr2::resp_status_desc(ergast_raw)
     ))
+    return(NULL)
   }
 
   if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
-    cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
+    cli::cli_alert(x = "Ergast is having database trouble. Please try again at a later time.")
+    return(NULL)
   }
   # nocov end
 
