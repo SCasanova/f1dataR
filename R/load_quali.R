@@ -18,6 +18,7 @@ load_quali <- function(season = get_current_season(), round = "last") {
   url <- glue::glue("{season}/{round}/qualifying.json?limit=40",
     season = season, round = round
   )
+
   data <- get_ergast_content(url)
 
   if (is.null(data)) {
@@ -26,30 +27,25 @@ load_quali <- function(season = get_current_season(), round = "last") {
 
   data <- data$MRData$RaceTable$Races$QualifyingResults[[1]]
 
+  data<-add_col_if_absent(data, "Q2", NA_character_)
+  data<-add_col_if_absent(data, "Q3", NA_character_)
+
+  data <- data %>%
+    tidyr::unnest(cols = c("Driver")) %>%
+    dplyr::select("driverId", "position", "Q1", "Q2", "Q3") %>%
+    suppressWarnings() %>%
+    suppressMessages() %>%
+    dplyr::mutate(
+      Q1_sec = time_to_sec(.data$Q1),
+      Q2_sec = time_to_sec(.data$Q2),
+      Q3_sec = time_to_sec(.data$Q3)
+    ) %>%
+    tibble::as_tibble() %>%
+    janitor::clean_names()
+
   if (season < 2006) {
-    data %>%
-      tidyr::unnest(cols = c("Driver")) %>%
-      dplyr::select("driverId", "position", "Q1") %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      dplyr::mutate(Q1_sec = time_to_sec(.data$Q1)) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
+    return(data %>% dplyr::select(-c("q2", "q3", "q2_sec", "q3_sec")))
   } else {
-    if (season == 2015 && round == 16) {
-      data$Q3 <- NA
-    }
-    data %>%
-      tidyr::unnest(cols = c("Driver")) %>%
-      dplyr::select("driverId", "position", "Q1":"Q3") %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      dplyr::mutate(
-        Q1_sec = time_to_sec(.data$Q1),
-        Q2_sec = time_to_sec(.data$Q2),
-        Q3_sec = time_to_sec(.data$Q3)
-      ) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
+    return(data)
   }
 }
