@@ -28,7 +28,7 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
   )
   data <- get_ergast_content(url)
 
-  if(is.null(data)){
+  if (is.null(data)) {
     return(NULL)
   }
 
@@ -40,7 +40,7 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
     )
     data2 <- get_ergast_content(url2)
 
-    if(is.null(data2)){
+    if (is.null(data2)) {
       return(NULL)
     }
 

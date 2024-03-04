@@ -10,7 +10,7 @@ load_constructors <- function() {
   url <- "constructors.json?limit=300"
   data <- get_ergast_content(url)
 
-  if(is.null(data)){
+  if (is.null(data)) {
     return(NULL)
   }
 

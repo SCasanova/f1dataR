@@ -27,7 +27,7 @@ load_standings <- function(season = get_current_season(), round = "last", type =
 
   data <- get_ergast_content(url)
 
-  if(is.null(data)){
+  if (is.null(data)) {
     return(NULL)
   }
 
