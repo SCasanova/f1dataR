@@ -23,29 +23,22 @@ load_drivers <- function(season = get_current_season()) {
     return(NULL)
   }
 
-  if (season < 2014) {
-    data$MRData$DriverTable$Drivers %>%
-      dplyr::select(
-        "driverId",
-        "givenName",
-        "familyName",
-        "nationality",
-        "dateOfBirth"
-      ) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
-  } else {
-    data$MRData$DriverTable$Drivers %>%
-      dplyr::select(
-        "driverId",
-        "givenName",
-        "familyName",
-        "nationality",
-        "dateOfBirth",
-        "code",
-        "permanentNumber"
-      ) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
-  }
+  data<-data$MRData$DriverTable$Drivers
+
+  data<-add_col_if_absent(data, "code", NA_character_)
+  data<-add_col_if_absent(data, "permanentNumber", NA_integer_)
+
+  data %>%
+    dplyr::select(
+      "driverId",
+      "givenName",
+      "familyName",
+      "nationality",
+      "dateOfBirth",
+      "code",
+      "permanentNumber"
+    ) %>%
+    tibble::as_tibble() %>%
+    janitor::clean_names()
+
 }
