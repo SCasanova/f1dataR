@@ -219,8 +219,8 @@ add_col_if_absent<-function(data, column_name, na_type = NA){
   if(!length(column_name) == 1 | class(column_name) != "character"){
     cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
   }
-  if(!(column_name %in% colnames(data))){
-    data[,column_name]<-na_type
+  if(!(column_name %in% colnames(data))) {
+    data[, column_name] <- na_type
   }
   return(dplyr::as_tibble(data))
 }
