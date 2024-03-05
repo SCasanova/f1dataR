@@ -11,7 +11,7 @@ vignette: >
 
 # Introduction
 
-This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd/). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for a host of data.
+This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd/). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for accessing host of data.
 
 We'll load all the required libraries for our data analysis:
 
@@ -54,8 +54,8 @@ ggplot(results, aes(x = position, y = grid)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="plot of chunk grid_to_finish_one" width="100%" />
-<p class="caption">plot of chunk grid_to_finish_one</p>
+<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix" width="100%" />
+<p class="caption">A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix</p>
 </div>
 
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
@@ -87,8 +87,8 @@ ggplot(results, aes(y = position, x = grid)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="plot of chunk grid_to_finish_season" width="100%" />
-<p class="caption">plot of chunk grid_to_finish_season</p>
+<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix" width="100%" />
+<p class="caption">A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix</p>
 </div>
 
 As expected, this produces a much stronger signal confirming our earlier hypothesis.
@@ -128,8 +128,8 @@ ggplot(points, aes(x = round, y = position, color = driver_id)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-round_position-1.png" alt="plot of chunk round_position" width="100%" />
-<p class="caption">plot of chunk round_position</p>
+<img src="ergast-data-analysis-round_position-1.png" alt="Driver ranking after each Grand Prix of the 2021 season" width="100%" />
+<p class="caption">Driver ranking after each Grand Prix of the 2021 season</p>
 </div>
 
 What may be more interesting is the total accumulation of points. For that we can change up the plot just a little bit.
@@ -147,8 +147,8 @@ ggplot(points, aes(x = round, y = points, color = driver_id)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-rounds_points-1.png" alt="plot of chunk rounds_points" width="100%" />
-<p class="caption">plot of chunk rounds_points</p>
+<img src="ergast-data-analysis-rounds_points-1.png" alt="Total points for each driver after each Grand Prix in the 2021 season" width="100%" />
+<p class="caption">Total points for each driver after each Grand Prix in the 2021 season</p>
 </div>
 
 
@@ -180,11 +180,11 @@ ggplot(rus, aes(x = lap, y = time_sec)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="plot of chunk driver_laptime_scatterplot" width="100%" />
-<p class="caption">plot of chunk driver_laptime_scatterplot</p>
+<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="Laptimes for George Russell, for each lap from the 2022 Saudi Arabian Grand Prix" width="100%" />
+<p class="caption">Laptimes for George Russell, for each lap from the 2022 Saudi Arabian Grand Prix</p>
 </div>
 
-We can see the most of Russell's laps were less than 110 seconds, with a safety car having occurred around lap 15 and VSC occurring near lap 38.
+We can see the most of Russell's laps were less than 110 seconds. Note a safety car had occurred around lap 15 and VSC occurred near lap 38.
 
 With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in lap time easier to see (i.e. show only racing laps).
 
@@ -209,8 +209,8 @@ ggplot(laps, aes(x = driver_id, y = time_sec)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="plot of chunk drivers_laptimes" width="100%" />
-<p class="caption">plot of chunk drivers_laptimes</p>
+<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="Laptime distributions for all drivers from the 2022 Saudi Arabian Grand Prix (racing laps only)" width="100%" />
+<p class="caption">Laptime distributions for all drivers from the 2022 Saudi Arabian Grand Prix (racing laps only)</p>
 </div>
 
 
@@ -245,6 +245,6 @@ ggplot(quali, aes(x = driver_id, y = t_diff)) +
 ```
 
 <div class="figure">
-<img src="ergast-data-analysis-quali_compare-1.png" alt="plot of chunk quali_compare" width="100%" />
-<p class="caption">plot of chunk quali_compare</p>
+<img src="ergast-data-analysis-quali_compare-1.png" alt="Gap to Pole at the end of qualifying for the 2023 Bahrain Grand Prix" width="100%" />
+<p class="caption">Gap to Pole at the end of qualifying for the 2023 Bahrain Grand Prix</p>
 </div>

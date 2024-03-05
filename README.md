@@ -176,6 +176,15 @@ load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 #> #   speed_st <dbl>, …
 ```
 
+### Circuit Data
+
+> `load_circuit_details(2023, 4)`
+
+This function loads circuit details for a specific race session. Note
+that different track layouts are used at some circuits depending on the
+year of the race. Useful for visualizing or annotating data. Contains
+information on corners, marshal_lights and marshal_sectors.
+
 ### Plotting
 
 > `plot_fastest(season = "current", round = "last", session = "R", driver, color = "gear")`
