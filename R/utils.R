@@ -162,7 +162,7 @@ check_ff1_session_loaded <- function(session_name = "session") {
 #' @keywords internal
 check_ff1_version <- function() {
   version <- get_fastf1_version()
-  if (version < '3.1') {
+  if (version < "3.1") {
     cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
       x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
       i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"

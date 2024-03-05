@@ -24,7 +24,7 @@ test_that("graphics work", {
 
   # Ensure caught failure if old ff1, then skip remainder
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < '3.1') {
+  if (ff1_ver < "3.1") {
     expect_error(
       session <- load_race_session(season = 2022, round = 1),
       "An old version of FastF1 is in use"

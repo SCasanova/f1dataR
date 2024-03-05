@@ -14,7 +14,7 @@ test_that("load circuit details works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < '3.1') {
+  if (ff1_ver < "3.1") {
     expect_error(
       circuit_details <- load_circuit_details(2023, "bahrain"),
       "An old version of FastF1 is in use"
