@@ -15,7 +15,7 @@ test_that("driver telemetry", {
   # Tests
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+  if (ff1_ver < '3.1') {
     expect_error(
       telem <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all"),
       "An old version of FastF1 is in use"
@@ -28,7 +28,7 @@ test_that("driver telemetry", {
 
   expect_true(nrow(telem) > nrow(telem_fast))
   expect_true(ncol(telem) == ncol(telem_fast))
-  if (get_fastf1_version()$major >= 3) {
+  if (get_fastf1_version() > '3') {
     expect_equal(telem_fast$session_time[[1]], 3518.641)
     expect_equal(round(telem_fast$time[[2]], 3), 0.086)
   } # else {
@@ -40,7 +40,7 @@ test_that("driver telemetry", {
   #     "can only be a lap number if using fastf1 v3.0 or higher"
   #   )
   # }
-  if (get_fastf1_version()$major >= 3) {
+  if (get_fastf1_version() > '3') {
     telem_lap <- load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = 1)
     expect_equal(telem_lap$time[[1]], 0)
     expect_equal(telem_lap$speed[[1]], 0)

@@ -162,7 +162,7 @@ check_ff1_session_loaded <- function(session_name = "session") {
 #' @keywords internal
 check_ff1_version <- function() {
   version <- get_fastf1_version()
-  if (version$major < 3 | (version$major == 3 & version$minor < 1)) {
+  if (version < '3.1') {
     cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
       x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
       i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
@@ -179,7 +179,7 @@ check_ff1_version <- function() {
 #' Gets the current installed FastF1 version available (via `reticulate`) to the function.
 #' Displays a note if significantly out of date.
 #' @export
-#' @return integer for major version number (or NA if any error )
+#' @return version as class `package_version`
 get_fastf1_version <- function() {
   ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
@@ -188,10 +188,8 @@ get_fastf1_version <- function() {
     cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.\nPlease run this to install the most recent version:\n{.code setup_fastf1()}")
     return(NA)
   }
-  major <- as.integer(unlist(strsplit(ver, ".", fixed = T))[1])
-  minor <- as.integer(unlist(strsplit(ver, ".", fixed = T))[2])
 
-  return(list(major = major, minor = minor))
+  return(package_version(ver))
 }
 
 # nocov start
