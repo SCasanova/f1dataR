@@ -15,6 +15,7 @@ reference:
     - starts_with("plot_")
     - theme_dark_f1
     - correct_track_ratio
+    - load_circuit_details
   - title: Extras
     contents:
     - time_to_sec
