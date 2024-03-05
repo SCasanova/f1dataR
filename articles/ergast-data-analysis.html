@@ -63,6 +63,9 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
+      <a href="../articles/plotting-turn-info.html">Plotting with FastF1 Circuit Information</a>
+    </li>
+    <li>
       <a href="../articles/setup_fastf1.html">Setup FastF1 Connection</a>
     </li>
   </ul>
@@ -107,7 +110,7 @@
 <p>This vignette provides a few demonstrations of possible data analysis
 projects using <code>f1dataR</code> and the data pulled from the <a href="https://ergast.com/mrd/" class="external-link">Ergast API</a>. All of the data used
 comes from Ergast and is not supplied by Formula 1. However, this data
-source is incredibly useful for a host of data.</p>
+source is incredibly useful for accessing host of data.</p>
 <p>We’ll load all the required libraries for our data analysis:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span>
@@ -155,8 +158,9 @@ that it produced a well mixed field.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Grid Position"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="plot of chunk grid_to_finish_one" width="100%"><p class="caption">
-plot of chunk grid_to_finish_one
+<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix" width="100%"><p class="caption">
+A plot of grid position (y axis) vs race finishing position (x axis) for
+the 2020 Austrian Grand Prix
 </p>
 </div>
 <p>Of course, this isn’t really an interesting plot for a single race.
@@ -191,8 +195,9 @@ Pit Lane, where <code>grid</code> = 0).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Finish Position"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Grid Position"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="plot of chunk grid_to_finish_season" width="100%"><p class="caption">
-plot of chunk grid_to_finish_season
+<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix" width="100%"><p class="caption">
+A plot of grid position (y axis) vs race finishing position (x axis) for
+all 2020 Grands Prix
 </p>
 </div>
 <p>As expected, this produces a much stronger signal confirming our
@@ -232,8 +237,8 @@ which had good competition throughout the year for P1.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">points</span><span class="op">$</span><span class="va">position</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-round_position-1.png" alt="plot of chunk round_position" width="100%"><p class="caption">
-plot of chunk round_position
+<img src="ergast-data-analysis-round_position-1.png" alt="Driver ranking after each Grand Prix of the 2021 season" width="100%"><p class="caption">
+Driver ranking after each Grand Prix of the 2021 season
 </p>
 </div>
 <p>What may be more interesting is the total accumulation of points. For
@@ -248,8 +253,8 @@ that we can change up the plot just a little bit.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Points"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-rounds_points-1.png" alt="plot of chunk rounds_points" width="100%"><p class="caption">
-plot of chunk rounds_points
+<img src="ergast-data-analysis-rounds_points-1.png" alt="Total points for each driver after each Grand Prix in the 2021 season" width="100%"><p class="caption">
+Total points for each driver after each Grand Prix in the 2021 season
 </p>
 </div>
 </div>
@@ -280,13 +285,14 @@ built-in data set.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Lap Number"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Lap Time (s)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="plot of chunk driver_laptime_scatterplot" width="100%"><p class="caption">
-plot of chunk driver_laptime_scatterplot
+<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="Laptimes for George Russell, for each lap from the 2022 Saudi Arabian Grand Prix" width="100%"><p class="caption">
+Laptimes for George Russell, for each lap from the 2022 Saudi Arabian
+Grand Prix
 </p>
 </div>
-<p>We can see the most of Russell’s laps were less than 110 seconds,
-with a safety car having occurred around lap 15 and VSC occurring near
-lap 38.</p>
+<p>We can see the most of Russell’s laps were less than 110 seconds.
+Note a safety car had occurred around lap 15 and VSC occurred near lap
+38.</p>
 <p>With the above data, we can also visualize all driver’s laptimes with
 violin plots. We’ll trim the laptimes to exclude anything above 105
 seconds to make the variation in lap time easier to see (i.e. show only
@@ -309,8 +315,9 @@ racing laps).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Laptime (s)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="plot of chunk drivers_laptimes" width="100%"><p class="caption">
-plot of chunk drivers_laptimes
+<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="Laptime distributions for all drivers from the 2022 Saudi Arabian Grand Prix (racing laps only)" width="100%"><p class="caption">
+Laptime distributions for all drivers from the 2022 Saudi Arabian Grand
+Prix (racing laps only)
 </p>
 </div>
 </div>
@@ -346,8 +353,8 @@ results!</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Driver ID"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="ergast-data-analysis-quali_compare-1.png" alt="plot of chunk quali_compare" width="100%"><p class="caption">
-plot of chunk quali_compare
+<img src="ergast-data-analysis-quali_compare-1.png" alt="Gap to Pole at the end of qualifying for the 2023 Bahrain Grand Prix" width="100%"><p class="caption">
+Gap to Pole at the end of qualifying for the 2023 Bahrain Grand Prix
 </p>
 </div>
 </div>

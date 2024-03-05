@@ -38,6 +38,9 @@
       <a href="../articles/introduction.html">Introduction</a>
     </li>
     <li>
+      <a href="../articles/plotting-turn-info.html">Plotting with FastF1 Circuit Information</a>
+    </li>
+    <li>
       <a href="../articles/setup_fastf1.html">Setup FastF1 Connection</a>
     </li>
   </ul></li>
@@ -68,6 +71,11 @@
 <ul><li>Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.</li>
 <li>Deprecated support for FastF1 v &lt; 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (<a href="https://github.com/scasanova/f1dataR/issues/198" class="external-link">#198</a>)</li>
 <li>Code cleanup (removed old inaccessible code, centralized repeated steps to functions, etc.)</li>
+<li>Named items in list returned bu <code><a href="../reference/load_circuit_details.html">load_circuit_details()</a></code>
+</li>
+<li>Changed the way that <code><a href="../reference/correct_track_ratio.html">correct_track_ratio()</a></code> works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.</li>
+<li>Added Vignette describing some <code><a href="../reference/load_circuit_details.html">load_circuit_details()</a></code> usage.</li>
+<li>Code improvements (better handle variation in Ergast response, better handle Ergast connection failures)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5.0" id="f1datar-150">f1dataR 1.5.0<small>2024-01-25</small><a class="anchor" aria-label="anchor" href="#f1datar-150"></a></h2>

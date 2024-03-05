@@ -63,6 +63,9 @@
       <a href="articles/introduction.html">Introduction</a>
     </li>
     <li>
+      <a href="articles/plotting-turn-info.html">Plotting with FastF1 Circuit Information</a>
+    </li>
+    <li>
       <a href="articles/setup_fastf1.html">Setup FastF1 Connection</a>
     </li>
   </ul>
@@ -105,7 +108,7 @@
 <p>or install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SCasanova/f1dataR"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"SCasanova/f1dataR"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -238,6 +241,14 @@
 <span><span class="co">#&gt; #   sector1session_time &lt;dbl&gt;, sector2session_time &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   sector3session_time &lt;dbl&gt;, speed_i1 &lt;dbl&gt;, speed_i2 &lt;dbl&gt;, speed_fl &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   speed_st &lt;dbl&gt;, …</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="circuit-data">Circuit Data<a class="anchor" aria-label="anchor" href="#circuit-data"></a>
+</h3>
+<blockquote>
+<p><code>load_circuit_details(2023, 4)</code></p>
+</blockquote>
+<p>This function loads circuit details for a specific race session. Note that different track layouts are used at some circuits depending on the year of the race. Useful for visualizing or annotating data. Contains information on corners, marshal_lights and marshal_sectors.</p>
 </div>
 <div class="section level3">
 <h3 id="plotting">Plotting<a class="anchor" aria-label="anchor" href="#plotting"></a>
