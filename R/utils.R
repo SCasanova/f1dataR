@@ -54,14 +54,16 @@ get_ergast_content <- function(url) {
   }
 
   if (httr2::resp_is_error(ergast_raw)) {
-    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
+    cli::cli_alert(x = glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
       code = httr2::resp_status(ergast_raw),
       msg = httr2::resp_status_desc(ergast_raw)
     ))
+    return(NULL)
   }
 
   if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
-    cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
+    cli::cli_alert(x = "Ergast is having database trouble. Please try again at a later time.")
+    return(NULL)
   }
   # nocov end
 
@@ -194,6 +196,34 @@ get_fastf1_version <- function() {
   return(list(major = major, minor = minor))
 }
 
+
+#' Add Column if Absent
+#'
+#' @description Adds a column (with the name specified in column_name) of NA values to a data.frame or tibble. If that
+#' column already exists, no change will be made to data. NA value type (character, integer, real, logical)
+#' may be specified.
+#'
+#' @param data a data.frame or tibble to which a column may be added
+#' @param column_name the name of the column to be added if it doesn't exist
+#' @param na_type the type of NA value to use for the column values. Default to basic `NA`
+#'
+#' @return the data.frame as provided (converted to tibble)
+#' @keywords internal
+add_col_if_absent <- function(data, column_name, na_type = NA) {
+  if (!is.na(na_type)) {
+    cli::cli_abort(x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_}).")
+  }
+  if (!("data.frame" %in% class(data))) {
+    cli::cli_abort(x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}.")
+  }
+  if (!length(column_name) == 1 | class(column_name) != "character") {
+    cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
+  }
+  if (!(column_name %in% colnames(data))) {
+    data[, column_name] <- na_type
+  }
+  return(dplyr::as_tibble(data))
+}
 # nocov start
 
 #' Setup fastf1 connection

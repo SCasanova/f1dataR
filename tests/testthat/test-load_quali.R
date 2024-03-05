@@ -16,6 +16,7 @@ test_that("Quali Load works", {
   quali_2004 <- load_quali(2004, 1)
   expect_equal(nrow(quali_2004), 20)
   expect_equal(quali_2004$driver_id[2], "barrichello")
+  expect_false("q2" %in% quali_2004)
 
   expect_equal(nrow(load_quali(2015, 16)), 20)
 

@@ -6,6 +6,7 @@
 * Named items in list returned bu `load_circuit_details()`
 * Changed the way that `correct_track_ratio()` works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.
 * Added Vignette describing some `load_circuit_details()` usage.
+* Code improvements (better handle variation in Ergast response, better handle Ergast connection failures)
 
 # f1dataR 1.5.0
 

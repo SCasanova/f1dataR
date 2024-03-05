@@ -13,69 +13,59 @@ load_schedule <- function(season = get_current_season()) {
   }
 
   url <- glue::glue("{season}.json?limit=30", season = season)
-  data <- get_ergast_content(url)
 
-  if (season < 2005) {
-    data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
-      janitor::clean_names() %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      tidyr::unnest(cols = c("location")) %>%
-      dplyr::select(
-        "season",
-        "round",
-        "race_name",
-        "circuit_id",
-        "circuit_name",
-        "lat":"country",
-        "date"
-      ) %>%
-      dplyr::mutate("time" = NA_character_, "sprint_date" = NA_character_) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
-  } else if (season < 2021) {
-    data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
-      janitor::clean_names() %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      tidyr::unnest(cols = c("location")) %>%
-      dplyr::select(
-        "season",
-        "round",
-        "race_name",
-        "circuit_id",
-        "circuit_name",
-        "lat":"country",
-        "date",
-        "time"
-      ) %>%
-      dplyr::mutate("sprint_date" = NA_character_) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
-  } else {
-    data$MRData$RaceTable$Races %>%
-      tidyr::unnest(cols = c("Circuit"), names_repair = "universal") %>%
-      janitor::clean_names() %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      tidyr::unnest(cols = c("location", "sprint"), names_sep = "_") %>%
-      dplyr::select(
-        "season",
-        "round",
-        "race_name",
-        "circuit_id",
-        "circuit_name",
-        "lat" = "location_lat",
-        "long" = "location_long",
-        "locality" = "location_locality",
-        "country" = "location_country",
-        "date",
-        "time",
-        "sprint_date"
-      ) %>%
-      tibble::as_tibble() %>%
-      janitor::clean_names()
+  data <- get_ergast_content(url)
+  if (is.null(data)) {
+    return(NULL)
   }
+
+  data <- data$MRData$RaceTable$Races %>%
+    dplyr::select(-"url")
+
+  if ("Circuit" %in% colnames(data)) {
+    if (class(data$Circuit) == "data.frame") {
+      data <- data %>%
+        tidyr::unnest(cols = c("Circuit"), names_repair = "universal")
+    }
+  }
+
+  if ("Location" %in% colnames(data)) {
+    if (class(data$Location) == "data.frame") {
+      data <- data %>%
+        tidyr::unnest(cols = c("Location"), names_repair = "universal")
+    }
+  }
+
+  if ("Sprint" %in% colnames(data)) {
+    if (class(data$Sprint) == "data.frame") {
+      data <- data %>%
+        tidyr::unnest(cols = c("Sprint"), names_sep = "_")
+    }
+  }
+
+  data <- add_col_if_absent(data, "time", NA_character_)
+  data <- add_col_if_absent(data, "sprint_date", NA_character_)
+
+  data <- data %>%
+    janitor::clean_names() %>%
+    suppressWarnings() %>%
+    suppressMessages() %>%
+    dplyr::select(
+      "season",
+      "round",
+      "race_name",
+      "circuit_id",
+      "circuit_name",
+      "lat",
+      "long",
+      "locality",
+      "country",
+      "date",
+      "time",
+      "sprint_date"
+    ) %>%
+    tibble::as_tibble() %>%
+    janitor::clean_names()
+
+  return(data)
 }

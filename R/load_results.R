@@ -20,6 +20,10 @@ load_results <- function(season = get_current_season(), round = "last") {
   )
   data <- get_ergast_content(url)
 
+  if (is.null(data)) {
+    return(NULL)
+  }
+
   data <- data$MRData$RaceTable$Races$Results[[1]]
 
   if (!("FastestLap" %in% colnames(data))) {
@@ -30,6 +34,11 @@ load_results <- function(season = get_current_season(), round = "last") {
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
+      dplyr::mutate(
+        fastest_rank = NA_integer_,
+        fastest = NA_character_,
+        top_speed_kpt = NA_real_
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else {
