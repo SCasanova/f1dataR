@@ -16,7 +16,7 @@ test_that("Load Session (file cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+  if (ff1_ver < "3.1") {
     expect_error(
       session <- load_race_session(season = 2022, round = 1),
       "An old version of FastF1 is in use"
@@ -75,7 +75,7 @@ test_that("Load Session (memory cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+  if (ff1_ver < "3.1") {
     expect_error(
       session <- load_race_session(season = 2022, round = 1),
       "An old version of FastF1 is in use"

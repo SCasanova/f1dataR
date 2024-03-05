@@ -14,7 +14,7 @@ test_that("load session laps works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver$major < 3 | (ff1_ver$major == 3 & ff1_ver$minor < 1)) {
+  if (ff1_ver < "3.1") {
     expect_error(
       laps <- load_session_laps(season = 2022, round = "bahrain"),
       "An old version of FastF1 is in use"
@@ -33,7 +33,7 @@ test_that("load session laps works", {
   expect_equal(laps$time, laps2$time)
   expect_true(!is.na(laps$time[1]))
   expect_equal(nrow(laps), nrow(laps2))
-  if (get_fastf1_version()$major >= 3) {
+  if (get_fastf1_version() >= "3") {
     expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
     expect_true(all(c("Q1", "Q2", "Q3") %in% unique(lapsq$session_type)))
   }
