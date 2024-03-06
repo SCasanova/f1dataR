@@ -25,13 +25,6 @@ test_that("utility functions work", {
 
   # add_col_if_absent is also inherently tested in many load_x functions too
 
-  if (requireNamespace("httptest", quietly = TRUE)) {
-    # Test internet failures for get_current_season
-    httptest::without_internet({
-      expect_gte(get_current_season(), 2022)
-    })
-  }
-
   # Test time format changes
   expect_equal(time_to_sec("12.345"), 12.345)
   expect_equal(time_to_sec("1:23.456"), 83.456)
@@ -43,4 +36,22 @@ test_that("utility functions work", {
     time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
     c(12.345, 83.456, 45296.789, 12.3456)
   )
+})
+
+test_that("Utility Functions work without internet", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(tempdir(), "tst_utils2"))) {
+    unlink(file.path(tempdir(), "tst_utils2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_utils2"))
+  dir.create(file.path(tempdir(), "tst_utils2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_utils2"))
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # Test internet failures for get_current_season
+    httptest2::without_internet({
+      expect_message(get_current_season(), "f1dataR: Error getting current season from Ergast")
+      expect_gte(get_current_season(), 2022)
+    })
+  }
 })

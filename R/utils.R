@@ -39,6 +39,8 @@ get_ergast_content <- function(url) {
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
 
+  ergast_res <- NULL
+
   tryCatch({
     ergast_res <- ergast_raw %>%
       httr2::req_perform()
@@ -64,12 +66,12 @@ get_ergast_content <- function(url) {
   }
 
   if(is.null(ergast_res)){
-    cli::cli_alert(x = "Couldn't connect to Ergast to retrieve data.")
+    cli::cli_alert("Couldn't connect to Ergast to retrieve data.")
     return(NULL)
   }
 
   if (httr2::resp_is_error(ergast_res)) {
-    cli::cli_alert(x = glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
+    cli::cli_alert(glue::glue("Error getting Ergast data, http status code {code}.\n{msg}",
       code = httr2::resp_status(ergast_res),
       msg = httr2::resp_status_desc(ergast_res)
     ))
@@ -77,7 +79,7 @@ get_ergast_content <- function(url) {
   }
 
   if (httr2::resp_body_string(ergast_res) == "Unable to select database") {
-    cli::cli_alert(x = "Ergast is having database trouble. Please try again at a later time.")
+    cli::cli_alert("Ergast is having database trouble. Please try again at a later time.")
     return(NULL)
   }
   # nocov end

@@ -29,7 +29,7 @@ Note that this leaves the plot object on a dark background, any plot borders wil
 }
 \examples{
 \dontrun{
-# Note that plot_fastest plots have already been ratio correctedF
+# Note that plot_fastest plots have already been ratio corrected
 fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
 correct_track_ratio(fast_plot)
 }
