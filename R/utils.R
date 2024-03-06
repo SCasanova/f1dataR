@@ -39,36 +39,51 @@ get_ergast_content <- function(url) {
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
 
-  ergast_raw <- ergast_raw %>%
-    httr2::req_perform()
+  tryCatch({
+    ergast_res <- ergast_raw %>%
+      httr2::req_perform()
+  },
+  error = function(e) {
+    cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+  })
 
   # Restart retries to ergast with http (instead of https)
   # No testing penalty for ergast functioning correct
   # nocov start
-  if (httr2::resp_is_error(ergast_raw) || httr2::resp_body_string(ergast_raw) == "Unable to select database") {
+  if (is.null(ergast_res) || httr2::resp_is_error(ergast_res) || httr2::resp_body_string(ergast_res) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
-    ergast_raw <- ergast_raw %>%
-      httr2::req_url("http://ergast.com/api/f1") %>%
-      httr2::req_url_path_append(url) %>%
-      httr2::req_perform()
+    tryCatch({
+      ergast_res <- ergast_raw %>%
+        httr2::req_url("http://ergast.com/api/f1") %>%
+        httr2::req_url_path_append(url) %>%
+        httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+    })
   }
 
-  if (httr2::resp_is_error(ergast_raw)) {
+  if(is.null(ergast_res)){
+    cli::cli_alert(x = "Couldn't connect to Ergast to retrieve data.")
+    return(NULL)
+  }
+
+  if (httr2::resp_is_error(ergast_res)) {
     cli::cli_alert(x = glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
-      code = httr2::resp_status(ergast_raw),
-      msg = httr2::resp_status_desc(ergast_raw)
+      code = httr2::resp_status(ergast_res),
+      msg = httr2::resp_status_desc(ergast_res)
     ))
     return(NULL)
   }
 
-  if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
+  if (httr2::resp_body_string(ergast_res) == "Unable to select database") {
     cli::cli_alert(x = "Ergast is having database trouble. Please try again at a later time.")
     return(NULL)
   }
   # nocov end
 
   # else must be ok
-  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
+  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_res)))
 }
 
 #' Get Current Season
@@ -88,7 +103,7 @@ get_current_season <- function() {
       current_season <- as.numeric(data$MRData$RaceTable$season)
     },
     error = function(e) {
-      cli::cli_inform(glue::glue("f1dataR: Error getting current season from Ergast:\n{e}\nFalling back to manually determined 'current' season", e = e))
+      cli::cli_inform("Falling back to manually determined 'current' season")
     }
   )
   return(current_season)
