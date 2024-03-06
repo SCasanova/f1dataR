@@ -101,11 +101,11 @@ get_current_season <- function() {
   url <- "current.json?limit=30"
   data <- get_ergast_content(url)
 
-  if(is.null(data)){
+  if (is.null(data)) {
     cli::cli_inform("Falling back to manually determined 'current' season")
     current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
-                             as.numeric(strftime(Sys.Date(), "%Y")) - 1,
-                             as.numeric(strftime(Sys.Date(), "%Y"))
+      as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+      as.numeric(strftime(Sys.Date(), "%Y"))
     )
   } else {
     current_season <- as.numeric(data$MRData$RaceTable$season)
