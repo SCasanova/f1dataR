@@ -54,15 +54,17 @@ get_ergast_content <- function(url) {
   # nocov start
   if (is.null(ergast_res) || httr2::resp_is_error(ergast_res) || httr2::resp_body_string(ergast_res) == "Unable to select database") {
     cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
-    tryCatch({
-      ergast_res <- ergast_raw %>%
-        httr2::req_url("http://ergast.com/api/f1") %>%
-        httr2::req_url_path_append(url) %>%
-        httr2::req_perform()
-    },
-    error = function(e) {
-      cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
-    })
+    tryCatch(
+      {
+        ergast_res <- ergast_raw %>%
+          httr2::req_url("http://ergast.com/api/f1") %>%
+          httr2::req_url_path_append(url) %>%
+          httr2::req_perform()
+      },
+      error = function(e) {
+        cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+      }
+    )
   }
 
   if(is.null(ergast_res)){
@@ -206,8 +208,9 @@ get_fastf1_version <- function() {
     dplyr::pull("version")
   if (length(ver) == 0) {
     cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.",
-                  i = "Please run this to install the most recent version:",
-                  " " = "{.code setup_fastf1()}")
+      i = "Please run this to install the most recent version:",
+      " " = "{.code setup_fastf1()}"
+    )
     return(NA)
   }
 
