@@ -30,7 +30,7 @@ If these happen to you (particularly if you're a new user of `f1dataR`) read on!
 
 At the core of the `f1dataR` package, the connection to the Python package is created
 by using [`reticulate`](https://rstudio.github.io/reticulate/). This provides the 
-connectionused to call on Python and return objects to R. However, it has to be 
+connection used to call on Python and return objects to R. However, it has to be 
 set up properly to work.
 
 > **_NOTE:_**  If you are comfortable with `reticulate`, set up a virtualenv or 

@@ -23,21 +23,21 @@ load_schedule <- function(season = get_current_season()) {
     dplyr::select(-"url")
 
   if ("Circuit" %in% colnames(data)) {
-    if (class(data$Circuit) == "data.frame") {
+    if (inherits(data$Circuit, "data.frame")) {
       data <- data %>%
         tidyr::unnest(cols = c("Circuit"), names_repair = "universal")
     }
   }
 
   if ("Location" %in% colnames(data)) {
-    if (class(data$Location) == "data.frame") {
+    if (inherits(data$Location, "data.frame")) {
       data <- data %>%
         tidyr::unnest(cols = c("Location"), names_repair = "universal")
     }
   }
 
   if ("Sprint" %in% colnames(data)) {
-    if (class(data$Sprint) == "data.frame") {
+    if (inherits(data$Sprint, "data.frame")) {
       data <- data %>%
         tidyr::unnest(cols = c("Sprint"), names_sep = "_")
     }

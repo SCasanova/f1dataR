@@ -40,7 +40,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 
   driver_data <- load_driver_telemetry(season, round, session, driver, "fastest")
 
-  if (is.null(status)) {
+  if (is.null(driver_data)) {
     # Failure to load - escape
     return(NULL)
   }
@@ -136,7 +136,7 @@ correct_track_ratio <- function(trackplot, x = "x", y = "y", background = "grey1
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     cli::cli_abort("f1dataR::correct_track_ratio() requires ggplot2 package installation")
   }
-  if (!"ggplot" %in% class(trackplot)) {
+  if (!inherits(trackplot, "ggplot")) {
     cli::cli_abort("{.var trackplot} must be a `ggplot` object")
   }
 
