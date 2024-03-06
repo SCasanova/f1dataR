@@ -41,13 +41,15 @@ get_ergast_content <- function(url) {
 
   ergast_res <- NULL
 
-  tryCatch({
-    ergast_res <- ergast_raw %>%
-      httr2::req_perform()
-  },
-  error = function(e) {
-    cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
-  })
+  tryCatch(
+    {
+      ergast_res <- ergast_raw %>%
+        httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+    }
+  )
 
   # Restart retries to ergast with http (instead of https)
   # No testing penalty for ergast functioning correct
@@ -67,7 +69,7 @@ get_ergast_content <- function(url) {
     )
   }
 
-  if(is.null(ergast_res)){
+  if (is.null(ergast_res)) {
     cli::cli_alert("Couldn't connect to Ergast to retrieve data.")
     return(NULL)
   }
