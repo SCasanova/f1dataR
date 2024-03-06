@@ -62,8 +62,8 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
 
   status <- load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
 
-  if(is.null(status)){
-    #Failure to load - escape
+  if (is.null(status)) {
+    # Failure to load - escape
     return(NULL)
   }
 

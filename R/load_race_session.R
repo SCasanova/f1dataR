@@ -93,7 +93,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
 
   # Check for fastf1 (F1timing/internet) connection
   status <- check_ff1_network_connection(session$session$api_path)
-  if(!status){
+  if (!status) {
     cli::cli_alert_danger("f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
     return(NULL)
   }
@@ -118,7 +118,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
     }
   )
 
-  if(!status){
+  if (!status) {
     return(NULL)
   }
 

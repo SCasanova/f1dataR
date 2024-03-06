@@ -34,10 +34,10 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   check_ff1_version()
 
   # Function Code
-  status<-load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
+  status <- load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
 
-  if(is.null(status)){
-    #Failure to load - escape
+  if (is.null(status)) {
+    # Failure to load - escape
     return(NULL)
   }
 

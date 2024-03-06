@@ -40,8 +40,8 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 
   driver_data <- load_driver_telemetry(season, round, session, driver, "fastest")
 
-  if(is.null(status)){
-    #Failure to load - escape
+  if (is.null(status)) {
+    # Failure to load - escape
     return(NULL)
   }
 

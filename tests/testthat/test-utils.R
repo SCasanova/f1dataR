@@ -63,7 +63,7 @@ test_that("Utility Functions work without internet", {
         })
 
         httptest2::without_internet((
-          expect_false(check_ff1_network_connection('/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/'))
+          expect_false(check_ff1_network_connection("/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/"))
         ))
       })
     })

@@ -101,7 +101,7 @@ get_current_season <- function() {
   url <- "current.json?limit=30"
   data <- get_ergast_content(url)
 
-  if(is.null(data)){
+  if (is.null(data)) {
     cli::cli_alert_info("Falling back to manually determined 'current' season")
     current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
       as.numeric(strftime(Sys.Date(), "%Y")) - 1,
@@ -181,29 +181,30 @@ check_ff1_session_loaded <- function(session_name = "session") {
 #'
 #' @keywords internal
 #' @noRd
-check_ff1_network_connection <- function(path = NA_character_){
-  if(is.na(path)){
+check_ff1_network_connection <- function(path = NA_character_) {
+  if (is.na(path)) {
     cli::cli_abort("f1dataR: Specific race path must be provided")
   }
 
   status <- NULL
 
-  tryCatch({
-    ff1raw <- httr2::request("https://livetiming.formula1.com/") %>%
-      httr2::req_url_path_append(path) %>%
-      httr2::req_url_path_append("Index.json") %>%
-      httr2::req_retry(max_tries = 5) %>%
-      httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
-      httr2::req_throttle(4 / 1) %>%
-      httr2::req_error(is_error = ~FALSE)
-    status <- ff1raw %>%
-      httr2::req_perform()
+  tryCatch(
+    {
+      ff1raw <- httr2::request("https://livetiming.formula1.com/") %>%
+        httr2::req_url_path_append(path) %>%
+        httr2::req_url_path_append("Index.json") %>%
+        httr2::req_retry(max_tries = 5) %>%
+        httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+        httr2::req_throttle(4 / 1) %>%
+        httr2::req_error(is_error = ~FALSE)
+      status <- ff1raw %>%
+        httr2::req_perform()
     },
     error = function(e) {
       cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from F1 Live Timing:\n{e}", e = e))
     }
   )
-  if(is.null(status)){
+  if (is.null(status)) {
     return(FALSE)
   } else {
     return(TRUE)

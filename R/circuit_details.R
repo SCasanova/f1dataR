@@ -41,8 +41,8 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
   # Function Code
   status <- load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
 
-  if(is.null(status)){
-    #Failure to load - escape
+  if (is.null(status)) {
+    # Failure to load - escape
     return(NULL)
   }
 
