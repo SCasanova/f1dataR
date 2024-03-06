@@ -88,7 +88,7 @@ get_current_season <- function() {
       current_season <- as.numeric(data$MRData$RaceTable$season)
     },
     error = function(e) {
-      cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}\nFalling back to manually determined 'current' season", e = e))
+      cli::cli_inform(glue::glue("f1dataR: Error getting current season from Ergast:\n{e}\nFalling back to manually determined 'current' season", e = e))
     }
   )
   return(current_season)
@@ -167,7 +167,8 @@ check_ff1_version <- function() {
   if (version < "3.1") {
     cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
       x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
-      i = "You can update your {.pkg FastF1} installation by running: {.code reticulate::py_install('fastf1')}"
+      i = "You can update your {.pkg FastF1} installation manually, or by running:",
+      " " = "{.code setup_fastf1()}"
     ))
   } else {
     invisible(TRUE)
@@ -187,7 +188,9 @@ get_fastf1_version <- function() {
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if (length(ver) == 0) {
-    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.\nPlease run this to install the most recent version:\n{.code setup_fastf1()}")
+    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.",
+                  i = "Please run this to install the most recent version:",
+                  " " = "{.code setup_fastf1()}")
     return(NA)
   }
 
