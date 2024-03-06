@@ -30,10 +30,8 @@ jobs:
           - {os: windows-latest, r: "devel",    py: "3.11", http-user-agent: "release"}
           - {os: windows-latest, r: "devel",    py: "3.x",  http-user-agent: "release"}
           - {os: ubuntu-latest,  r: "oldrel-1", py: "3.x" }
-          - {os: ubuntu-latest,  r: "release",  py: "3.8" }
           - {os: ubuntu-latest,  r: "release",  py: "3.9" }
-          - {os: ubuntu-latest,  r: "release",  py: "3.10"}
-          - {os: ubuntu-latest,  r: "release",  py: "3.11"}
+          - {os: ubuntu-latest,  r: "release",  py: "3.x" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -58,6 +56,14 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+
+      - name: Install remotes
+        run: |
+          Rscript -e "install.packages('remotes')"
+
+      - name: Install dev reticulate from Github
+        run: |
+          Rscript -e "remotes::install_github('rstudio/reticulate')"
 
       - name: setup r-reticulate venv
         shell: Rscript {0}
