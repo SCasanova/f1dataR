@@ -52,7 +52,7 @@ test_that("Utility Functions work without internet", {
   if (requireNamespace("httptest2", quietly = TRUE)) {
     # Test internet failures for get_current_season
     httptest2::without_internet({
-      expect_message(get_current_season(), "f1dataR: Error getting current season from Ergast")
+      expect_message(get_current_season(), "f1dataR: Error getting data from Ergast")
       expect_gte(get_current_season(), 2022)
     })
   }

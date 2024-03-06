@@ -98,20 +98,18 @@ get_ergast_content <- function(url) {
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- function() {
-  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
-    as.numeric(strftime(Sys.Date(), "%Y")) - 1,
-    as.numeric(strftime(Sys.Date(), "%Y"))
-  )
-  tryCatch(
-    {
-      url <- "current.json?limit=30"
-      data <- get_ergast_content(url)
-      current_season <- as.numeric(data$MRData$RaceTable$season)
-    },
-    error = function(e) {
-      cli::cli_inform("Falling back to manually determined 'current' season")
-    }
-  )
+  url <- "current.json?limit=30"
+  data <- get_ergast_content(url)
+
+  if(is.null(data)){
+    cli::cli_inform("Falling back to manually determined 'current' season")
+    current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+                             as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+                             as.numeric(strftime(Sys.Date(), "%Y"))
+    )
+  } else {
+    current_season <- as.numeric(data$MRData$RaceTable$season)
+  }
   return(current_season)
 }
 
