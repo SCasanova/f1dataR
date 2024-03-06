@@ -47,7 +47,7 @@ get_ergast_content <- function(url) {
         httr2::req_perform()
     },
     error = function(e) {
-      cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
     }
   )
 
@@ -55,7 +55,7 @@ get_ergast_content <- function(url) {
   # No testing penalty for ergast functioning correct
   # nocov start
   if (is.null(ergast_res) || httr2::resp_is_error(ergast_res) || httr2::resp_body_string(ergast_res) == "Unable to select database") {
-    cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
+    cli::cli_alert_warning("Failure at Ergast with https:// connection. Retrying as http://.")
     tryCatch(
       {
         ergast_res <- ergast_raw %>%
@@ -64,18 +64,18 @@ get_ergast_content <- function(url) {
           httr2::req_perform()
       },
       error = function(e) {
-        cli::cli_inform(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+        cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
       }
     )
   }
 
   if (is.null(ergast_res)) {
-    cli::cli_alert("Couldn't connect to Ergast to retrieve data.")
+    cli::cli_alert_danger("Couldn't connect to Ergast to retrieve data.")
     return(NULL)
   }
 
   if (httr2::resp_is_error(ergast_res)) {
-    cli::cli_alert(glue::glue("Error getting Ergast data, http status code {code}.\n{msg}",
+    cli::cli_alert_danger(glue::glue("Error getting Ergast data, http status code {code}.\n{msg}",
       code = httr2::resp_status(ergast_res),
       msg = httr2::resp_status_desc(ergast_res)
     ))
@@ -83,7 +83,7 @@ get_ergast_content <- function(url) {
   }
 
   if (httr2::resp_body_string(ergast_res) == "Unable to select database") {
-    cli::cli_alert("Ergast is having database trouble. Please try again at a later time.")
+    cli::cli_alert_danger("Ergast is having database trouble. Please try again at a later time.")
     return(NULL)
   }
   # nocov end
@@ -102,7 +102,7 @@ get_current_season <- function() {
   data <- get_ergast_content(url)
 
   if(is.null(data)){
-    cli::cli_inform("Falling back to manually determined 'current' season")
+    cli::cli_alert_info("Falling back to manually determined 'current' season")
     current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
                              as.numeric(strftime(Sys.Date(), "%Y")) - 1,
                              as.numeric(strftime(Sys.Date(), "%Y"))
@@ -167,6 +167,47 @@ check_ff1_session_loaded <- function(session_name = "session") {
     }
   )
   invisible(TRUE)
+}
+
+
+#' Check FastF1/F1 Live Timing network status
+#'
+#' @description check the network connection to livetiming.formula1.com, the datasource for FastF1.
+#' Requires a specific session path be provided as the 'homepage' requires authentication to load.
+#'
+#' @param path session path (available from the session at session.api_path)
+#'
+#' @return True if a connection is available, else FALSE
+#'
+#' @keywords internal
+#' @noRd
+check_ff1_network_connection <- function(path = NA_character_){
+  if(is.na(path)){
+    cli::cli_abort("f1dataR: Specific race path must be provided")
+  }
+
+  status <- NULL
+
+  tryCatch({
+    ff1raw <- httr2::request("https://livetiming.formula1.com/") %>%
+      httr2::req_url_path_append(path) %>%
+      httr2::req_url_path_append("Index.json") %>%
+      httr2::req_retry(max_tries = 5) %>%
+      httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+      httr2::req_throttle(4 / 1) %>%
+      httr2::req_error(is_error = ~FALSE)
+    status <- ff1raw %>%
+      httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from F1 Live Timing:\n{e}", e = e))
+    }
+  )
+  if(is.null(status)){
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
 }
 
 
@@ -272,11 +313,11 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
+    cli::cli_alert_warning("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
     virtualenv_remove(envname)
   }
 
-  cli::cli_inform("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
+  cli::cli_alert_inform("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
   reticulate::py_install("fastf1", envname = envname, ...)
 }
 

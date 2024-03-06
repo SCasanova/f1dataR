@@ -38,7 +38,14 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
   # Function Code
   cli::cli_alert_info("If the session has not been loaded yet, this could take a minute\n\n")
 
-  driver_data <- load_driver_telemetry(season, round, session, driver, "fastest") %>%
+  driver_data <- load_driver_telemetry(season, round, session, driver, "fastest")
+
+  if(is.null(status)){
+    #Failure to load - escape
+    return(NULL)
+  }
+
+  driver_data <- driver_data %>%
     dplyr::mutate(
       x = .data$x - mean(range(.data$x, na.rm = TRUE)),
       y = .data$y - mean(range(.data$y, na.rm = TRUE))

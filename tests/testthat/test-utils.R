@@ -36,6 +36,8 @@ test_that("utility functions work", {
     time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
     c(12.345, 83.456, 45296.789, 12.3456)
   )
+
+  expect_error(check_ff1_network_connection(), "f1dataR: Specific race path must be provided")
 })
 
 test_that("Utility Functions work without internet", {
@@ -50,10 +52,20 @@ test_that("Utility Functions work without internet", {
   clear_cache()
 
   if (requireNamespace("httptest2", quietly = TRUE)) {
-    # Test internet failures for get_current_season
-    httptest2::without_internet({
-      expect_message(get_current_season(), "f1dataR: Error getting data from Ergast")
-      expect_gte(get_current_season(), 2022)
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        # Test internet failures for get_current_season
+        httptest2::without_internet({
+          expect_message(get_current_season(), "f1dataR: Error getting data from Ergast")
+          expect_gte(get_current_season(), 2022)
+        })
+
+        httptest2::without_internet((
+          expect_false(check_ff1_network_connection('/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/'))
+        ))
+      })
     })
   }
 })
