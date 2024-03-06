@@ -47,6 +47,8 @@ test_that("Utility Functions work without internet", {
   dir.create(file.path(tempdir(), "tst_utils2"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_utils2"))
 
+  clear_cache()
+
   if (requireNamespace("httptest2", quietly = TRUE)) {
     # Test internet failures for get_current_season
     httptest2::without_internet({
