@@ -88,8 +88,10 @@ test_that("Load Driver Telemetry works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all"),
-                         "f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
+          expect_message(
+            load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all"),
+            "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+          )
           expect_null(load_driver_telemetry(season = 2022, round = "Brazil", session = "S", driver = "HAM", laps = "all"))
         })
       })
