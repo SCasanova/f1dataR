@@ -1,4 +1,4 @@
-test_that("sprint works", {
+test_that("load_sprint works", {
   if (dir.exists(file.path(tempdir(), "tst_load_sprint"))) {
     unlink(file.path(tempdir(), "tst_load_sprint"), recursive = TRUE, force = TRUE)
   }
@@ -17,4 +17,29 @@ test_that("sprint works", {
 
   # A sprint doesn't exist for season = 2021, round = 11
   expect_null(suppressMessages(load_sprint(2021, 11)))
+})
+
+test_that("load_sprint works without internet", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(tempdir(), "tst_load_sprint2"))) {
+    unlink(file.path(tempdir(), "tst_load_sprint2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_load_sprint2"))
+  dir.create(file.path(tempdir(), "tst_load_sprint2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_sprint2"))
+
+  clear_cache()
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        httptest2::without_internet({
+          expect_message(load_sprint(2021, 10), "f1dataR: Error getting data from Ergast")
+          expect_null(load_sprint(2021, 10))
+        })
+      })
+    })
+  }
 })

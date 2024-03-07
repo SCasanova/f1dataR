@@ -1,4 +1,4 @@
-test_that("Lap Load works", {
+test_that("load_laps works", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_laps"))) {
     unlink(file.path(tempdir(), "tst_load_laps"), recursive = TRUE, force = TRUE)
@@ -23,4 +23,29 @@ test_that("Lap Load works", {
   # 2021 Monaco had very many laps, this checks >1000 return code
   laps_long <- load_laps(2021, 5)
   expect_equal(nrow(laps_long), 1418)
+})
+
+test_that("load_laps works without internet", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(tempdir(), "tst_load_laps2"))) {
+    unlink(file.path(tempdir(), "tst_load_laps2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_load_laps2"))
+  dir.create(file.path(tempdir(), "tst_load_laps2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_laps2"))
+
+  clear_cache()
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        httptest2::without_internet({
+          expect_message(load_laps(2021, 1), "f1dataR: Error getting data from Ergast")
+          expect_null(load_laps(2021, 1))
+        })
+      })
+    })
+  }
 })
