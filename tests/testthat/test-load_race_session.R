@@ -86,3 +86,38 @@ test_that("Load Session (memory cached) Works", {
   session1 <- load_race_session(season = 2022, round = 1, session = "R")
   expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2022")
 })
+
+test_that("Load Session works without internet", {
+  skip_if_no_py()
+  skip_if_no_ff1()
+
+  # Set testing specific parameters - this disposes after the test finishes
+  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
+  # because python's process has it locked.
+  if (dir.exists(file.path(tempdir(), "tst_session2"))) {
+    unlink(file.path(tempdir(), "tst_session2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_session2"))
+  dir.create(file.path(tempdir(), "tst_session2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session2"))
+
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver < "3.1") {
+    skip("Skipping load_race_session (no internet) test as FastF1 is out of date.")
+  }
+
+  clear_cache()
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        httptest2::without_internet({
+          expect_message(load_race_session(season = 2022, round = 1), "f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
+          expect_null(load_race_session(season = 2022, round = 1))
+        })
+      })
+    })
+  }
+})

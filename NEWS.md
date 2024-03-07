@@ -8,7 +8,9 @@
 * Added Vignette describing some `load_circuit_details()` usage.
 * Code improvements (better handle variation in Ergast response, better handle Ergast connection failures) (#228)
 * Testing improvements to validate our handling of internet failures (#228)
+* Upgraded to use `httptest2` for testing no-internet scenarios (no affect on package performance)
 * Code cleanup (removed old inaccessible code, centralized repeated steps to functions, etc.)
+
 
 # f1dataR 1.5.0
 
