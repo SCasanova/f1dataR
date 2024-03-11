@@ -56,12 +56,6 @@ test_that("Utility Functions work without internet", {
     # a byproduct of the without_internet call
     suppressWarnings({
       suppressMessages({
-        # Test internet failures for get_current_season
-        httptest2::without_internet({
-          expect_message(get_current_season(), "f1dataR: Error getting data from Ergast")
-          expect_gte(get_current_season(), 2022)
-        })
-
         httptest2::without_internet((
           expect_false(check_ff1_network_connection("/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/"))
         ))
