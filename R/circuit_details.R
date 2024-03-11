@@ -35,22 +35,16 @@
 #'
 #' @export
 load_circuit_details <- function(season = get_current_season(), round = 1, log_level = "WARNING") {
-  if (get_fastf1_version()$major < 3 || (get_fastf1_version()$major == 3 && get_fastf1_version()$minor < 1)) {
-    cli::cli_abort("An old version of FastF1 is in use. FastF1 verison 3.1.0 or later.")
+  # Deprecation Checks
+  check_ff1_version()
+
+  # Function Code
+  status <- load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
+
+  if (is.null(status)) {
+    # Failure to load - escape
+    return(NULL)
   }
-
-  load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
-
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
-    },
-    error = function(e) {
-      reticulate::py_run_string("session.load()")
-    }
-  )
 
   py_env <- reticulate::py_run_string("circuit_info = session.get_circuit_info()")
 
@@ -70,5 +64,8 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
 
   rotation <- circuit_info$rotation
 
-  return(list(corners, marshal_post, marshal_sectors, rotation))
+  return(list(
+    "corners" = corners, "marshal_posts" = marshal_post, "marshal_sectors" = marshal_sectors,
+    "rotation" = rotation
+  ))
 }

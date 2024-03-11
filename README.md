@@ -2,7 +2,7 @@
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
 An R package to access Formula 1 Data from the Ergast API and the
-official F1 data stream via the fastf1 Python library.
+official F1 data stream via the FastF1 Python library.
 
 <!-- badges: start -->
 
@@ -41,6 +41,10 @@ Data is pulled from:
 - [Ergast API](https://ergast.com/mrd/)
 - [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the
   [Fast F1 python library](https://docs.fastf1.dev/index.html)
+
+Note the Ergast Motor Racing Database API will be shutting down at the
+end of 2024. When a new data source is identified the package will be
+migrated to that source.
 
 ## Functions
 
@@ -181,22 +185,31 @@ load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 #> # A tibble: 962 × 39
 #>     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time
 #>    <dbl> <chr>  <chr>            <dbl>      <dbl> <dbl>        <dbl>       <dbl>
-#>  1 3892. VER    1                 110.          1     1         697.        NaN 
-#>  2 4000. VER    1                 108.          2     1         NaN         NaN 
-#>  3 4108. VER    1                 108.          3     1         NaN         NaN 
-#>  4 4215. VER    1                 107.          4     1         NaN         NaN 
-#>  5 4322. VER    1                 107.          5     1         NaN         NaN 
-#>  6 4430. VER    1                 107.          6     1         NaN         NaN 
-#>  7 4537. VER    1                 107.          7     1         NaN         NaN 
-#>  8 4643. VER    1                 107.          8     1         NaN         NaN 
-#>  9 4750. VER    1                 107.          9     1         NaN         NaN 
-#> 10 4861. VER    1                 111.         10     1         NaN        4860.
+#>  1 3892. VER    1                 110.          1     1          NaN        NaN 
+#>  2 4000. VER    1                 108.          2     1          NaN        NaN 
+#>  3 4108. VER    1                 108.          3     1          NaN        NaN 
+#>  4 4215. VER    1                 107.          4     1          NaN        NaN 
+#>  5 4322. VER    1                 107.          5     1          NaN        NaN 
+#>  6 4430. VER    1                 107.          6     1          NaN        NaN 
+#>  7 4537. VER    1                 107.          7     1          NaN        NaN 
+#>  8 4643. VER    1                 107.          8     1          NaN        NaN 
+#>  9 4750. VER    1                 107.          9     1          NaN        NaN 
+#> 10 4861. VER    1                 111.         10     1          NaN       4860.
 #> # ℹ 952 more rows
 #> # ℹ 31 more variables: sector1time <dbl>, sector2time <dbl>, sector3time <dbl>,
 #> #   sector1session_time <dbl>, sector2session_time <dbl>,
 #> #   sector3session_time <dbl>, speed_i1 <dbl>, speed_i2 <dbl>, speed_fl <dbl>,
 #> #   speed_st <dbl>, …
 ```
+
+### Circuit Data
+
+> `load_circuit_details(2023, 4)`
+
+This function loads circuit details for a specific race session. Note
+that different track layouts are used at some circuits depending on the
+year of the race. Useful for visualizing or annotating data. Contains
+information on corners, marshal_lights and marshal_sectors.
 
 ### Plotting
 
@@ -251,9 +264,8 @@ Clears the cache for all functions in the package.
 
 ## Loaded Data
 
-The package also includes a static data frame for all current drivers
-and their respective constructors. Complete with team colors, and links
-to team logos.
+The package also includes a static data frame for all current
+Constructors. Complete with team colors, and links to team logos.
 
 ``` r
 constructor_data %>% colnames()

@@ -14,7 +14,12 @@ load_circuits <- function(season = get_current_season()) {
   url <- glue::glue("{season}/circuits.json?limit=40",
     season = season
   )
+
   data <- get_ergast_content(url)
+
+  if (is.null(data)) {
+    return(NULL)
+  }
 
   data$MRData$CircuitTable$Circuits %>%
     tidyr::unnest(cols = c("Location")) %>%

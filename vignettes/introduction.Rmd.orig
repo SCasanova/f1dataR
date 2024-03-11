@@ -42,16 +42,16 @@ Let's get Leclerc's fastest lap from the first race of 2022:
 ```{r telem}
 library(f1dataR)
 
-load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest")
+load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
 
-```{r simple_plot, warning=FALSE, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r simple_plot, warning=FALSE, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap = 'Plot of lap distance vs throttle percentage for Leclerc at the 2022 Bahrain Grand Prix Qualifying session (specifically his fastest lap)'}
 library(dplyr)
 library(ggplot2)
 
-lec <- load_driver_telemetry(2022, 1, driver = "LEC", laps = "fastest") %>%
+lec <- load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest") %>%
   head(300)
 
 ggplot(lec, aes(distance, throttle)) +
@@ -61,11 +61,11 @@ ggplot(lec, aes(distance, throttle)) +
 
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
-```{r triple_plot, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r triple_plot, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap = 'Throttle percent by distance for Leclerc, Hamilton and Perez from 2022 Bahrain Grand Prix Qualifying session'}
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
-per <- load_driver_telemetry(2022, 1, driver = "PER", laps = "fastest") %>%
+per <- load_driver_telemetry(2022, 1, "Q", driver = "PER", laps = "fastest") %>%
   head(300)
 
 data <- bind_rows(lec, ham, per)
@@ -79,7 +79,7 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
 
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
-```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE)), optipng = ''}
+```{r use_theme, eval=all(require('ggplot2', quietly = TRUE),require('dplyr', quietly = TRUE)), optipng = '', fig.cap='Throttle percent by distance for the three drivers, with f1dataR theme applied'}
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
   theme_dark_f1(axis_marks = TRUE) +
@@ -94,7 +94,7 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
 
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
-```{r use_builtin, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r use_builtin, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Fastest lap for Perez from the 2022 Bahrain Grand Prix, showing gear used at each point in the lap'}
 plot_fastest(2022, 1, "R", "PER")
 ```
 
@@ -102,7 +102,7 @@ plot_fastest(2022, 1, "R", "PER")
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
-```{r session_laps, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r tire_life, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Average laptime per tire type and age at Spanish Grand Prix 2023'}
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -129,7 +129,7 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP. Note that
 we'll pass the plot through the helper function `correct_track_ratio()` to ensure the plotted track has correct dimensions (and a few other tweaks for pretty plotting). Alternatively, you can call `ggplot2::coord_fixed()` while building track plots to ensure the `x` & `y` ratios are equal.
 
-```{r telem_plotting, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r telem_plotting, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Verstappen fastest lab in the Canadian Grand Prix 2023, showing full throttle sections'}
 ver_can <- load_driver_telemetry(
   season = 2023,
   round = "Canada",
@@ -151,9 +151,9 @@ throttle_plot <- ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), gro
 correct_track_ratio(throttle_plot)
 ```
 
-For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot.
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
 
-```{r pitstop, eval=require('ggplot2', quietly = TRUE), optipng = ''}
+```{r pitstop, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Average time in pits for each team at the 2023 Azerbaijan Grand Prix'}
 pit_data <- load_pitstops(2023, 4)
 
 driver_team <- load_results(2023, 4) %>%
@@ -169,7 +169,6 @@ pit_constructor <- pit_data %>%
   summarise(pit_time = mean(as.numeric(duration))) %>%
   left_join(constructors, by = "constructor_id")
 
-
 ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
   geom_bar(stat = "identity", fill = pit_constructor$constructor_color) +
   theme_dark_f1(axis_marks = TRUE) +
@@ -179,7 +178,8 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
   labs(
     x = "Constructor",
     y = "Average Pit Time (seconds)"
-  )
+  ) +
+  ggtitle("Average time in pit lane for each team", subtitle = "Azerbijan Grand Prix 2023")
 ```
 
 # Help

@@ -1,20 +1,35 @@
 #' Get Ergast Content
 #'
-#' @description Gets ergast content and returns the processed json object if
+#' @description Gets Ergast content and returns the processed json object if
 #' no Ergast errors are found. This will automatically fall back from https://
-#' to http:// if ergast suffers errors, and will automatically retry up to 5
+#' to http:// if Ergast suffers errors, and will automatically retry up to 5
 #' times by each protocol
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Note the Ergast Motor Racing Database API will shut down at the end of 2024.
+#' This function willbe replaced with a new data-source when one is made available.
 #'
 #' @param url the Ergast URL tail to get from the API (for example,
 #' `"current.json?limit=30"` is called from `get_current_season()`).
 #' @keywords internal
-#' @return the result of `jsonlite::fromJSON` called on ergast's return content.
+#' @return the result of `jsonlite::fromJSON` called on Ergast's return content.
 #' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
+  # Function Deprecation Warning
+  lifecycle::deprecate_soft("at the end of 2024", "get_ergast_content()",
+    details = c(
+      "i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
+      " " = "This package will update with a replacement when one is available."
+    )
+  )
+
+  # Function Code
+
   # note:
   # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
-  # Automatically retries request up to 5 times. Backoff provided in httr2 documentation
+  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
 
@@ -25,31 +40,57 @@ get_ergast_content <- function(url) {
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
 
-  ergast_raw <- ergast_raw %>%
-    httr2::req_perform()
+  ergast_res <- NULL
+
+  tryCatch(
+    {
+      ergast_res <- ergast_raw %>%
+        httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+    }
+  )
 
   # Restart retries to ergast with http (instead of https)
-  if (httr2::resp_is_error(ergast_raw) || httr2::resp_body_string(ergast_raw) == "Unable to select database") {
-    cli::cli_inform("Failure at Ergast with https:// connection. Retrying as http://.")
-    ergast_raw <- ergast_raw %>%
-      httr2::req_url("http://ergast.com/api/f1") %>%
-      httr2::req_url_path_append(url) %>%
-      httr2::req_perform()
+  # No testing penalty for ergast functioning correct
+  # nocov start
+  if (is.null(ergast_res) || httr2::resp_is_error(ergast_res) || httr2::resp_body_string(ergast_res) == "Unable to select database") {
+    cli::cli_alert_warning("Failure at Ergast with https:// connection. Retrying as http://.")
+    tryCatch(
+      {
+        ergast_res <- ergast_raw %>%
+          httr2::req_url("http://ergast.com/api/f1") %>%
+          httr2::req_url_path_append(url) %>%
+          httr2::req_perform()
+      },
+      error = function(e) {
+        cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
+      }
+    )
   }
 
-  if (httr2::resp_is_error(ergast_raw)) {
-    cli::cli_abort(glue::glue("Error getting Ergast Data, http status code {code}.\n{msg}",
-      code = httr2::resp_status(ergast_raw),
-      msg = httr2::resp_status_desc(ergast_raw)
+  if (is.null(ergast_res)) {
+    cli::cli_alert_danger("Couldn't connect to Ergast to retrieve data.")
+    return(NULL)
+  }
+
+  if (httr2::resp_is_error(ergast_res)) {
+    cli::cli_alert_danger(glue::glue("Error getting Ergast data, http status code {code}.\n{msg}",
+      code = httr2::resp_status(ergast_res),
+      msg = httr2::resp_status_desc(ergast_res)
     ))
+    return(NULL)
   }
 
-  if (httr2::resp_body_string(ergast_raw) == "Unable to select database") {
-    cli::cli_abort("Ergast is having database trouble. Please try again at a later time.")
+  if (httr2::resp_body_string(ergast_res) == "Unable to select database") {
+    cli::cli_alert_danger("Ergast is having database trouble. Please try again at a later time.")
+    return(NULL)
   }
+  # nocov end
 
   # else must be ok
-  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_raw)))
+  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_res)))
 }
 
 #' Get Current Season
@@ -58,20 +99,18 @@ get_ergast_content <- function(url) {
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- function() {
-  current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
-    as.numeric(strftime(Sys.Date(), "%Y")) - 1,
-    as.numeric(strftime(Sys.Date(), "%Y"))
-  )
-  tryCatch(
-    {
-      url <- "current.json?limit=30"
-      data <- get_ergast_content(url)
-      current_season <- as.numeric(data$MRData$RaceTable$season)
-    },
-    error = function(e) {
-      cli::cli_inform(glue::glue("f1dataR: Error getting current season from ergast:\n{e}\nFalling back to manually determined 'current' season", e = e))
-    }
-  )
+  url <- "current.json?limit=30"
+  data <- get_ergast_content(url)
+
+  if (is.null(data)) {
+    cli::cli_alert_info("Falling back to manually determined 'current' season")
+    current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+      as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+      as.numeric(strftime(Sys.Date(), "%Y"))
+    )
+  } else {
+    current_season <- as.numeric(data$MRData$RaceTable$season)
+  }
   return(current_season)
 }
 
@@ -106,33 +145,149 @@ time_to_sec <- function(time) {
 }
 
 
+#' Check FastF1 Session Loaded
+#'
+#' @description Used to verify that the fastf1 session is loaded before trying to work with it.
+#'
+#' Prevents errors in automated processing code.
+#'
+#' @param session_name Name of the python session object. For internal functions, typically `session`.
+#'
+#' @return invisible TRUE, no real return, called for effect
+#'
+#' @keywords internal
+check_ff1_session_loaded <- function(session_name = "session") {
+  tryCatch(
+    {
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, retry
+      reticulate::py_run_string(glue::glue("{session_name}.t0_date", session_name = session_name))
+    },
+    error = function(e) {
+      reticulate::py_run_string(glue::glue("{session_name}.load()", session_name = session_name))
+    }
+  )
+  invisible(TRUE)
+}
+
+
+#' Check FastF1/F1 Live Timing network status
+#'
+#' @description check the network connection to livetiming.formula1.com, the datasource for FastF1.
+#' Requires a specific session path be provided as the 'homepage' requires authentication to load.
+#'
+#' @param path session path (available from the session at session.api_path)
+#'
+#' @return True if a connection is available, else FALSE
+#'
+#' @keywords internal
+#' @noRd
+check_ff1_network_connection <- function(path = NA_character_) {
+  if (is.na(path)) {
+    cli::cli_abort("f1dataR: Specific race path must be provided")
+  }
+
+  status <- NULL
+
+  tryCatch(
+    {
+      ff1raw <- httr2::request("https://livetiming.formula1.com/") %>%
+        httr2::req_url_path_append(path) %>%
+        httr2::req_url_path_append("Index.json") %>%
+        httr2::req_retry(max_tries = 5) %>%
+        httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+        httr2::req_throttle(4 / 1) %>%
+        httr2::req_error(is_error = ~FALSE)
+      status <- ff1raw %>%
+        httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from F1 Live Timing:\n{e}", e = e))
+    }
+  )
+  if (is.null(status)) {
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
+}
+
+
+#' Check FastF1 Version
+#'
+#' @description
+#' This function checks the version of `FastF1` and ensures it's at or above the minimum supported version for
+#' `f1dataR` (currently requires 3.1.0 or better).
+#'
+#' This function is a light wrapper around get_fastf1_version()
+#'
+#' @return Invisibly `TRUE` if not raising an error for unsupported `FastF1` version.
+#'
+#' @keywords internal
+check_ff1_version <- function() {
+  version <- get_fastf1_version()
+  if (version < "3.1") {
+    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+      x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
+      i = "You can update your {.pkg FastF1} installation manually, or by running:",
+      " " = "{.code setup_fastf1()}"
+    ))
+  } else {
+    invisible(TRUE)
+  }
+}
+
+
 #' Get current FastF1 version
 #'
 #' @description
 #' Gets the current installed FastF1 version available (via `reticulate`) to the function.
 #' Displays a note if significantly out of date.
 #' @export
-#' @return integer for major version number (or NA if any error )
+#' @return version as class `package_version`
 get_fastf1_version <- function() {
   ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if (length(ver) == 0) {
-    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.\nPlease run this to install the most recent version:\n{.code setup_fastf1()}")
+    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.",
+      i = "Please run this to install the most recent version:",
+      " " = "{.code setup_fastf1()}"
+    )
     return(NA)
   }
-  major <- as.integer(unlist(strsplit(ver, ".", fixed = T))[1])
-  minor <- as.integer(unlist(strsplit(ver, ".", fixed = T))[2])
-  if (major < 3 | (major == 3 & minor < 1)) {
-    lifecycle::deprecate_warn("1.4.1",
-      what = I("fastf1 version < 3.1"), with = I("fastf1 version >= 3.1"),
-      details = c("Hard deprecation will occur between 2023 and 2024 F1 seasons")
-    )
-    cli::cli_inform("The Python package {.pgk fastf1} was updated to v3 recently.\nPlease update the version on your system by running:\n{.code setup_fastf1(newenv = TRUE)}\nFuture versions of {.pkg f1dataR} may not support {.pkg fastf1<3.0.0}.")
-  }
-  return(list(major = major, minor = minor))
+
+  return(package_version(ver))
 }
 
+
+#' Add Column if Absent
+#'
+#' @description Adds a column (with the name specified in column_name) of NA values to a data.frame or tibble. If that
+#' column already exists, no change will be made to data. NA value type (character, integer, real, logical)
+#' may be specified.
+#'
+#' @param data a data.frame or tibble to which a column may be added
+#' @param column_name the name of the column to be added if it doesn't exist
+#' @param na_type the type of NA value to use for the column values. Default to basic `NA`
+#'
+#' @return the data.frame as provided (converted to tibble)
+#' @keywords internal
+add_col_if_absent <- function(data, column_name, na_type = NA) {
+  if (!is.na(na_type)) {
+    cli::cli_abort(x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_}).")
+  }
+  if (!(inherits(data, "data.frame"))) {
+    cli::cli_abort(x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}.")
+  }
+  if (!(length(column_name) == 1) | !(inherits(column_name, "character"))) {
+    cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
+  }
+  if (!(column_name %in% colnames(data))) {
+    data[, column_name] <- na_type
+  }
+  return(dplyr::as_tibble(data))
+}
 # nocov start
 
 #' Setup fastf1 connection
@@ -160,11 +315,11 @@ get_fastf1_version <- function() {
 #' }
 setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg fastf1}f")
+    cli::cli_alert_warning("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
     virtualenv_remove(envname)
   }
 
-  cli::cli_inform("Installing {.pkg fastf1} in current Python environment: {.var {envname}}.")
+  cli::cli_alert_info("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
   reticulate::py_install("fastf1", envname = envname, ...)
 }
 

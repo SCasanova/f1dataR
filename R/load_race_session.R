@@ -35,10 +35,13 @@
 #' }
 load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = "R",
                               log_level = "WARNING", race = lifecycle::deprecated()) {
+  # Deprecation Checks
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_race_session(race)", "load_race_session(round)")
-    round <- race
   }
+  check_ff1_version()
+
+  # Function Code
   if (season != "current" && (season < 2018 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 2018 and {get_current_season()} (or use "current")')
     # stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
@@ -69,10 +72,7 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   reticulate::py_run_string("import fastf1")
-  if (get_fastf1_version()$major >= 3) {
-    reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
-  }
-
+  reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
   reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = f1datar_cache))
 
   py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
@@ -87,20 +87,40 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
     )
   }
 
-  reticulate::py_run_string(py_string)
+  # fastf1.get_session([args]) runs even if there's no internet connection,
+  # the schedule of sessions is built into the package
+  session <- reticulate::py_run_string(py_string)
 
-  session <- reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+  # Check for fastf1 (F1timing/internet) connection
+  status <- check_ff1_network_connection(session$session$api_path)
+  if (!status) {
+    cli::cli_alert_danger("f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
+    return(NULL)
+  }
 
+  # likewise, without internet the session itself will 'load' but not actually retrieve any data
+  reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+
+  # without internet the session check will fail, and retry reload
+  check_ff1_session_loaded(session_name = obj_name)
+
+  status <- FALSE
   tryCatch(
     {
       # Only returns a value if session.load() has been successful
-      # If it hasn't, retry
-      reticulate::py_run_string("session.t0_date")
+      # If it hasn't, internet or fastf1 must be down
+      reticulate::py_run_string(glue::glue("{obj_name}.t0_date", obj_name = obj_name))
+      status <- TRUE
     },
     error = function(e) {
-      reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+      cli::cli_alert_danger("f1dataR: Error getting data from FastF1 or F1 Live Timing")
+      status <- FALSE
     }
   )
+
+  if (!status) {
+    return(NULL)
+  }
 
   invisible(session[obj_name])
 }

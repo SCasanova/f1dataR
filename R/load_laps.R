@@ -12,18 +12,25 @@
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
 load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
+  # Deprecation Check
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_laps(race)", "load_laps(round)")
-    round <- race
   }
+
+  # Parameter Check
   if (season != "current" && (season < 1996 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1996 and {get_current_season()} (or use "current")')
   }
 
+  # Function Code
   url <- glue::glue("{season}/{round}/laps.json?limit=1000",
     season = season, round = round
   )
   data <- get_ergast_content(url)
+
+  if (is.null(data)) {
+    return(NULL)
+  }
 
   total <- data$MRData$total %>% as.numeric()
   if (total - 1000 > 0 && total - 1000 <= 1000) {
@@ -32,6 +39,10 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
       lim = lim, season = season, round = round
     )
     data2 <- get_ergast_content(url2)
+
+    if (is.null(data2)) {
+      return(NULL)
+    }
 
     full <- dplyr::bind_rows(data$MRData$RaceTable$Races$Laps[[1]][2], data2$MRData$RaceTable$Races$Laps[[1]][2])
   } else {
