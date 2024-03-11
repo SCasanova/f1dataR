@@ -13,10 +13,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  fig.width = 7,
-  fig.height = 5,
+  fig.width = 6,
+  fig.height = 4,
   fig.path = "plotting-turn-info-",
-  dpi = 300,
+  dpi = 250,
   dev = "png"
 )
 # Use a local temporary cache and set back to user's info when finished vignette build

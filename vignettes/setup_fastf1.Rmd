@@ -55,6 +55,7 @@ This will create a virtual environment using your system's default Python versio
 and install `fastf1` in that python environment. It will also tell `reticulate` to use that
 environment instead of just running in your main system. For more information on Python 
 environments read [this article (infoworld.com)](https://www.infoworld.com/article/3239675/virtualenv-and-venv-python-virtual-environments-explained.html). 
+
 # Repeat/Recurring Issues
 
 If you have repeat issues with the package failing to connect to your proper environment, 
