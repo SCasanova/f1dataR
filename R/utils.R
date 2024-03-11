@@ -11,7 +11,7 @@
 #' This function willbe replaced with a new data-source when one is made available.
 #'
 #' @param url the Ergast URL tail to get from the API (for example,
-#' `"current.json?limit=30"` is called from `get_current_season()`).
+#' `"{season}/circuits.json?limit=40"` is called from `load_circuits()`).
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on Ergast's return content.
 #' Further processing is performed by specific functions
@@ -92,25 +92,18 @@ get_ergast_content <- function(url) {
   return(jsonlite::fromJSON(httr2::resp_body_string(ergast_res)))
 }
 
+
 #' Get Current Season
 #'
-#' @description Looks up current season from ergast, fallback to manual determination
+#' @description Determines current season by System Date. Note returns the season prior to the current year
+#' in January and February
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- function() {
-  url <- "current.json?limit=30"
-  data <- get_ergast_content(url)
-
-  if (is.null(data)) {
-    cli::cli_alert_info("Falling back to manually determined 'current' season")
-    current_season <- ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+  return(ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
       as.numeric(strftime(Sys.Date(), "%Y")) - 1,
       as.numeric(strftime(Sys.Date(), "%Y"))
-    )
-  } else {
-    current_season <- as.numeric(data$MRData$RaceTable$season)
-  }
-  return(current_season)
+    ))
 }
 
 

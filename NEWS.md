@@ -2,6 +2,7 @@
 
 * Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.
 * Deprecated support for FastF1 v < 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (#198)
+* Removed Ergast check for `get_current_season()` (#227)
 * Improved messaging to users regarding updating FastF1 (#226)
 * Named items in list returned by `load_circuit_details()`
 * Changed the way that `correct_track_ratio()` works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.
