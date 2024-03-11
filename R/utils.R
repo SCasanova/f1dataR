@@ -101,9 +101,9 @@ get_ergast_content <- function(url) {
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- function() {
   return(ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
-      as.numeric(strftime(Sys.Date(), "%Y")) - 1,
-      as.numeric(strftime(Sys.Date(), "%Y"))
-    ))
+    as.numeric(strftime(Sys.Date(), "%Y")) - 1,
+    as.numeric(strftime(Sys.Date(), "%Y"))
+  ))
 }
 
 
