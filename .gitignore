@@ -8,5 +8,6 @@ tests/testthat/tst_*
 f1dataR.Rproj
 /doc/
 /Meta/
-/tst_*
+/tst_*go
 Rplots.pdf
+.DS_Store
