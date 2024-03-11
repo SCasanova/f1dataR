@@ -31,7 +31,7 @@ get_ergast_content <- function(url) {
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
   # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
-  
+
 
   ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
     httr2::req_url_path_append(url) %>%
