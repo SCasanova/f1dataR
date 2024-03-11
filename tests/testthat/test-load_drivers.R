@@ -18,3 +18,28 @@ test_that("Drivers Load works", {
 
   expect_error(load_drivers(3050), "`season` must be between 1950 and *")
 })
+
+test_that("load_drivers works without internet", {
+  # Set testing specific parameters - this disposes after the test finishes
+  if (dir.exists(file.path(tempdir(), "tst_load_drivers2"))) {
+    unlink(file.path(tempdir(), "tst_load_drivers2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_load_drivers2"))
+  dir.create(file.path(tempdir(), "tst_load_drivers2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_drivers2"))
+
+  clear_cache()
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        httptest2::without_internet({
+          expect_message(load_drivers(2021), "f1dataR: Error getting data from Ergast")
+          expect_null(load_drivers(2021))
+        })
+      })
+    })
+  }
+})

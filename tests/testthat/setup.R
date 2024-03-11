@@ -1,4 +1,4 @@
-require(httptest, quietly = TRUE)
+require(httptest2, quietly = TRUE)
 
 # helper function to skip tests if we don't have the fastf1 module
 skip_if_no_ff1 <- function() {

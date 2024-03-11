@@ -34,8 +34,12 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   check_ff1_version()
 
   # Function Code
-  load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
-  check_ff1_session_loaded(session_name = "session")
+  status <- load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
+
+  if (is.null(status)) {
+    # Failure to load - escape
+    return(NULL)
+  }
 
   reticulate::py_run_string("laps = session.laps")
   if (add_weather) {

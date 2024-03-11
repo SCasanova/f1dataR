@@ -39,7 +39,7 @@ Imports:
     withr
 Suggests: 
     ggplot2,
-    httptest,
+    httptest2,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
