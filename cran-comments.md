@@ -5,5 +5,7 @@ The package has been updated to fail gracefully if the web resource is unavailab
 
 This version update was requested by 17 March, should there be any issues with this submission please extend this deadline.
 
+Reduced image quality to comply with 5MB tarball limit
+
 ## R CMD check results
 
