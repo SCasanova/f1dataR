@@ -141,8 +141,8 @@ ggplot(laps, aes(tyre_life, lap_time, color = compound)) +
 ```
 
 <div class="figure">
-<img src="introduction-tire_life-1.png" alt="Average laptime per tire type and age at Spanish Grand Prix 2023" width="100%" />
-<p class="caption">Average laptime per tire type and age at Spanish Grand Prix 2023</p>
+<img src="introduction-tyre_life-1.png" alt="Average laptime per tyre type and age at Spanish Grand Prix 2023" width="100%" />
+<p class="caption">Average laptime per tyre type and age at Spanish Grand Prix 2023</p>
 </div>
 
 Now let's visualize the portion of the track where Verstappen had the throttle 100% open in the 2023 Canadian GP. Note that
@@ -205,7 +205,7 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
     x = "Constructor",
     y = "Average Pit Time (seconds)"
   ) +
-  ggtitle("Average time in pit lane for each team", subtitle = "Azerbijan Grand Prix 2023")
+  ggtitle("Average time in pit lane for each team", subtitle = "Azerbaijan Grand Prix 2023")
 ```
 
 <div class="figure">

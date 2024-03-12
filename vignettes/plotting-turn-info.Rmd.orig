@@ -157,7 +157,7 @@ silverstone_circuit$corners$labx <- labelx(silverstone_circuit$corners$x, silver
 silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silverstone_circuit$corners$angle )
 ```
 
-With those new label x and y points calculated, we can replot the labels slightly offset from the track.
+With those new label x and y points calculated, we can re-plot the labels slightly offset from the track.
 
 ```{r relabelled_gear_plot, message = FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.height=5, fig.width=5, fig.cap='Plot showing gear in use by Vertappen around Silversone, with corner labels applied'}
 labelled_gear_plot2 <- gear_plot +

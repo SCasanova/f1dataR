@@ -157,7 +157,7 @@ silverstone_circuit$corners$labx <- labelx(silverstone_circuit$corners$x, silver
 silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silverstone_circuit$corners$angle )
 ```
 
-With those new label x and y points calculated, we can replot the labels slightly offset from the track.
+With those new label x and y points calculated, we can re-plot the labels slightly offset from the track.
 
 
 ```r
