@@ -11,9 +11,10 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%",
-  dpi = 300,
-  fig.retina = 2,
-  dev = "png"
+  dpi = 250,
+  dev = "png",
+  fig.width = 6,
+  fig.height = 4
 )
 library(tibble)
 options(

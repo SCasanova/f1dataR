@@ -12,10 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  fig.width = 7,
-  fig.height = 5,
+  fig.width = 6,
+  fig.height = 4,
   fig.path = "ergast-data-analysis-",
-  dpi = 300,
+  dpi = 250,
   dev = "png"
 )
 knitr::knit_hooks$set(optipng = knitr::hook_optipng)
@@ -36,7 +36,7 @@ library(dplyr)
 # Sample Data Analysis
 Here are a few simple data analysis examples using Ergast's data.
 
- > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](https://ergast.com/mrd/terms/) for more informaiton.
+ > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](https://ergast.com/mrd/terms/) for more information.
 
 We can make multiple repeat calls to the same function (with the same arguments) as the `f1dataR` package automatically caches responses from Ergast. You'll see this taken advantage of in a few areas.
 
@@ -145,7 +145,7 @@ ggplot(points, aes(x = round, y = points, color = driver_id)) +
 Sys.sleep(1)
 ```
 
-## Driver Laptime Scatterplot
+## Driver Lap Time Scatter Plot
 
 We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
@@ -189,7 +189,7 @@ ggplot(laps, aes(x = driver_id, y = time_sec)) +
   theme_dark_f1(axis_marks = TRUE) +
   ggtitle("Driver Lap Times", subtitle = paste("Racing Laps Only -", racename)) +
   xlab("Driver ID") +
-  ylab("Laptime (s)") +
+  ylab("Lap Time (s)") +
   theme(axis.text.x = element_text(angle = 90))
 ```
 

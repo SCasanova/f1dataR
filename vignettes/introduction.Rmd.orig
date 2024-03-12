@@ -12,10 +12,10 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  fig.width = 7,
-  fig.height = 5,
+  fig.width = 6,
+  fig.height = 4,
   fig.path = "introduction-",
-  dpi = 300,
+  dpi = 250,
   dev = "png"
 )
 
@@ -102,7 +102,7 @@ plot_fastest(2022, 1, "R", "PER")
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
-```{r tire_life, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Average laptime per tire type and age at Spanish Grand Prix 2023'}
+```{r tyre_life, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Average laptime per tyre type and age at Spanish Grand Prix 2023'}
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -179,7 +179,7 @@ ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor
     x = "Constructor",
     y = "Average Pit Time (seconds)"
   ) +
-  ggtitle("Average time in pit lane for each team", subtitle = "Azerbijan Grand Prix 2023")
+  ggtitle("Average time in pit lane for each team", subtitle = "Azerbaijan Grand Prix 2023")
 ```
 
 # Help

@@ -60,20 +60,20 @@ season and last race. Lap data is limited to 1996-present.
 
 ``` r
 load_laps()
-#> # A tibble: 1,157 × 6
+#> # A tibble: 900 × 6
 #>    driver_id      position time       lap time_sec season
 #>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 max_verstappen 1        1:32.190     1     92.2   2023
-#>  2 leclerc        2        1:33.119     1     93.1   2023
-#>  3 piastri        3        1:33.882     1     93.9   2023
-#>  4 norris         4        1:34.309     1     94.3   2023
-#>  5 russell        5        1:34.776     1     94.8   2023
-#>  6 tsunoda        6        1:35.435     1     95.4   2023
-#>  7 alonso         7        1:36.044     1     96.0   2023
-#>  8 gasly          8        1:36.636     1     96.6   2023
-#>  9 hamilton       9        1:37.227     1     97.2   2023
-#> 10 perez          10       1:37.745     1     97.7   2023
-#> # ℹ 1,147 more rows
+#>  1 max_verstappen 1        1:35.505     1     95.5   2024
+#>  2 leclerc        2        1:36.681     1     96.7   2024
+#>  3 perez          3        1:37.222     1     97.2   2024
+#>  4 alonso         4        1:38.507     1     98.5   2024
+#>  5 piastri        5        1:38.705     1     98.7   2024
+#>  6 norris         6        1:39.926     1     99.9   2024
+#>  7 russell        7        1:40.459     1    100.    2024
+#>  8 hamilton       8        1:40.900     1    101.    2024
+#>  9 stroll         9        1:42.429     1    102.    2024
+#> 10 tsunoda        10       1:42.531     1    103.    2024
+#> # ℹ 890 more rows
 ```
 
 or
@@ -226,7 +226,7 @@ total number of races in a season).
 - `load_pitstops(season = "current", round = "last")`
 - `load_quali(season = "current", round = "last")`
 - `load_results(season = "current", round = "last")`
-- `load_schedule(season =`2023`)`
+- `load_schedule(season =`2024`)`
 - `load_sprint(season = "current", round = "last")`
 - `load_standings(season = "current", round = "last", type = c("driver", "constructor"))`
 
