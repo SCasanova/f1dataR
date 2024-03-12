@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: Access Formula 1 Data
-Version: 1.5.0.9000
+Version: 1.5.1
 Authors@R: c(
     person("Santiago", "Casanova", , "santiago.casanova@yahoo.com", role = c("aut", "cre", "cph")),
     person("Philip", "Bulsink", , "bulsinkp@gmail.com", role = "aut",
@@ -45,6 +45,6 @@ Suggests:
     testthat (>= 3.0.0),
     usethis
 VignetteBuilder: knitr
-URL: https://scasanova.github.io/f1dataR/, https://github.com/scasanova/f1dataR/
-BugReports: https://github.com/scasanova/f1dataR/issues
+URL: https://scasanova.github.io/f1dataR/, https://github.com/SCasanova/f1dataR
+BugReports: https://github.com/SCasanova/f1dataR/issues
 Config/testthat/edition: 3
