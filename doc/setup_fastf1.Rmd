@@ -1,0 +1,69 @@
+---
+title: "Setup FastF1 Connection"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Setup FastF1 Connection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette briefly describes setting up the `f1dataR` package to work properly with with 
+the Python package [`FastF1`](https://docs.fastf1.dev/). This guide may help resolve some issues
+that might arise when you get the following warning or error messages:
+
+- `Ensure fastf1 python package is installed. Please run this to install the most recent version: setup_fastf1()`
+- `Error in if (get_fastf1_version() < '3.1') { :` 
+   `missing value where TRUE/FALSE needed`
+
+If these happen to you (particularly if you're a new user of `f1dataR`) read on!
+
+# `f1dataR`'s Relationship to Python
+
+At the core of the `f1dataR` package, the connection to the Python package is created
+by using [`reticulate`](https://rstudio.github.io/reticulate/). This provides the 
+connection used to call on Python and return objects to R. However, it has to be 
+set up properly to work.
+
+> **_NOTE:_**  If you are comfortable with `reticulate`, set up a virtualenv or 
+condaenv and point reticulate to that with your .RProfile before calling `library(fastf1)`,
+and you can skip the rest of this guide.
+
+# Setting up `reticulate`
+
+There are a few options to get the `reticulate` set up in a way that works well for 
+`f1dataR` to use it.
+
+## Accept all defaults
+
+To use all of the defaults and set up the `reticulate` package, you can use the below 
+helper function. 
+
+```r
+setup_fastf1()
+```
+
+This will create a virtual environment using your system's default Python version,
+and install `fastf1` in that python environment. It will also tell `reticulate` to use that
+environment instead of just running in your main system. For more information on Python 
+environments read [this article (infoworld.com)](https://www.infoworld.com/article/3239675/virtualenv-and-venv-python-virtual-environments-explained.html). 
+
+# Repeat/Recurring Issues
+
+If you have repeat issues with the package failing to connect to your proper environment, 
+you can force a complete recreation of the virtual environment by calling:
+
+```r
+setup_fastf1(new_env = TRUE)
+```
+
+If you've configured the package to use a custom environment name, the above function will require that name supplied as
+the `envname` parameter.
