@@ -8,5 +8,7 @@ This version update was requested by 17 March, should there be any issues with t
 
 Reduced image quality to comply with 5MB tarball limit
 
+Reduced image quality to comply with 5MB tarball limit
+
 ## R CMD check results
 
