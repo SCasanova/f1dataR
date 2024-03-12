@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">f1dataR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/scasanova/f1dataR/" class="external-link">
+  <a href="https://github.com/SCasanova/f1dataR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -63,47 +63,47 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/scasanova/f1dataR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/SCasanova/f1dataR/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="f1datar-development-version">f1dataR (development version)<a class="anchor" aria-label="anchor" href="#f1datar-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="1.5.1" id="f1datar-151">f1dataR 1.5.1<a class="anchor" aria-label="anchor" href="#f1datar-151"></a></h2>
 <ul><li>Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.</li>
-<li>Deprecated support for FastF1 v &lt; 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (<a href="https://github.com/scasanova/f1dataR/issues/198" class="external-link">#198</a>)</li>
-<li>Removed Ergast check for <code><a href="../reference/get_current_season.html">get_current_season()</a></code> (<a href="https://github.com/scasanova/f1dataR/issues/227" class="external-link">#227</a>)</li>
-<li>Improved messaging to users regarding updating FastF1 (<a href="https://github.com/scasanova/f1dataR/issues/226" class="external-link">#226</a>)</li>
+<li>Deprecated support for FastF1 v &lt; 3.1.0. Older FastF1 versions do not support all of the functions in use and may return different values from some data retrieval or calculation functions. Forcing use of up-to-date FastF1 allows for simpler bugfixes and code updates. (<a href="https://github.com/SCasanova/f1dataR/issues/198" class="external-link">#198</a>)</li>
+<li>Removed Ergast check for <code><a href="../reference/get_current_season.html">get_current_season()</a></code> (<a href="https://github.com/SCasanova/f1dataR/issues/227" class="external-link">#227</a>)</li>
+<li>Improved messaging to users regarding updating FastF1 (<a href="https://github.com/SCasanova/f1dataR/issues/226" class="external-link">#226</a>)</li>
 <li>Named items in list returned by <code><a href="../reference/load_circuit_details.html">load_circuit_details()</a></code>
 </li>
 <li>Changed the way that <code><a href="../reference/correct_track_ratio.html">correct_track_ratio()</a></code> works. Visually the results are the same, but now any labels/annotations added to the ggplot should be kept in the right spot.</li>
 <li>Added Vignette describing some <code><a href="../reference/load_circuit_details.html">load_circuit_details()</a></code> usage.</li>
-<li>Code improvements (better handle variation in Ergast response, better handle Ergast connection failures) (<a href="https://github.com/scasanova/f1dataR/issues/228" class="external-link">#228</a>)</li>
-<li>Testing improvements to validate our handling of internet failures (<a href="https://github.com/scasanova/f1dataR/issues/228" class="external-link">#228</a>)</li>
+<li>Code improvements (better handle variation in Ergast response, better handle Ergast connection failures) (<a href="https://github.com/SCasanova/f1dataR/issues/228" class="external-link">#228</a>)</li>
+<li>Testing improvements to validate our handling of internet failures (<a href="https://github.com/SCasanova/f1dataR/issues/228" class="external-link">#228</a>)</li>
 <li>Upgraded to use <code>httptest2</code> for testing no-internet scenarios (no affect on package performance)</li>
 <li>Code cleanup (removed old inaccessible code, centralized repeated steps to functions, etc.)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.5.0" id="f1datar-150">f1dataR 1.5.0<small>2024-01-25</small><a class="anchor" aria-label="anchor" href="#f1datar-150"></a></h2>
-<ul><li>Added <code>load_circuit_details</code> (<a href="https://github.com/scasanova/f1dataR/issues/210" class="external-link">#210</a>)</li>
-<li>Strengthened package testing (<a href="https://github.com/scasanova/f1dataR/issues/212" class="external-link">#212</a>, <a href="https://github.com/scasanova/f1dataR/issues/216" class="external-link">#216</a>)</li>
-<li>Bugfixes (<a href="https://github.com/scasanova/f1dataR/issues/216" class="external-link">#216</a>)</li>
+<ul><li>Added <code>load_circuit_details</code> (<a href="https://github.com/SCasanova/f1dataR/issues/210" class="external-link">#210</a>)</li>
+<li>Strengthened package testing (<a href="https://github.com/SCasanova/f1dataR/issues/212" class="external-link">#212</a>, <a href="https://github.com/SCasanova/f1dataR/issues/216" class="external-link">#216</a>)</li>
+<li>Bugfixes (<a href="https://github.com/SCasanova/f1dataR/issues/216" class="external-link">#216</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.4.1" id="f1datar-141">f1dataR 1.4.1<small>2023-11-13</small><a class="anchor" aria-label="anchor" href="#f1datar-141"></a></h2>
-<ul><li>Fixed a bug with cache options (<a href="https://github.com/scasanova/f1dataR/issues/194" class="external-link">#194</a>, <a href="https://github.com/scasanova/f1dataR/issues/195" class="external-link">#195</a>, <a href="https://github.com/scasanova/f1dataR/issues/197" class="external-link">#197</a>)</li>
+<ul><li>Fixed a bug with cache options (<a href="https://github.com/SCasanova/f1dataR/issues/194" class="external-link">#194</a>, <a href="https://github.com/SCasanova/f1dataR/issues/195" class="external-link">#195</a>, <a href="https://github.com/SCasanova/f1dataR/issues/197" class="external-link">#197</a>)</li>
 <li>Fixed a build bug</li>
 <li>Began deprecation of support for FastF1 v &lt; 3.1.0</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.4.0" id="f1datar-140">f1dataR 1.4.0<small>2023-10-03</small><a class="anchor" aria-label="anchor" href="#f1datar-140"></a></h2>
 <ul><li>Fully deprecated <code>round</code> and <code>fastest_only</code> arguments</li>
-<li>Added a function <code><a href="../reference/correct_track_ratio.html">correct_track_ratio()</a></code> to ensure plotted tracks have proper x &amp; y ratios (<a href="https://github.com/scasanova/f1dataR/issues/89" class="external-link">#89</a>, <a href="https://github.com/scasanova/f1dataR/issues/179" class="external-link">#179</a>)
+<li>Added a function <code><a href="../reference/correct_track_ratio.html">correct_track_ratio()</a></code> to ensure plotted tracks have proper x &amp; y ratios (<a href="https://github.com/SCasanova/f1dataR/issues/89" class="external-link">#89</a>, <a href="https://github.com/SCasanova/f1dataR/issues/179" class="external-link">#179</a>)
 <ul><li>Updated <code><a href="../reference/plot_fastest.html">plot_fastest()</a></code> to use <code><a href="../reference/correct_track_ratio.html">correct_track_ratio()</a></code>
 </li>
 </ul></li>
-<li>Added a function to help switch between cache choices (<a href="https://github.com/scasanova/f1dataR/issues/170" class="external-link">#170</a>, <a href="https://github.com/scasanova/f1dataR/issues/171" class="external-link">#171</a>)
-<ul><li>Ensured cache option had default (<code>"memory"</code>) (<a href="https://github.com/scasanova/f1dataR/issues/181" class="external-link">#181</a>, <a href="https://github.com/scasanova/f1dataR/issues/183" class="external-link">#183</a>)</li>
+<li>Added a function to help switch between cache choices (<a href="https://github.com/SCasanova/f1dataR/issues/170" class="external-link">#170</a>, <a href="https://github.com/SCasanova/f1dataR/issues/171" class="external-link">#171</a>)
+<ul><li>Ensured cache option had default (<code>"memory"</code>) (<a href="https://github.com/SCasanova/f1dataR/issues/181" class="external-link">#181</a>, <a href="https://github.com/SCasanova/f1dataR/issues/183" class="external-link">#183</a>)</li>
 </ul></li>
-<li>Simplified Python package <code>fastf1</code> installation (<a href="https://github.com/scasanova/f1dataR/issues/187" class="external-link">#187</a>).
+<li>Simplified Python package <code>fastf1</code> installation (<a href="https://github.com/SCasanova/f1dataR/issues/187" class="external-link">#187</a>).
 <ul><li>Virtualenv and Conda environment management is up to the user now</li>
 </ul></li>
 </ul></div>
@@ -125,11 +125,11 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="f1datar-110">f1dataR 1.1.0<a class="anchor" aria-label="anchor" href="#f1datar-110"></a></h2>
-<ul><li>Updated load_driver_telemetry to use <code>laps</code> parameter, allowing for a choice of ‘fastest’, ‘all’, or a numbered lap. Note a numbered lap requires <code>fastf1</code> version 3.0 or greater (<a href="https://github.com/scasanova/f1dataR/issues/78" class="external-link">#78</a>)</li>
+<ul><li>Updated load_driver_telemetry to use <code>laps</code> parameter, allowing for a choice of ‘fastest’, ‘all’, or a numbered lap. Note a numbered lap requires <code>fastf1</code> version 3.0 or greater (<a href="https://github.com/SCasanova/f1dataR/issues/78" class="external-link">#78</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.1" id="f1datar-101">f1dataR 1.0.1<a class="anchor" aria-label="anchor" href="#f1datar-101"></a></h2>
-<ul><li>Added examples to documentation (<a href="https://github.com/scasanova/f1dataR/issues/95" class="external-link">#95</a>)</li>
+<ul><li>Added examples to documentation (<a href="https://github.com/SCasanova/f1dataR/issues/95" class="external-link">#95</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="f1datar-100">f1dataR 1.0.0<a class="anchor" aria-label="anchor" href="#f1datar-100"></a></h2>
