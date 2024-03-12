@@ -125,7 +125,7 @@ source is incredibly useful for accessing host of data.</p>
 <code><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep()</a></code> in the loop to reduce load on their servers.
 Please be a courteous user of their free service and have similar pauses
 built into your analysis code. Please read their <a href="https://ergast.com/mrd/terms/" class="external-link">Terms and Conditions</a> for more
-informaiton.</p>
+information.</p>
 </blockquote>
 <p>We can make multiple repeat calls to the same function (with the same
 arguments) as the <code>f1dataR</code> package automatically caches
@@ -259,7 +259,7 @@ Total points for each driver after each Grand Prix in the 2021 season
 </div>
 </div>
 <div class="section level3">
-<h3 id="driver-laptime-scatterplot">Driver Laptime Scatterplot<a class="anchor" aria-label="anchor" href="#driver-laptime-scatterplot"></a>
+<h3 id="driver-lap-time-scatter-plot">Driver Lap Time Scatter Plot<a class="anchor" aria-label="anchor" href="#driver-lap-time-scatter-plot"></a>
 </h3>
 <p>We can look at a scatterplot of a driver’s laptimes throughout a race
 - possibly observing the effect of fuel usage, tire wear, pit stops, and
@@ -312,7 +312,7 @@ racing laps).</p>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Driver Lap Times"</span>, subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Racing Laps Only -"</span>, <span class="va">racename</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Driver ID"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Laptime (s)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Lap Time (s)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="ergast-data-analysis-drivers_laptimes-1.png" alt="Laptime distributions for all drivers from the 2022 Saudi Arabian Grand Prix (racing laps only)" width="100%"><p class="caption">
