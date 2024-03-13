@@ -10,5 +10,6 @@ get_current_season()
 Year (four digit number) representation of current season, as numeric.
 }
 \description{
-Looks up current season from ergast, fallback to manual determination
+Determines current season by System Date. Note returns the season prior to the current year
+in January and February
 }

@@ -1,3 +1,5 @@
+# f1dataR (development version)
+
 # f1dataR 1.5.1
 
 * Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.

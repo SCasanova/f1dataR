@@ -8,7 +8,7 @@ get_ergast_content(url)
 }
 \arguments{
 \item{url}{the Ergast URL tail to get from the API (for example,
-\code{"current.json?limit=30"} is called from \code{get_current_season()}).}
+\code{"{season}/circuits.json?limit=40"} is called from \code{load_circuits()}).}
 }
 \value{
 the result of \code{jsonlite::fromJSON} called on Ergast's return content.

@@ -7,6 +7,7 @@ fastf1_http_cache.sqlite
 tests/testthat/tst_*
 f1dataR.Rproj
 /Meta/
-/tst_*
+/tst_*go
 Rplots.pdf
 .DS_Store
+docs
