@@ -1,8 +1,8 @@
 ---
-title: "Alonso's Penalty in Australian GP 2024"
+title: "Alonso's Penalty in the Australian GP 2024"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Alonso's Penalty in Australian GP 2024}
+  %\VignetteIndexEntry{Alonso's Penalty in the Australian GP 2024}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
