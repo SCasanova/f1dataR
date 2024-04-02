@@ -9,9 +9,10 @@
 knitr::knit("vignettes/ergast-data-analysis.Rmd.orig", "vignettes/ergast-data-analysis.Rmd")
 knitr::knit("vignettes/introduction.Rmd.orig", "vignettes/introduction.Rmd")
 knitr::knit("vignettes/plotting-turn-info.Rmd.orig", "vignettes/plotting-turn-info.Rmd")
+knitr::knit("vignettes/alonso-penalty-2024.Rmd.orig", "vignettes/alonso-penalty-2024.Rmd")
 cat("Successfully compiled vignettes. Now moving figures to ./vignettes")
 
-vig_images<-list.files(pattern = "(ergast-data-analysis|introduction|plotting-turn-info)-[(a-z)(A-Z)(0-9)_]*-1.png")
+vig_images<-list.files(pattern = "(ergast-data-analysis|introduction|plotting-turn-info|alonso-penalty-2024)-[(a-z)(A-Z)(0-9)_]*-1.png")
 file.copy(paste0("./", vig_images),
           paste0("./vignettes/", vig_images), overwrite = T)
 unlink(vig_images)
