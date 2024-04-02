@@ -370,7 +370,7 @@ telemetry data.</p>
 <p>To demonstrate the addition of turn information, we’ll start by
 plotting the speed telemetry for the three drivers</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>telem_plot_speed <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(telem, <span class="fu">aes</span>(<span class="at">x =</span> distance, <span class="at">y =</span> speed, <span class="at">color =</span> driver_code)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> drivercolours) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">theme_dark_f1</span>(<span class="at">axis_marks =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;2022 Bahrain Grand Prix Qualifying Telemetry&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;Speed vs Distance in lap&quot;</span>) <span class="sc">+</span></span>

@@ -67,7 +67,7 @@ To demonstrate the addition of turn information, we'll start by plotting the spe
 
 ```{r telem_plot, message = FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Speed by Distance for Leclerc, Hamilton and Perez after qualifying best laps'}
 telem_plot_speed <- ggplot(telem, aes(x = distance, y = speed, color = driver_code)) +
-  geom_line() +
+  geom_path() +
   scale_color_manual(values = drivercolours) +
   theme_dark_f1(axis_marks = TRUE) +
   ggtitle("2022 Bahrain Grand Prix Qualifying Telemetry", subtitle = "Speed vs Distance in lap") +
