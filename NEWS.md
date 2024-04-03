@@ -1,4 +1,4 @@
-# f1dataR (development version)
+# f1dataR 1.5.1
 
 # f1dataR 1.5.1
 
