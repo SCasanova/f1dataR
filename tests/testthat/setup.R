@@ -3,7 +3,7 @@ require(httptest2, quietly = TRUE)
 
 # helper function to skip tests if we don't have the fastf1 module
 skip_if_no_ff1 <- function() {
-  if (!require("reticulate", quietly = TRUE)){
+  if (!require("reticulate", quietly = TRUE)) {
     testthat::skip("Reticulate unavailable for testing")
   }
   have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
@@ -23,7 +23,7 @@ skip_if_no_ggplot2 <- function() {
 
 # helper function to skip if python isn't available by reticulate
 skip_if_no_py <- function() {
-  if (!require("reticulate", quietly = TRUE)){
+  if (!require("reticulate", quietly = TRUE)) {
     testthat::skip("Reticulate unavailable for testing")
   }
   if (!reticulate::py_available(initialize = TRUE)) {
@@ -35,6 +35,7 @@ skip_if_no_py <- function() {
 # helper function to skip if ergast isn't working
 skip_if_no_ergast <- function() {
   # testthat::skip_if_offline("ergast.com")  # This will also skip on CRAN
-  if(is.null(get_ergast_content("current/circuits.json?limit=40")))
+  if (is.null(get_ergast_content("current/circuits.json?limit=40"))) {
     testthat::skip("No ergast connection available for testing")
+  }
 }
