@@ -7,11 +7,15 @@ test_that("load_ciruits works", {
   dir.create(file.path(tempdir(), "tst_load_circuits"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_circuits"))
 
-  ciruits_2021 <- load_circuits(2021)
+  skip_if_no_ergast()
 
-  expect_equal(nrow(ciruits_2021), 21)
-  expect_equal(ciruits_2021$circuit_id[3], "baku")
-  expect_equal(ciruits_2021$locality[1], "Austin")
+  circuits_2021 <- load_circuits(2021)
+
+  skip_if(is.null(circuits_2021))
+
+  expect_equal(nrow(circuits_2021), 21)
+  expect_equal(circuits_2021$circuit_id[3], "baku")
+  expect_equal(circuits_2021$locality[1], "Austin")
 
   expect_error(load_circuits(3050), "`season` must be between 1950 and *")
 })
