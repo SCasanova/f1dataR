@@ -56,7 +56,7 @@ ggplot2::ggplot(alo_telem, ggplot2::aes(x = distance, y = throttle, color = lap)
 <p class="caption">Throttle Percent by Distance, per lap, for Fernando Alonso at the 2024 Australian GP</p>
 </div>
 
-In this plot we can see that he let off the throttle starting about 180 m before any other lap, and had to put some throttle back on before the normal braking point. This doesn't line up with someone suffering from ERS deployment, but instead an intentional effort to drive the car differently then in the previous laps. 
+In this plot we can see that he let off the throttle about 180 m before any other lap, and had to put some throttle back on before the normal braking point. This doesn't line up with someone suffering from ERS deployment, but instead an intentional effort to drive the car differently then in the previous laps. 
 
 Similarly, we can look at braking (on/off), selected gear, and speed traces to see all the differences:
 
