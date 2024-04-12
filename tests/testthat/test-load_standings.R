@@ -6,7 +6,11 @@ test_that("load_standings works", {
   dir.create(file.path(tempdir(), "tst_load_standings"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_standings"))
 
+  skip_if_no_ergast()
+
   standings_2021 <- load_standings(2021)
+
+  skip_if(is.null(standings_2021))
 
   expect_equal(nrow(standings_2021), 21)
 

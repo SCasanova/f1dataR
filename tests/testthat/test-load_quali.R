@@ -7,7 +7,11 @@ test_that("load_quali works", {
   dir.create(file.path(tempdir(), "tst_load_quali"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_quali"))
 
+  skip_if_no_ergast()
+
   quali_2021_1 <- load_quali(2021, 1)
+
+  skip_if(is.null(quali_2021_1))
 
   expect_equal(nrow(quali_2021_1), 20)
   expect_equal(quali_2021_1$driver_id[2], "hamilton")

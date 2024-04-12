@@ -7,7 +7,11 @@ test_that("load_results works", {
   dir.create(file.path(tempdir(), "tst_load_results"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_results"))
 
+  skip_if_no_ergast()
+
   results_2021_1 <- load_results(2021, 1)
+
+  skip_if(is.null(results_2021_1))
 
   expect_equal(nrow(results_2021_1), 20)
   expect_equal(results_2021_1$driver_id[4], "norris")

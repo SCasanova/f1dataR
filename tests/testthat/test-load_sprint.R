@@ -6,8 +6,12 @@ test_that("load_sprint works", {
   dir.create(file.path(tempdir(), "tst_load_sprint"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_sprint"))
 
+  skip_if_no_ergast()
+
   # A sprint exists for season = 2021, round = 10
   sprint_2021_10 <- load_sprint(2021, 10)
+
+  skip_if(is.null(sprint_2021_10))
 
   expect_equal(nrow(sprint_2021_10), 20)
   expect_equal(sprint_2021_10$driver_id[3], "bottas")

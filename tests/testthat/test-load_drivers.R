@@ -6,7 +6,11 @@ test_that("Drivers Load works", {
   dir.create(file.path(getwd(), "tst_load_drivers"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(getwd(), "tst_load_drivers"))
 
+  skip_if_no_ergast()
+
   drivers_2021 <- load_drivers(2021)
+
+  skip_if(is.null(drivers_2021))
 
   expect_equal(nrow(drivers_2021), 21)
   expect_equal(drivers_2021$driver_id[2], "bottas")

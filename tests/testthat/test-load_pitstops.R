@@ -7,7 +7,11 @@ test_that("load_pitstops works", {
   dir.create(file.path(tempdir(), "tst_load_pitstops"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_pitstops"))
 
+  skip_if_no_ergast()
+
   pitstop_2021_1 <- load_pitstops(2021, 1)
+
+  skip_if(is.null(pitstop_2021_1))
 
   expect_equal(nrow(pitstop_2021_1), 40)
   expect_equal(pitstop_2021_1$driver_id[1], "perez")
