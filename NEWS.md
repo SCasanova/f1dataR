@@ -1,5 +1,7 @@
 # f1dataR (development version)
 
+* Modified testing to satisfy CRAN requirements. 
+
 # f1dataR 1.5.1
 
 * Added (very soft) deprecation warning to Ergast functions in advance of the Ergast API being defunct in less than 12 months.
