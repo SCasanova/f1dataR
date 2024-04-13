@@ -1,3 +1,5 @@
+# f1dataR 1.5.2
+
 # f1dataR 1.5.1
 
 * Modified testing to satisfy CRAN requirements. 
