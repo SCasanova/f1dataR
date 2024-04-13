@@ -29,7 +29,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">f1dataR</a>
 
@@ -94,13 +94,13 @@
 <p>In the closing laps of the 2024 Australian Grand Prix, the lone
 remaining Mercedes of George Russell was in a showdown with Aston
 Martin’s Fernando Alonso. On the penultimate lap, Russell crashed out at
-turn 6-7, coming to a stop at an awkward angle skew across the track.
-Following the race, both drivers were called to the Stewards, who
+turn 6-7, coming to a stop at an awkward angle and askew across the
+track. Following the race, both drivers were called to the Stewards, who
 discussed the incident with both drivers and reviewed data and video.
 They handed Alonso a 20 second penalty for causing the crash, despite
 there not having been any contact between the two drivers. A large
 portion of the decision rested on the telemetry from the drivers’ cars.
-While the Stewards, FIA and Teams have much more detailed data than we
+While the Stewards, FIA and teams have much more detailed data than we
 do, we can repeat their analysis using R, <code>f1dataR</code> and the
 Python FastF1 package.</p>
 <div class="section level2">
@@ -117,8 +117,8 @@ information.</p>
 <p>Since the crash occurred on lap 57, we’ll download telemetry for
 Alonso for the five previous laps to compare what Alonso did on the
 fateful lap compared to those before. We’ll also load Russell’s
-telemetry from lap 57 to see how he reacts before the crash. Note we use
-some <code>dplyr</code> for data manipulation.</p>
+telemetry from those same laps to see how he reacts before the crash.
+Note we use some <code>dplyr</code> for data manipulation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">alo_telem</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span><span class="op">:</span><span class="fl">57</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="../reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2024</span>, round <span class="op">=</span> <span class="st">"Australia"</span>, session <span class="op">=</span> <span class="st">"R"</span>, driver <span class="op">=</span> <span class="st">"ALO"</span>, laps <span class="op">=</span> <span class="va">l</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>lap <span class="op">=</span> <span class="va">l</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rus_telem</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span><span class="op">:</span><span class="fl">57</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">l</span><span class="op">)</span> <span class="fu"><a href="../reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2024</span>, round <span class="op">=</span> <span class="st">"Australia"</span>, session <span class="op">=</span> <span class="st">"R"</span>, driver <span class="op">=</span> <span class="st">"RUS"</span>, laps <span class="op">=</span> <span class="va">l</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>lap <span class="op">=</span> <span class="va">l</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -154,13 +154,13 @@ Throttle Percent by Distance, per lap, for Fernando Alonso at the 2024
 Australian GP
 </p>
 </div>
-<p>In this plot we can see that he let off the throttle starting about
-180 m before any other lap, and had to put some throttle back on before
-the normal braking point. This doesn’t line up with someone suffering
-from ERS deployment, but instead an intentional effort to drive the car
+<p>In this plot we can see that he let off the throttle about 180 m
+before any other lap, and had to put some throttle back on before the
+normal braking point. This doesn’t line up with someone suffering from
+ERS deployment, but instead an intentional effort to drive the car
 differently then in the previous laps.</p>
 <p>Similarly, we can look at braking (on/off), selected gear, and speed
-traces to see all the differences:</p>
+traces to see all the changes in driving style for that lap:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">long_telem_alo</span> <span class="op">&lt;-</span> <span class="va">alo_telem</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"speed"</span>, <span class="st">"n_gear"</span>, <span class="st">"throttle"</span>, <span class="st">"brake"</span>, <span class="st">"lap"</span>, <span class="st">"distance"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
@@ -202,8 +202,8 @@ he had to accelerate a bit to get into the corner).</p>
 <h2 id="effect-on-russell">Effect on Russell<a class="anchor" aria-label="anchor" href="#effect-on-russell"></a>
 </h2>
 <p>Russell, of course, was tailing Alonso, and the telemetry provides a
-(calculated) distance behind the driver in front. We can observe this
-(with his other telemetry lines too).</p>
+(calculated/interpolated) distance behind the driver in front. We can
+observe this (with his other telemetry lines too).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">long_telem_rus</span> <span class="op">&lt;-</span> <span class="va">rus_telem</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"speed"</span>, <span class="st">"n_gear"</span>, <span class="st">"throttle"</span>, <span class="st">"brake"</span>, <span class="st">"lap"</span>, <span class="st">"distance"</span>, <span class="st">"distance_to_driver_ahead"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
@@ -241,13 +241,15 @@ Alonso and Russell in lap 57 (starting around 1575 m). Russell reacted
 by applying brake earlier than other laps (by a few meters) and was off
 the throttle earlier than most laps. It was 1.271 s between when Alonso
 and Russel let off the throttle.</p>
-<p>But Russell didn’t expect Alonso to do this move there. The Stewards’
+<p>Russell didn’t expect Alonso to do this move there. The Stewards’
 decision rested on the lack of predictability of Alonso. There’s
 typically only one line through turns 6 &amp; 7, compromising your speed
 anywhere leaves you vulnerable down the road. Our telemetry access
 doesn’t provide enough detail to prove that the decrease in distance
-between the cars (all we can see is they got to within 18.6 m, but the
-replays made it look much closer).</p>
+between the cars caused the problem (all we can see is they got to
+within 18.6 m, but the replays made it look much closer). Would this
+have been a penalty if Russell hadn’t crashed? Should Russell have
+reacted quicker?</p>
 </div>
 <div class="section level2">
 <h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
@@ -275,7 +277,7 @@ documents</a>,</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
