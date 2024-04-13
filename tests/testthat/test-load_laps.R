@@ -7,7 +7,11 @@ test_that("load_laps works", {
   dir.create(file.path(tempdir(), "tst_load_laps"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_laps"))
 
+  skip_if_no_ergast()
+
   laps_2021_1 <- load_laps(2021, 1)
+
+  skip_if(is.null(laps_2021_1))
 
   expect_equal(nrow(laps_2021_1), 1026)
   expect_equal(laps_2021_1$driver_id[3], "leclerc")

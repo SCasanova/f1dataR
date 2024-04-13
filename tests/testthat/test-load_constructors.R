@@ -7,7 +7,11 @@ test_that("load_constructors works", {
   dir.create(file.path(tempdir(), "tst_load_constructors"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_constructors"))
 
+  skip_if_no_ergast()
+
   constructors <- load_constructors()
+
+  skip_if(is.null(constructors))
 
   expect_equal(ncol(constructors), 3)
   expect_equal(constructors[1, ]$constructor_id, "adams")

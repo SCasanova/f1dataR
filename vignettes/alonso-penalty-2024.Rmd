@@ -9,7 +9,7 @@ vignette: >
 
 
 
-In the closing laps of the 2024 Australian Grand Prix, the lone remaining Mercedes of George Russell was in a showdown with Aston Martin's Fernando Alonso. On the penultimate lap, Russell crashed out at turn 6-7, coming to a stop at an awkward angle skew across the track. Following the race, both drivers were called to the Stewards, who discussed the incident with both drivers and reviewed data and video. They handed Alonso a 20 second penalty for causing the crash, despite there not having been any contact between the two drivers. A large portion of the decision rested on the telemetry from the drivers' cars. While the Stewards, FIA and Teams have much more detailed data than we do, we can repeat their analysis using R, `f1dataR` and the Python FastF1 package. 
+In the closing laps of the 2024 Australian Grand Prix, the lone remaining Mercedes of George Russell was in a showdown with Aston Martin's Fernando Alonso. On the penultimate lap, Russell crashed out at turn 6-7, coming to a stop at an awkward angle and askew across the track. Following the race, both drivers were called to the Stewards, who discussed the incident with both drivers and reviewed data and video. They handed Alonso a 20 second penalty for causing the crash, despite there not having been any contact between the two drivers. A large portion of the decision rested on the telemetry from the drivers' cars. While the Stewards, FIA and teams have much more detailed data than we do, we can repeat their analysis using R, `f1dataR` and the Python FastF1 package. 
 
 # Accessing the Data
 We'll start by loading the `f1dataR` package, and preparing the Python virtual environment (including installing FastF1). This happens automatically with a call to `setup_fastf1()`, [see the setup_fastf1 vignette](setup_fastf1.Rmd) for more information.
@@ -20,14 +20,16 @@ library(f1dataR)
 setup_fastf1()
 ```
 
-Since the crash occurred on lap 57, we'll download telemetry for Alonso for the five previous laps to compare what Alonso did on the fateful lap compared to those before. We'll also load Russell's telemetry from lap 57 to see how he reacts before the crash. Note we use some `dplyr` for data manipulation.
+Since the crash occurred on lap 57, we'll download telemetry for Alonso for the five previous laps to compare what Alonso did on the fateful lap compared to those before. We'll also load Russell's telemetry from those same laps to see how he reacts before the crash. Note we use some `dplyr` for data manipulation.
 
 
 ```r
 alo_telem <- dplyr::bind_rows(lapply(c(52:57), function(l) load_driver_telemetry(season = 2024, round = "Australia", session = "R", driver = "ALO", laps = l) %>% dplyr::mutate(lap = l)))
 rus_telem <- dplyr::bind_rows(lapply(c(52:57), function(l) load_driver_telemetry(season = 2024, round = "Australia", session = "R", driver = "RUS", laps = l) %>% dplyr::mutate(lap = l)))
 ```
+
 A few manipulations now will make later plotting easier:
+
 
 ```r
 alo_telem$lap <- as.factor(alo_telem$lap)
@@ -56,9 +58,9 @@ ggplot2::ggplot(alo_telem, ggplot2::aes(x = distance, y = throttle, color = lap)
 <p class="caption">Throttle Percent by Distance, per lap, for Fernando Alonso at the 2024 Australian GP</p>
 </div>
 
-In this plot we can see that he let off the throttle starting about 180 m before any other lap, and had to put some throttle back on before the normal braking point. This doesn't line up with someone suffering from ERS deployment, but instead an intentional effort to drive the car differently then in the previous laps. 
+In this plot we can see that he let off the throttle about 180 m before any other lap, and had to put some throttle back on before the normal braking point. This doesn't line up with someone suffering from ERS deployment, but instead an intentional effort to drive the car differently then in the previous laps.
 
-Similarly, we can look at braking (on/off), selected gear, and speed traces to see all the differences:
+Similarly, we can look at braking (on/off), selected gear, and speed traces to see all the changes in driving style for that lap:
 
 
 ```r
@@ -96,7 +98,7 @@ Alonso at the Stewards visit claimed intent to drive a different line at T6 (Ste
 
 # Effect on Russell
 
-Russell, of course, was tailing Alonso, and the telemetry provides a (calculated) distance behind the driver in front. We can observe this (with his other telemetry lines too).
+Russell, of course, was tailing Alonso, and the telemetry provides a (calculated/interpolated) distance behind the driver in front. We can observe this (with his other telemetry lines too).
 
 
 ```r
@@ -133,7 +135,7 @@ ggplot2::ggplot(long_telem_rus, ggplot2::aes(x = distance, y = value, color = La
 </div>
 You can see a sudden and dramatic decrease in the distance between Alonso and Russell in lap 57 (starting around 1575 m). Russell reacted by applying brake earlier than other laps (by a few meters) and was off the throttle earlier than most laps. It was 1.271 s between when Alonso and Russel let off the throttle. 
 
-But Russell didn't expect Alonso to do this move there. The Stewards' decision rested on the lack of predictability of Alonso. There's typically only one line through turns 6 & 7, compromising your speed anywhere leaves you vulnerable down the road. Our telemetry access doesn't provide enough detail to prove that the decrease in distance between the cars (all we can see is they got to within 18.6 m, but the replays made it look much closer).
+Russell didn't expect Alonso to do this move there. The Stewards' decision rested on the lack of predictability of Alonso. There's typically only one line through turns 6 & 7, compromising your speed anywhere leaves you vulnerable down the road. Our telemetry access doesn't provide enough detail to prove that the decrease in distance between the cars caused the problem (all we can see is they got to within 18.6 m, but the replays made it look much closer). Would this have been a penalty if Russell hadn't crashed? Should Russell have reacted quicker? 
 
 # Limitations
 There's key limitations in this data - the most significant being that it's at a resolution of only about 4 Hertz. The nuances of car gap, reaction times, etc. are all lost in the coarse data we have access to. The FIA, Teams, and Stewards have a much higher resolution available, with many additional data sources too. They also have the testimony of the teams and drivers to consider in their decision, and lots of video sources. 

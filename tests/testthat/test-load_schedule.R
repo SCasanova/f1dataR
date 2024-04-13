@@ -7,7 +7,11 @@ test_that("load_schedule works", {
   dir.create(file.path(tempdir(), "tst_load_schedule"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_schedule"))
 
+  skip_if_no_ergast()
+
   schedule_2021 <- load_schedule(2021)
+
+  skip_if(is.null(schedule_2021))
 
   expect_equal(nrow(schedule_2021), 22)
   expect_equal(schedule_2021$season[1], "2021")
