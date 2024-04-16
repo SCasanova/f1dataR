@@ -1,4 +1,6 @@
-# f1dataR (development version)
+# f1dataR 1.5.2
+
+# f1dataR 1.5.1
 
 * Modified testing to satisfy CRAN requirements. 
 * Added vignette looking at telemetry plots through Alonso's 2024 Australia penalty.
