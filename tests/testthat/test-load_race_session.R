@@ -50,7 +50,7 @@ test_that("Load Session (file cached) Works", {
   )
   expect_error(
     load_race_session(session = "ZZZ"),
-    '`session` must be one of "FP1", "FP2", "FP3", "Q", "SS", "S", or "R"'
+    '`session` must be one of "FP1", "FP2", "FP3", "Q", "SQ", "SS", "S", or "R"'
   )
   expect_error(load_race_session(season = 2022, round = 1, session = "R", log_level = "ZZZ"))
 

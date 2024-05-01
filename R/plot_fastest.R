@@ -9,7 +9,7 @@
 #' @param round number from 1 to 23 (depending on season selected) and defaults
 #' to most recent.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
-#' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
+#' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
 #' @param driver three letter driver code (see load_drivers() for a list).
 #' @param color argument that indicates which variable to plot along the
 #' circuit. Choice of `'gear'` or `'speed'`, default `'gear'`.

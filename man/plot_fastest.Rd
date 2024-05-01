@@ -20,7 +20,7 @@ plot_fastest(
 to most recent.}
 
 \item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
-\code{'Q'}, \code{'S'}, \code{'SS'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
+\code{'Q'}, \code{'S'}, \code{'SS'}, \code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{driver}{three letter driver code (see load_drivers() for a list).}
 

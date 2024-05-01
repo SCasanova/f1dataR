@@ -12,7 +12,7 @@
 #' @param season number from 2018 to current season (defaults to current season).
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
-#' `'Q'`, `'S'`, `'SS'`, and `'R'`. Default is `'R'`, which refers to Race.
+#' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
 #' @param driver three letter driver code (see `load_drivers()` for a list)
 #' @param laps which lap's telemetry to return. One of an integer lap number (<= total laps in the race), `fastest`,
 #' or `all`. Note that integer lap choice requires `fastf1` version 3.0 or greater.
