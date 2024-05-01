@@ -89,7 +89,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     q2len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q2len"))
     q3len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q3len"))
 
-    if(session == "Q"){
+    if (session == "Q") {
       laps$SessionType <- c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
     } else {
       laps$SessionType <- c(rep("SQ1", q1len), rep("SQ2", q2len), rep("SQ3", q3len))
