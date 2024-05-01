@@ -26,6 +26,7 @@ test_that("load session laps works", {
   laps2 <- load_session_laps(season = 2022, round = "bahrain", add_weather = TRUE)
   lapsq <- load_session_laps(season = 2022, round = "bahrain", session = "Q")
   lapsqw <- load_session_laps(season = 2022, round = "bahrain", session = "Q", add_weather = TRUE)
+  lapssq <- load_session_laps(season = 2024, round = "china", session = "SQ")
 
   expect_true("tbl" %in% class(laps))
   expect_true(ncol(laps) %in% c(28, 32))
@@ -33,10 +34,9 @@ test_that("load session laps works", {
   expect_equal(laps$time, laps2$time)
   expect_true(!is.na(laps$time[1]))
   expect_equal(nrow(laps), nrow(laps2))
-  if (get_fastf1_version() >= "3") {
-    expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
-    expect_true(all(c("Q1", "Q2", "Q3") %in% unique(lapsq$session_type)))
-  }
+  expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
+  expect_true(all(c("Q1", "Q2", "Q3") %in% unique(lapsq$session_type)))
+  expect_true(all(c("SQ1", "SQ2", "SQ3") %in% unique(lapssq$session_type)))
   expect_true(!is.na(lapsq$time[1]))
   expect_equal(min(lapsq$lap_time, na.rm = TRUE), 90.558)
   expect_equal(nrow(lapsq), nrow(lapsqw))
