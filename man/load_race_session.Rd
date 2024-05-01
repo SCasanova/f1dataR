@@ -22,10 +22,8 @@ Leave as \code{'session'} unless otherwise required.}
 \item{round}{number from 1 to 23 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
-\item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
-\code{'Q'}, \code{'S'}, \code{'SS'} and \code{'R'}. Default is \code{'R'}, which refers to Race.
-Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-default is the current working directory.}
+\item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
+\code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL.'} See
@@ -37,9 +35,8 @@ default is the current working directory.}
 A session object to be used in other functions invisibly.
 }
 \description{
-Loads telemetry and general data from the official F1
-data stream via the fastf1 python library. Data is available from
-2018 onward.
+Loads telemetry and general data from the official F1 data stream via
+the fastf1 python library. Data is available from 2018 onward.
 
 The data loaded can optionally be assigned to a R variable, and then interrogated for
 session data streams. See the \href{https://docs.fastf1.dev/}{fastf1 documentation}
@@ -47,6 +44,9 @@ for more details on the data returned by the python API.
 
 If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
+
+Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
+default is the current working directory.
 }
 \examples{
 # Load the quali session from 2019 first round

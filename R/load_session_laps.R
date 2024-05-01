@@ -14,7 +14,7 @@
 #' @param season number from 2018 to current season. Defaults to current season.
 #' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
-#' `'Q'`, `'S'`, `'SS'` and `'R'` Default is `'R'`, which refers to Race.
+#' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'` Default is `'R'`, which refers to Race.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See
 #' \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
@@ -52,7 +52,7 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     ))
   }
 
-  if (session == "Q") {
+  if (session %in% c("Q", "SQ")) {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
     reticulate::py_run_string(paste("q1, q2, q3 = session.laps.split_qualifying_sessions()",
       "q1len = len(q1.index)",
@@ -83,13 +83,17 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   laps <- laps %>%
     dplyr::mutate("Time" = .data$Time)
 
-  if (session == "Q") {
+  if (session %in% c("Q", "SQ")) {
     # pull the lengths of each Quali session from the python env.
     q1len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q1len"))
     q2len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q2len"))
     q3len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q3len"))
 
-    laps$SessionType <- c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
+    if(session == "Q"){
+      laps$SessionType <- c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
+    } else {
+      laps$SessionType <- c(rep("SQ1", q1len), rep("SQ2", q2len), rep("SQ3", q3len))
+    }
   } else {
     laps$SessionType <- session
   }

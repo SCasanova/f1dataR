@@ -19,7 +19,7 @@ load_session_laps(
 \item{round}{number from 1 to 23 (depending on season selected). Also accepts race name.}
 
 \item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
-\code{'Q'}, \code{'S'}, \code{'SS'} and \code{'R'} Default is \code{'R'}, which refers to Race.}
+\code{'Q'}, \code{'S'}, \code{'SS'}, \code{'SQ'}, and \code{'R'} Default is \code{'R'}, which refers to Race.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See

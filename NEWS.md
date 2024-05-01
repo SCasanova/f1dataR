@@ -1,6 +1,7 @@
-# f1dataR 1.5.2
+# f1dataR 1.5.3
+* Enabled Sprint Qualifying "SQ" as a session type in line with FastF1 v3.3.5.
 
-# f1dataR 1.5.1
+# f1dataR 1.5.2
 
 * Modified testing to satisfy CRAN requirements. 
 * Added vignette looking at telemetry plots through Alonso's 2024 Australia penalty.
