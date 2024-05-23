@@ -144,7 +144,7 @@ Many other functions exist, and are flexible enough to call the current `season`
 * `load_standings(season = "current", round = "last", type = c("driver", "constructor"))`
 
 ### Clear F1 Cache
-> `clear_f1_cache()`
+> `clear_f1_cache()` 
 
 Clears the cache for all functions in the package.
 
