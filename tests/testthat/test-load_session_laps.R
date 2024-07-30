@@ -1,5 +1,5 @@
 test_that("load session laps works", {
-  testthat::skip_if_offline("formula1.com")
+  testthat::skip_if_offline("livetiming.formula1.com")
   skip_if_no_py()
   skip_if_no_ff1()
 
