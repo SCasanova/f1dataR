@@ -43,7 +43,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    usethis
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR/, https://github.com/SCasanova/f1dataR
 BugReports: https://github.com/SCasanova/f1dataR/issues
