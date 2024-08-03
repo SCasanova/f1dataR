@@ -91,8 +91,11 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   # the schedule of sessions is built into the package
   tryCatch(
     session <- reticulate::py_run_string(py_string),
-    error = function(e) {cli::cli_abort(c("Error loading FastF1 session.",
-                                          "x" = as.character(e)))}
+    error = function(e) {
+      cli::cli_abort(c("Error loading FastF1 session.",
+        "x" = as.character(e)
+      ))
+    }
   )
 
   # Check for fastf1 (F1timing/internet) connection
