@@ -12,14 +12,13 @@
 #' driver plotting style.
 #'
 #' @return a named list of graphic parameters for the provided driver
-get_driver_style <- function(driver, season = get_current_season(), round = 1){
-
+get_driver_style <- function(driver, season = get_current_season(), round = 1) {
   # checks
   check_ff1_version()
-  if(package_version(get_fastf1_version()) < "3.4"){
+  if (package_version(get_fastf1_version()) < "3.4") {
     cli::cli_abort("{.fn get_driver_style} requires FastF1 version 3.4.0 or later")
   }
-  if(!is.character(driver) & length(driver) != 1){
+  if (!is.character(driver) & length(driver) != 1) {
     cli::cli_abort("{.var driver} must be a character vector of length one.")
   }
 
@@ -27,8 +26,10 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1){
 
   # TODO: split load_race_session into get_session and load_session sub-functions, this only
   # requires get_session (i.e. not loaded session)
-  status <- load_race_session(obj_name = "session", season = season, round = round,
-                              session = "R", log_level = "WARNING")
+  status <- load_race_session(
+    obj_name = "session", season = season, round = round,
+    session = "R", log_level = "WARNING"
+  )
 
   if (is.null(status)) {
     # Failure to load - escape
@@ -36,14 +37,14 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1){
   }
 
   ff1string <- glue::glue("driverstyle = get_driver_style('{driver}', ['linestyle', 'marker', 'color'], session)",
-                          driver = driver)
+    driver = driver
+  )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_style")
   py_env <- reticulate::py_run_string(ff1string)
   driverstyle <- reticulate::py_to_r(reticulate::py_get_item(py_env, "driverstyle"))
 
-  driverstyle$driver = driver
+  driverstyle$driver <- driver
 
   return(driverstyle)
 }
-

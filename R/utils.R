@@ -227,9 +227,9 @@ check_ff1_version <- function() {
     ))
   } else if (version < "3.4") {
     cli::cli_warn(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.4.0 or newer for some functions.",
-                     x = "Support for older {.pkg FastF1} versions may be removed soon.",
-                     i = "You can update your {.pkg FastF1} installation manually, or by running:",
-                     " " = "{.code setup_fastf1()}"
+      x = "Support for older {.pkg FastF1} versions may be removed soon.",
+      i = "You can update your {.pkg FastF1} installation manually, or by running:",
+      " " = "{.code setup_fastf1()}"
     ))
   } else {
     invisible(TRUE)
