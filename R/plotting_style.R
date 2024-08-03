@@ -23,25 +23,28 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
   }
 
   # Function Code
-
-  # TODO: split load_race_session into get_session and load_session sub-functions, this only
-  # requires get_session (i.e. not loaded session)
   status <- load_race_session(
     obj_name = "session", season = season, round = round,
     session = "R", log_level = "WARNING"
   )
 
-  if (is.null(status)) {
-    # Failure to load - escape
-    return(NULL)
-  }
+  reticulate::py_run_string("import fastf1")
+  reticulate::py_run_string("from fastf1.plotting import get_driver_style")
 
-  ff1string <- glue::glue("driverstyle = get_driver_style('{driver}', ['linestyle', 'marker', 'color'], session)",
+  py_string <- glue::glue("session = fastf1.get_session({season}, ", season = season)
+  if (is.numeric(round)) {
+    py_string <- glue::glue("{py_string}{round}, 'R')", py_string = py_string, round = round)
+  } else {
+    # Character race, so need quotes around it
+    py_string <- glue::glue("{py_string}'{round}', 'R')", py_string = py_string, round = round)
+  }
+  reticulate::py_run_string(py_string)
+
+  py_string <- glue::glue("driverstyle = get_driver_style('{driver}', ['linestyle', 'marker', 'color'], session)",
     driver = driver
   )
+  py_env <- reticulate::py_run_string(py_string)
 
-  reticulate::py_run_string("from fastf1.plotting import get_driver_style")
-  py_env <- reticulate::py_run_string(ff1string)
   driverstyle <- reticulate::py_to_r(reticulate::py_get_item(py_env, "driverstyle"))
 
   driverstyle$driver <- driver
