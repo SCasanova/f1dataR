@@ -19,7 +19,7 @@ Leave as \code{'session'} unless otherwise required.}
 
 \item{season}{number from 2018 to current season. Defaults to current season.}
 
-\item{round}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to 24 (depending on season selected) and defaults
 to most recent. Also accepts race name.}
 
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},

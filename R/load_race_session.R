@@ -16,7 +16,7 @@
 #' @param obj_name name assigned to the loaded session to be referenced later.
 #' Leave as `'session'` unless otherwise required.
 #' @param season number from 2018 to current season. Defaults to current season.
-#' @param round number from 1 to 23 (depending on season selected) and defaults
+#' @param round number from 1 to 24 (depending on season selected) and defaults
 #' to most recent. Also accepts race name.
 #' @param session the code for the session to load. Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`,`'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
