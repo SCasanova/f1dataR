@@ -90,7 +90,7 @@ get_driver_color <- function(driver, season = get_current_season(), round = 1) {
   get_session(season = season, round = round)
 
   py_string <- glue::glue("drivercolor = get_driver_color('{driver}', session)",
-                          driver = driver
+    driver = driver
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_color")
@@ -104,7 +104,7 @@ get_driver_color <- function(driver, season = get_current_season(), round = 1) {
 
 #' @rdname get_aesthetics
 #' @export
-get_driver_colour <- function(driver, season = get_current_season(), round = 1){
+get_driver_colour <- function(driver, season = get_current_season(), round = 1) {
   get_driver_color(driver = driver, season = season, round = round)
 }
 
@@ -113,7 +113,7 @@ get_driver_colour <- function(driver, season = get_current_season(), round = 1){
 #' @param team Team abbreviation or name (FastF1 performs a fuzzy-match to ambiguous strings).
 #'
 #' @export
-get_team_color <- function(team, season = get_current_season(), round = 1){
+get_team_color <- function(team, season = get_current_season(), round = 1) {
   # checks
   if (!is.character(team) & length(team) != 1) {
     cli::cli_abort("{.var driver} must be a character vector of length one.")
@@ -123,7 +123,7 @@ get_team_color <- function(team, season = get_current_season(), round = 1){
   get_session(season = season, round = round)
 
   py_string <- glue::glue("teamcolor = get_team_color('{team}', session)",
-                          team = team
+    team = team
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_color")
@@ -137,7 +137,7 @@ get_team_color <- function(team, season = get_current_season(), round = 1){
 
 #' @rdname get_aesthetics
 #' @export
-get_team_colour <- function(team, season = get_current_season(), round = 1){
+get_team_colour <- function(team, season = get_current_season(), round = 1) {
   get_team_color(team = team, season = season, round = round)
 }
 
@@ -145,7 +145,7 @@ get_team_colour <- function(team, season = get_current_season(), round = 1){
 #' @rdname get_aesthetics
 #' @inheritParams load_race_session
 #' @export
-get_driver_color_map <- function(season = get_current_season(), round = 1, session = "R"){
+get_driver_color_map <- function(season = get_current_season(), round = 1, session = "R") {
   # function
   get_session(season = season, round = round, session = session)
 
@@ -161,7 +161,7 @@ get_driver_color_map <- function(season = get_current_season(), round = 1, sessi
 
 #' @rdname get_aesthetics
 #' @export
-get_driver_colour_map <- function(season = get_current_season(), round = 1, session = "R"){
+get_driver_colour_map <- function(season = get_current_season(), round = 1, session = "R") {
   get_driver_color_map(season = season, round = round, session = session)
 }
 
@@ -205,7 +205,7 @@ NULL
 #' @param driver_name Driver name (or unique part thereof) to look up.
 #'
 #' @export
-get_driver_abbreviation <- function(driver_name, season = get_current_season){
+get_driver_abbreviation <- function(driver_name, season = get_current_season) {
   # checks
   if (!is.character(driver_name) & length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
@@ -217,7 +217,8 @@ get_driver_abbreviation <- function(driver_name, season = get_current_season){
   reticulate::py_run_string("from fastf1.plotting import get_driver_abbreviation")
 
   py_env <- reticulate::py_run_string(glue::glue("abbreviation = get_driver_abbreviation('{driver_name}', session)",
-                          driver_name = driver_name))
+    driver_name = driver_name
+  ))
 
   abbreviation <- py_env$abbreviation
 
@@ -238,7 +239,7 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
   get_session(season = season, round = round, session = session)
 
   py_string <- glue::glue("drivername = get_driver_name('{driver_name}', session)",
-                          driver_name = driver_name
+    driver_name = driver_name
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_name")
@@ -252,13 +253,13 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
 #'
 #' @param short whether to provide a shortened version of the team name. Default False.
 #' @export
-get_team_name <- function(team_name, season = get_current_season(), short = FALSE){
+get_team_name <- function(team_name, season = get_current_season(), short = FALSE) {
   # checks
   if (!is.character(team_name) & length(team_name) != 1) {
     cli::cli_abort("{.var team_name} must be a character vector of length one.")
   }
 
-  if (!is.logical(short) & length(short) != 1){
+  if (!is.logical(short) & length(short) != 1) {
     cli::cli_abort("{.var short} must be a single logical value.")
   }
 
@@ -266,8 +267,8 @@ get_team_name <- function(team_name, season = get_current_season(), short = FALS
   get_session(season = season)
 
   py_string <- glue::glue("teamname = get_team_name('{team_name}', session, short = {short})",
-                          team_name = team_name,
-                          short = ifelse(short, "True", "False")
+    team_name = team_name,
+    short = ifelse(short, "True", "False")
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_name")
@@ -281,7 +282,7 @@ get_team_name <- function(team_name, season = get_current_season(), short = FALS
 #' @inheritParams load_race_session
 #'
 #' @export
-get_drivers_by_team <- function(team_name, season = get_current_season(), round = 1, session = "R"){
+get_drivers_by_team <- function(team_name, season = get_current_season(), round = 1, session = "R") {
   # checks
   if (!is.character(team_name) & length(team_name) != 1) {
     cli::cli_abort("{.var team_name} must be a character vector of length one.")
@@ -291,7 +292,7 @@ get_drivers_by_team <- function(team_name, season = get_current_season(), round 
   get_session(season = season, round = round, session = session)
 
   py_string <- glue::glue("drivers = get_driver_names_by_team('{team_name}', session)",
-                          team_name = team_name
+    team_name = team_name
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_names_by_team")
@@ -306,13 +307,13 @@ get_drivers_by_team <- function(team_name, season = get_current_season(), round 
 #' @rdname driver_team_lookup
 #'
 #' @export
-get_team_by_driver <- function(driver_name, season = get_current_season(), round = 1, short = FALSE){
+get_team_by_driver <- function(driver_name, season = get_current_season(), round = 1, short = FALSE) {
   # checks
   if (!is.character(driver_name) & length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
   }
 
-  if (!is.logical(short) & length(short) != 1){
+  if (!is.logical(short) & length(short) != 1) {
     cli::cli_abort("{.var short} must be a single logical value.")
   }
 
@@ -320,8 +321,8 @@ get_team_by_driver <- function(driver_name, season = get_current_season(), round
   get_session(season = season, round = round)
 
   py_string <- glue::glue("team = get_team_name_by_driver('{driver_name}', session, short = {short})",
-                          driver_name = driver_name,
-                          short = ifelse(short, "True", "False")
+    driver_name = driver_name,
+    short = ifelse(short, "True", "False")
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_name_by_driver")
@@ -334,8 +335,8 @@ get_team_by_driver <- function(driver_name, season = get_current_season(), round
 #' @rdname driver_team_lookup
 #'
 #' @export
-get_session_drivers_and_teams <- function(season, round, session = "R"){
-  #return name/abbreviation/team data.frame
+get_session_drivers_and_teams <- function(season, round, session = "R") {
+  # return name/abbreviation/team data.frame
   # function
   get_session(season = season, round = round, session = session)
 
@@ -345,16 +346,20 @@ get_session_drivers_and_teams <- function(season, round, session = "R"){
 
   abbreviations <- reticulate::py_to_r(reticulate::py_get_item(py_env, "abbreviations"))
 
-  driver_team_df <- data.frame(name = NA_character_,
-                               abbreviation = abbreviations,
-                               team = NA_character_)
+  driver_team_df <- data.frame(
+    name = NA_character_,
+    abbreviation = abbreviations,
+    team = NA_character_
+  )
 
 
   for (i in seq_along(driver_team_df$abbreviation)) {
     py_run_string(glue::glue("team = get_team_name_by_driver('{driver}', session)",
-                             driver = driver_team_df$abbreviation[i]))
+      driver = driver_team_df$abbreviation[i]
+    ))
     py_run_string(glue::glue("name = get_driver_name('{driver}', session)",
-                             driver = driver_team_df$abbreviation[i]))
+      driver = driver_team_df$abbreviation[i]
+    ))
     driver_team_df$team[i] <- py_env$team
     driver_team_df$name[i] <- py_env$name
   }
@@ -435,8 +440,11 @@ get_session <- function(season = get_current_season(), round = 1, session = "R")
   }
   tryCatch(
     py_env <- reticulate::py_run_string(py_string),
-    error = function(e) {cli::cli_abort(c("Error loading FastF1 session.",
-                                          "x" = as.character(e)))}
+    error = function(e) {
+      cli::cli_abort(c("Error loading FastF1 session.",
+        "x" = as.character(e)
+      ))
+    }
   )
   invisible(py_env)
 }
