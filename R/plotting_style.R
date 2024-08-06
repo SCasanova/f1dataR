@@ -260,9 +260,7 @@ get_driver_abbreviation <- function(driver_name, season = get_current_season) {
     }
   )
 
-  abbreviation <- py_env$abbreviation
-
-  return(c(name = abbreviation))
+  return(py_env$abbreviation)
 }
 
 
