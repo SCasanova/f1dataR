@@ -71,7 +71,7 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -106,7 +106,7 @@ get_driver_color <- function(driver, season = get_current_season(), round = 1) {
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -147,7 +147,7 @@ get_team_color <- function(team, season = get_current_season(), round = 1) {
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -178,7 +178,7 @@ get_driver_color_map <- function(season = get_current_season(), round = 1, sessi
     py_env <- reticulate::py_run_string("colormap = get_driver_color_mapping(session)"),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -255,7 +255,7 @@ get_driver_abbreviation <- function(driver_name, season = get_current_season) {
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -285,7 +285,7 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -321,7 +321,7 @@ get_team_name <- function(team_name, season = get_current_season(), short = FALS
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -352,7 +352,7 @@ get_drivers_by_team <- function(team_name, season = get_current_season(), round 
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -389,7 +389,7 @@ get_team_by_driver <- function(driver_name, season = get_current_season(), round
     py_env <- reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
@@ -412,7 +412,7 @@ get_session_drivers_and_teams <- function(season, round, session = "R") {
     py_env <- reticulate::py_run_string("abbreviations = list_driver_abbreviations(session)"),
     error = function(e) {
       cli::cli_abort(c("Error running FastF1 code:",
-                       "x" = as.character(e)
+        "x" = as.character(e)
       ))
     }
   )
