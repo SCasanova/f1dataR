@@ -54,7 +54,7 @@ NULL
 #' @export
 get_driver_style <- function(driver, season = get_current_season(), round = 1) {
   # checks
-  if (!is.character(driver) & length(driver) != 1) {
+  if (!is.character(driver) | length(driver) != 1) {
     cli::cli_abort("{.var driver} must be a character vector of length one.")
   }
 
@@ -67,7 +67,14 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_style, get_driver_abbreviation")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   driverstyle <- reticulate::py_to_r(reticulate::py_get_item(py_env, "driverstyle"))
   abbreviation <- py_env$abbreviation
@@ -83,7 +90,7 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
 #' @export
 get_driver_color <- function(driver, season = get_current_season(), round = 1) {
   # checks
-  if (!is.character(driver) & length(driver) != 1) {
+  if (!is.character(driver) | length(driver) != 1) {
     cli::cli_abort("{.var driver} must be a character vector of length one.")
   }
 
@@ -94,7 +101,16 @@ get_driver_color <- function(driver, season = get_current_season(), round = 1) {
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_color")
-  py_env <- reticulate::py_run_string(py_string)
+
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
+
 
   drivercolor <- py_env$drivercolor
 
@@ -115,8 +131,8 @@ get_driver_colour <- function(driver, season = get_current_season(), round = 1) 
 #' @export
 get_team_color <- function(team, season = get_current_season(), round = 1) {
   # checks
-  if (!is.character(team) & length(team) != 1) {
-    cli::cli_abort("{.var driver} must be a character vector of length one.")
+  if (!is.character(team) | length(team) != 1) {
+    cli::cli_abort("{.var team} must be a character vector of length one.")
   }
 
   # function
@@ -127,7 +143,14 @@ get_team_color <- function(team, season = get_current_season(), round = 1) {
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_color")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   teamcolor <- py_env$teamcolor
 
@@ -150,7 +173,15 @@ get_driver_color_map <- function(season = get_current_season(), round = 1, sessi
   get_session(season = season, round = round, session = session)
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_color_mapping")
-  py_env <- reticulate::py_run_string("colormap = get_driver_color_mapping(session)")
+
+  tryCatch(
+    py_env <- reticulate::py_run_string("colormap = get_driver_color_mapping(session)"),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   colormap <- reticulate::py_to_r(reticulate::py_get_item(py_env, "colormap"))
 
@@ -207,7 +238,7 @@ NULL
 #' @export
 get_driver_abbreviation <- function(driver_name, season = get_current_season) {
   # checks
-  if (!is.character(driver_name) & length(driver_name) != 1) {
+  if (!is.character(driver_name) | length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
   }
 
@@ -216,9 +247,18 @@ get_driver_abbreviation <- function(driver_name, season = get_current_season) {
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_abbreviation")
 
-  py_env <- reticulate::py_run_string(glue::glue("abbreviation = get_driver_abbreviation('{driver_name}', session)",
+  py_string <- glue::glue("abbreviation = get_driver_abbreviation('{driver_name}', session)",
     driver_name = driver_name
-  ))
+  )
+
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   abbreviation <- py_env$abbreviation
 
@@ -231,7 +271,7 @@ get_driver_abbreviation <- function(driver_name, season = get_current_season) {
 #' @export
 get_driver_name <- function(driver_name, season = get_current_season(), round = 1, session = "R") {
   # checks
-  if (!is.character(driver_name) & length(driver_name) != 1) {
+  if (!is.character(driver_name) | length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
   }
 
@@ -243,7 +283,14 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_name")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   return(py_env$drivername)
 }
@@ -255,11 +302,11 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
 #' @export
 get_team_name <- function(team_name, season = get_current_season(), short = FALSE) {
   # checks
-  if (!is.character(team_name) & length(team_name) != 1) {
+  if (!is.character(team_name) | length(team_name) != 1) {
     cli::cli_abort("{.var team_name} must be a character vector of length one.")
   }
 
-  if (!is.logical(short) & length(short) != 1) {
+  if (!is.logical(short) | length(short) != 1) {
     cli::cli_abort("{.var short} must be a single logical value.")
   }
 
@@ -272,7 +319,14 @@ get_team_name <- function(team_name, season = get_current_season(), short = FALS
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_name")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   return(py_env$teamname)
 }
@@ -284,7 +338,7 @@ get_team_name <- function(team_name, season = get_current_season(), short = FALS
 #' @export
 get_drivers_by_team <- function(team_name, season = get_current_season(), round = 1, session = "R") {
   # checks
-  if (!is.character(team_name) & length(team_name) != 1) {
+  if (!is.character(team_name) | length(team_name) != 1) {
     cli::cli_abort("{.var team_name} must be a character vector of length one.")
   }
 
@@ -296,7 +350,14 @@ get_drivers_by_team <- function(team_name, season = get_current_season(), round 
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_names_by_team")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   drivers <- reticulate::py_to_r(reticulate::py_get_item(py_env, "drivers"))
 
@@ -309,11 +370,11 @@ get_drivers_by_team <- function(team_name, season = get_current_season(), round 
 #' @export
 get_team_by_driver <- function(driver_name, season = get_current_season(), round = 1, short = FALSE) {
   # checks
-  if (!is.character(driver_name) & length(driver_name) != 1) {
+  if (!is.character(driver_name) | length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
   }
 
-  if (!is.logical(short) & length(short) != 1) {
+  if (!is.logical(short) | length(short) != 1) {
     cli::cli_abort("{.var short} must be a single logical value.")
   }
 
@@ -326,7 +387,14 @@ get_team_by_driver <- function(driver_name, season = get_current_season(), round
   )
 
   reticulate::py_run_string("from fastf1.plotting import get_team_name_by_driver")
-  py_env <- reticulate::py_run_string(py_string)
+  tryCatch(
+    py_env <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   return(py_env$team)
 }
@@ -342,7 +410,14 @@ get_session_drivers_and_teams <- function(season, round, session = "R") {
 
   reticulate::py_run_string("from fastf1.plotting import list_driver_abbreviations, get_team_name_by_driver, get_driver_name")
 
-  py_env <- reticulate::py_run_string("abbreviations = list_driver_abbreviations(session)")
+  tryCatch(
+    py_env <- reticulate::py_run_string("abbreviations = list_driver_abbreviations(session)"),
+    error = function(e) {
+      cli::cli_abort(c("Error running FastF1 code:",
+                       "x" = as.character(e)
+      ))
+    }
+  )
 
   abbreviations <- reticulate::py_to_r(reticulate::py_get_item(py_env, "abbreviations"))
 
