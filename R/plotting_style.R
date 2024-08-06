@@ -297,6 +297,7 @@ get_driver_name <- function(driver_name, season = get_current_season(), round = 
 #' @rdname driver_team_lookup
 #'
 #' @param short whether to provide a shortened version of the team name. Default False.
+#' @param team_name The team name (as a string) to use for lookup.
 #' @export
 get_team_name <- function(team_name, season = get_current_season(), short = FALSE) {
   # checks

@@ -49,6 +49,8 @@ to most recent. Also accepts race name.}
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
+\item{team_name}{The team name (as a string) to use for lookup.}
+
 \item{short}{whether to provide a shortened version of the team name. Default False.}
 }
 \value{
