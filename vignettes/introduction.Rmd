@@ -17,32 +17,32 @@ The most sought-after aspect of F1 data is telemetry data.
 Let's get Leclerc's fastest lap from the first race of 2022:
 
 
-```r
+``` r
 library(f1dataR)
 
 load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 #> # A tibble: 697 × 19
-#>    date                session_time  time   rpm speed n_gear throttle brake   drs source    relative_distance
-#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>                 <dbl>
-#>  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpol…        0.00000636
-#>  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos              0.00128   
-#>  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car              0.00232   
-#>  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos              0.00587   
-#>  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car              0.00599   
-#>  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos              0.0120    
-#>  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car              0.0122    
-#>  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car              0.0147    
-#>  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos              0.0158    
-#> 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos              0.0205    
+#>    date                session_time  time   rpm speed n_gear throttle brake   drs source  
+#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>   
+#>  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpo…
+#>  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos     
+#>  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car     
+#>  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos     
+#>  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car     
+#>  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos     
+#>  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car     
+#>  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car     
+#>  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos     
+#> 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos     
 #> # ℹ 687 more rows
-#> # ℹ 8 more variables: status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>, driver_ahead <chr>,
-#> #   distance_to_driver_ahead <dbl>, driver_code <chr>
+#> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>,
+#> #   distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>
 ```
 
 Now let's use ggplot2 to visualize some of the data we have
 
 
-```r
+``` r
 library(dplyr)
 library(ggplot2)
 
@@ -62,7 +62,7 @@ ggplot(lec, aes(distance, throttle)) +
 What if we get more drivers involved. Let's also get the Qualifying data from Hamilton and Pérez
 
 
-```r
+``` r
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
@@ -86,7 +86,7 @@ ggplot(data, aes(distance, throttle, color = driver_code)) +
 There are a couple of functions in the package that help with plotting. The first one is `theme_dark_f1()` that simply applies a theme similar to the official F1 graphics. We can apply it to our previous data.
 
 
-```r
+``` r
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
   theme_dark_f1(axis_marks = TRUE) +
@@ -107,16 +107,22 @@ ggplot(data, aes(distance, speed, color = driver_code)) +
 Another built-in function is `plot_fastest()` that can plot the speed or gear changes throughout the fastest lap for a driver/race.
 
 
-```r
+``` r
 plot_fastest(2022, 1, "R", "PER")
+#> ℹ If the session has not been loaded yet, this could take a minute
 ```
+
+<div class="figure">
+<img src="introduction-use_builtin-1.png" alt="Fastest lap for Perez from the 2022 Bahrain Grand Prix, showing gear used at each point in the lap" width="100%" />
+<p class="caption">Fastest lap for Perez from the 2022 Bahrain Grand Prix, showing gear used at each point in the lap</p>
+</div>
 
 ## Combining several functions
 
 Now let's look at a more complete analysis. We want to visualize how lap time change over time (tyre age) for Pérez with every compound used in the Spanish GP.
 
 
-```r
+``` r
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -149,7 +155,7 @@ Now let's visualize the portion of the track where Verstappen had the throttle 1
 we'll pass the plot through the helper function `correct_track_ratio()` to ensure the plotted track has correct dimensions (and a few other tweaks for pretty plotting). Alternatively, you can call `ggplot2::coord_fixed()` while building track plots to ensure the `x` & `y` ratios are equal.
 
 
-```r
+``` r
 ver_can <- load_driver_telemetry(
   season = 2023,
   round = "Canada",
@@ -176,26 +182,25 @@ correct_track_ratio(throttle_plot)
 <p class="caption">Verstappen fastest lab in the Canadian Grand Prix 2023, showing full throttle sections</p>
 </div>
 
-For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and read the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
 
 
-```r
+``` r
 pit_data <- load_pitstops(2023, 4)
 
 driver_team <- load_results(2023, 4) %>%
   select(driver_id, constructor_id)
 
-constructors <- constructor_data %>%
-  select(constructor_id, constructor_color) %>%
-  unique()
-
 pit_constructor <- pit_data %>%
   left_join(driver_team, by = "driver_id") %>%
   group_by(constructor_id) %>%
-  summarise(pit_time = mean(as.numeric(duration))) %>%
-  left_join(constructors, by = "constructor_id")
+  summarise(pit_time = mean(as.numeric(duration)))
 
-ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
+pit_constructor$constructor_color <- sapply(pit_constructor$constructor_id, get_team_color, season = 2023, round = 4, USE.NAMES = FALSE)
+
+pit_constructor$team_name <- sapply(pit_constructor$constructor_id, get_team_name, season = 2023, short = TRUE, USE.NAMES = FALSE)
+
+ggplot(pit_constructor, aes(x = team_name, y = pit_time, fill = team_name)) +
   geom_bar(stat = "identity", fill = pit_constructor$constructor_color) +
   theme_dark_f1(axis_marks = TRUE) +
   theme(

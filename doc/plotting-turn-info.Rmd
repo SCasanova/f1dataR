@@ -16,7 +16,7 @@ This vignette provides a few demonstrations of the use of FastF1 circuit data in
 We'll load all the required libraries for our data analysis:
 
 
-```r
+``` r
 library(f1dataR)
 library(dplyr)
 library(ggplot2)
@@ -26,7 +26,7 @@ library(ggplot2)
 As in our Introduction vignette, we'll start by working with telemetry data.
 
 
-```r
+``` r
 lec <- load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest")
 per <- load_driver_telemetry(2022, 1, "Q", driver = "PER", laps = "fastest")
@@ -36,16 +36,16 @@ telem <- bind_rows(lec, ham, per) %>%
   mutate(drs = ifelse(drs == 12, 1, 0))
 
 drivercolours <- c(
-  "LEC" = constructor_data[constructor_data$constructor_id == "ferrari", ]$constructor_color,
-  "HAM" = constructor_data[constructor_data$constructor_id == "mercedes", ]$constructor_color,
-  "PER" = constructor_data[constructor_data$constructor_id == "red_bull", ]$constructor_color
+  "LEC" = get_driver_color("LEC", 2022, 1),
+  "HAM" = get_driver_color("HAM", 2022, 1),
+  "PER" = get_driver_color("PER", 2022, 1)
 )
 ```
 
 To demonstrate the addition of turn information, we'll start by plotting the speed telemetry for the three drivers
 
 
-```r
+``` r
 telem_plot_speed <- ggplot(telem, aes(x = distance, y = speed, color = driver_code)) +
   geom_path() +
   scale_color_manual(values = drivercolours) +
@@ -66,7 +66,7 @@ telem_plot_speed
 Now, to add the corner numbers to a plot like this, we'll have to retrieve those from FastF1.
 
 
-```r
+``` r
 bahrain_circuit <- load_circuit_details(2022, 1)
 bahrain_corners <- bahrain_circuit$corners
 
@@ -77,7 +77,7 @@ speedmin <- min(telem$speed, na.rm = TRUE)
 Now we can add these indicators to the previous plot:
 
 
-```r
+``` r
 telem_plot_speed +
   geom_vline(xintercept = bahrain_corners$distance, linetype = "longdash", color = "#646464") +
   geom_label(data = bahrain_corners, aes(
@@ -99,7 +99,7 @@ Similar to the plotting of turn numbers on telemetry, we can add these annotatio
 
 We'll work with 2022 Silverstone (British Grand Prix) for this plot. Lets' start by getting the data:
 
-```r
+``` r
 ver <- load_driver_telemetry(season = 2022, round = 'Silverstone', session = 'Q', driver = 'VER', laps = 'fastest')
 silverstone_circuit <- load_circuit_details(season = 2022, round = 'Silverstone')
 ```
@@ -107,7 +107,7 @@ silverstone_circuit <- load_circuit_details(season = 2022, round = 'Silverstone'
 Now we'll plot it. Look to the bottom of the code to see the addition of labels.
 
 
-```r
+``` r
 gear_plot <- ggplot(ver, aes(x, y, color = as.factor(n_gear), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   ggplot2::scale_color_manual(
@@ -143,7 +143,7 @@ Like before, the plot has some issues with overlap. But this time, beyond using 
 The data returned by `get_circuit_data()` includes an extra column (`angle`) that can be used to determine an adequate shift angle for the label. With that data, and some careful math, we can move the labels to where we want them.
 
 
-```r
+``` r
 labelx <- function(x, angle, distance = 750){
   angle <- angle * pi/180
   return(cos(angle)*distance + x)
@@ -160,7 +160,7 @@ silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silver
 With those new label x and y points calculated, we can re-plot the labels slightly offset from the track.
 
 
-```r
+``` r
 labelled_gear_plot2 <- gear_plot +
   geom_label(data = silverstone_circuit$corners, aes(
     label = paste0(silverstone_circuit$corners$number, silverstone_circuit$corners$letter),

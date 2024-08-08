@@ -57,9 +57,9 @@ telem <- bind_rows(lec, ham, per) %>%
   mutate(drs = ifelse(drs == 12, 1, 0))
 
 drivercolours <- c(
-  "LEC" = constructor_data[constructor_data$constructor_id == "ferrari", ]$constructor_color,
-  "HAM" = constructor_data[constructor_data$constructor_id == "mercedes", ]$constructor_color,
-  "PER" = constructor_data[constructor_data$constructor_id == "red_bull", ]$constructor_color
+  "LEC" = get_driver_color("LEC", 2022, 1),
+  "HAM" = get_driver_color("HAM", 2022, 1),
+  "PER" = get_driver_color("PER", 2022, 1)
 )
 ```
 

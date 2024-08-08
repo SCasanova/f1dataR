@@ -163,7 +163,7 @@ racename <- paste(racename, "2022")
 
 # Plot the results
 ggplot(rus, aes(x = lap, y = time_sec)) +
-  geom_point(color = constructor_data %>% filter(constructor_id == "mercedes") %>% pull(constructor_color)) +
+  geom_point(color = get_driver_color("Russell", 2022, 2)) +
   theme_dark_f1(axis_marks = TRUE) +
   ggtitle("Russell Lap times through the Grand Prix", subtitle = racename) +
   xlab("Lap Number") +

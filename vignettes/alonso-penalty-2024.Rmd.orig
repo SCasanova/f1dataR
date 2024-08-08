@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   out.width = "100%",
   fig.width = 6,
   fig.height = 4,
-  fig.path = "alonso-penalty-2024",
+  fig.path = "alonso-penalty-2024-",
   dpi = 250,
   dev = "png"
 )
