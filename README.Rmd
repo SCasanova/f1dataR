@@ -121,6 +121,27 @@ plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "g
 
 Two helper functions exist as well. The first, `theme_dark_f1()` assists with colour schemes similar to that used in other F1 graphics. The second, `correct_track_ratio()` is a function that fixes track ratio issues that appear when you create images similar to that above from `plot_fastest()`. Please refer to their documentation for usage.
 
+### Metadata Lookups
+The package echos the metadata information look-up from the FastF1 package. this is a convenient way to programmatically look up drivers, teams, driver-team relationships, team colors, driver colors, tire types & colors and more. See the following functions for this look-up:
+
+* `get_driver_abbreviation()`
+* `get_driver_color()`
+* `get_driver_color_map()`
+* `get_driver_colour()`
+* `get_driver_colour_map()`
+* `get_driver_name()`
+* `get_driver_style()`
+* `get_driver_telemetry()`
+* `get_drivers_by_team()`
+* `get_session_drivers_and_teams()`
+* `get_team_by_driver()`
+* `get_team_color()`
+* `get_team_colour()`
+* `get_team_name()`
+* `get_tire_compounds()`
+
+Note that (in support of plotting functions) driver colors and marker type / line style can be retrieved from `get_driver_style()`. The function `get_driver_color()` will return the same color value for both drivers in a team. 
+
 ### Cache information
 
 The cache directory for sessions can be set manually with the options function
@@ -147,11 +168,3 @@ Many other functions exist, and are flexible enough to call the current `season`
 > `clear_f1_cache()` 
 
 Clears the cache for all functions in the package.
-
-## Loaded Data
-
-The package also includes a static data frame for all current Constructors. Complete with team colors, and links to team logos.
-
-```{r constructor_example}
-constructor_data %>% colnames()
-```

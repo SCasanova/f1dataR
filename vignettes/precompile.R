@@ -12,7 +12,7 @@ knitr::knit("vignettes/plotting-turn-info.Rmd.orig", "vignettes/plotting-turn-in
 knitr::knit("vignettes/alonso-penalty-2024.Rmd.orig", "vignettes/alonso-penalty-2024.Rmd")
 cat("Successfully compiled vignettes. Now moving figures to ./vignettes")
 
-vig_images<-list.files(pattern = "(ergast-data-analysis|introduction|plotting-turn-info|alonso-penalty-2024)-[(a-z)(A-Z)(0-9)_]*-1.png")
+vig_images<-list.files(pattern = "(ergast-data-analysis|introduction|plotting-turn-info|alonso-penalty)-[(a-z)(A-Z)(0-9)_]*-1.png")
 file.copy(paste0("./", vig_images),
           paste0("./vignettes/", vig_images), overwrite = T)
 unlink(vig_images)

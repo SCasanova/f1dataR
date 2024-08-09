@@ -60,20 +60,20 @@ season and last race. Lap data is limited to 1996-present.
 
 ``` r
 load_laps()
-#> # A tibble: 900 × 6
+#> # A tibble: 841 × 6
 #>    driver_id      position time       lap time_sec season
 #>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 max_verstappen 1        1:35.505     1     95.5   2024
-#>  2 leclerc        2        1:36.681     1     96.7   2024
-#>  3 perez          3        1:37.222     1     97.2   2024
-#>  4 alonso         4        1:38.507     1     98.5   2024
-#>  5 piastri        5        1:38.705     1     98.7   2024
-#>  6 norris         6        1:39.926     1     99.9   2024
-#>  7 russell        7        1:40.459     1    100.    2024
-#>  8 hamilton       8        1:40.900     1    101.    2024
-#>  9 stroll         9        1:42.429     1    102.    2024
-#> 10 tsunoda        10       1:42.531     1    103.    2024
-#> # ℹ 890 more rows
+#>  1 leclerc        1        1:51.912     1     112.   2024
+#>  2 hamilton       2        1:52.700     1     113.   2024
+#>  3 perez          3        1:53.439     1     113.   2024
+#>  4 piastri        4        1:54.248     1     114.   2024
+#>  5 russell        5        1:54.763     1     115.   2024
+#>  6 sainz          6        1:55.270     1     115.   2024
+#>  7 norris         7        1:55.727     1     116.   2024
+#>  8 alonso         8        1:56.577     1     117.   2024
+#>  9 max_verstappen 9        1:57.183     1     117.   2024
+#> 10 albon          10       1:57.321     1     117.   2024
+#> # ℹ 831 more rows
 ```
 
 or
@@ -126,6 +126,9 @@ load_driver_telemetry(season = 2022, round = 4, driver = "PER")
 #> # ℹ 11 more variables: drs <dbl>, source <chr>, relative_distance <dbl>,
 #> #   status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
 #> #   driver_ahead <chr>, distance_to_driver_ahead <dbl>, …
+```
+
+``` r
 
 load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
 #> # A tibble: 534 × 19
@@ -204,6 +207,34 @@ second, `correct_track_ratio()` is a function that fixes track ratio
 issues that appear when you create images similar to that above from
 `plot_fastest()`. Please refer to their documentation for usage.
 
+### Metadata Lookups
+
+The package echos the metadata information look-up from the FastF1
+package. this is a convenient way to programmatically look up drivers,
+teams, driver-team relationships, team colors, driver colors, tire types
+& colors and more. See the following functions for this look-up:
+
+- `get_driver_abbreviation()`
+- `get_driver_color()`
+- `get_driver_color_map()`
+- `get_driver_colour()`
+- `get_driver_colour_map()`
+- `get_driver_name()`
+- `get_driver_style()`
+- `get_driver_telemetry()`
+- `get_drivers_by_team()`
+- `get_session_drivers_and_teams()`
+- `get_team_by_driver()`
+- `get_team_color()`
+- `get_team_colour()`
+- `get_team_name()`
+- `get_tire_compounds()`
+
+Note that (in support of plotting functions) driver colors and marker
+type / line style can be retrieved from `get_driver_style()`. The
+function `get_driver_color()` will return the same color value for both
+drivers in a team.
+
 ### Cache information
 
 The cache directory for sessions can be set manually with the options
@@ -235,14 +266,3 @@ total number of races in a season).
 > `clear_f1_cache()`
 
 Clears the cache for all functions in the package.
-
-## Loaded Data
-
-The package also includes a static data frame for all current
-Constructors. Complete with team colors, and links to team logos.
-
-``` r
-constructor_data %>% colnames()
-#> [1] "constructor_id"     "constructor_color"  "constructor_color2"
-#> [4] "constructor_logo"
-```
