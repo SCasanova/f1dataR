@@ -22,18 +22,18 @@ library(f1dataR)
 
 load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 #> # A tibble: 697 × 19
-#>    date                session_time  time   rpm speed n_gear throttle brake   drs source  
-#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>   
-#>  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpo…
-#>  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos     
-#>  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car     
-#>  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos     
-#>  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car     
-#>  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos     
-#>  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car     
-#>  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car     
-#>  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos     
-#> 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos     
+#>    date                session_time  time   rpm speed n_gear throttle brake   drs source       
+#>    <dttm>                     <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <lgl> <dbl> <chr>        
+#>  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpolation
+#>  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos          
+#>  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car          
+#>  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos          
+#>  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car          
+#>  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos          
+#>  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car          
+#>  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car          
+#>  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos          
+#> 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos          
 #> # ℹ 687 more rows
 #> # ℹ 9 more variables: relative_distance <dbl>, status <chr>, x <dbl>, y <dbl>, z <dbl>,
 #> #   distance <dbl>, driver_ahead <chr>, distance_to_driver_ahead <dbl>, driver_code <chr>

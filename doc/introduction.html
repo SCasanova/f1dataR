@@ -351,18 +351,18 @@ Leclerc’s fastest lap from the first race of 2022:</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">load_driver_telemetry</span>(<span class="dv">2022</span>, <span class="dv">1</span>, <span class="st">&quot;Q&quot;</span>, <span class="at">driver =</span> <span class="st">&quot;LEC&quot;</span>, <span class="at">laps =</span> <span class="st">&quot;fastest&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 697 × 19</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source  </span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;   </span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpo…</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos     </span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car     </span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos     </span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car     </span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos     </span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car     </span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car     </span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos     </span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos     </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source       </span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;        </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt;  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpolation</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt;  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos          </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car          </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos          </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car          </span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt;  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos          </span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car          </span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car          </span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos          </span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos          </span></span>
 <span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 687 more rows</span></span>
 <span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; # ℹ 9 more variables: relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;,</span></span>
 <span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; #   distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, driver_code &lt;chr&gt;</span></span></code></pre></div>

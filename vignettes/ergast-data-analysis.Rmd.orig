@@ -69,7 +69,7 @@ Of course, this isn't really an interesting plot for a single race. Naturally we
 ```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix'}
 # Load the data
 results <- data.frame()
-for(i in seq_len(17)) {
+for (i in seq_len(17)) {
   Sys.sleep(1)
   r <- load_results(2022, i)
   results <- dplyr::bind_rows(results, r)
@@ -145,52 +145,108 @@ ggplot(points, aes(x = round, y = points, color = driver_id)) +
 Sys.sleep(1)
 ```
 
+Both of these are a bit hard to read and use `driver_id` values that aren't pretty on the plot. We can use some of the FastF1 look-up functions to improve our graphics (recalling that Kubica raced for Alfa Romeo for races 13 & 14 mid-season). We'll first build a data.frame of all drivers and styles for the season, and join that to the points data.frame after we generate driver abbreviations from the Ergast `driver_id`.
+
+```{r lookups, message = FALSE}
+driver_style <- rbind(
+  get_session_drivers_and_teams(2021, round = 1),
+  get_session_drivers_and_teams(2021, round = 13)
+) %>%
+  unique()
+
+driver_style$linestyle <- driver_style$marker <- driver_style$color <- driver_style$abbreviation <- NA
+
+for (i in seq_along(driver_style$name)) {
+  if (driver_style$name[i] == "Robert Kubica") {
+    # Manually handling Kubica
+    style <- get_driver_style(driver_style$name[i], season = 2021, round = 13)
+    driver_style$color[i] <- style$color
+    driver_style$marker[i] <- 2
+    driver_style$linestyle[i] <- "dotted"
+    driver_style$abbreviation[i] <- style$abbreviation
+  } else {
+    style <- get_driver_style(driver_style$name[i], season = 2021, round = 1)
+    driver_style$color[i] <- style$color
+    driver_style$marker[i] <- style$marker
+    driver_style$linestyle[i] <- style$linestyle
+    driver_style$abbreviation[i] <- style$abbreviation
+  }
+}
+
+color_values <- driver_style$color
+names(color_values) <- driver_style$abbreviation
+
+marker_values <- driver_style$marker
+names(marker_values) <- driver_style$abbreviation
+
+linestyle_values <- driver_style$linestyle
+names(linestyle_values) <- driver_style$abbreviation
+
+points <- dplyr::left_join(points, load_drivers(2021)[, c("driver_id", "code")], by = "driver_id")
+```
+
+With our data having graphical and label information added, we can remake these plots:
+```{r remade_rounds_points, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap="Remade points plot for each driver after each Grand Prix in the 2021 season, with better driver names and colors"}
+ggplot(points, aes(x = round, y = points, color = code, shape = code, linetype = code)) +
+  geom_line() +
+  geom_point() +
+  scale_color_manual(name = "Driver", values = color_values, aesthetics = c("color", "fill")) +
+  scale_shape_manual(name = "Driver", values = marker_values) +
+  scale_linetype_manual(name = "Driver", values = linestyle_values) +
+  ggtitle("Driver Points", subtitle = "Through 2021 season") +
+  xlab("Round #") +
+  ylab("Points") +
+  theme_dark_f1(axis_marks = TRUE)
+```
+
 ## Driver Lap Time Scatter Plot
 
 We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
-```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptimes for George Russell, for each lap from the 2022 Saudi Arabian Grand Prix'}
+```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptimes for George Russell, for each lap from the 2021 Spanish Grand Prix'}
 # Load the laps data and select one driver (this time - Russell)
-rus <- load_laps(season = 2022, round = 2) %>%
-  filter(driver_id == "russell")
+bot <- load_laps(season = 2021, round = 4) %>%
+  filter(driver_id == "bottas")
 
 # Get Grand Prix Name
-racename <- load_schedule(2022) %>%
-  filter(round == 2) %>%
+racename <- load_schedule(2021) %>%
+  filter(round == 4) %>%
   pull("race_name")
 
-racename <- paste(racename, "2022")
+racename <- paste(racename, "2021")
 
 # Plot the results
-ggplot(rus, aes(x = lap, y = time_sec)) +
-  geom_point(color = get_driver_color("Russell", 2022, 2)) +
+ggplot(bot, aes(x = lap, y = time_sec)) +
+  geom_point(color = get_driver_color("Bottas", 2021, 4)) +
   theme_dark_f1(axis_marks = TRUE) +
-  ggtitle("Russell Lap times through the Grand Prix", subtitle = racename) +
+  ggtitle("Bottas Lap times through the Grand Prix", subtitle = racename) +
   xlab("Lap Number") +
   ylab("Lap Time (s)")
 ```
 
-We can see the most of Russell's laps were less than 110 seconds. Note a safety car had occurred around lap 15 and VSC occurred near lap 38.
+We can see the most of Bottas' laps were less than 90 seconds. Note a safety car had occurred around lap 8.
 
-With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 105 seconds to make the variation in lap time easier to see (i.e. show only racing laps).
+With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 100 seconds to make the variation in lap time easier to see (i.e. show only racing laps). We can recycle the color values we produced above.
 
-```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptime distributions for all drivers from the 2022 Saudi Arabian Grand Prix (racing laps only)'}
+```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptime distributions for all drivers from the 2021 Spanish Grand Prix (racing laps only)'}
 # Load the laps data (cached!) and filter
-laps <- load_laps(season = 2022, round = 2) %>%
-  filter(time_sec < 105) %>%
+laps <- load_laps(season = 2021, round = 4) %>%
+  filter(time_sec < 100) %>%
   group_by(driver_id) %>%
   mutate(driver_avg = mean(time_sec)) %>%
   ungroup() %>%
-  mutate(driver_id = factor(driver_id, unique(driver_id[order(driver_avg)])))
+  left_join(load_drivers(2021)[, c("driver_id", "code")], by = "driver_id") %>%
+  mutate(code = factor(code, unique(code[order(driver_avg)])))
 
-ggplot(laps, aes(x = driver_id, y = time_sec)) +
+ggplot(laps, aes(x = code, y = time_sec, color = code, fill = code)) +
   geom_violin(trim = FALSE) +
-  geom_boxplot(width = 0.1) +
+  scale_color_manual("Driver", values = color_values, aesthetics = c("color", "fill")) +
+  geom_boxplot(width = 0.1, color = "black", fill = "white", outlier.shape = NA) +
   theme_dark_f1(axis_marks = TRUE) +
   ggtitle("Driver Lap Times", subtitle = paste("Racing Laps Only -", racename)) +
   xlab("Driver ID") +
   ylab("Lap Time (s)") +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90), legend.position = "")
 ```
 
 ```{r sleep3, eval = T, echo = F}
@@ -201,26 +257,31 @@ Sys.sleep(1)
 
 We can compare the qualifying times for all drivers from a Grand Prix. There's naturally a few ways to do this (pick each driver's fastest time, pick each driver's fastest time from the last session they participated in, etc), all with pros or cons. Rerunning this analysis with different ways of handling the data could produce different results!
 
-```{r quali_compare, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Gap to Pole at the end of qualifying for the 2023 Bahrain Grand Prix'}
+```{r quali_compare, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Gap to Pole at the end of qualifying for the 2021 Styrian Grand Prix'}
 # Load the Data
-quali <- load_quali(2023, 1)
+quali <- load_quali(2021, 8)
+
+# Get Grand Prix Name
+racename <- load_schedule(2021) %>%
+  filter(round == 8) %>%
+  pull("race_name")
 
 # Process the Data
 quali <- quali %>%
   summarize(t_min = min(q1_sec, q2_sec, q3_sec, na.rm = TRUE), .by = driver_id) %>%
-  mutate(
-    t_diff = t_min - min(t_min),
-    driver_id = factor(driver_id, unique(driver_id[order(-t_min)]))
-  )
+  mutate(t_diff = t_min - min(t_min)) %>%
+  left_join(load_drivers(2021)[, c("driver_id", "code")], by = "driver_id") %>%
+  mutate(code = factor(code, unique(code[order(-t_min)])))
 
 # Plot the results
-ggplot(quali, aes(x = driver_id, y = t_diff)) +
+ggplot(quali, aes(x = code, y = t_diff, color = code, fill = code)) +
   geom_col() +
   coord_flip() +
-  ggtitle("Bahrain 2023 Quali Time Comparison",
+  ggtitle(paste0(racename, " 2021 Quali Time Comparison"),
     subtitle = paste("VER Pole time:", min(quali$t_min), "s")
   ) +
+  scale_color_manual(values = color_values, aesthetics = c("fill", "color")) +
   ylab("Gap to Pole (s)") +
-  xlab("Driver ID") +
-  theme_dark_f1(axis_marks = TRUE)
+  theme_dark_f1(axis_marks = TRUE) +
+  theme(legend.position = "")
 ```

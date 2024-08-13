@@ -107,8 +107,8 @@ Similar to the plotting of turn numbers on telemetry, we can add these annotatio
 
 We'll work with 2022 Silverstone (British Grand Prix) for this plot. Lets' start by getting the data:
 ```{r silverstone, message = FALSE}
-ver <- load_driver_telemetry(season = 2022, round = 'Silverstone', session = 'Q', driver = 'VER', laps = 'fastest')
-silverstone_circuit <- load_circuit_details(season = 2022, round = 'Silverstone')
+ver <- load_driver_telemetry(season = 2022, round = "Silverstone", session = "Q", driver = "VER", laps = "fastest")
+silverstone_circuit <- load_circuit_details(season = 2022, round = "Silverstone")
 ```
 
 Now we'll plot it. Look to the bottom of the code to see the addition of labels.
@@ -118,8 +118,10 @@ gear_plot <- ggplot(ver, aes(x, y, color = as.factor(n_gear), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   ggplot2::scale_color_manual(
     name = "Gear",
-    values = c("1" = "#BC3C29", "2" = "#0072B5", "3" = "#E18727", "4" = "#20854E",
-               "5" = "#7876B1", "6" = "#6F99AD", "7" = "#FFDC91", "8" = "#EE4C97"),
+    values = c(
+      "1" = "#BC3C29", "2" = "#0072B5", "3" = "#E18727", "4" = "#20854E",
+      "5" = "#7876B1", "6" = "#6F99AD", "7" = "#FFDC91", "8" = "#EE4C97"
+    ),
     aesthetics = c("color", "fill")
   ) +
   theme_dark_f1() +
@@ -144,17 +146,17 @@ Like before, the plot has some issues with overlap. But this time, beyond using 
 The data returned by `get_circuit_data()` includes an extra column (`angle`) that can be used to determine an adequate shift angle for the label. With that data, and some careful math, we can move the labels to where we want them.
 
 ```{r prep_label_frame, message = FALSE}
-labelx <- function(x, angle, distance = 750){
-  angle <- angle * pi/180
-  return(cos(angle)*distance + x)
+labelx <- function(x, angle, distance = 750) {
+  angle <- angle * pi / 180
+  return(cos(angle) * distance + x)
 }
-labely <- function(y, angle, distance = 750){
-  angle <- angle * pi/180
-  return(sin(angle)*distance + y)
+labely <- function(y, angle, distance = 750) {
+  angle <- angle * pi / 180
+  return(sin(angle) * distance + y)
 }
 
-silverstone_circuit$corners$labx <- labelx(silverstone_circuit$corners$x, silverstone_circuit$corners$angle )
-silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silverstone_circuit$corners$angle )
+silverstone_circuit$corners$labx <- labelx(silverstone_circuit$corners$x, silverstone_circuit$corners$angle)
+silverstone_circuit$corners$laby <- labely(silverstone_circuit$corners$y, silverstone_circuit$corners$angle)
 ```
 
 With those new label x and y points calculated, we can re-plot the labels slightly offset from the track.

@@ -49,7 +49,7 @@ ggplot2::ggplot(alo_telem, ggplot2::aes(x = distance, y = throttle, color = lap)
   f1dataR::theme_dark_f1(axis_marks = T) +
   ggplot2::ggtitle("Alonso Throttle % by Distance, per Lap", subtitle = "At the 2024 Australian Grand Prix") +
   ggplot2::xlab("Distance (m) into lap") +
-  ggplot2::ylab("Throttle %")+
+  ggplot2::ylab("Throttle %") +
   ggplot2::xlim(c(1500, 2000))
 #> Warning: Removed 3489 rows containing missing values or values outside the scale range
 #> (`geom_path()`).
@@ -68,14 +68,18 @@ Similarly, we can look at braking (on/off), selected gear, and speed traces to s
 ``` r
 long_telem_alo <- alo_telem %>%
   dplyr::select(c("speed", "n_gear", "throttle", "brake", "lap", "distance")) %>%
-  tidyr::pivot_longer(cols = c("speed", "n_gear", "throttle", "brake"),
-                      names_to = "param",
-                      values_to = "value") %>%
-  dplyr::mutate(param = dplyr::case_match(param,
-                                          "speed" ~ "Speed (kph)",
-                                          "n_gear" ~ "Gear",
-                                          "throttle" ~ "Throttle %",
-                                          "brake" ~ "Brake (on/off)")) %>%
+  tidyr::pivot_longer(
+    cols = c("speed", "n_gear", "throttle", "brake"),
+    names_to = "param",
+    values_to = "value"
+  ) %>%
+  dplyr::mutate(param = dplyr::case_match(
+    param,
+    "speed" ~ "Speed (kph)",
+    "n_gear" ~ "Gear",
+    "throttle" ~ "Throttle %",
+    "brake" ~ "Brake (on/off)"
+  )) %>%
   dplyr::rename("Lap" = "lap") %>%
   dplyr::mutate(param = factor(param, c("Speed (kph)", "Throttle %", "Gear", "Brake (on/off)")))
 
@@ -86,7 +90,7 @@ ggplot2::ggplot(long_telem_alo, ggplot2::aes(x = distance, y = value, color = La
   ggplot2::facet_grid(rows = ggplot2::vars(param), scales = "free") +
   ggplot2::ggtitle("Alonso Telemetry by Distance, per Lap", subtitle = "At the 2024 Australian Grand Prix") +
   ggplot2::xlab("Distance (m) into lap") +
-  ggplot2::ylab(NULL)+
+  ggplot2::ylab(NULL) +
   ggplot2::xlim(c(1500, 2000))
 #> Warning: Removed 13956 rows containing missing values or values outside the scale range
 #> (`geom_path()`).
@@ -107,16 +111,20 @@ Russell, of course, was tailing Alonso, and the telemetry provides a (calculated
 ``` r
 long_telem_rus <- rus_telem %>%
   dplyr::select(c("speed", "n_gear", "throttle", "brake", "lap", "distance", "distance_to_driver_ahead")) %>%
-  tidyr::pivot_longer(cols = c("speed", "n_gear", "throttle", "brake", "distance_to_driver_ahead"),
-                      names_to = "param",
-                      values_to = "value") %>%
+  tidyr::pivot_longer(
+    cols = c("speed", "n_gear", "throttle", "brake", "distance_to_driver_ahead"),
+    names_to = "param",
+    values_to = "value"
+  ) %>%
   dplyr::filter(!(param == "distance_to_driver_ahead" & value > 50)) %>%
-  dplyr::mutate(param = dplyr::case_match(param,
-                                          "speed" ~ "Speed (kph)",
-                                          "n_gear" ~ "Gear",
-                                          "throttle" ~ "Throttle %",
-                                          "brake" ~ "Brake (on/off)",
-                                          "distance_to_driver_ahead" ~ "Gap (m)")) %>%
+  dplyr::mutate(param = dplyr::case_match(
+    param,
+    "speed" ~ "Speed (kph)",
+    "n_gear" ~ "Gear",
+    "throttle" ~ "Throttle %",
+    "brake" ~ "Brake (on/off)",
+    "distance_to_driver_ahead" ~ "Gap (m)"
+  )) %>%
   dplyr::rename("Lap" = "lap") %>%
   dplyr::mutate(param = factor(param, c("Gap (m)", "Speed (kph)", "Throttle %", "Gear", "Brake (on/off)")))
 
@@ -127,7 +135,7 @@ ggplot2::ggplot(long_telem_rus, ggplot2::aes(x = distance, y = value, color = La
   ggplot2::facet_grid(rows = ggplot2::vars(param), scales = "free") +
   ggplot2::ggtitle("Russell Telemetry by Distance, per Lap", subtitle = "At the 2024 Australian Grand Prix") +
   ggplot2::xlab("Distance (m) into lap") +
-  ggplot2::ylab(NULL)+
+  ggplot2::ylab(NULL) +
   ggplot2::xlim(c(1500, 2000))
 #> Warning: Removed 13834 rows containing missing values or values outside the scale range
 #> (`geom_path()`).
