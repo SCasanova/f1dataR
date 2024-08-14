@@ -76,15 +76,14 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
     }
   )
 
-  driverstyle <- reticulate::py_to_r(reticulate::py_get_item(py_env, "driverstyle")) %>%
-    dplyr::mutate(
-      abbreviation = py_env$abbreviation,
-      driver = driver,
-      marker = dplyr::case_match(marker,
-        "o" ~ 16,
-        "x" ~ 4,
-        .default = 2
-      )
+  driverstyle <- reticulate::py_to_r(reticulate::py_get_item(py_env, "driverstyle"))
+
+  driverstyle$driver <- driver
+  driverstyle$abbreviation <- py_env$abbreviation
+  driverstyle$marker <- dplyr::case_match(driverstyle$marker,
+      "o" ~ 16,
+      "x" ~ 4,
+      .default = 2
     )
 
   return(driverstyle)
