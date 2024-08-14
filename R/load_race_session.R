@@ -89,7 +89,14 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
 
   # fastf1.get_session([args]) runs even if there's no internet connection,
   # the schedule of sessions is built into the package
-  session <- reticulate::py_run_string(py_string)
+  tryCatch(
+    session <- reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error loading FastF1 session.",
+        "x" = as.character(e)
+      ))
+    }
+  )
 
   # Check for fastf1 (F1timing/internet) connection
   status <- check_ff1_network_connection(session$session$api_path)
