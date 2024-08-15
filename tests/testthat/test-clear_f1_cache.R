@@ -1,4 +1,5 @@
 test_that("Cache Clearing works for memoised functions to file", {
+  skip_if_no_ergast()
   # Note: cache clearing for fastf1 is not our responsibility, it's performed
   # by a call to fastf1 itself.
 
@@ -19,6 +20,7 @@ test_that("Cache Clearing works for memoised functions to file", {
 
 
 test_that("load_ciruits (off cache) works", {
+  skip_if_no_ergast()
   # Set testing specific parameters - this disposes after the test finishes
   change_cache("off", persist = FALSE)
 
@@ -31,6 +33,8 @@ test_that("load_ciruits (off cache) works", {
 
 
 test_that("load_ciruits (memory cache) works", {
+  skip_if_no_ergast()
+
   # Set testing specific parameters - this disposes after the test finishes
   withr::local_options("f1dataR.cache" = NULL)
   change_cache("memory", persist = TRUE)
@@ -51,6 +55,8 @@ test_that("load_ciruits (bad path cache) works", {
 
 
 test_that("load_ciruits (filesystem cache) works", {
+  skip_if_no_ergast()
+
   # Set testing specific parameters - this disposes after the test finishes
   withr::local_options("f1dataR.cache" = NULL)
   change_cache(cache = "filesystem")
