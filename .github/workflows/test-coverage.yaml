@@ -95,7 +95,7 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
-          python_packages <- c("urllib3==1.26.15", "fastf1==2.3.3")
+          python_packages <- c("urllib3", "fastf1==3.3.9")
 
           library(reticulate)
           virtualenv_create("r-reticulate", Sys.which("python"))
