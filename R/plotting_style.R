@@ -240,14 +240,14 @@ NULL
 #' @param driver_name Driver name (or unique part thereof) to look up.
 #'
 #' @export
-get_driver_abbreviation <- function(driver_name, season = get_current_season) {
+get_driver_abbreviation <- function(driver_name, season = get_current_season(), round = 1, session = "R") {
   # checks
   if (!is.character(driver_name) | length(driver_name) != 1) {
     cli::cli_abort("{.var driver_name} must be a character vector of length one.")
   }
 
   # function
-  get_session(season = season)
+  get_session(season = season, round = round, session = session)
 
   reticulate::py_run_string("from fastf1.plotting import get_driver_abbreviation")
 
