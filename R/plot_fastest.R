@@ -64,15 +64,15 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
   if (is.null(season_drivers)) {
     # Ergast is down
     lap_time <- ""
-    if(get_fastf1_version() < "3.4"){
+    if (get_fastf1_version() < "3.4") {
       driver_name <- driver
     }
   } else {
-    if(get_fastf1_version() < "3.4"){
+    if (get_fastf1_version() < "3.4") {
       driver_name <- season_drivers %>%
         dplyr::filter(.data$code == driver_abbreviation) %>%
         dplyr::select("given_name", "family_name") %>%
-        paste(collapse= " ")
+        paste(collapse = " ")
     }
     driver_id <- season_drivers %>%
       dplyr::filter(.data$code == driver_abbreviation) %>%
