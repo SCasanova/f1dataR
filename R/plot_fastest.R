@@ -61,7 +61,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
 
   driver_abbreviation <- get_driver_abbreviation(driver, season = season, round = round, session = session)
   season_drivers <- load_drivers(season = season)
-  if(is.null(season_drivers)) {
+  if (is.null(season_drivers)) {
     # Ergast is down
     lap_time <- ""
     if(get_fastf1_version() < "3.4"){
