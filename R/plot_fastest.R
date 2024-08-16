@@ -10,8 +10,8 @@
 #' to most recent.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list) or name to be fuzzy matched to a
-#' driver from the session.
+#' @param driver three letter driver code (see load_drivers() for a list) or name to be
+#' fuzzy matched to a driver from the session if FastF1 >= 3.4.0 is available.
 #' @param color argument that indicates which variable to plot along the
 #' circuit. Choice of `'gear'` or `'speed'`, default `'gear'`.
 #' @importFrom magrittr "%>%"
@@ -39,8 +39,12 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
   # Function Code
   cli::cli_alert_info("If the session has not been loaded yet, this could take a minute\n\n")
 
-  driver_abbreviation <- get_driver_abbreviation(driver, season = season, round = round, session = session)
-  driver_name <- get_driver_name(driver_abbreviation, season = season, round = round, session = session)
+  if (get_fastf1_version() >= "3.4") {
+    driver_abbreviation <- get_driver_abbreviation(driver, season = season, round = round, session = session)
+    driver_name <- get_driver_name(driver_abbreviation, season = season, round = round, session = session)
+  } else {
+    driver_abbreviation <- driver
+  }
 
   driver_data <- load_driver_telemetry(season, round, session, driver_abbreviation, "fastest")
 
@@ -60,7 +64,16 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
   if(is.null(season_drivers)) {
     # Ergast is down
     lap_time <- ""
+    if(get_fastf1_version() < "3.4"){
+      driver_name <- driver
+    }
   } else {
+    if(get_fastf1_version() < "3.4"){
+      driver_name <- season_drivers %>%
+        dplyr::filter(.data$code == driver_abbreviation) %>%
+        dplyr::select("given_name", "family_name") %>%
+        paste(collapse= " ")
+    }
     driver_id <- season_drivers %>%
       dplyr::filter(.data$code == driver_abbreviation) %>%
       dplyr::pull("driver_id")
