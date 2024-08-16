@@ -59,7 +59,6 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
       y = .data$y - mean(range(.data$y, na.rm = TRUE))
     )
 
-  driver_abbreviation <- get_driver_abbreviation(driver, season = season, round = round, session = session)
   season_drivers <- load_drivers(season = season)
   if (is.null(season_drivers)) {
     # Ergast is down
