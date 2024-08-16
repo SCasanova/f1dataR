@@ -10,7 +10,8 @@
 #' to most recent.
 #' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
-#' @param driver three letter driver code (see load_drivers() for a list).
+#' @param driver three letter driver code (see load_drivers() for a list) or name to be fuzzy matched to a
+#' driver from the session.
 #' @param color argument that indicates which variable to plot along the
 #' circuit. Choice of `'gear'` or `'speed'`, default `'gear'`.
 #' @importFrom magrittr "%>%"

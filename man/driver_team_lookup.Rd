@@ -10,7 +10,12 @@
 \alias{get_session_drivers_and_teams}
 \title{Driver & Team Look-ups}
 \usage{
-get_driver_abbreviation(driver_name, season = get_current_season)
+get_driver_abbreviation(
+  driver_name,
+  season = get_current_season(),
+  round = 1,
+  session = "R"
+)
 
 get_driver_name(
   driver_name,

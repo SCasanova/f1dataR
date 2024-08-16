@@ -1,7 +1,7 @@
 # Vignettes that depend on internet access have been precompiled
 # Per guidance in:
 # https://ropensci.org/blog/2019/12/08/precompute-vignettes/#the-solution-locally-knitting-rmarkdown
-# Must manually move figures from package root ./ to ./vignettes
+# Must manually move figures from package root ./ to ./vignettes if they don't go by themselves.
 
 # Install optipng for your system to enable auto-compression of png files output by knitr.
 # See https://bookdown.org/yihui/rmarkdown-cookbook/optipng.html
