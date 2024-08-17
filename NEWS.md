@@ -8,6 +8,7 @@
     * Expanded vignettes to improve graphics & demonstrate lookups.
 * Removed `usethis` from Suggests (only needed when changing data)
 * Updated tests to avoid API failure for 2022 season & better skip-on-CRAN for internet resources
+* Updated minimum R to 3.5.0, reflecting imported package requirements.
 
 # f1dataR 1.5.3
 * Enabled Sprint Qualifying "SQ" as a session type in line with FastF1 v3.3.5.
