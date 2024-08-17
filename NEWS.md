@@ -1,4 +1,11 @@
-# f1dataR dev
+
+# f1dataR 1.6.0.9000
+* Updates per FastF1 (python) updates at 3.4.0 #259
+    * Soft deprecates FastF1 v < 3.4.0, hard deprecates FastF1 v < 3.1.0.
+    * Added functions to get driver graphic style & team colors from FastF1. See `get_driver_style()`, `get_driver_color()`, `get_team_color()` and `get_driver_color_map()` (and the aliases with `colour`). 
+    * Added functions for look-ups of driver & team information for seasons/sessions. See `get_driver_abbreviation()`, `get_driver_name()`, `get_team_by_driver()`, `get_team_name()`, `get_drivers_by_team()`.
+    * Removed `constructor_data` object from package vignettes, readme, examples, etc.
+    * Expanded vignettes to improve graphics & demonstrate lookups.
 * Removed `usethis` from Suggests (only needed when changing data)
 * Updated tests to avoid API failure for 2022 season & better skip-on-CRAN for internet resources
 

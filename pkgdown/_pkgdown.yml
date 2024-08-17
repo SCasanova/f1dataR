@@ -16,6 +16,23 @@ reference:
     - theme_dark_f1
     - correct_track_ratio
     - load_circuit_details
+  - title: Metadata and Lookups
+    contents:
+     - get_driver_abbreviation
+     - get_driver_color
+     - get_driver_color_map
+     - get_driver_colour
+     - get_driver_colour_map
+     - get_driver_name
+     - get_driver_style
+     - get_driver_telemetry
+     - get_drivers_by_team
+     - get_session_drivers_and_teams
+     - get_team_by_driver
+     - get_team_color
+     - get_team_colour
+     - get_team_name
+     - get_tire_compounds
   - title: Extras
     contents:
     - time_to_sec
@@ -24,7 +41,6 @@ reference:
     - setup_fastf1
     - get_current_season
     - get_fastf1_version
-    - constructor_data
 
 authors:
   Santiago Casanova:

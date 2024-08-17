@@ -11,20 +11,12 @@
 #' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
 #' 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
 #'
-#' @param season number from 2018 to current season. Defaults to current season.
-#' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
-#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
-#' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'` Default is `'R'`, which refers to Race.
-#' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
-#' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See
-#' \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
+#' @inheritParams load_race_session
 #' @param add_weather Whether to add weather information to the laps. See
 #' \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather.
-#' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
-#' @import reticulate
+#'
 #' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-#'
 load_session_laps <- function(season = get_current_season(), round = 1, session = "R", log_level = "WARNING",
                               add_weather = FALSE, race = lifecycle::deprecated()) {
   # Deprecation Checks

@@ -151,7 +151,7 @@ throttle_plot <- ggplot(ver_can, aes(x, y, color = as.factor(open_throttle), gro
 correct_track_ratio(throttle_plot)
 ```
 
-For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
+For a simpler visualization let's look at the average time it took each team to pit in round 4 of 2023. For this we will have to load the pit data, the results data (to extract driver + team combos), and read the constructor data to get the colors for our plot. Note the time is the difference from pit entry to exit, not stopped time.
 
 ```{r pitstop, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Average time in pits for each team at the 2023 Azerbaijan Grand Prix'}
 pit_data <- load_pitstops(2023, 4)
@@ -159,17 +159,16 @@ pit_data <- load_pitstops(2023, 4)
 driver_team <- load_results(2023, 4) %>%
   select(driver_id, constructor_id)
 
-constructors <- constructor_data %>%
-  select(constructor_id, constructor_color) %>%
-  unique()
-
 pit_constructor <- pit_data %>%
   left_join(driver_team, by = "driver_id") %>%
   group_by(constructor_id) %>%
-  summarise(pit_time = mean(as.numeric(duration))) %>%
-  left_join(constructors, by = "constructor_id")
+  summarise(pit_time = mean(as.numeric(duration)))
 
-ggplot(pit_constructor, aes(x = constructor_id, y = pit_time, fill = constructor_id)) +
+pit_constructor$constructor_color <- sapply(pit_constructor$constructor_id, get_team_color, season = 2023, round = 4, USE.NAMES = FALSE)
+
+pit_constructor$team_name <- sapply(pit_constructor$constructor_id, get_team_name, season = 2023, short = TRUE, USE.NAMES = FALSE)
+
+ggplot(pit_constructor, aes(x = team_name, y = pit_time, fill = team_name)) +
   geom_bar(stat = "identity", fill = pit_constructor$constructor_color) +
   theme_dark_f1(axis_marks = TRUE) +
   theme(
