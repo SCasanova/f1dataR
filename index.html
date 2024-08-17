@@ -108,20 +108,20 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 900 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 841 × 6</span></span>
 <span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 max_verstappen 1        1:35.505     1     95.5   2024</span></span>
-<span><span class="co">#&gt;  2 leclerc        2        1:36.681     1     96.7   2024</span></span>
-<span><span class="co">#&gt;  3 perez          3        1:37.222     1     97.2   2024</span></span>
-<span><span class="co">#&gt;  4 alonso         4        1:38.507     1     98.5   2024</span></span>
-<span><span class="co">#&gt;  5 piastri        5        1:38.705     1     98.7   2024</span></span>
-<span><span class="co">#&gt;  6 norris         6        1:39.926     1     99.9   2024</span></span>
-<span><span class="co">#&gt;  7 russell        7        1:40.459     1    100.    2024</span></span>
-<span><span class="co">#&gt;  8 hamilton       8        1:40.900     1    101.    2024</span></span>
-<span><span class="co">#&gt;  9 stroll         9        1:42.429     1    102.    2024</span></span>
-<span><span class="co">#&gt; 10 tsunoda        10       1:42.531     1    103.    2024</span></span>
-<span><span class="co">#&gt; # ℹ 890 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 leclerc        1        1:51.912     1     112.   2024</span></span>
+<span><span class="co">#&gt;  2 hamilton       2        1:52.700     1     113.   2024</span></span>
+<span><span class="co">#&gt;  3 perez          3        1:53.439     1     113.   2024</span></span>
+<span><span class="co">#&gt;  4 piastri        4        1:54.248     1     114.   2024</span></span>
+<span><span class="co">#&gt;  5 russell        5        1:54.763     1     115.   2024</span></span>
+<span><span class="co">#&gt;  6 sainz          6        1:55.270     1     115.   2024</span></span>
+<span><span class="co">#&gt;  7 norris         7        1:55.727     1     116.   2024</span></span>
+<span><span class="co">#&gt;  8 alonso         8        1:56.577     1     117.   2024</span></span>
+<span><span class="co">#&gt;  9 max_verstappen 9        1:57.183     1     117.   2024</span></span>
+<span><span class="co">#&gt; 10 albon          10       1:57.321     1     117.   2024</span></span>
+<span><span class="co">#&gt; # ℹ 831 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, round <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
@@ -165,8 +165,9 @@
 <span><span class="co">#&gt; # ℹ 582 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: drs &lt;dbl&gt;, source &lt;chr&gt;, relative_distance &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, …</span></span>
-<span></span>
+<span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, …</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>, <span class="st">"Q"</span>, <span class="st">"HAM"</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake</span></span>
@@ -193,7 +194,7 @@
 <p><code>load_session_laps(season = "current", race = "last", session = "R", add_weather = FALSE)</code></p>
 </blockquote>
 <p>This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_session_laps.html">load_session_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, add_weather <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
 <span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time</span></span>
@@ -229,16 +230,39 @@
 <p><code>plot_fastest(season = "current", round = "last", session = "R", driver, color = "gear")</code></p>
 </blockquote>
 <p>A built in plotting function that plots the circuit and a driver’s fastest laps’ <code>speed</code> or <code>gear</code> exists.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">1</span>, session <span class="op">=</span> <span class="st">"R"</span>, driver <span class="op">=</span> <span class="st">"VER"</span>, color <span class="op">=</span> <span class="st">"gear"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-1.png" width="100%"></p>
 <p>Two helper functions exist as well. The first, <code><a href="reference/theme_dark_f1.html">theme_dark_f1()</a></code> assists with colour schemes similar to that used in other F1 graphics. The second, <code><a href="reference/correct_track_ratio.html">correct_track_ratio()</a></code> is a function that fixes track ratio issues that appear when you create images similar to that above from <code><a href="reference/plot_fastest.html">plot_fastest()</a></code>. Please refer to their documentation for usage.</p>
 </div>
 <div class="section level3">
+<h3 id="metadata-lookups">Metadata Lookups<a class="anchor" aria-label="anchor" href="#metadata-lookups"></a>
+</h3>
+<p>The package echos the metadata information look-up from the FastF1 package. this is a convenient way to programmatically look up drivers, teams, driver-team relationships, team colors, driver colors, tire types &amp; colors and more. See the following functions for this look-up:</p>
+<ul>
+<li><code><a href="reference/driver_team_lookup.html">get_driver_abbreviation()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_driver_color()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_driver_color_map()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_driver_colour()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_driver_colour_map()</a></code></li>
+<li><code><a href="reference/driver_team_lookup.html">get_driver_name()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_driver_style()</a></code></li>
+<li><code><a href="reference/get_driver_telemetry.html">get_driver_telemetry()</a></code></li>
+<li><code><a href="reference/driver_team_lookup.html">get_drivers_by_team()</a></code></li>
+<li><code><a href="reference/driver_team_lookup.html">get_session_drivers_and_teams()</a></code></li>
+<li><code><a href="reference/driver_team_lookup.html">get_team_by_driver()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_team_color()</a></code></li>
+<li><code><a href="reference/get_aesthetics.html">get_team_colour()</a></code></li>
+<li><code><a href="reference/driver_team_lookup.html">get_team_name()</a></code></li>
+<li><code><a href="reference/get_tire_compounds.html">get_tire_compounds()</a></code></li>
+</ul>
+<p>Note that (in support of plotting functions) driver colors and marker type / line style can be retrieved from <code><a href="reference/get_aesthetics.html">get_driver_style()</a></code>. The function <code><a href="reference/get_aesthetics.html">get_driver_color()</a></code> will return the same color value for both drivers in a team.</p>
+</div>
+<div class="section level3">
 <h3 id="cache-information">Cache information<a class="anchor" aria-label="anchor" href="#cache-information"></a>
 </h3>
 <p>The cache directory for sessions can be set manually with the options function</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>f1dataR.cache <span class="op">=</span> <span class="st">"path/to/directory"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -267,15 +291,6 @@
 </blockquote>
 <p>Clears the cache for all functions in the package.</p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="loaded-data">Loaded Data<a class="anchor" aria-label="anchor" href="#loaded-data"></a>
-</h2>
-<p>The package also includes a static data frame for all current Constructors. Complete with team colors, and links to team logos.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">constructor_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "constructor_id"     "constructor_color"  "constructor_color2"</span></span>
-<span><span class="co">#&gt; [4] "constructor_logo"</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

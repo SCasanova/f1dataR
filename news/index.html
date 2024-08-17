@@ -40,6 +40,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.6.0.9000" id="f1datar-1609000">f1dataR 1.6.0.9000<a class="anchor" aria-label="anchor" href="#f1datar-1609000"></a></h2>
+<ul><li>Updates per FastF1 (python) updates at 3.4.0 <a href="https://github.com/SCasanova/f1dataR/issues/259" class="external-link">#259</a>
+<ul><li>Soft deprecates FastF1 v &lt; 3.4.0, hard deprecates FastF1 v &lt; 3.1.0.</li>
+<li>Added functions to get driver graphic style &amp; team colors from FastF1. See <code><a href="../reference/get_aesthetics.html">get_driver_style()</a></code>, <code><a href="../reference/get_aesthetics.html">get_driver_color()</a></code>, <code><a href="../reference/get_aesthetics.html">get_team_color()</a></code> and <code><a href="../reference/get_aesthetics.html">get_driver_color_map()</a></code> (and the aliases with <code>colour</code>).</li>
+<li>Added functions for look-ups of driver &amp; team information for seasons/sessions. See <code><a href="../reference/driver_team_lookup.html">get_driver_abbreviation()</a></code>, <code><a href="../reference/driver_team_lookup.html">get_driver_name()</a></code>, <code><a href="../reference/driver_team_lookup.html">get_team_by_driver()</a></code>, <code><a href="../reference/driver_team_lookup.html">get_team_name()</a></code>, <code><a href="../reference/driver_team_lookup.html">get_drivers_by_team()</a></code>.</li>
+<li>Removed <code>constructor_data</code> object from package vignettes, readme, examples, etc.</li>
+<li>Expanded vignettes to improve graphics &amp; demonstrate lookups.</li>
+</ul></li>
+<li>Removed <code>usethis</code> from Suggests (only needed when changing data)</li>
+<li>Updated tests to avoid API failure for 2022 season &amp; better skip-on-CRAN for internet resources</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.5.3" id="f1datar-153">f1dataR 1.5.3<a class="anchor" aria-label="anchor" href="#f1datar-153"></a></h2><p class="text-muted">CRAN release: 2024-05-01</p>
 <ul><li>Enabled Sprint Qualifying “SQ” as a session type in line with FastF1 v3.3.5.</li>
 </ul></div>

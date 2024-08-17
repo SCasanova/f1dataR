@@ -87,21 +87,21 @@ Leclerc’s fastest lap from the first race of 2022:</p>
 <span></span>
 <span><span class="fu"><a href="../reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span>, <span class="st">"Q"</span>, driver <span class="op">=</span> <span class="st">"LEC"</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 697 × 19</span></span>
-<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source    relative_distance</span></span>
-<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpol…        0.00000636</span></span>
-<span><span class="co">#&gt;  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos              0.00128   </span></span>
-<span><span class="co">#&gt;  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car              0.00232   </span></span>
-<span><span class="co">#&gt;  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos              0.00587   </span></span>
-<span><span class="co">#&gt;  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car              0.00599   </span></span>
-<span><span class="co">#&gt;  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos              0.0120    </span></span>
-<span><span class="co">#&gt;  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car              0.0122    </span></span>
-<span><span class="co">#&gt;  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car              0.0147    </span></span>
-<span><span class="co">#&gt;  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos              0.0158    </span></span>
-<span><span class="co">#&gt; 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos              0.0205    </span></span>
+<span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake   drs source       </span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;                     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;chr&gt;        </span></span>
+<span><span class="co">#&gt;  1 2022-03-19 15:58:18        4397. 0     10514   292      7      100 FALSE    12 interpolation</span></span>
+<span><span class="co">#&gt;  2 2022-03-19 15:58:18        4397. 0.084 10502   293      7      100 FALSE    12 pos          </span></span>
+<span><span class="co">#&gt;  3 2022-03-19 15:58:18        4398. 0.152 10478   294      8      100 FALSE    12 car          </span></span>
+<span><span class="co">#&gt;  4 2022-03-19 15:58:18        4398. 0.384 10519   295      8      100 FALSE    12 pos          </span></span>
+<span><span class="co">#&gt;  5 2022-03-19 15:58:18        4398. 0.392 10560   296      8      100 FALSE    12 car          </span></span>
+<span><span class="co">#&gt;  6 2022-03-19 15:58:19        4398. 0.784 10628   297      8      100 FALSE    12 pos          </span></span>
+<span><span class="co">#&gt;  7 2022-03-19 15:58:19        4398. 0.792 10696   299      8      100 FALSE    12 car          </span></span>
+<span><span class="co">#&gt;  8 2022-03-19 15:58:19        4398. 0.952 10696   300      8      100 FALSE    12 car          </span></span>
+<span><span class="co">#&gt;  9 2022-03-19 15:58:19        4398. 1.02  10734   301      8      100 FALSE    12 pos          </span></span>
+<span><span class="co">#&gt; 10 2022-03-19 15:58:19        4399. 1.32  10773   302      8      100 FALSE    12 pos          </span></span>
 <span><span class="co">#&gt; # ℹ 687 more rows</span></span>
-<span><span class="co">#&gt; # ℹ 8 more variables: status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   distance_to_driver_ahead &lt;dbl&gt;, driver_code &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 9 more variables: relative_distance &lt;dbl&gt;, status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   distance &lt;dbl&gt;, driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, driver_code &lt;chr&gt;</span></span></code></pre></div>
 <p>Now let’s use ggplot2 to visualize some of the data we have</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -168,7 +168,14 @@ applied
 plot the speed or gear changes throughout the fastest lap for a
 driver/race.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span>, <span class="st">"R"</span>, <span class="st">"PER"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">1</span>, <span class="st">"R"</span>, <span class="st">"PER"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ℹ If the session has not been loaded yet, this could take a minute</span></span></code></pre></div>
+<div class="figure">
+<img src="introduction-use_builtin-1.png" alt="Fastest lap for Perez from the 2022 Bahrain Grand Prix, showing gear used at each point in the lap" width="100%"><p class="caption">
+Fastest lap for Perez from the 2022 Bahrain Grand Prix, showing gear
+used at each point in the lap
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="combining-several-functions">Combining several functions<a class="anchor" aria-label="anchor" href="#combining-several-functions"></a>
@@ -238,26 +245,25 @@ throttle sections
 </div>
 <p>For a simpler visualization let’s look at the average time it took
 each team to pit in round 4 of 2023. For this we will have to load the
-pit data, the results data (to extract driver + team combos), and the
-constructor data to get the colors for our plot. Note the time is the
-difference from pit entry to exit, not stopped time.</p>
+pit data, the results data (to extract driver + team combos), and read
+the constructor data to get the colors for our plot. Note the time is
+the difference from pit entry to exit, not stopped time.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pit_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_pitstops.html">load_pitstops</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">driver_team</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_results.html">load_results</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">driver_id</span>, <span class="va">constructor_id</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">constructors</span> <span class="op">&lt;-</span> <span class="va">constructor_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">constructor_id</span>, <span class="va">constructor_color</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">pit_constructor</span> <span class="op">&lt;-</span> <span class="va">pit_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">driver_team</span>, by <span class="op">=</span> <span class="st">"driver_id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">constructor_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>pit_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">duration</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">constructors</span>, by <span class="op">=</span> <span class="st">"constructor_id"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>pit_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">duration</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pit_constructor</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">constructor_id</span>, y <span class="op">=</span> <span class="va">pit_time</span>, fill <span class="op">=</span> <span class="va">constructor_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">pit_constructor</span><span class="op">$</span><span class="va">constructor_color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">pit_constructor</span><span class="op">$</span><span class="va">constructor_id</span>, <span class="va">get_team_color</span>, season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pit_constructor</span><span class="op">$</span><span class="va">team_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">pit_constructor</span><span class="op">$</span><span class="va">constructor_id</span>, <span class="va">get_team_name</span>, season <span class="op">=</span> <span class="fl">2023</span>, short <span class="op">=</span> <span class="cn">TRUE</span>, USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pit_constructor</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">team_name</span>, y <span class="op">=</span> <span class="va">pit_time</span>, fill <span class="op">=</span> <span class="va">team_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, fill <span class="op">=</span> <span class="va">pit_constructor</span><span class="op">$</span><span class="va">constructor_color</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_dark_f1.html">theme_dark_f1</a></span><span class="op">(</span>axis_marks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
