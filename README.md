@@ -39,7 +39,7 @@ library(f1dataR)
 Data is pulled from:
 
 - [Ergast API](https://ergast.com/mrd/)
-- [F1 Data Stream](https://www.formula1.com/en/f1-live.html) via the
+- [F1 Data Stream](https://www.formula1.com/en/timing/f1-live) via the
   [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
 Note the Ergast Motor Racing Database API will be shutting down at the
