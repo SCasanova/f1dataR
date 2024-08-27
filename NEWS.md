@@ -1,3 +1,5 @@
+# f1dataR 1.6.0
+
 
 # f1dataR 1.6.0.9000
 * Updates per FastF1 (python) updates at 3.4.0 #259
