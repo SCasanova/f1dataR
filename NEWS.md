@@ -1,9 +1,8 @@
-# f1dataR (development version)
+
+# f1dataR 1.6.0.9000
 
 # f1dataR 1.6.0
 
-
-# f1dataR 1.6.0.9000
 * Updates per FastF1 (python) updates at 3.4.0 #259
     * Soft deprecates FastF1 v < 3.4.0, hard deprecates FastF1 v < 3.1.0.
     * Added functions to get driver graphic style & team colors from FastF1. See `get_driver_style()`, `get_driver_color()`, `get_team_color()` and `get_driver_color_map()` (and the aliases with `colour`). 
