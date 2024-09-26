@@ -163,8 +163,8 @@ get_jolpica_content <- function(url) {
 
   if (httr2::resp_is_error(jolpica_res)) {
     cli::cli_alert_danger(glue::glue("Error getting Jolpica data, http status code {code}.\n{msg}",
-                                     code = httr2::resp_status(jolpica_res),
-                                     msg = httr2::resp_status_desc(jolpica_res)
+      code = httr2::resp_status(jolpica_res),
+      msg = httr2::resp_status_desc(jolpica_res)
     ))
     return(NULL)
   }
