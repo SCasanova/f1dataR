@@ -94,6 +94,92 @@ get_ergast_content <- function(url) {
 }
 
 
+#' Get Jolpica Content
+#'
+#' @description Gets Jolpica-F1 content and returns the processed json object if
+#' no  errors are found. This will automatically fall back from https://
+#' to http:// if Jolpica suffers errors, and will automatically retry up to 5
+#' times by each protocol
+#'
+#' Note in 2024 this replaced the deprecated Ergast API. Much of the historical data
+#' is duplicated in Jolpica
+#'
+#' @param url the Jolpica URL tail to get from the API (for example,
+#' `"{season}/circuits.json?limit=40"` is called from `load_circuits()`).
+#' @keywords internal
+#' @return the result of `jsonlite::fromJSON` called on Jolpica's return content.
+#' Further processing is performed by specific functions
+get_jolpica_content <- function(url) {
+  # Function Code
+
+  # note:
+  # Throttles at 200 req/hr requested.
+  # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
+  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
+  # Automatically retries at http if https fails after retries.
+
+
+  jolpica_raw <- httr2::request("https://api.jolpi.ca/ergast/f1/") %>%
+    httr2::req_url_path_append(url) %>%
+    httr2::req_retry(max_tries = 5) %>%
+    httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+    httr2::req_throttle(4 / 1) %>%
+    httr2::req_error(is_error = ~FALSE)
+
+  jolpica_res <- NULL
+
+  tryCatch(
+    {
+      jolpica_res <- jolpica_raw %>%
+        httr2::req_perform()
+    },
+    error = function(e) {
+      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Jolpica:\n{e}", e = e))
+    }
+  )
+
+  # Restart retries to Jolpica with http (instead of https)
+  # No testing penalty for Jolpica functioning correct
+  # nocov start
+  if (is.null(jolpica_res) || httr2::resp_is_error(jolpica_res) || httr2::resp_body_string(jolpica_res) == "Unable to select database") {
+    cli::cli_alert_warning("Failure at Jolpica with https:// connection. Retrying as http://.")
+    tryCatch(
+      {
+        jolpica_res <- jolpica_raw %>%
+          httr2::req_url("http://api.jolpi.ca/ergast/f1/") %>%
+          httr2::req_url_path_append(url) %>%
+          httr2::req_perform()
+      },
+      error = function(e) {
+        cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Jolpica:\n{e}", e = e))
+      }
+    )
+  }
+
+  if (is.null(jolpica_res)) {
+    cli::cli_alert_danger("Couldn't connect to Jolpica to retrieve data.")
+    return(NULL)
+  }
+
+  if (httr2::resp_is_error(jolpica_res)) {
+    cli::cli_alert_danger(glue::glue("Error getting Jolpica data, http status code {code}.\n{msg}",
+                                     code = httr2::resp_status(jolpica_res),
+                                     msg = httr2::resp_status_desc(jolpica_res)
+    ))
+    return(NULL)
+  }
+
+  if (httr2::resp_body_string(jolpica_res) == "Unable to select database") {
+    cli::cli_alert_danger("Jolpica is having database trouble. Please try again at a later time.")
+    return(NULL)
+  }
+  # nocov end
+
+  # else must be ok
+  return(jsonlite::fromJSON(httr2::resp_body_string(jolpica_res)))
+}
+
+
 #' Get Current Season
 #'
 #' @description Determines current season by System Date. Note returns the season prior to the current year
