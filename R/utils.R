@@ -17,10 +17,10 @@
 #' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
   # Function Deprecation Warning
-  lifecycle::deprecate_soft("at the end of 2024", "get_ergast_content()",
+  lifecycle::deprecate_warn("at the end of 2024", "get_ergast_content()",
     details = c(
       "i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
-      " " = "This package will update with a replacement when one is available."
+      " " = "Update f1dataR to use the new jolpica-f1 API data source"
     )
   )
 
