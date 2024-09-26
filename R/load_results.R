@@ -18,7 +18,7 @@ load_results <- function(season = get_current_season(), round = "last") {
   url <- glue::glue("{season}/{round}/results.json?limit=40",
     season = season, round = round
   )
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)

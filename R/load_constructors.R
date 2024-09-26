@@ -8,7 +8,7 @@
 #' @return A tibble with one row per constructor
 load_constructors <- function() {
   url <- "constructors.json?limit=300"
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)

@@ -26,7 +26,7 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
   url <- glue::glue("{season}/{round}/laps.json?limit=1000",
     season = season, round = round
   )
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)
@@ -38,7 +38,7 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
     url2 <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset=1000",
       lim = lim, season = season, round = round
     )
-    data2 <- get_ergast_content(url2)
+    data2 <- get_jolpica_content(url2)
 
     if (is.null(data2)) {
       return(NULL)
