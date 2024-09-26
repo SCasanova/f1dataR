@@ -7,7 +7,7 @@ test_that("load_constructors works", {
   dir.create(file.path(tempdir(), "tst_load_constructors"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_constructors"))
 
-  skip_if_no_ergast()
+  skip_if_no_jolpica()
 
   constructors <- load_constructors()
 
@@ -34,7 +34,7 @@ test_that("load_constructors works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_constructors(), "f1dataR: Error getting data from Ergast")
+          expect_message(load_constructors(), "f1dataR: Error getting data from Jolpica")
           expect_null(load_constructors())
         })
       })

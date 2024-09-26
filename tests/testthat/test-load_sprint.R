@@ -6,7 +6,7 @@ test_that("load_sprint works", {
   dir.create(file.path(tempdir(), "tst_load_sprint"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_sprint"))
 
-  skip_if_no_ergast()
+  skip_if_no_jolpica()
 
   # A sprint exists for season = 2021, round = 10
   sprint_2021_10 <- load_sprint(2021, 10)
@@ -40,7 +40,7 @@ test_that("load_sprint works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_sprint(2021, 10), "f1dataR: Error getting data from Ergast")
+          expect_message(load_sprint(2021, 10), "f1dataR: Error getting data from Jolpica")
           expect_null(load_sprint(2021, 10))
         })
       })

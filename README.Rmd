@@ -29,7 +29,7 @@ withr::local_timezone("UTC")
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
-An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the FastF1 Python library.
+An R package to access Formula 1 Data from the Jolpica API (formerly Ergast) and the official F1 data stream via the FastF1 Python library.
 
 <!-- badges: start -->
 
@@ -63,7 +63,7 @@ Data is pulled from:
 * [Ergast API](https://ergast.com/mrd/)
 * [F1 Data Stream](https://www.formula1.com/en/timing/f1-live) via the [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
-Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. When a new data source is identified the package will be migrated to that source.
+Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. A new data source (Jolpica-F1 project) was identified and implemented.
 
 ## Functions
 
