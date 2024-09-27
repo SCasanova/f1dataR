@@ -14,7 +14,7 @@ load_drivers <- function(season = get_current_season()) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
 
-  url <- glue::glue("{season}/drivers.json?limit=40",
+  url <- glue::glue("{season}/drivers.json?limit=50",
     season = season
   )
   data <- get_jolpica_content(url)

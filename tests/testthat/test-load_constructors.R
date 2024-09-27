@@ -15,6 +15,7 @@ test_that("load_constructors works", {
 
   expect_equal(ncol(constructors), 3)
   expect_equal(constructors[1, ]$constructor_id, "adams")
+  expect_true(nrow(unique(constructors)) >=212)
 })
 
 test_that("load_constructors works without internet", {
