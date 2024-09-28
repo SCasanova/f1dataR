@@ -24,10 +24,10 @@ load_pitstops <- function(season = get_current_season(), round = "last", race = 
   }
 
   # Function Code
-  url <- glue::glue("{season}/{round}/pitstops.json?limit=80",
+  url <- glue::glue("{season}/{round}/pitstops.json?limit=100",
     season = season, round = round
   )
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)

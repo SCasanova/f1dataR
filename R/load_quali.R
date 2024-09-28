@@ -19,7 +19,7 @@ load_quali <- function(season = get_current_season(), round = "last") {
     season = season, round = round
   )
 
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)

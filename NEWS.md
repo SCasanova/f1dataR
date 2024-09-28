@@ -1,6 +1,8 @@
 
 # f1dataR 1.6.0.9000
 
+* Deprecated Ergast and moved to Jolpica API for Ergast Functions
+
 # f1dataR 1.6.0
 
 * Updates per FastF1 (python) updates at 3.4.0 #259

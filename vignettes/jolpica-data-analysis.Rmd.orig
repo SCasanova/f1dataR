@@ -1,32 +1,46 @@
 ---
-title: "Ergast Data Analysis"
+title: "Jolpica Data Analysis"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ergast Data Analysis}
+  %\VignetteIndexEntry{Jolpica Data Analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  fig.width = 6,
+  fig.height = 4,
+  fig.path = "jolpica-data-analysis-",
+  dpi = 250,
+  dev = "png"
+)
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+withr::local_timezone("UTC")
+```
 
 # Introduction
 
-This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Ergast API](https://ergast.com/mrd/). All of the data used comes from Ergast and is not supplied by Formula 1. However, this data source is incredibly useful for accessing host of data.
+This vignette provides a few demonstrations of possible data analysis projects using `f1dataR` and the data pulled from the [Jolpica API](https://api.jolpi.ca/). All of the data used comes from Jolpica and is not supplied by Formula 1. However, this data source is incredibly useful for accessing a host of data.
+
+This package (and vignette) previously used the Ergast Motor Racing Database. Unfortunately, Ergast was shuttered in 2024. Jolpica was developed as a direct replacement.
 
 We'll load all the required libraries for our data analysis:
 
-
-``` r
+```{r setup, message=FALSE}
 library(f1dataR)
 library(dplyr)
 ```
 
 # Sample Data Analysis
-Here are a few simple data analysis examples using Ergast's data.
+Here are a few simple data analysis examples using Jolpica's data.
 
- > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](https://ergast.com/mrd/terms/) for more information.
+ > Note that, when downloading multiple sets of data, we'll put a short `Sys.sleep()` in the loop to reduce load on their servers. Please be a courteous user of their free service and have similar pauses built into your analysis code. Please read their [Terms and Conditions](https://github.com/jolpica/jolpica-f1/blob/main/docs/rate_limits.md) for more information.
 
-We can make multiple repeat calls to the same function (with the same arguments) as the `f1dataR` package automatically caches responses from Ergast. You'll see this taken advantage of in a few areas.
+We can make multiple repeat calls to the same function (with the same arguments) as the `f1dataR` package automatically caches responses from Jolpica. You'll see this taken advantage of in a few areas.
 
 If you have example projects you want to share, please feel free to submit them as an issue or pull request to the `f1dataR` [repository on Github](https://github.com/scasanova/f1dataR).
 
@@ -34,8 +48,7 @@ If you have example projects you want to share, please feel free to submit them 
 
 We can look at the correlation between the starting (grid) position and the race finishing position. We'll look at the Austrian Grand Prix from 2020 for this analysis, not because of any particular reason, but that it produced a well mixed field.
 
-
-``` r
+```{r grid_to_finish_one, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix'}
 library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
@@ -53,15 +66,9 @@ ggplot(results, aes(x = position, y = grid)) +
   ylab("Grid Position")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_one-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix" width="100%" />
-<p class="caption">A plot of grid position (y axis) vs race finishing position (x axis) for the 2020 Austrian Grand Prix</p>
-</div>
-
 Of course, this isn't really an interesting plot for a single race. Naturally we expect that a better grid position yields a better finish position, but there's so much variation in one race (including the effect of DNF) that it's a very weak correlation. We can look at the whole season instead by downloading sequentially the list of results. We'll filter the results to remove those who didn't finish the race, and also those who didn't start from the grid (i.e. those who started from Pit Lane, where `grid` = 0).
 
-
-``` r
+```{r grid_to_finish_season, message=FALSE, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix'}
 # Load the data
 results <- data.frame()
 for (i in seq_len(17)) {
@@ -86,21 +93,17 @@ ggplot(results, aes(y = position, x = grid)) +
   xlab("Grid Position")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-grid_to_finish_season-1.png" alt="A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix" width="100%" />
-<p class="caption">A plot of grid position (y axis) vs race finishing position (x axis) for all 2020 Grands Prix</p>
-</div>
-
 As expected, this produces a much stronger signal confirming our earlier hypothesis.
 
-
+```{r sleep1, eval = T, echo = F}
+Sys.sleep(1)
+```
 
 ## Driver Points Progress
 
-Ergast contains the points for drivers' or constructors' championship races as of the end of every round in a season. We can pull a season's worth of data and compare the driver pace throughout the season, looking at both position or total points accumulation. We'll do that for 2021, which had good competition throughout the year for P1.
+Jolpica contains the points for drivers' or constructors' championship races as of the end of every round in a season. We can pull a season's worth of data and compare the driver pace throughout the season, looking at both position or total points accumulation. We'll do that for 2021, which had good competition throughout the year for P1.
 
-
-``` r
+```{r round_position, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Driver ranking after each Grand Prix of the 2021 season' }
 # Load the data
 points <- data.frame()
 for (rnd in seq_len(22)) {
@@ -127,15 +130,9 @@ ggplot(points, aes(x = round, y = position, color = driver_id)) +
   theme_dark_f1(axis_marks = TRUE)
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-round_position-1.png" alt="Driver ranking after each Grand Prix of the 2021 season" width="100%" />
-<p class="caption">Driver ranking after each Grand Prix of the 2021 season</p>
-</div>
-
 What may be more interesting is the total accumulation of points. For that we can change up the plot just a little bit.
 
-
-``` r
+```{r rounds_points, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap="Total points for each driver after each Grand Prix in the 2021 season"}
 # Plot the Results
 ggplot(points, aes(x = round, y = points, color = driver_id)) +
   geom_line() +
@@ -146,17 +143,13 @@ ggplot(points, aes(x = round, y = points, color = driver_id)) +
   theme_dark_f1(axis_marks = TRUE)
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-rounds_points-1.png" alt="Total points for each driver after each Grand Prix in the 2021 season" width="100%" />
-<p class="caption">Total points for each driver after each Grand Prix in the 2021 season</p>
-</div>
+```{r sleep2, eval = T, echo = F}
+Sys.sleep(1)
+```
 
+Both of these are a bit hard to read and use `driver_id` values that aren't pretty on the plot. We can use some of the FastF1 look-up functions to improve our graphics (recalling that Kubica raced for Alfa Romeo for races 13 & 14 mid-season). We'll first build a data.frame of all drivers and styles for the season, and join that to the points data.frame after we generate driver abbreviations from the Jolpica `driver_id`.
 
-
-Both of these are a bit hard to read and use `driver_id` values that aren't pretty on the plot. We can use some of the FastF1 look-up functions to improve our graphics (recalling that Kubica raced for Alfa Romeo for races 13 & 14 mid-season). We'll first build a data.frame of all drivers and styles for the season, and join that to the points data.frame after we generate driver abbreviations from the Ergast `driver_id`.
-
-
-``` r
+```{r lookups, message = FALSE}
 driver_style <- rbind(
   get_session_drivers_and_teams(2021, round = 1),
   get_session_drivers_and_teams(2021, round = 13)
@@ -195,8 +188,7 @@ points <- dplyr::left_join(points, load_drivers(2021)[, c("driver_id", "code")],
 ```
 
 With our data having graphical and label information added, we can remake these plots:
-
-``` r
+```{r remade_rounds_points, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap="Remade points plot for each driver after each Grand Prix in the 2021 season, with better driver names and colors"}
 ggplot(points, aes(x = round, y = points, color = code, shape = code, linetype = code)) +
   geom_line() +
   geom_point() +
@@ -209,17 +201,11 @@ ggplot(points, aes(x = round, y = points, color = code, shape = code, linetype =
   theme_dark_f1(axis_marks = TRUE)
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-remade_rounds_points-1.png" alt="Remade points plot for each driver after each Grand Prix in the 2021 season, with better driver names and colors" width="100%" />
-<p class="caption">Remade points plot for each driver after each Grand Prix in the 2021 season, with better driver names and colors</p>
-</div>
-
 ## Driver Lap Time Scatter Plot
 
 We can look at a scatterplot of a driver's laptimes throughout a race - possibly observing the effect of fuel usage, tire wear, pit stops, and race conditions. We'll also show extracting constructor colour from the built-in data set.
 
-
-``` r
+```{r driver_laptime_scatterplot, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptimes for George Russell, for each lap from the 2021 Spanish Grand Prix'}
 # Load the laps data and select one driver (this time - Russell)
 bot <- load_laps(season = 2021, round = 4) %>%
   filter(driver_id == "bottas")
@@ -240,17 +226,11 @@ ggplot(bot, aes(x = lap, y = time_sec)) +
   ylab("Lap Time (s)")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-driver_laptime_scatterplot-1.png" alt="Laptimes for George Russell, for each lap from the 2021 Spanish Grand Prix" width="100%" />
-<p class="caption">Laptimes for George Russell, for each lap from the 2021 Spanish Grand Prix</p>
-</div>
-
 We can see the most of Bottas' laps were less than 90 seconds. Note a safety car had occurred around lap 8.
 
 With the above data, we can also visualize all driver's laptimes with violin plots. We'll trim the laptimes to exclude anything above 100 seconds to make the variation in lap time easier to see (i.e. show only racing laps). We can recycle the color values we produced above.
 
-
-``` r
+```{r drivers_laptimes, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Laptime distributions for all drivers from the 2021 Spanish Grand Prix (racing laps only)'}
 # Load the laps data (cached!) and filter
 laps <- load_laps(season = 2021, round = 4) %>%
   filter(time_sec < 100) %>%
@@ -271,19 +251,15 @@ ggplot(laps, aes(x = code, y = time_sec, color = code, fill = code)) +
   theme(axis.text.x = element_text(angle = 90), legend.position = "")
 ```
 
-<div class="figure">
-<img src="ergast-data-analysis-drivers_laptimes-1.png" alt="Laptime distributions for all drivers from the 2021 Spanish Grand Prix (racing laps only)" width="100%" />
-<p class="caption">Laptime distributions for all drivers from the 2021 Spanish Grand Prix (racing laps only)</p>
-</div>
-
-
+```{r sleep3, eval = T, echo = F}
+Sys.sleep(1)
+```
 
 ## Compare Qualifying Times
 
 We can compare the qualifying times for all drivers from a Grand Prix. There's naturally a few ways to do this (pick each driver's fastest time, pick each driver's fastest time from the last session they participated in, etc), all with pros or cons. Rerunning this analysis with different ways of handling the data could produce different results!
 
-
-``` r
+```{r quali_compare, eval=require('ggplot2', quietly = TRUE), optipng = '', fig.cap='Gap to Pole at the end of qualifying for the 2021 Styrian Grand Prix'}
 # Load the Data
 quali <- load_quali(2021, 8)
 
@@ -311,8 +287,3 @@ ggplot(quali, aes(x = code, y = t_diff, color = code, fill = code)) +
   theme_dark_f1(axis_marks = TRUE) +
   theme(legend.position = "")
 ```
-
-<div class="figure">
-<img src="ergast-data-analysis-quali_compare-1.png" alt="Gap to Pole at the end of qualifying for the 2021 Styrian Grand Prix" width="100%" />
-<p class="caption">Gap to Pole at the end of qualifying for the 2021 Styrian Grand Prix</p>
-</div>

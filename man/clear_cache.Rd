@@ -13,7 +13,7 @@ clear_cache()
 No return value, called to erase cached data
 }
 \description{
-Clears the cache for f1dataR telemetry and Ergast API results.
+Clears the cache for f1dataR telemetry and Jolpica API results.
 Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
 but the default is a temporary directory.
 

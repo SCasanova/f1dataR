@@ -22,31 +22,37 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
     cli::cli_abort('{.var season} must be between 1996 and {get_current_season()} (or use "current")')
   }
 
+  lim <- 100
+
   # Function Code
-  url <- glue::glue("{season}/{round}/laps.json?limit=1000",
-    season = season, round = round
+  url <- glue::glue("{season}/{round}/laps.json?limit={lim}",
+    season = season, round = round, lim = lim
   )
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)
   }
 
   total <- data$MRData$total %>% as.numeric()
-  if (total - 1000 > 0 && total - 1000 <= 1000) {
-    lim <- total - 1000
-    url2 <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset=1000",
-      lim = lim, season = season, round = round
-    )
-    data2 <- get_ergast_content(url2)
+  offset <- data$MRData$offset %>% as.numeric()
 
-    if (is.null(data2)) {
+  full <- data$MRData$RaceTable$Races$Laps[[1]][2]
+
+  # Iterate over the request until completed
+  while (offset + lim <= total) {
+    offset <- offset + lim
+
+    url <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset={offset}",
+      lim = lim, season = season, round = round, offset = offset
+    )
+    data <- get_jolpica_content(url)
+
+    if (is.null(data)) {
       return(NULL)
     }
 
-    full <- dplyr::bind_rows(data$MRData$RaceTable$Races$Laps[[1]][2], data2$MRData$RaceTable$Races$Laps[[1]][2])
-  } else {
-    full <- data$MRData$RaceTable$Races$Laps[[1]][2]
+    full <- dplyr::bind_rows(full, data$MRData$RaceTable$Races$Laps[[1]][2])
   }
 
   laps <- tibble::tibble()
