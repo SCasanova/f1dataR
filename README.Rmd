@@ -60,7 +60,7 @@ library(f1dataR)
 
 Data is pulled from:
 
-* [Ergast API](https://ergast.com/mrd/)
+* [Jolpica F1 API](https://api.jolpi.ca/ergast/)
 * [F1 Data Stream](https://www.formula1.com/en/timing/f1-live) via the [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
 Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. A new data source (Jolpica-F1 project) was identified and implemented.

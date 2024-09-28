@@ -1,8 +1,8 @@
 
 # f1dataR <img src='man/figures/logo.png' align="right" width="25%" min-width="120px"/>
 
-An R package to access Formula 1 Data from the Ergast API and the
-official F1 data stream via the FastF1 Python library.
+An R package to access Formula 1 Data from the Jolpica API (formerly
+Ergast) and the official F1 data stream via the FastF1 Python library.
 
 <!-- badges: start -->
 
@@ -38,13 +38,13 @@ library(f1dataR)
 
 Data is pulled from:
 
-- [Ergast API](https://ergast.com/mrd/)
+- [Jolpica F1 API](https://api.jolpi.ca/ergast/)
 - [F1 Data Stream](https://www.formula1.com/en/timing/f1-live) via the
   [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
 Note the Ergast Motor Racing Database API will be shutting down at the
-end of 2024. When a new data source is identified the package will be
-migrated to that source.
+end of 2024. A new data source (Jolpica-F1 project) was identified and
+implemented.
 
 ## Functions
 
@@ -60,20 +60,20 @@ season and last race. Lap data is limited to 1996-present.
 
 ``` r
 load_laps()
-#> # A tibble: 841 × 6
+#> # A tibble: 1,177 × 6
 #>    driver_id      position time       lap time_sec season
 #>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 leclerc        1        1:51.912     1     112.   2024
-#>  2 hamilton       2        1:52.700     1     113.   2024
-#>  3 perez          3        1:53.439     1     113.   2024
-#>  4 piastri        4        1:54.248     1     114.   2024
-#>  5 russell        5        1:54.763     1     115.   2024
-#>  6 sainz          6        1:55.270     1     115.   2024
-#>  7 norris         7        1:55.727     1     116.   2024
-#>  8 alonso         8        1:56.577     1     117.   2024
-#>  9 max_verstappen 9        1:57.183     1     117.   2024
-#> 10 albon          10       1:57.321     1     117.   2024
-#> # ℹ 831 more rows
+#>  1 norris         1        1:40.424     1     100.   2024
+#>  2 max_verstappen 2        1:41.413     1     101.   2024
+#>  3 hamilton       3        1:42.702     1     103.   2024
+#>  4 russell        4        1:43.822     1     104.   2024
+#>  5 piastri        5        1:45.268     1     105.   2024
+#>  6 hulkenberg     6        1:45.723     1     106.   2024
+#>  7 alonso         7        1:46.384     1     106.   2024
+#>  8 leclerc        8        1:47.090     1     107.   2024
+#>  9 colapinto      9        1:47.696     1     108.   2024
+#> 10 perez          10       1:48.150     1     108.   2024
+#> # ℹ 1,167 more rows
 ```
 
 or
@@ -126,9 +126,6 @@ load_driver_telemetry(season = 2022, round = 4, driver = "PER")
 #> # ℹ 11 more variables: drs <dbl>, source <chr>, relative_distance <dbl>,
 #> #   status <chr>, x <dbl>, y <dbl>, z <dbl>, distance <dbl>,
 #> #   driver_ahead <chr>, distance_to_driver_ahead <dbl>, …
-```
-
-``` r
 
 load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
 #> # A tibble: 534 × 19

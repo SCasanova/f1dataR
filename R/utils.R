@@ -121,7 +121,7 @@ get_jolpica_content <- function(url) {
 
   jolpica_raw <- httr2::request("https://api.jolpi.ca/ergast/f1/") %>%
     httr2::req_url_path_append(url) %>%
-    httr2::req_retry(max_tries = 5) %>%
+    httr2::req_retry(max_tries = 10, backoff = function(x) runif(1, 1, 2^x)) %>%
     httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
