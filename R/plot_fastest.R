@@ -46,6 +46,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
     driver_abbreviation <- driver
   }
 
+  s <- load_race_session(season = season, round = round, session = session)
   driver_data <- load_driver_telemetry(season, round, session, driver_abbreviation, "fastest")
 
   if (is.null(driver_data)) {
@@ -83,11 +84,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
     lap_time <- paste0(" | ", lap_time)
   }
 
-  rnd <- round
-  # I can't figure out why but for some reason the filter .data$round == round doesn't work. Rename to rnd fixes.
-  race_name <- load_schedule(season) %>%
-    dplyr::filter(.data$round == rnd) %>%
-    dplyr::pull(.data$race_name)
+  race_name <- s$event$EventName
 
   if (!(session %in% c("r", "R"))) {
     race_name <- dplyr::case_match(
