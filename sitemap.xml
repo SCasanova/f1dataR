@@ -3,9 +3,9 @@
 <url><loc>https://scasanova.github.io/f1dataR/LICENSE-text.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/LICENSE.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/alonso-penalty-2024.html</loc></url>
-<url><loc>https://scasanova.github.io/f1dataR/articles/ergast-data-analysis.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/index.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/introduction.html</loc></url>
+<url><loc>https://scasanova.github.io/f1dataR/articles/jolpica-data-analysis.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/plotting-turn-info.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/setup_fastf1.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/authors.html</loc></url>
@@ -23,6 +23,7 @@
 <url><loc>https://scasanova.github.io/f1dataR/reference/get_driver_telemetry.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/get_ergast_content.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/get_fastf1_version.html</loc></url>
+<url><loc>https://scasanova.github.io/f1dataR/reference/get_jolpica_content.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/get_session.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/get_tire_compounds.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/index.html</loc></url>

@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Access Formula 1 Data">
-<meta name="description" content="Obtain Formula 1 data via the Ergast API &lt;https://ergast.com/mrd/&gt; and the unofficial API &lt;https://www.formula1.com/en/timing/f1-live&gt; via the fastf1 Python library &lt;https://docs.fastf1.dev/&gt;.">
-<meta property="og:description" content="Obtain Formula 1 data via the Ergast API &lt;https://ergast.com/mrd/&gt; and the unofficial API &lt;https://www.formula1.com/en/timing/f1-live&gt; via the fastf1 Python library &lt;https://docs.fastf1.dev/&gt;.">
+<meta name="description" content="Obtain Formula 1 data via the Jolpica API &lt;https://jolpi.ca&gt; and the unofficial API &lt;https://www.formula1.com/en/timing/f1-live&gt; via the fastf1 Python library &lt;https://docs.fastf1.dev/&gt;.">
+<meta property="og:description" content="Obtain Formula 1 data via the Jolpica API &lt;https://jolpi.ca&gt; and the unofficial API &lt;https://www.formula1.com/en/timing/f1-live&gt; via the fastf1 Python library &lt;https://docs.fastf1.dev/&gt;.">
 <meta property="og:image" content="https://scasanova.github.io/f1dataR/logo.svg">
 </head>
 <body>
@@ -43,8 +43,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/alonso-penalty-2024.html">Alonso's Penalty in the Australian GP 2024</a></li>
-    <li><a class="dropdown-item" href="articles/ergast-data-analysis.html">Ergast Data Analysis</a></li>
     <li><a class="dropdown-item" href="articles/introduction.html">Introduction</a></li>
+    <li><a class="dropdown-item" href="articles/jolpica-data-analysis.html">Jolpica Data Analysis</a></li>
     <li><a class="dropdown-item" href="articles/plotting-turn-info.html">Plotting with FastF1 Circuit Information</a></li>
     <li><a class="dropdown-item" href="articles/setup_fastf1.html">Setup FastF1 Connection</a></li>
   </ul>
@@ -68,7 +68,7 @@
 <img src="logo.svg" class="logo" alt=""><h1 id="f1datar-">f1dataR <a class="anchor" aria-label="anchor" href="#f1datar-"></a>
 </h1>
 </div>
-<p>An R package to access Formula 1 Data from the Ergast API and the official F1 data stream via the FastF1 Python library.</p>
+<p>An R package to access Formula 1 Data from the Jolpica API (formerly Ergast) and the official F1 data stream via the FastF1 Python library.</p>
 <!-- badges: start -->
 
 <div class="section level2">
@@ -88,12 +88,12 @@
 </h2>
 <p>Data is pulled from:</p>
 <ul>
-<li><a href="https://ergast.com/mrd/" class="external-link">Ergast API</a></li>
+<li><a href="https://api.jolpi.ca/ergast/" class="external-link">Jolpica F1 API</a></li>
 <li>
 <a href="https://www.formula1.com/en/timing/f1-live" class="external-link">F1 Data Stream</a> via the <a href="https://docs.fastf1.dev/index.html" class="external-link">Fast F1 python library</a>
 </li>
 </ul>
-<p>Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. When a new data source is identified the package will be migrated to that source.</p>
+<p>Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. A new data source (Jolpica-F1 project) was identified and implemented.</p>
 </div>
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
@@ -108,20 +108,20 @@
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 841 × 6</span></span>
+<span><span class="co">#&gt; # A tibble: 1,177 × 6</span></span>
 <span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 leclerc        1        1:51.912     1     112.   2024</span></span>
-<span><span class="co">#&gt;  2 hamilton       2        1:52.700     1     113.   2024</span></span>
-<span><span class="co">#&gt;  3 perez          3        1:53.439     1     113.   2024</span></span>
-<span><span class="co">#&gt;  4 piastri        4        1:54.248     1     114.   2024</span></span>
-<span><span class="co">#&gt;  5 russell        5        1:54.763     1     115.   2024</span></span>
-<span><span class="co">#&gt;  6 sainz          6        1:55.270     1     115.   2024</span></span>
-<span><span class="co">#&gt;  7 norris         7        1:55.727     1     116.   2024</span></span>
-<span><span class="co">#&gt;  8 alonso         8        1:56.577     1     117.   2024</span></span>
-<span><span class="co">#&gt;  9 max_verstappen 9        1:57.183     1     117.   2024</span></span>
-<span><span class="co">#&gt; 10 albon          10       1:57.321     1     117.   2024</span></span>
-<span><span class="co">#&gt; # ℹ 831 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt;  1 norris         1        1:40.424     1     100.   2024</span></span>
+<span><span class="co">#&gt;  2 max_verstappen 2        1:41.413     1     101.   2024</span></span>
+<span><span class="co">#&gt;  3 hamilton       3        1:42.702     1     103.   2024</span></span>
+<span><span class="co">#&gt;  4 russell        4        1:43.822     1     104.   2024</span></span>
+<span><span class="co">#&gt;  5 piastri        5        1:45.268     1     105.   2024</span></span>
+<span><span class="co">#&gt;  6 hulkenberg     6        1:45.723     1     106.   2024</span></span>
+<span><span class="co">#&gt;  7 alonso         7        1:46.384     1     106.   2024</span></span>
+<span><span class="co">#&gt;  8 leclerc        8        1:47.090     1     107.   2024</span></span>
+<span><span class="co">#&gt;  9 colapinto      9        1:47.696     1     108.   2024</span></span>
+<span><span class="co">#&gt; 10 perez          10       1:48.150     1     108.   2024</span></span>
+<span><span class="co">#&gt; # ℹ 1,167 more rows</span></span></code></pre></div>
 <p>or</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, round <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
@@ -165,9 +165,8 @@
 <span><span class="co">#&gt; # ℹ 582 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: drs &lt;dbl&gt;, source &lt;chr&gt;, relative_distance &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   status &lt;chr&gt;, x &lt;dbl&gt;, y &lt;dbl&gt;, z &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, …</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; #   driver_ahead &lt;chr&gt;, distance_to_driver_ahead &lt;dbl&gt;, …</span></span>
+<span></span>
 <span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2018</span>, round <span class="op">=</span> <span class="fl">7</span>, <span class="st">"Q"</span>, <span class="st">"HAM"</span>, laps <span class="op">=</span> <span class="st">"fastest"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 534 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake</span></span>
@@ -194,7 +193,7 @@
 <p><code>load_session_laps(season = "current", race = "last", session = "R", add_weather = FALSE)</code></p>
 </blockquote>
 <p>This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_session_laps.html">load_session_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, add_weather <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
 <span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time</span></span>
@@ -230,7 +229,7 @@
 <p><code>plot_fastest(season = "current", round = "last", session = "R", driver, color = "gear")</code></p>
 </blockquote>
 <p>A built in plotting function that plots the circuit and a driver’s fastest laps’ <code>speed</code> or <code>gear</code> exists.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">1</span>, session <span class="op">=</span> <span class="st">"R"</span>, driver <span class="op">=</span> <span class="st">"VER"</span>, color <span class="op">=</span> <span class="st">"gear"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-1.png" width="100%"></p>
 <p>Two helper functions exist as well. The first, <code><a href="reference/theme_dark_f1.html">theme_dark_f1()</a></code> assists with colour schemes similar to that used in other F1 graphics. The second, <code><a href="reference/correct_track_ratio.html">correct_track_ratio()</a></code> is a function that fixes track ratio issues that appear when you create images similar to that above from <code><a href="reference/plot_fastest.html">plot_fastest()</a></code>. Please refer to their documentation for usage.</p>
@@ -262,7 +261,7 @@
 <h3 id="cache-information">Cache information<a class="anchor" aria-label="anchor" href="#cache-information"></a>
 </h3>
 <p>The cache directory for sessions can be set manually with the options function</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>f1dataR.cache <span class="op">=</span> <span class="st">"path/to/directory"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
