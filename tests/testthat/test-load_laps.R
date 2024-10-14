@@ -7,15 +7,19 @@ test_that("load_laps works", {
   dir.create(file.path(tempdir(), "tst_load_laps"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_laps"))
 
-  skip_if_no_ergast()
+  skip_if_no_jolpica()
 
   laps_2021_1 <- load_laps(2021, 1)
 
   skip_if(is.null(laps_2021_1))
 
-  expect_equal(nrow(laps_2021_1), 1026)
+  expect_equal(nrow(unique(laps_2021_1)), 1026)
   expect_equal(laps_2021_1$driver_id[3], "leclerc")
   expect_equal(laps_2021_1$position[1], "1")
+
+  expect_equal(laps_2021_1$driver_id[1026], "raikkonen")
+  expect_equal(laps_2021_1$position[1026], "11")
+  expect_equal(laps_2021_1$time_sec[1026], 95.96)
 
   expect_error(load_laps(3050, 3), "`season` must be between 1996 and *")
   expect_error(load_laps(2021, race = 1))
@@ -46,7 +50,7 @@ test_that("load_laps works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_laps(2021, 1), "f1dataR: Error getting data from Ergast")
+          expect_message(load_laps(2021, 1), "f1dataR: Error getting data from Jolpica")
           expect_null(load_laps(2021, 1))
         })
       })

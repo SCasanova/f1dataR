@@ -7,7 +7,7 @@ test_that("load_pitstops works", {
   dir.create(file.path(tempdir(), "tst_load_pitstops"), recursive = TRUE)
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_pitstops"))
 
-  skip_if_no_ergast()
+  skip_if_no_jolpica()
 
   pitstop_2021_1 <- load_pitstops(2021, 1)
 
@@ -39,7 +39,7 @@ test_that("load_pitstops works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_pitstops(2021, 1), "f1dataR: Error getting data from Ergast")
+          expect_message(load_pitstops(2021, 1), "f1dataR: Error getting data from Jolpica")
           expect_null(load_pitstops(2021, 1))
         })
       })

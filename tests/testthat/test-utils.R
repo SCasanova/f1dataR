@@ -11,7 +11,11 @@ test_that("utility functions work", {
   expect_true(is.numeric(get_current_season()))
   expect_gte(get_current_season(), 2022)
 
-  # get_ergast_content() is inherently tested in load_x functions too
+  # get_jolpica_content() is inherently tested in load_x functions too
+  url <- "2022/circuits.json?limit=40"
+
+  expect_warning(get_ergast_content(url), regexp = "was deprecated in f1dataR")
+  # Test for ergast deprecation
 
   # Test add_col_if_absent()
   testdf <- tibble::tibble("a" = 1:5, "b" = letters[1:5])

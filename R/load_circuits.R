@@ -15,7 +15,7 @@ load_circuits <- function(season = get_current_season()) {
     season = season
   )
 
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
 
   if (is.null(data)) {
     return(NULL)

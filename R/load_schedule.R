@@ -14,7 +14,7 @@ load_schedule <- function(season = get_current_season()) {
 
   url <- glue::glue("{season}.json?limit=30", season = season)
 
-  data <- get_ergast_content(url)
+  data <- get_jolpica_content(url)
   if (is.null(data)) {
     return(NULL)
   }
