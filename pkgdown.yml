@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.0
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   alonso-penalty-2024: alonso-penalty-2024.html
@@ -7,7 +7,7 @@ articles:
   introduction: introduction.html
   plotting-turn-info: plotting-turn-info.html
   setup_fastf1: setup_fastf1.html
-last_built: 2024-09-02T20:16Z
+last_built: 2024-10-14T19:43Z
 urls:
   reference: https://scasanova.github.io/f1dataR/reference
   article: https://scasanova.github.io/f1dataR/articles
