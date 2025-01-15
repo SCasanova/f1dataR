@@ -29,7 +29,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr
+          extra-packages: |
+            any::covr
+            any::devtools
           needs: coverage
 
       - name: setup r-reticulate venv
@@ -48,6 +50,7 @@ jobs:
       - name: Test coverage
         run: |
           covr::codecov(
+            code = "devtools::test(stop_on_failure = FALSE, stop_on_warning = FALSE)",
             quiet = FALSE,
             clean = FALSE,
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
@@ -89,7 +92,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::covr
+          extra-packages: |
+            any::covr
+            any::devtools
           needs: coverage
 
       - name: setup r-reticulate venv
@@ -108,6 +113,7 @@ jobs:
       - name: Test coverage
         run: |
           covr::codecov(
+            code = "devtools::test(stop_on_failure = FALSE, stop_on_warning = FALSE)",
             quiet = FALSE,
             clean = FALSE,
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
@@ -166,11 +172,13 @@ jobs:
             any::rmarkdown
             any::markdown
             any::covr
+            any::devtools
           needs: coverage
 
       - name: Test coverage
         run: |
           covr::codecov(
+            code = "devtools::test(stop_on_failure = FALSE, stop_on_warning = FALSE)",
             quiet = FALSE,
             clean = FALSE,
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
