@@ -131,7 +131,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-test-failures
+          name: coverage-oldff1-test-failures
           path: ${{ runner.temp }}/package
 
   test-coverage-hard:
@@ -196,7 +196,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-test-failures
+          name: coverage-hard-test-failures
           path: ${{ runner.temp }}/package
 
   test-pkgdown-ok:
