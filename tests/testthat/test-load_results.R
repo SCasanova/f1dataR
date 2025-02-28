@@ -25,7 +25,7 @@ test_that("load_results works", {
   results_2021_12 <- load_results(2021, 12)
   expect_equal(nrow(results_2021_1), nrow(results_2021_12))
   expect_equal(ncol(results_2003), ncol(results_2021_12))
-  expect_true(ncol(results_2021_1) != ncol(results_2021_12))
+  expect_equal(ncol(results_2021_1), ncol(results_2021_12))
 
   expect_error(load_results(3050, 2), "`season` must be between 1950 and *")
 })
