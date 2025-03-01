@@ -107,23 +107,6 @@
 <p>This function loads lap-by-lap time data for all drivers in a given season and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.</p>
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1,177 × 6</span></span>
-<span><span class="co">#&gt;    driver_id      position time       lap time_sec season</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 norris         1        1:40.424     1     100.   2024</span></span>
-<span><span class="co">#&gt;  2 max_verstappen 2        1:41.413     1     101.   2024</span></span>
-<span><span class="co">#&gt;  3 hamilton       3        1:42.702     1     103.   2024</span></span>
-<span><span class="co">#&gt;  4 russell        4        1:43.822     1     104.   2024</span></span>
-<span><span class="co">#&gt;  5 piastri        5        1:45.268     1     105.   2024</span></span>
-<span><span class="co">#&gt;  6 hulkenberg     6        1:45.723     1     106.   2024</span></span>
-<span><span class="co">#&gt;  7 alonso         7        1:46.384     1     106.   2024</span></span>
-<span><span class="co">#&gt;  8 leclerc        8        1:47.090     1     107.   2024</span></span>
-<span><span class="co">#&gt;  9 colapinto      9        1:47.696     1     108.   2024</span></span>
-<span><span class="co">#&gt; 10 perez          10       1:48.150     1     108.   2024</span></span>
-<span><span class="co">#&gt; # ℹ 1,167 more rows</span></span></code></pre></div>
-<p>or</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_laps.html">load_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2021</span>, round <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1,025 × 6</span></span>
 <span><span class="co">#&gt;    driver_id position time       lap time_sec season</span></span>
@@ -147,7 +130,7 @@
 <p><code>load_driver_telemetry(season = "current", race = "last", session = "R", driver, laps = "all")</code></p>
 </blockquote>
 <p>When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_driver_telemetry.html">load_driver_telemetry</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2022</span>, round <span class="op">=</span> <span class="fl">4</span>, driver <span class="op">=</span> <span class="st">"PER"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 592 × 19</span></span>
 <span><span class="co">#&gt;    date                session_time  time   rpm speed n_gear throttle brake</span></span>
@@ -193,7 +176,7 @@
 <p><code>load_session_laps(season = "current", race = "last", session = "R", add_weather = FALSE)</code></p>
 </blockquote>
 <p>This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/load_session_laps.html">load_session_laps</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">4</span>, add_weather <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 962 × 39</span></span>
 <span><span class="co">#&gt;     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time</span></span>
@@ -229,7 +212,7 @@
 <p><code>plot_fastest(season = "current", round = "last", session = "R", driver, color = "gear")</code></p>
 </blockquote>
 <p>A built in plotting function that plots the circuit and a driver’s fastest laps’ <code>speed</code> or <code>gear</code> exists.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_fastest.html">plot_fastest</a></span><span class="op">(</span>season <span class="op">=</span> <span class="fl">2023</span>, round <span class="op">=</span> <span class="fl">1</span>, session <span class="op">=</span> <span class="st">"R"</span>, driver <span class="op">=</span> <span class="st">"VER"</span>, color <span class="op">=</span> <span class="st">"gear"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-1.png" width="100%"></p>
 <p>Two helper functions exist as well. The first, <code><a href="reference/theme_dark_f1.html">theme_dark_f1()</a></code> assists with colour schemes similar to that used in other F1 graphics. The second, <code><a href="reference/correct_track_ratio.html">correct_track_ratio()</a></code> is a function that fixes track ratio issues that appear when you create images similar to that above from <code><a href="reference/plot_fastest.html">plot_fastest()</a></code>. Please refer to their documentation for usage.</p>
@@ -261,7 +244,7 @@
 <h3 id="cache-information">Cache information<a class="anchor" aria-label="anchor" href="#cache-information"></a>
 </h3>
 <p>The cache directory for sessions can be set manually with the options function</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>f1dataR.cache <span class="op">=</span> <span class="st">"path/to/directory"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -276,7 +259,7 @@
 <li><code>load_quali(season = "current", round = "last")</code></li>
 <li><code>load_results(season = "current", round = "last")</code></li>
 <li>
-<code>load_schedule(season =</code>2024<code>)</code>
+<code>load_schedule(season =</code>2025<code>)</code>
 </li>
 <li><code>load_sprint(season = "current", round = "last")</code></li>
 <li><code>load_standings(season = "current", round = "last", type = c("driver", "constructor"))</code></li>
