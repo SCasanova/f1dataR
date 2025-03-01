@@ -74,11 +74,6 @@ This function loads lap-by-lap time data for all drivers in a given season
 and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.
 
 **Example:**
-```{r load_laps}
-load_laps()
-```
-
-or
 
 ```{r load_specific_laps}
 load_laps(season = 2021, round = 15)

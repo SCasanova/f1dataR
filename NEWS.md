@@ -1,9 +1,10 @@
 
 # f1dataR 1.6.0.9000
 
-* Deprecated Ergast and moved to Jolpica API for Ergast Functions
-* Bugfix in plot_fastest()
-* Bugfix in README
+* Deprecated Ergast and moved to Jolpica API for Ergast Functions. While this is not a breaking change in the code syntax, the documentation changes significantly to reflect this and a new major version is appropriate. (#268)
+* Bugfix in plot_fastest().
+* Bugfix in load_results() with pagination - Thanks to @awanderingspirit. (#272)
+* Bugfix in README. (#267)
 
 # f1dataR 1.6.0
 

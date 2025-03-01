@@ -8,10 +8,14 @@ Ergast) and the official F1 data stream via the FastF1 Python library.
 
 [![R-CMD-check](https://github.com/SCasanova/f1dataR/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/check-standard.yaml)
 [![test-coverage](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/SCasanova/f1dataR/actions/workflows/test-coverage.yaml)
-[![Codecov test coverage](https://img.shields.io/codecov/c/github/SCasanova/f1dataR?label=codecov&logo=codecov)](https://app.codecov.io/gh/SCasanova/f1dataR?branch=main)
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![CRAN status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
-[![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
+[![Codecov test
+coverage](https://img.shields.io/codecov/c/github/SCasanova/f1dataR?label=codecov&logo=codecov)](https://app.codecov.io/gh/SCasanova/f1dataR?branch=main)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/f1dataR)](https://CRAN.R-project.org/package=f1dataR)
 <!--badges: end -->
 
 ## Installation
@@ -53,26 +57,6 @@ season and round. Round refers to race number. The defaults are current
 season and last race. Lap data is limited to 1996-present.
 
 **Example:**
-
-``` r
-load_laps()
-#> # A tibble: 1,177 × 6
-#>    driver_id      position time       lap time_sec season
-#>    <chr>          <chr>    <chr>    <int>    <dbl>  <dbl>
-#>  1 norris         1        1:40.424     1     100.   2024
-#>  2 max_verstappen 2        1:41.413     1     101.   2024
-#>  3 hamilton       3        1:42.702     1     103.   2024
-#>  4 russell        4        1:43.822     1     104.   2024
-#>  5 piastri        5        1:45.268     1     105.   2024
-#>  6 hulkenberg     6        1:45.723     1     106.   2024
-#>  7 alonso         7        1:46.384     1     106.   2024
-#>  8 leclerc        8        1:47.090     1     107.   2024
-#>  9 colapinto      9        1:47.696     1     108.   2024
-#> 10 perez          10       1:48.150     1     108.   2024
-#> # ℹ 1,167 more rows
-```
-
-or
 
 ``` r
 load_laps(season = 2021, round = 15)
@@ -250,7 +234,7 @@ total number of races in a season).
 - `load_pitstops(season = "current", round = "last")`
 - `load_quali(season = "current", round = "last")`
 - `load_results(season = "current", round = "last")`
-- `load_schedule(season =`2024`)`
+- `load_schedule(season =`2025`)`
 - `load_sprint(season = "current", round = "last")`
 - `load_standings(season = "current", round = "last", type = c("driver", "constructor"))`
 
