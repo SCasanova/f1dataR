@@ -37,7 +37,8 @@ load_results <- function(season = get_current_season(), round = "last") {
       dplyr::mutate(
         fastest_rank = NA_integer_,
         fastest = NA_character_,
-        top_speed_kpt = NA_real_
+        top_speed_kph = NA_real_,
+        time_sec = NA_real_
       ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
