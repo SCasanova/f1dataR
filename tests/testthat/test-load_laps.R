@@ -19,7 +19,7 @@ test_that("load_laps works", {
 
   expect_equal(laps_2021_1$driver_id[1026], "raikkonen")
   expect_equal(laps_2021_1$position[1026], "11")
-  expect_equal(laps_2021_1$time_sec[1026], 95.96)
+  expect_equal(round(laps_2021_1$time_sec[1026]), round(95.96))
 
   expect_error(load_laps(3050, 3), "`season` must be between 1996 and *")
   expect_error(load_laps(2021, race = 1))

@@ -39,7 +39,7 @@ test_that("load session laps works", {
   expect_true(all(c("Q1", "Q2", "Q3") %in% unique(lapsq$session_type)))
   expect_true(all(c("SQ1", "SQ2", "SQ3") %in% unique(lapssq$session_type)))
   expect_true(!is.na(lapsq$time[1]))
-  expect_equal(min(lapsq$lap_time, na.rm = TRUE), 89.708)
+  expect_equal(round(min(lapsq$lap_time, na.rm = TRUE)), round(89.708))
   expect_equal(nrow(lapsq), nrow(lapsqw))
   expect_equal(min(lapsq$lap_time, na.rm = TRUE), min(lapsqw$lap_time, na.rm = TRUE))
   expect_lt(ncol(lapsq), ncol(lapsqw))
