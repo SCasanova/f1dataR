@@ -21,7 +21,7 @@ load_schedule <- function(season = get_current_season()) {
 
   data <- data$MRData$RaceTable$Races
 
-  if("url" %in% colnames(data)) {
+  if ("url" %in% colnames(data)) {
     data$url <- NULL
   }
 
