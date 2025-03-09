@@ -19,78 +19,12 @@ get_ergast_content <- function(url) {
   # Function Deprecation Warning
   lifecycle::deprecate_warn("at the end of 2024", "get_ergast_content()",
     details = c(
-      "i" = "By the end of 2024 the Ergast Motor Racing Database API will be shut down.",
+      "i" = "At the end of 2024 season the Ergast Motor Racing Database API was shut down.",
       " " = "Update f1dataR to use the new jolpica-f1 API data source"
     )
   )
 
-  # Function Code
-
-  # note:
-  # Throttles at 4 req/sec. Note additional 200 req/hr requested too (http://ergast.com/mrd/terms/)
-  # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
-  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
-  # Automatically retries at http if https fails after retries.
-
-
-  ergast_raw <- httr2::request("https://ergast.com/api/f1") %>%
-    httr2::req_url_path_append(url) %>%
-    httr2::req_retry(max_tries = 5) %>%
-    httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
-    httr2::req_throttle(4 / 1) %>%
-    httr2::req_error(is_error = ~FALSE)
-
-  ergast_res <- NULL
-
-  tryCatch(
-    {
-      ergast_res <- ergast_raw %>%
-        httr2::req_perform()
-    },
-    error = function(e) {
-      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
-    }
-  )
-
-  # Restart retries to ergast with http (instead of https)
-  # No testing penalty for ergast functioning correct
-  # nocov start
-  if (is.null(ergast_res) || httr2::resp_is_error(ergast_res) || httr2::resp_body_string(ergast_res) == "Unable to select database") {
-    cli::cli_alert_warning("Failure at Ergast with https:// connection. Retrying as http://.")
-    tryCatch(
-      {
-        ergast_res <- ergast_raw %>%
-          httr2::req_url("http://ergast.com/api/f1") %>%
-          httr2::req_url_path_append(url) %>%
-          httr2::req_perform()
-      },
-      error = function(e) {
-        cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Ergast:\n{e}", e = e))
-      }
-    )
-  }
-
-  if (is.null(ergast_res)) {
-    cli::cli_alert_danger("Couldn't connect to Ergast to retrieve data.")
-    return(NULL)
-  }
-
-  if (httr2::resp_is_error(ergast_res)) {
-    cli::cli_alert_danger(glue::glue("Error getting Ergast data, http status code {code}.\n{msg}",
-      code = httr2::resp_status(ergast_res),
-      msg = httr2::resp_status_desc(ergast_res)
-    ))
-    return(NULL)
-  }
-
-  if (httr2::resp_body_string(ergast_res) == "Unable to select database") {
-    cli::cli_alert_danger("Ergast is having database trouble. Please try again at a later time.")
-    return(NULL)
-  }
-  # nocov end
-
-  # else must be ok
-  return(jsonlite::fromJSON(httr2::resp_body_string(ergast_res)))
+  get_jolpica_content(url)
 }
 
 
