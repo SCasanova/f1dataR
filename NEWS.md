@@ -1,9 +1,9 @@
 # f1dataR (development version)
 
+* Forced fail-over from Ergast to Jolpica (still deprecated at 'warn' level).
+* Fixed a pre-season bug where Jolpica API was missing a column in load_season().
+
 # f1dataR 2.0.0
-
-
-# f1dataR 1.6.0.9000
 
 * Deprecated Ergast and moved to Jolpica API for Ergast Functions. While this is not a breaking change in the code syntax, the documentation changes significantly to reflect this and a new major version is appropriate. (#268)
 * Bugfix in plot_fastest().

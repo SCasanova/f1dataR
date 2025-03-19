@@ -19,8 +19,11 @@ load_schedule <- function(season = get_current_season()) {
     return(NULL)
   }
 
-  data <- data$MRData$RaceTable$Races %>%
-    dplyr::select(-"url")
+  data <- data$MRData$RaceTable$Races
+
+  if ("url" %in% colnames(data)) {
+    data$url <- NULL
+  }
 
   if ("Circuit" %in% colnames(data)) {
     if (inherits(data$Circuit, "data.frame")) {
