@@ -2,6 +2,7 @@
 
 * Forced fail-over from Ergast to Jolpica (still deprecated at 'warn' level).
 * Fixed a pre-season bug where Jolpica API was missing a column in load_season().
+* Fixed a bug resulting from a change in API for 2025 season - Thanks to @appiehappie999 (#277)
 
 # f1dataR 2.0.0
 

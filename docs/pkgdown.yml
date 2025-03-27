@@ -1,14 +1,13 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: 3.6.4
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   alonso-penalty-2024: alonso-penalty-2024.html
-  ergast-data-analysis: ergast-data-analysis.html
   introduction: introduction.html
+  jolpica-data-analysis: jolpica-data-analysis.html
   plotting-turn-info: plotting-turn-info.html
   setup_fastf1: setup_fastf1.html
-last_built: 2024-05-23T01:43Z
+last_built: 2025-03-27T00:49Z
 urls:
   reference: https://scasanova.github.io/f1dataR/reference
   article: https://scasanova.github.io/f1dataR/articles
-
