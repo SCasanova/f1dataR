@@ -1,3 +1,5 @@
+# f1dataR (development version)
+
 # f1dataR 2.0.1
 
 * Forced fail-over from Ergast to Jolpica (still deprecated at 'warn' level).
