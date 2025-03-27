@@ -21,6 +21,10 @@ test_that("load_results works", {
   expect_equal(nrow(results_2003), 20)
   expect_equal(results_2003$driver_id[2], "montoya")
 
+  results_2025 <- load_results(2025, 1)
+  expect_equal(nrow(results_2025), 20)
+  expect_equal(results_2025$driver_id[5], "albon")
+
   # Special Case:
   results_2021_12 <- load_results(2021, 12)
   expect_equal(nrow(results_2021_1), nrow(results_2021_12))
