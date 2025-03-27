@@ -1,15 +1,16 @@
 #' Load Results
 #'
-#' @description Loads final race results for a given year and round. Use `.load_results()`
-#' for an uncached version
+#' @description Loads final race results for a given year and round. Use `.load_results()` for an uncached version
 #'
 #' @param season number from 1950 to current season (or the word 'current') (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
-#' to most recent. Also accepts `'last'`.
+#' @param round number from 1 to 23 (depending on season), and defaults to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @export
-#' @return A tibble with one row per driver
+#' @return A tibble with one row per driver, with columns for driver & constructor ID, the points won by each driver in
+#'   the race, their finishing position, their starting (grid) position, number of completed laps, status code, gap to
+#'   leader (or time of race), fastest lap ranking, drivers' fastest lap time, top speed achieved, and fastest lap time
+#'   in seconds.
 load_results <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 1950 || season > get_current_season())) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
@@ -40,6 +41,18 @@ load_results <- function(season = get_current_season(), round = "last") {
         top_speed_kph = NA_real_,
         time_sec = NA_real_
       ) %>%
+      tibble::as_tibble() %>%
+      janitor::clean_names()
+  } else if (!("AverageSpeed" %in% colnames(data$FastestLap))) {
+    data %>%
+      tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = "universal") %>%
+      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", "time", "Time", "rank") %>%
+      tidyr::unnest(cols = "Time", names_repair = "universal") %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::mutate(top_speed_kph = NA_real_) %>%
+      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", gap = "time...8", fastest_rank = "rank", fastest = "time...9", top_speed_kph) %>%
+      dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else {
