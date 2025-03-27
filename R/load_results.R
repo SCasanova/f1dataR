@@ -51,11 +51,11 @@ load_results <- function(season = get_current_season(), round = "last") {
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::mutate(top_speed_kph = NA_real_) %>%
-      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", gap = "time...8",fastest_rank = "rank",fastest = "time...9", top_speed_kph) %>%
+      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", gap = "time...8", fastest_rank = "rank", fastest = "time...9", top_speed_kph) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
-  }else {
+  } else {
     data %>%
       tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = "universal") %>%
       dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
