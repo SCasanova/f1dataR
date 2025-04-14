@@ -17,6 +17,12 @@ test_that("load_sprint works", {
   expect_equal(sprint_2021_10$driver_id[3], "bottas")
   expect_equal(sprint_2021_10$position[1], "1")
 
+  sprint_2025_2 <- load_sprint(2025, 2)
+
+  expect_equal(nrow(sprint_2025_2), 20)
+  expect_equal(sprint_2025_2$driver_id[1], "hamilton")
+  expect_equal(sprint_2025_2$position[1], "1")
+
   expect_error(load_sprint(3050, 2), "`season` must be between 2021 and *")
 
   # A sprint doesn't exist for season = 2021, round = 11
