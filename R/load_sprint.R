@@ -15,11 +15,15 @@
 #' or NULL if no sprint exists for this season/round combo
 load_sprint <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2021 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 2021 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 2021 and {get_current_season()} (or use "current")'
+    )
   }
 
-  url <- glue::glue("{season}/{round}/sprint.json?limit=40",
-    season = season, round = round
+  url <- glue::glue(
+    "{season}/{round}/sprint.json?limit=40",
+    season = season,
+    round = round
   )
 
   data <- get_jolpica_content(url)
@@ -29,15 +33,17 @@ load_sprint <- function(season = get_current_season(), round = "last") {
   }
 
   if (length(data$MRData$RaceTable$Races) == 0) {
-    cli::cli_alert_warning(glue::glue("No Sprint data for season = {season}, round = {round}",
-      season = season, round = round
+    cli::cli_alert_warning(glue::glue(
+      "No Sprint data for season = {season}, round = {round}",
+      season = season,
+      round = round
     ))
     return(NULL)
   }
 
   data <- data$MRData$RaceTable$Races$SprintResults[[1]]
 
-  data %>%
+  data <- data %>%
     tidyr::unnest(
       cols = c("Driver", "Constructor", "Time", "FastestLap"),
       names_repair = "universal"
@@ -45,22 +51,45 @@ load_sprint <- function(season = get_current_season(), round = "last") {
     tidyr::unnest(
       cols = c("Time"),
       names_repair = "universal"
-    ) %>%
-    suppressWarnings() %>%
-    suppressMessages() %>%
-    dplyr::select(
-      "driverId",
-      "constructorId",
-      "points",
-      "position",
-      "grid",
-      "laps",
-      "status",
-      "position",
-      gap = "time...21",
-      "lap",
-      fastest = "time...23"
-    ) %>%
+    )
+
+  if ("time...24" %in% names(data)) {
+    data <- data %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select(
+        "driverId",
+        "constructorId",
+        "points",
+        "position",
+        "grid",
+        "laps",
+        "status",
+        "position",
+        gap = "time...21",
+        "lap",
+        fastest = "time...24"
+      )
+  } else {
+    data <- data %>%
+      suppressWarnings() %>%
+      suppressMessages() %>%
+      dplyr::select(
+        "driverId",
+        "constructorId",
+        "points",
+        "position",
+        "grid",
+        "laps",
+        "status",
+        "position",
+        gap = "time...21",
+        "lap",
+        fastest = "time...23"
+      )
+  }
+
+  data %>%
     dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
     tibble::as_tibble() %>%
     janitor::clean_names()
