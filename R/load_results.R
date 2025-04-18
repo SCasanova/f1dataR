@@ -47,7 +47,7 @@ load_results <- function(season = get_current_season(), round = "last") {
         "constructorId" = "Constructor.constructorId",
         "points",
         "position",
-        "grid", 
+        "grid",
         "laps",
         "status",
         gap = "Time.time"
