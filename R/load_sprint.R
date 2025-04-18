@@ -46,50 +46,29 @@ load_sprint <- function(season = get_current_season(), round = "last") {
   data <- data %>%
     tidyr::unnest(
       cols = c("Driver", "Constructor", "Time", "FastestLap"),
-      names_repair = "universal"
+      names_repair = "universal",
+      names_sep = "."
     ) %>%
     tidyr::unnest(
-      cols = c("Time"),
-      names_repair = "universal"
-    )
-
-  if ("time...24" %in% names(data)) {
-    data <- data %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      dplyr::select(
-        "driverId",
-        "constructorId",
-        "points",
-        "position",
-        "grid",
-        "laps",
-        "status",
-        "position",
-        gap = "time...21",
-        "lap",
-        fastest = "time...24"
-      )
-  } else {
-    data <- data %>%
-      suppressWarnings() %>%
-      suppressMessages() %>%
-      dplyr::select(
-        "driverId",
-        "constructorId",
-        "points",
-        "position",
-        "grid",
-        "laps",
-        "status",
-        "position",
-        gap = "time...21",
-        "lap",
-        fastest = "time...23"
-      )
-  }
-
-  data %>%
+      cols = c("FastestLap.Time"),
+      names_repair = "universal",
+      names_sep = "."
+    ) %>%
+    suppressWarnings() %>%
+    suppressMessages() %>%
+    dplyr::select(
+      "driverId" = "Driver.driverId",
+      "constructorId" = "Constructor.constructorId",
+      "points",
+      "position",
+      "grid",
+      "laps",
+      "status",
+      "position",
+      "gap" = "Time.time",
+      "lap" = "FastestLap.lap",
+      "fastest" = "FastestLap.Time.time"
+    ) %>%
     dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
     tibble::as_tibble() %>%
     janitor::clean_names()
