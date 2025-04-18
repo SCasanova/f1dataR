@@ -13,11 +13,15 @@
 #'   in seconds.
 load_results <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
+    )
   }
 
-  url <- glue::glue("{season}/{round}/results.json?limit=40",
-    season = season, round = round
+  url <- glue::glue(
+    "{season}/{round}/results.json?limit=40",
+    season = season,
+    round = round
   )
   data <- get_jolpica_content(url)
 
@@ -31,10 +35,23 @@ load_results <- function(season = get_current_season(), round = "last") {
     # all races from before 2004 will have no 'Fastest Lap' column,
     # but also 2021 round 12 (Belgian GP) where no racing laps were run
     data %>%
-      tidyr::unnest(cols = c("Driver", "Time", "Constructor"), names_repair = "universal") %>%
+      tidyr::unnest(
+        cols = c("Driver", "Time", "Constructor"),
+        names_sep = ".",
+        names_repair = "universal"
+      ) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      dplyr::select("driverId", "constructorId", "position", "points", "grid":"status", gap = "time") %>%
+      dplyr::select(
+        "driverId" = "Driver.driverId",
+        "constructorId" = "Constructor.constructorId",
+        "points",
+        "position",
+        "grid",
+        "laps",
+        "status",
+        gap = "Time.time"
+      ) %>%
       dplyr::mutate(
         fastest_rank = NA_integer_,
         fastest = NA_character_,
@@ -45,35 +62,61 @@ load_results <- function(season = get_current_season(), round = "last") {
       janitor::clean_names()
   } else if (!("AverageSpeed" %in% colnames(data$FastestLap))) {
     data %>%
-      tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = "universal") %>%
-      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", "time", "Time", "rank") %>%
-      tidyr::unnest(cols = "Time", names_repair = "universal") %>%
+      tidyr::unnest(
+        cols = c("Driver", "Constructor", "Time", "FastestLap"),
+        names_sep = ".",
+        names_repair = "universal"
+      ) %>%
+      tidyr::unnest(
+        cols = "FastestLap.Time",
+        names_sep = ".",
+        names_repair = "universal"
+      ) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::mutate(top_speed_kph = NA_real_) %>%
-      dplyr::select("driverId", "constructorId", "points", "position", "grid", "laps", "status", gap = "time...8", fastest_rank = "rank", fastest = "time...9", top_speed_kph) %>%
+      dplyr::select(
+        "driverId" = "Driver.driverId",
+        "constructorId" = "Constructor.constructorId",
+        "points",
+        "position",
+        "grid",
+        "laps",
+        "status",
+        gap = "Time.time",
+        fastest_rank = "FastestLap.rank",
+        fastest = "FastestLap.Time.time",
+        top_speed_kph
+      ) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else {
     data %>%
-      tidyr::unnest(cols = c("Driver", "Constructor", "Time", "FastestLap"), names_repair = "universal") %>%
-      dplyr::select("driverId", "points", "position", "grid":"AverageSpeed", "constructorId", "name") %>%
       tidyr::unnest(
-        cols = c("Time", "AverageSpeed"),
+        cols = c("Driver", "Constructor", "Time", "FastestLap"),
+        names_sep = ".",
+        names_repair = "universal"
+      ) %>%
+      tidyr::unnest(
+        cols = c("FastestLap.Time", "FastestLap.AverageSpeed"),
+        names_sep = ".",
         names_repair = "universal"
       ) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
       dplyr::select(
-        "driverId",
-        "constructorId",
-        "points":"status",
-        gap = "time...8",
-        fastest_rank = "rank",
+        "driverId" = "Driver.driverId",
+        "constructorId" = "Constructor.constructorId",
+        "points",
+        "position",
+        "grid",
         "laps",
-        fastest = "time...11",
-        top_speed_kph = "speed",
+        "status",
+        gap = "Time.time",
+        fastest_rank = "FastestLap.rank",
+        fastest = "FastestLap.Time.time",
+        top_speed_kph = "FastestLap.AverageSpeed.speed",
       ) %>%
       dplyr::mutate(time_sec = time_to_sec(.data$fastest)) %>%
       tibble::as_tibble() %>%
