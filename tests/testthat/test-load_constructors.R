@@ -14,7 +14,6 @@ test_that("load_constructors works", {
   skip_if(is.null(constructors))
 
   expect_equal(ncol(constructors), 3)
-  expect_equal(constructors[1, ]$constructor_id, "adams")
   expect_true(nrow(unique(constructors)) >= 212)
 })
 

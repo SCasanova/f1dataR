@@ -16,7 +16,7 @@ test_that("load_results works", {
   expect_equal(nrow(results_2021_1), 20)
   expect_equal(results_2021_1$driver_id[4], "norris")
   expect_equal(results_2021_1$position[1], "1")
-
+  vcr::local_cassette("load_results")
   results_2003 <- load_results(2003, 1)
   expect_equal(nrow(results_2003), 20)
   expect_equal(results_2003$driver_id[2], "montoya")
@@ -31,7 +31,7 @@ test_that("load_results works", {
   expect_equal(ncol(results_2003), ncol(results_2021_12))
   expect_equal(ncol(results_2021_1), ncol(results_2021_12))
 
-  expect_error(load_results(3050, 2), "`season` must be between 1950 and *")
+  expect_error(load_results(3050, 2), "`season` must be between 1950 and")
 })
 
 test_that("load_results works without internet", {

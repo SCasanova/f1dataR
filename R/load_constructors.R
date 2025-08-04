@@ -8,8 +8,9 @@
 #' @return A tibble with one row per constructor
 load_constructors <- function() {
   lim <- 100
-  url <- glue::glue("constructors.json?limit={lim}", lim = lim)
-  data <- get_jolpica_content(url)
+  url <- "constructors.json"
+  parameters <- list(limit = lim)
+  data <- get_jolpica_content(url, parameters)
 
   if (is.null(data)) {
     return(NULL)
@@ -24,10 +25,8 @@ load_constructors <- function() {
   while (offset + lim <= total) {
     offset <- offset + lim
 
-    url <- glue::glue("constructors.json?limit={lim}&offset={offset}",
-      lim = lim, offset = offset
-    )
-    data <- get_jolpica_content(url)
+    parameters <- list(limit = lim, offset = offset)
+    data <- get_jolpica_content(url, parameters)
 
     if (is.null(data)) {
       return(NULL)

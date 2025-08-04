@@ -19,7 +19,7 @@ load_results <- function(season = get_current_season(), round = "last") {
   }
 
   url <- glue::glue(
-    "{season}/{round}/results.json?limit=40",
+    "{season}/{round}/results.json",
     season = season,
     round = round
   )

@@ -35,7 +35,7 @@ skip_if_no_py <- function() {
 # helper function to skip if jolpica isn't working
 skip_if_no_jolpica <- function() {
   testthat::skip_if_offline("jolpi.ca") # This will also skip on CRAN
-  if (is.null(get_jolpica_content("current/circuits.json?limit=40"))) {
+  if (is.null(get_jolpica_content("current/circuits.json"))) {
     testthat::skip("No Jolpica connection available for testing")
   }
 }

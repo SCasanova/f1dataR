@@ -12,7 +12,7 @@ load_schedule <- function(season = get_current_season()) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
 
-  url <- glue::glue("{season}.json?limit=30", season = season)
+  url <- glue::glue("{season}.json", season = season)
 
   data <- get_jolpica_content(url)
   if (is.null(data)) {

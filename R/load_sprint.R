@@ -16,12 +16,12 @@
 load_sprint <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2021 || season > get_current_season())) {
     cli::cli_abort(
-      '{.var season} must be between 2021 and {get_current_season()} (or use "current")'
+      '{.var season} must be between 2021 and {get_current_season()} (or use "current").'
     )
   }
 
   url <- glue::glue(
-    "{season}/{round}/sprint.json?limit=40",
+    "{season}/{round}/sprint.json",
     season = season,
     round = round
   )

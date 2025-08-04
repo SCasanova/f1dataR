@@ -12,7 +12,7 @@ test_that("utility functions work", {
   expect_gte(get_current_season(), 2022)
 
   # get_jolpica_content() is inherently tested in load_x functions too
-  url <- "2022/circuits.json?limit=40"
+  url <- "2022/circuits.json"
 
   expect_warning(get_ergast_content(url), regexp = "was deprecated in f1dataR")
   # Test for ergast deprecation

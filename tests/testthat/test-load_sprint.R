@@ -17,6 +17,7 @@ test_that("load_sprint works", {
   expect_equal(sprint_2021_10$driver_id[3], "bottas")
   expect_equal(sprint_2021_10$position[1], "1")
 
+  vcr::local_cassette("load_sprint")
   sprint_2025_2 <- load_sprint(2025, 2)
 
   expect_equal(nrow(sprint_2025_2), 20)

@@ -25,10 +25,10 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
   lim <- 100
 
   # Function Code
-  url <- glue::glue("{season}/{round}/laps.json?limit={lim}",
-    season = season, round = round, lim = lim
+  url <- glue::glue("{season}/{round}/laps.json",
+    season = season, round = round
   )
-  data <- get_jolpica_content(url)
+  data <- get_jolpica_content(url, parameters = list("limit" = lim))
 
   if (is.null(data)) {
     return(NULL)
@@ -43,10 +43,7 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
   while (offset + lim <= total) {
     offset <- offset + lim
 
-    url <- glue::glue("{season}/{round}/laps.json?limit={lim}&offset={offset}",
-      lim = lim, season = season, round = round, offset = offset
-    )
-    data <- get_jolpica_content(url)
+    data <- get_jolpica_content(url, parameters = list(limit = lim, offset = offset))
 
     if (is.null(data)) {
       return(NULL)
