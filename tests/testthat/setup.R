@@ -6,8 +6,7 @@ skip_if_no_ff1 <- function() {
   if (!require("reticulate", quietly = TRUE)) {
     testthat::skip("Reticulate unavailable for testing")
   }
-  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
-  if (!have_ff1) {
+  if (!reticulate::py_module_available("fastf1")) {
     testthat::skip("fastf1 not available for testing")
   }
 }
