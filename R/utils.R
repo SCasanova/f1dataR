@@ -57,8 +57,8 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
 
   if (grepl("?", url, fixed = TRUE)) {
     cli::cli_warn(c(
-      'x' = "Warning: A {.param url} was provided with parameters.",
-      'i' = "Modify your request to pass the parameters as a list"
+      "x" = "Warning: A {.param url} was provided with parameters.",
+      "i" = "Modify your request to pass the parameters as a list"
     ))
   }
   if (!is.list(parameters)) {
@@ -388,10 +388,9 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
 #' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 #' }
 setup_fastf1 <- function(
-  ...,
-  envname = "f1dataR_env",
-  new_env = identical(envname, "f1dataR_env")
-) {
+    ...,
+    envname = "f1dataR_env",
+    new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
     cli::cli_alert_warning(
       "The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}."

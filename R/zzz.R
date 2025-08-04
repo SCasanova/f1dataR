@@ -2,7 +2,7 @@
 .onLoad <- function(libname, pkgname) {
   reticulate::py_require("f1dataR_env")
   reticulate::configure_environment(pkgname)
-  
+
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
 
   memoise_option <- getOption("f1dataR.cache", default = "memory")
