@@ -72,7 +72,7 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
       driver = driver
     ))
   } else if (laps != "all") {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_drivers('{driver}').pick_lap({laps}).get_telemetry().add_distance().add_driver_ahead()",
+    reticulate::py_run_string(glue::glue("tel = session.laps.pick_drivers('{driver}').pick_laps({laps}).get_telemetry().add_distance().add_driver_ahead()",
       driver = driver, laps = laps
     ))
   } else {
