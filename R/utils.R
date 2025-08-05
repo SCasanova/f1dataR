@@ -362,48 +362,8 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
   }
   return(dplyr::as_tibble(data))
 }
+
 # nocov start
-
-#' Setup fastf1 connection
-#'
-#' @description Installs or optionally updates `fastf1` Python package in the current active Python
-#' environment/virtualenv/conda env.
-#'
-#' More information on how to manage complex environment needs can be read in the
-#' \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
-#' managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
-#' \link[reticulate]{conda-tools}
-#' @param ... Additional parameters to pass to \link[reticulate]{py_install}
-#' @param envname Optionally pass an environment name used. Defaults to package default of `f1dataR_env`.
-#' @param new_env Whether or not to completely remove and recreate the environment provided in `envname`. This will fix
-#' any issues experienced by `fastf1` related to package dependencies.
-#' @export
-#' @return No return value, called to install or update `fastf1` Python package.
-#' @examples
-#' \dontrun{
-#' # Install fastf1 into the currently active Python environment
-#' setup_fastf1()
-#'
-#' # Reinstall fastf1 and recreate the environment.
-#' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
-#' }
-setup_fastf1 <- function(
-    ...,
-    envname = "f1dataR_env",
-    new_env = identical(envname, "f1dataR_env")) {
-  if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert_warning(
-      "The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}."
-    )
-    virtualenv_remove(envname)
-  }
-
-  cli::cli_alert_info(
-    "Installing {.pkg FastF1} in current Python environment: {.var {envname}}."
-  )
-  reticulate::py_install("fastf1", envname = envname, ...)
-}
-
 
 #' @noRd
 dummy <- function() {
