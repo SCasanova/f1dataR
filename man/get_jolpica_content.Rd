@@ -4,11 +4,13 @@
 \alias{get_jolpica_content}
 \title{Get Jolpica Content}
 \usage{
-get_jolpica_content(url)
+get_jolpica_content(url, parameters = list(limit = 40))
 }
 \arguments{
 \item{url}{the Jolpica URL tail to get from the API (for example,
 \code{"{season}/circuits.json?limit=40"} is called from \code{load_circuits()}).}
+
+\item{parameters}{Parameters to add to the url. Typically \code{"...?limit=40"}.}
 }
 \value{
 the result of \code{jsonlite::fromJSON} called on Jolpica's return content.

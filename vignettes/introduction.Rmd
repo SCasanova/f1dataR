@@ -217,6 +217,3 @@ ggplot(pit_constructor, aes(x = team_name, y = pit_time, fill = team_name)) +
 <img src="introduction-pitstop-1.png" alt="Average time in pits for each team at the 2023 Azerbaijan Grand Prix" width="100%" />
 <p class="caption">Average time in pits for each team at the 2023 Azerbaijan Grand Prix</p>
 </div>
-
-# Help
-If you're having trouble with `fastf1 is not available` errors, please check out the "Setup FastF1 Connection" vignette (`vignette("setup_fastf1", "f1dataR")`).
