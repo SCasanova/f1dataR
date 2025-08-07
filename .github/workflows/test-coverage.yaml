@@ -194,6 +194,7 @@ jobs:
             any::covr
             any::devtools
             any::xml2
+            any::vcr
           needs: coverage
 
       - name: Test coverage
