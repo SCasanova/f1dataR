@@ -55,19 +55,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: setup r-reticulate venv
-        shell: Rscript {0}
-        run: |
-          python_packages <- c("numpy", "fastf1")
-
-          library(reticulate)
-          virtualenv_create("r-reticulate", Sys.which("python"))
-          virtualenv_install("r-reticulate", python_packages)
-
-          path_to_python <- virtualenv_python("r-reticulate")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
-
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
@@ -149,6 +136,7 @@ jobs:
             any::knitr
             any::rmarkdown
             any::markdown
+            any::vcr
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
@@ -193,19 +181,19 @@ jobs:
       - name: setup r-reticulate venv
         shell: Rscript {0}
         run: |
+            path_to_python <- reticulate::virtualenv_create(
+              envname = "r-reticulate",
+              python = Sys.which("python"),
+              packages = c("numpy")
+            )
+            writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
+              Sys.getenv("GITHUB_ENV"))
           python_packages <- c("numpy")
 
-          library(reticulate)
-          virtualenv_create("r-reticulate", Sys.which("python"))
-          virtualenv_install("r-reticulate", python_packages)
           #force dev version install with repl python from reticulate
           repl_python(quiet = TRUE)
-          %pip install git+https://github.com/theOehrly/Fast-F1.git
+          pip install git+https://github.com/theOehrly/Fast-F1.git
           exit
-
-          path_to_python <- virtualenv_python("r-reticulate")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
 
       - uses: r-lib/actions/check-r-package@v2
         with:

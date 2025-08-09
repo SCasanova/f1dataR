@@ -19,7 +19,7 @@ test_that("driver telemetry", {
   if (ff1_ver < "3.1") {
     expect_error(
       telem <- load_driver_telemetry(season = 2023, round = "Brazil", session = "S", driver = "HAM", laps = "all"),
-      "An old version of FastF1 is in use"
+      "Skipping load_race_session as FastF1 is out of date."
     )
     skip("Skipping load_driver_telemetry tests as FastF1 is out of date.")
   }

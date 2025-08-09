@@ -35,19 +35,6 @@ jobs:
             any::xml2
           needs: coverage
 
-      - name: setup r-reticulate venv
-        shell: Rscript {0}
-        run: |
-          python_packages <- c("numpy", "fastf1")
-
-          library(reticulate)
-          virtualenv_create("r-reticulate", Sys.which("python"))
-          virtualenv_install("r-reticulate", python_packages)
-
-          path_to_python <- virtualenv_python("r-reticulate")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
-
       - name: Test coverage
         run: |
           cov <- covr::package_coverage(
@@ -79,79 +66,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-test-failures
-          path: ${{ runner.temp }}/package
-
-  test-coverage-oldff1:
-    name: Test coverage - old fastf1
-
-    runs-on: ubuntu-latest
-
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::covr
-            any::devtools
-            any::xml2
-          needs: coverage
-
-      - name: setup r-reticulate venv
-        shell: Rscript {0}
-        run: |
-          python_packages <- c("urllib3", "fastf1==3.3.9")
-
-          library(reticulate)
-          virtualenv_create("r-reticulate", Sys.which("python"))
-          virtualenv_install("r-reticulate", python_packages)
-
-          path_to_python <- virtualenv_python("r-reticulate")
-          writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
-                     Sys.getenv("GITHUB_ENV"))
-
-      - name: Test coverage
-        run: |
-          cov <- covr::package_coverage(
-            quiet = FALSE,
-            clean = FALSE,
-            install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
-          )
-          covr::to_cobertura(cov)
-        shell: Rscript {0}
-
-      - uses: codecov/codecov-action@v4
-        with:
-          # Fail if error if not on PR, or if on PR and token is given
-          fail_ci_if_error: ${{ github.event_name != 'pull_request' || secrets.CODECOV_TOKEN }}
-          file: ./cobertura.xml
-          plugin: noop
-          disable_search: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: Show testthat output
-        if: always()
-        run: |
-          ## --------------------------------------------------------------------
-          find ${{ runner.temp }}/package -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
-
-      - name: Upload test results
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-oldff1-test-failures
           path: ${{ runner.temp }}/package
 
   test-coverage-hard:
