@@ -188,12 +188,8 @@ jobs:
             )
             writeLines(sprintf("RETICULATE_PYTHON=%s", path_to_python),
               Sys.getenv("GITHUB_ENV"))
-            python_packages <- c("numpy")
-
-            #force dev version install with repl python from reticulate
-            reticulate::repl_python(quiet = TRUE)
-            %pip install git+https://github.com/theOehrly/Fast-F1.git
-            exit
+            reticulate::py_require('fastf1@git+https://github.com/theOehrly/Fast-F1.git')
+            reticulate::py_available(TRUE)
 
       - uses: r-lib/actions/check-r-package@v2
         with:

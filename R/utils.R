@@ -313,6 +313,7 @@ check_ff1_version <- function() {
 #' @export
 #' @return version as class `package_version`
 get_fastf1_version <- function() {
+  reticulate::py_available(initialize = TRUE)
   ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")

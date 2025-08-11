@@ -1,5 +1,10 @@
 # f1dataR (development version)
 
+* Updated code to match new `reticulate` interface for package and environment management.
+* Updated tests to use `vcr` package to reduce hits on the Jolpica API
+* Removed support for FastF1 v < 3.0 (now causes errors instead of warnings).
+* Test suite and automated testing changes to reflect the above changes.
+
 # f1dataR 2.0.1
 
 * Forced fail-over from Ergast to Jolpica (still deprecated at 'warn' level).

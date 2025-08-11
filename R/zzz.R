@@ -1,7 +1,7 @@
 # nocov start
 .onLoad <- function(libname, pkgname) {
-  reticulate::py_require("f1dataR")
-  reticulate::configure_environment(pkgname)
+  reticulate::py_require("fastf1")
+  reticulate::import("fastf1", delay_load = TRUE)
 
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
 
