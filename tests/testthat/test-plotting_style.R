@@ -6,7 +6,11 @@ test_that("aesthetics works", {
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
   if (dir.exists(file.path(tempdir(), "tst_aesthetics"))) {
-    unlink(file.path(tempdir(), "tst_aesthetics"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_aesthetics"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_aesthetics"))
   dir.create(file.path(tempdir(), "tst_aesthetics"), recursive = TRUE)
@@ -29,32 +33,44 @@ test_that("aesthetics works", {
 
   expect_equal(driver1, driver2)
   expect_equal(driver1$driver, "ALO")
-  expect_equal(names(driver1), c("linestyle", "marker", "color", "driver", "abbreviation"))
+  expect_equal(
+    names(driver1),
+    c("linestyle", "marker", "color", "driver", "abbreviation")
+  )
 
-  expect_true(grepl("^#[0-9A-Fa-f]{6}$", get_driver_color(driver = "HAM", season = 2024)))
+  expect_true(grepl(
+    "^#[0-9A-Fa-f]{6}$",
+    get_driver_color(driver = "HAM", season = 2024)
+  ))
   expect_equal(get_driver_color("HAM", 2024), get_driver_colour("HAM", 2024))
 
   expect_true(grepl("^#[0-9A-Fa-f]{6}$", get_team_color("Red Bull", 2024)))
-  expect_equal(get_team_color("Red Bull", 2024), get_team_colour("Red Bull", 2024))
+  expect_equal(
+    get_team_color("Red Bull", 2024),
+    get_team_colour("Red Bull", 2024)
+  )
 
   colormap <- get_driver_color_map(2024, 1)
   expect_true(is.data.frame(colormap))
   expect_equal(names(colormap), c("abbreviation", "color"))
   expect_equal(nrow(colormap), 20)
 
-  expect_error(get_driver_style(c("Lando Norris", "Max Verstappen"), 2024, 1),
+  expect_error(
+    get_driver_style(c("Lando Norris", "Max Verstappen"), 2024, 1),
     "`driver` must be a character vector of length one.",
     fixed = TRUE
   )
   expect_error(get_driver_style("q", 2024, 1), "Error running FastF1 code:")
 
-  expect_error(get_driver_color(c("Lando Norris", "Max Verstappen"), 2024, 1),
+  expect_error(
+    get_driver_color(c("Lando Norris", "Max Verstappen"), 2024, 1),
     "`driver` must be a character vector of length one.",
     fixed = TRUE
   )
   expect_error(get_driver_color("q", 2024, 1), "Error running FastF1 code:")
 
-  expect_error(get_team_color(c("Red Bull", "Mercedes"), 2024, 1),
+  expect_error(
+    get_team_color(c("Red Bull", "Mercedes"), 2024, 1),
     "`team` must be a character vector of length one.",
     fixed = TRUE
   )
@@ -92,7 +108,10 @@ test_that("lookups works", {
   expect_equal(get_team_by_driver("HAM", 2024), "Mercedes")
   expect_equal(get_team_name("Merc", 2024), "Mercedes")
   expect_equal(get_team_name("Haas", 2024, short = TRUE), "Haas")
-  expect_equal(get_drivers_by_team("Mercedes", 2024), c("Lewis Hamilton", "George Russell"))
+  expect_equal(
+    get_drivers_by_team("Mercedes", 2024),
+    c("Lewis Hamilton", "George Russell")
+  )
   dt <- get_session_drivers_and_teams(2024, 1)
 
   expect_true(is.data.frame(dt))
@@ -102,39 +121,81 @@ test_that("lookups works", {
   expect_equal(
     get_tire_compounds(2024),
     data.frame(
-      compound = c("SOFT", "MEDIUM", "HARD", "INTERMEDIATE", "WET", "UNKNOWN", "TEST-UNKNOWN"),
-      color = c("#da291c", "#ffd12e", "#f0f0ec", "#43b02a", "#0067ad", "#00ffff", "#434649")
+      compound = c(
+        "SOFT",
+        "MEDIUM",
+        "HARD",
+        "INTERMEDIATE",
+        "WET",
+        "UNKNOWN",
+        "TEST-UNKNOWN"
+      ),
+      color = c(
+        "#da291c",
+        "#ffd12e",
+        "#f0f0ec",
+        "#43b02a",
+        "#0067ad",
+        "#00ffff",
+        "#434649"
+      )
     )
   )
 
-  expect_error(get_driver_abbreviation(c("Lewis", "George"), 2024),
+  expect_error(
+    get_driver_abbreviation(c("Lewis", "George"), 2024),
     "`driver_name` must be a character vector of length one.",
     fixed = TRUE
   )
-  expect_error(get_driver_name(c("Lewis", "George"), 2024),
+  expect_error(
+    get_driver_name(c("Lewis", "George"), 2024),
     "`driver_name` must be a character vector of length one.",
     fixed = TRUE
   )
-  expect_error(get_team_by_driver(c("Lewis", "George"), 2024),
+  expect_error(
+    get_team_by_driver(c("Lewis", "George"), 2024),
     "`driver_name` must be a character vector of length one.",
     fixed = TRUE
   )
-  expect_error(get_team_name(c("Merc", "Aston"), 2024),
+  expect_error(
+    get_team_name(c("Merc", "Aston"), 2024),
     "`team_name` must be a character vector of length one.",
     fixed = TRUE
   )
-  expect_error(get_team_name("Merc", 2024, short = "yes"),
+  expect_error(
+    get_team_name("Merc", 2024, short = "yes"),
     "`short` must be a single logical value.",
     fixed = TRUE
   )
-  expect_error(get_drivers_by_team(c("Merc", "Aston"), 2024),
+  expect_error(
+    get_drivers_by_team(c("Merc", "Aston"), 2024),
     "`team_name` must be a character vector of length one.",
     fixed = TRUE
   )
 
-  expect_error(get_driver_abbreviation("q", 2024), "Error running FastF1 code:", fixed = TRUE)
-  expect_error(get_driver_name("q", 2024), "Error running FastF1 code:", fixed = TRUE)
-  expect_error(get_team_by_driver("q", 2024), "Error running FastF1 code:", fixed = TRUE)
-  expect_error(get_team_name("q", 2024), "Error running FastF1 code:", fixed = TRUE)
-  expect_error(get_drivers_by_team("q", 2024), "Error running FastF1 code:", fixed = TRUE)
+  expect_error(
+    get_driver_abbreviation("q", 2024),
+    "Error running FastF1 code:",
+    fixed = TRUE
+  )
+  expect_error(
+    get_driver_name("q", 2024),
+    "Error running FastF1 code:",
+    fixed = TRUE
+  )
+  expect_error(
+    get_team_by_driver("q", 2024),
+    "Error running FastF1 code:",
+    fixed = TRUE
+  )
+  expect_error(
+    get_team_name("q", 2024),
+    "Error running FastF1 code:",
+    fixed = TRUE
+  )
+  expect_error(
+    get_drivers_by_team("q", 2024),
+    "Error running FastF1 code:",
+    fixed = TRUE
+  )
 })

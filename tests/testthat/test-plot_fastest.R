@@ -17,8 +17,14 @@ test_that("graphics work", {
   # Ensure caught failure if no ggplot2, then skip remainder
   if (!require("ggplot2", quietly = TRUE)) {
     expect_error(
-      plot_fastest(season = 2023, round = 1, session = "R", driver = "HAM", color = "gear"),
-      "f1dataR::plot_fastest() requires ggplot2 package installation"
+      plot_fastest(
+        season = 2023,
+        round = 1,
+        session = "R",
+        driver = "HAM",
+        color = "gear"
+      ),
+      "requires ggplot2 package installation"
     )
     testthat::skip("ggplot2 not available for testing graphics")
   }
@@ -35,7 +41,13 @@ test_that("graphics work", {
 
   # Check deprecation
   expect_error(
-    plot_fastest(season = 2023, race = 1, session = "R", driver = "HAM", color = "gear"),
+    plot_fastest(
+      season = 2023,
+      race = 1,
+      session = "R",
+      driver = "HAM",
+      color = "gear"
+    ),
     "was deprecated in f1dataR"
   )
 
@@ -67,7 +79,10 @@ test_that("correct_track_ratio works", {
     )
     testthat::skip("ggplot2 not available for testing graphics")
   }
-  expect_error(correct_track_ratio("bob"), "`trackplot` must be a `ggplot` object")
+  expect_error(
+    correct_track_ratio("bob"),
+    "`trackplot` must be a `ggplot` object"
+  )
 })
 
 test_that("graphics works without internet", {
@@ -78,7 +93,11 @@ test_that("graphics works without internet", {
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
   if (dir.exists(file.path(tempdir(), "tst_graphics2"))) {
-    unlink(file.path(tempdir(), "tst_graphics2"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_graphics2"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_graphics2"))
   dir.create(file.path(tempdir(), "tst_graphics2"), recursive = TRUE)
@@ -86,7 +105,9 @@ test_that("graphics works without internet", {
 
   ff1_ver <- get_fastf1_version()
   if (ff1_ver < "3.1") {
-    skip("Skipping load_circuit_details (no internet) test as FastF1 is out of date.")
+    skip(
+      "Skipping load_circuit_details (no internet) test as FastF1 is out of date."
+    )
   }
   # if no ggplot2, then skip remainder
   if (!require("ggplot2", quietly = TRUE)) {
@@ -101,7 +122,10 @@ test_that("graphics works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(plot_fastest(2023, 1, "R", "HAM", "gear"), "f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
+          expect_message(
+            plot_fastest(2023, 1, "R", "HAM", "gear"),
+            "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+          )
           expect_null(plot_fastest(2023, 1, "R", "HAM", "gear"))
         })
       })
