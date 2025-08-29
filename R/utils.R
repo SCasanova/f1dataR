@@ -54,7 +54,7 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
   # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
-
+  
   if (grepl("?", url, fixed = TRUE)) {
     cli::cli_warn(c(
       "x" = "Warning: A {.param url} was provided with parameters.",
@@ -172,9 +172,11 @@ get_current_season <- function() {
 time_to_sec <- function(time) {
   subfun <- function(x) {
     if (is.na(x)) {
-      NA
+      return(NA_real_)
     } else if (is.numeric(x)) {
-      x
+      return(x)
+    } else if (x == "") {
+      return(NA_real_)
     } else {
       split <- as.numeric(strsplit(x, ":", fixed = TRUE)[[1]])
       if (length(split) == 3) {
