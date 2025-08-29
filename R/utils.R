@@ -378,10 +378,9 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
 #' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 #' }
 setup_fastf1 <- function(
-  ...,
-  envname = "f1dataR_env",
-  new_env = identical(envname, "f1dataR_env")
-) {
+    ...,
+    envname = "f1dataR_env",
+    new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
     cli::cli_alert_warning(
       "The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f"
