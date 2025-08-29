@@ -35,13 +35,17 @@ test_that("utility functions work", {
   expect_equal(time_to_sec("12:34:56.789"), 45296.789)
   expect_equal(time_to_sec("12.3456"), 12.3456)
   expect_equal(time_to_sec(12.345), 12.345)
+  expect_equal(time_to_sec(""), NA)
 
   expect_equal(
     time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
     c(12.345, 83.456, 45296.789, 12.3456)
   )
 
-  expect_error(check_ff1_network_connection(), "f1dataR: Specific race path must be provided")
+  expect_error(
+    check_ff1_network_connection(),
+    "f1dataR: Specific race path must be provided"
+  )
 })
 
 test_that("Utility Functions work without internet", {
@@ -60,9 +64,11 @@ test_that("Utility Functions work without internet", {
     # a byproduct of the without_internet call
     suppressWarnings({
       suppressMessages({
-        httptest2::without_internet((
-          expect_false(check_ff1_network_connection("/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/"))
-        ))
+        httptest2::without_internet(
+          (expect_false(check_ff1_network_connection(
+            "/static/2024/2024-03-02_Bahrain_Grand_Prix/2024-03-02_Race/"
+          )))
+        )
       })
     })
   }
