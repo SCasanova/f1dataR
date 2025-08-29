@@ -35,7 +35,8 @@ test_that("utility functions work", {
   expect_equal(time_to_sec("12:34:56.789"), 45296.789)
   expect_equal(time_to_sec("12.3456"), 12.3456)
   expect_equal(time_to_sec(12.345), 12.345)
-  expect_equal(time_to_sec(""), NA)
+  expect_equal(time_to_sec(""), NA_real_)
+  expect_equal(time_to_sec(NA), NA_real_)
 
   expect_equal(
     time_to_sec(c("12.345", "1:23.456", "12:34:56.789", "12.3456")),
