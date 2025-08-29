@@ -17,7 +17,9 @@
 #' Further processing is performed by specific functions
 get_ergast_content <- function(url) {
   # Function Deprecation Warning
-  lifecycle::deprecate_warn("at the end of 2024", "get_ergast_content()",
+  lifecycle::deprecate_warn(
+    "at the end of 2024",
+    "get_ergast_content()",
     details = c(
       "i" = "At the end of 2024 season the Ergast Motor Racing Database API was shut down.",
       " " = "Update f1dataR to use the new jolpica-f1 API data source"
@@ -52,11 +54,15 @@ get_jolpica_content <- function(url) {
   # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
-
   jolpica_raw <- httr2::request("https://api.jolpi.ca/ergast/f1/") %>%
     httr2::req_url_path_append(url) %>%
-    httr2::req_retry(max_tries = 10, backoff = function(x) stats::runif(1, 1, 2^x)) %>%
-    httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+    httr2::req_retry(max_tries = 10, backoff = function(x) {
+      stats::runif(1, 1, 2^x)
+    }) %>%
+    httr2::req_user_agent(glue::glue(
+      "f1dataR/{ver}",
+      ver = utils::installed.packages()["f1dataR", "Version"]
+    )) %>%
     httr2::req_throttle(4 / 1) %>%
     httr2::req_error(is_error = ~FALSE)
 
@@ -68,15 +74,24 @@ get_jolpica_content <- function(url) {
         httr2::req_perform()
     },
     error = function(e) {
-      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Jolpica:\n{e}", e = e))
+      cli::cli_alert_danger(glue::glue(
+        "f1dataR: Error getting data from Jolpica:\n{e}",
+        e = e
+      ))
     }
   )
 
   # Restart retries to Jolpica with http (instead of https)
   # No testing penalty for Jolpica functioning correct
   # nocov start
-  if (is.null(jolpica_res) || httr2::resp_is_error(jolpica_res) || httr2::resp_body_string(jolpica_res) == "Unable to select database") {
-    cli::cli_alert_warning("Failure at Jolpica with https:// connection. Retrying as http://.")
+  if (
+    is.null(jolpica_res) ||
+      httr2::resp_is_error(jolpica_res) ||
+      httr2::resp_body_string(jolpica_res) == "Unable to select database"
+  ) {
+    cli::cli_alert_warning(
+      "Failure at Jolpica with https:// connection. Retrying as http://."
+    )
     tryCatch(
       {
         jolpica_res <- jolpica_raw %>%
@@ -85,7 +100,10 @@ get_jolpica_content <- function(url) {
           httr2::req_perform()
       },
       error = function(e) {
-        cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from Jolpica:\n{e}", e = e))
+        cli::cli_alert_danger(glue::glue(
+          "f1dataR: Error getting data from Jolpica:\n{e}",
+          e = e
+        ))
       }
     )
   }
@@ -96,7 +114,8 @@ get_jolpica_content <- function(url) {
   }
 
   if (httr2::resp_is_error(jolpica_res)) {
-    cli::cli_alert_danger(glue::glue("Error getting Jolpica data, http status code {code}.\n{msg}",
+    cli::cli_alert_danger(glue::glue(
+      "Error getting Jolpica data, http status code {code}.\n{msg}",
       code = httr2::resp_status(jolpica_res),
       msg = httr2::resp_status_desc(jolpica_res)
     ))
@@ -104,7 +123,9 @@ get_jolpica_content <- function(url) {
   }
 
   if (httr2::resp_body_string(jolpica_res) == "Unable to select database") {
-    cli::cli_alert_danger("Jolpica is having database trouble. Please try again at a later time.")
+    cli::cli_alert_danger(
+      "Jolpica is having database trouble. Please try again at a later time."
+    )
     return(NULL)
   }
   # nocov end
@@ -121,7 +142,8 @@ get_jolpica_content <- function(url) {
 #' @export
 #' @return Year (four digit number) representation of current season, as numeric.
 get_current_season <- function() {
-  return(ifelse(as.numeric(strftime(Sys.Date(), "%m")) < 3,
+  return(ifelse(
+    as.numeric(strftime(Sys.Date(), "%m")) < 3,
     as.numeric(strftime(Sys.Date(), "%Y")) - 1,
     as.numeric(strftime(Sys.Date(), "%Y"))
   ))
@@ -138,9 +160,11 @@ get_current_season <- function() {
 time_to_sec <- function(time) {
   subfun <- function(x) {
     if (is.na(x)) {
-      NA
+      return(NA_real_)
     } else if (is.numeric(x)) {
-      x
+      return(x)
+    } else if (x == "") {
+      return(NA_real_)
     } else {
       split <- as.numeric(strsplit(x, ":", fixed = TRUE)[[1]])
       if (length(split) == 3) {
@@ -174,10 +198,16 @@ check_ff1_session_loaded <- function(session_name = "session") {
     {
       # Only returns a value if session.load() has been successful
       # If it hasn't, retry
-      reticulate::py_run_string(glue::glue("{session_name}.t0_date", session_name = session_name))
+      reticulate::py_run_string(glue::glue(
+        "{session_name}.t0_date",
+        session_name = session_name
+      ))
     },
     error = function(e) {
-      reticulate::py_run_string(glue::glue("{session_name}.load()", session_name = session_name))
+      reticulate::py_run_string(glue::glue(
+        "{session_name}.load()",
+        session_name = session_name
+      ))
     }
   )
   invisible(TRUE)
@@ -208,14 +238,20 @@ check_ff1_network_connection <- function(path = NA_character_) {
         httr2::req_url_path_append(path) %>%
         httr2::req_url_path_append("Index.json") %>%
         httr2::req_retry(max_tries = 5) %>%
-        httr2::req_user_agent(glue::glue("f1dataR/{ver}", ver = utils::installed.packages()["f1dataR", "Version"])) %>%
+        httr2::req_user_agent(glue::glue(
+          "f1dataR/{ver}",
+          ver = utils::installed.packages()["f1dataR", "Version"]
+        )) %>%
         httr2::req_throttle(4 / 1) %>%
         httr2::req_error(is_error = ~FALSE)
       status <- ff1raw %>%
         httr2::req_perform()
     },
     error = function(e) {
-      cli::cli_alert_danger(glue::glue("f1dataR: Error getting data from F1 Live Timing:\n{e}", e = e))
+      cli::cli_alert_danger(glue::glue(
+        "f1dataR: Error getting data from F1 Live Timing:\n{e}",
+        e = e
+      ))
     }
   )
   if (is.null(status)) {
@@ -240,13 +276,15 @@ check_ff1_network_connection <- function(path = NA_character_) {
 check_ff1_version <- function() {
   version <- get_fastf1_version()
   if (version < "3.1") {
-    cli::cli_abort(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
+    cli::cli_abort(c(
+      "An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.1.0 or newer.",
       x = "Support for older {.pkg FastF1} versions was removed in {.pkg f1dataR} v1.6.0",
       i = "You can update your {.pkg FastF1} installation manually, or by running:",
       " " = "{.code setup_fastf1()}"
     ))
   } else if (version < "3.4") {
-    cli::cli_warn(c("An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.4.0 or newer for some functions.",
+    cli::cli_warn(c(
+      "An old version of {.pkg FastF1} is in use. {.pkg f1dataR} requires {.pkg FastF1} version 3.4.0 or newer for some functions.",
       x = "Support for older {.pkg FastF1} versions may be removed soon.",
       i = "You can update your {.pkg FastF1} installation manually, or by running:",
       " " = "{.code setup_fastf1()}"
@@ -269,7 +307,8 @@ get_fastf1_version <- function() {
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
   if (length(ver) == 0) {
-    cli::cli_warn("Ensure {.pkg fastf1} Python package is installed.",
+    cli::cli_warn(
+      "Ensure {.pkg fastf1} Python package is installed.",
       i = "Please run this to install the most recent version:",
       " " = "{.code setup_fastf1()}"
     )
@@ -294,13 +333,19 @@ get_fastf1_version <- function() {
 #' @keywords internal
 add_col_if_absent <- function(data, column_name, na_type = NA) {
   if (!is.na(na_type)) {
-    cli::cli_abort(x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_}).")
+    cli::cli_abort(
+      x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_})."
+    )
   }
   if (!(inherits(data, "data.frame"))) {
-    cli::cli_abort(x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}.")
+    cli::cli_abort(
+      x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}."
+    )
   }
   if (!(length(column_name) == 1) | !(inherits(column_name, "character"))) {
-    cli::cli_abort(x = "{.arg column_name} must be provided as a single {.code character} value.")
+    cli::cli_abort(
+      x = "{.arg column_name} must be provided as a single {.code character} value."
+    )
   }
   if (!(column_name %in% colnames(data))) {
     data[, column_name] <- na_type
@@ -332,13 +377,20 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
 #' # Reinstall fastf1 and recreate the environment.
 #' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
 #' }
-setup_fastf1 <- function(..., envname = "f1dataR_env", new_env = identical(envname, "f1dataR_env")) {
+setup_fastf1 <- function(
+    ...,
+    envname = "f1dataR_env",
+    new_env = identical(envname, "f1dataR_env")) {
   if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert_warning("The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f")
+    cli::cli_alert_warning(
+      "The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f"
+    )
     virtualenv_remove(envname)
   }
 
-  cli::cli_alert_info("Installing {.pkg FastF1} in current Python environment: {.var {envname}}.")
+  cli::cli_alert_info(
+    "Installing {.pkg FastF1} in current Python environment: {.var {envname}}."
+  )
   reticulate::py_install("fastf1", envname = envname, ...)
 }
 

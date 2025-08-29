@@ -1,5 +1,7 @@
 # f1dataR (development version)
 
+* Fixed a data conversion issue in `time_to_sec()` (#290)
+
 # f1dataR 2.0.1
 
 * Forced fail-over from Ergast to Jolpica (still deprecated at 'warn' level).
