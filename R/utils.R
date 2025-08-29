@@ -54,7 +54,7 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
   # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
-  
+
   if (grepl("?", url, fixed = TRUE)) {
     cli::cli_warn(c(
       "x" = "Warning: A {.param url} was provided with parameters.",
