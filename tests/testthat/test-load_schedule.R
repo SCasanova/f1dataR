@@ -16,7 +16,7 @@ test_that("load_schedule works", {
   expect_equal(nrow(schedule_2021), 22)
   expect_equal(schedule_2021$season[1], "2021")
   expect_equal(schedule_2021$race_name[2], "Emilia Romagna Grand Prix")
-
+  vcr::local_cassette("load_schedule")
   schedule_1999 <- load_schedule(1999)
   expect_equal(nrow(schedule_1999), 16)
   expect_equal(schedule_1999$circuit_id[1], "albert_park")

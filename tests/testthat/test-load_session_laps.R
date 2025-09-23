@@ -18,7 +18,7 @@ test_that("load session laps works", {
   if (ff1_ver < "3.1") {
     expect_error(
       laps <- load_session_laps(season = 2023, round = "bahrain"),
-      "An old version of FastF1 is in use"
+      "Skipping load_race_session as FastF1 is out of date."
     )
     skip("Skipping load_session_laps tests as FastF1 is out of date.")
   }

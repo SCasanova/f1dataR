@@ -1,16 +1,19 @@
 # nocov start
 .onLoad <- function(libname, pkgname) {
-  reticulate::use_virtualenv("f1dataR_env", required = FALSE)
-  reticulate::configure_environment(pkgname)
+  reticulate::py_require("fastf1")
+  reticulate::import("fastf1", delay_load = TRUE)
+
   # Based on how nflreadr handles caching. Thanks to Tan (github @tanho63) for the suggestions
 
   memoise_option <- getOption("f1dataR.cache", default = "memory")
 
   if (!memoise_option %in% c("memory", "filesystem", "off")) {
     if (!dir.exists(normalizePath(memoise_option, mustWork = FALSE))) {
-      cli::cli_alert_warning("Option 'f1dataR.cache' was set to {memoise_option}.
+      cli::cli_alert_warning(
+        "Option 'f1dataR.cache' was set to {memoise_option}.
                              It should be one of c('memory', 'filesystem', 'off') or a valid/existing path.
-                             Reverting to 'memory'.")
+                             Reverting to 'memory'."
+      )
       memoise_option <- "memory"
       options("f1dataR.cache" = "memory")
     }
@@ -34,72 +37,128 @@
     # 86400 s is 24h
     assign(
       x = "load_circuits",
-      value = memoise::memoise(load_circuits, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_circuits,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_circuit_details",
-      value = memoise::memoise(load_circuit_details, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_circuit_details,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_constructors",
-      value = memoise::memoise(load_constructors, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_constructors,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_driver_telemetry",
-      value = memoise::memoise(load_driver_telemetry, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_driver_telemetry,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_drivers",
-      value = memoise::memoise(load_drivers, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_drivers,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_laps",
-      value = memoise::memoise(load_laps, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_laps,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_pitstops",
-      value = memoise::memoise(load_pitstops, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_pitstops,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_quali",
-      value = memoise::memoise(load_quali, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_quali,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_results",
-      value = memoise::memoise(load_results, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_results,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_schedule",
-      value = memoise::memoise(load_schedule, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_schedule,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_session_laps",
-      value = memoise::memoise(load_session_laps, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_session_laps,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_sprint",
-      value = memoise::memoise(load_sprint, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_sprint,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "load_standings",
-      value = memoise::memoise(load_standings, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        load_standings,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
     assign(
       x = "plot_fastest",
-      value = memoise::memoise(plot_fastest, ~ memoise::timeout(86400), cache = cache),
+      value = memoise::memoise(
+        plot_fastest,
+        ~ memoise::timeout(86400),
+        cache = cache
+      ),
       envir = rlang::ns_env("f1dataR")
     )
   }
@@ -115,7 +174,10 @@
     options("f1dataR.cache" = "memory")
   }
 
-  if (!memoise_option %in% c("memory", "filesystem", "off") && !dir.exists(normalizePath(memoise_option, mustWork = FALSE))) {
+  if (
+    !memoise_option %in% c("memory", "filesystem", "off") &&
+      !dir.exists(normalizePath(memoise_option, mustWork = FALSE))
+  ) {
     packageStartupMessage(
       "Note: f1dataR.cache is set to '",
       memoise_option,

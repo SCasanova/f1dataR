@@ -6,8 +6,7 @@ skip_if_no_ff1 <- function() {
   if (!require("reticulate", quietly = TRUE)) {
     testthat::skip("Reticulate unavailable for testing")
   }
-  have_ff1 <- "fastf1" %in% reticulate::py_list_packages()$package
-  if (!have_ff1) {
+  if (!reticulate::py_module_available("fastf1")) {
     testthat::skip("fastf1 not available for testing")
   }
 }
@@ -35,7 +34,7 @@ skip_if_no_py <- function() {
 # helper function to skip if jolpica isn't working
 skip_if_no_jolpica <- function() {
   testthat::skip_if_offline("jolpi.ca") # This will also skip on CRAN
-  if (is.null(get_jolpica_content("current/circuits.json?limit=40"))) {
+  if (is.null(get_jolpica_content("current/circuits.json"))) {
     testthat::skip("No Jolpica connection available for testing")
   }
 }

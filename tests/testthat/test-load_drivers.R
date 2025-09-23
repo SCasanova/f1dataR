@@ -16,6 +16,7 @@ test_that("Drivers Load works", {
   expect_equal(drivers_2021$driver_id[2], "bottas")
   expect_equal(drivers_2021$code[1], "ALO")
 
+  vcr::local_cassette("load_drivers")
   drivers_1999 <- load_drivers(1999)
   expect_equal(nrow(drivers_1999), 24)
   expect_equal(drivers_1999$driver_id[1], "alesi")

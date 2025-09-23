@@ -17,6 +17,7 @@ test_that("load_quali works", {
   expect_equal(quali_2021_1$driver_id[2], "hamilton")
   expect_equal(quali_2021_1$position[1], "1")
 
+  vcr::local_cassette("load_quali")
   quali_2004 <- load_quali(2004, 1)
   expect_equal(nrow(quali_2004), 20)
   expect_equal(quali_2004$driver_id[2], "barrichello")

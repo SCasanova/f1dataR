@@ -21,7 +21,7 @@ load_standings <- function(season = get_current_season(), round = "last", type =
     cli::cli_abort('{.var type} must be either "driver" or "constructor"')
   }
 
-  url <- glue::glue("{season}/{round}/{type}Standings.json?limit=40",
+  url <- glue::glue("{season}/{round}/{type}Standings.json",
     season = season, round = round, type = type
   )
 

@@ -19,7 +19,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Depends: 
     R (>= 3.5.0),
-    reticulate (>= 1.14),
+    reticulate (>= 1.41)
 Imports: 
     glue,
     magrittr,
@@ -42,6 +42,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
+    vcr
 VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR/, https://github.com/SCasanova/f1dataR
 BugReports: https://github.com/SCasanova/f1dataR/issues

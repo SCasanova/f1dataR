@@ -14,6 +14,7 @@ test_that("load_standings works", {
 
   expect_equal(nrow(standings_2021), 21)
 
+  vcr::local_cassette("load_standings")
   standings_2021_constructor <- load_standings(2021, type = "constructor")
   expect_equal(nrow(standings_2021_constructor), 10)
 

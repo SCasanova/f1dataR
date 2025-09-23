@@ -24,10 +24,10 @@ load_pitstops <- function(season = get_current_season(), round = "last", race = 
   }
 
   # Function Code
-  url <- glue::glue("{season}/{round}/pitstops.json?limit=100",
+  url <- glue::glue("{season}/{round}/pitstops.json",
     season = season, round = round
   )
-  data <- get_jolpica_content(url)
+  data <- get_jolpica_content(url, parameters = list(limit = 100))
 
   if (is.null(data)) {
     return(NULL)

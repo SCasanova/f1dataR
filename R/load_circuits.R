@@ -11,7 +11,7 @@ load_circuits <- function(season = get_current_season()) {
     cli::cli_abort('{.var season} must be between 1950 and {get_current_season()} (or use "current")')
   }
 
-  url <- glue::glue("{season}/circuits.json?limit=40",
+  url <- glue::glue("{season}/circuits.json",
     season = season
   )
 

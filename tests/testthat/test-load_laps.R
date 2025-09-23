@@ -25,6 +25,7 @@ test_that("load_laps works", {
   expect_error(load_laps(2021, race = 1))
 
   # 2021 Spa had very few laps
+  vcr::local_cassette("load_laps")
   laps_short <- load_laps(2021, 12)
   expect_equal(nrow(laps_short), 20)
 

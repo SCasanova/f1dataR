@@ -42,10 +42,11 @@ get_ergast_content <- function(url) {
 #'
 #' @param url the Jolpica URL tail to get from the API (for example,
 #' `"{season}/circuits.json?limit=40"` is called from `load_circuits()`).
+#' @param parameters Parameters to add to the url. Typically `"...?limit=40"`.
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on Jolpica's return content.
 #' Further processing is performed by specific functions
-get_jolpica_content <- function(url) {
+get_jolpica_content <- function(url, parameters = list(limit = 40)) {
   # Function Code
 
   # note:
@@ -54,8 +55,19 @@ get_jolpica_content <- function(url) {
   # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
+  if (grepl("?", url, fixed = TRUE)) {
+    cli::cli_warn(c(
+      "x" = "Warning: A {.param url} was provided with parameters.",
+      "i" = "Modify your request to pass the parameters as a list"
+    ))
+  }
+  if (!is.list(parameters)) {
+    as.list(parameters)
+  }
+
   jolpica_raw <- httr2::request("https://api.jolpi.ca/ergast/f1/") %>%
     httr2::req_url_path_append(url) %>%
+    httr2::req_url_query(!!!parameters) %>%
     httr2::req_retry(max_tries = 10, backoff = function(x) {
       stats::runif(1, 1, 2^x)
     }) %>%
@@ -303,6 +315,7 @@ check_ff1_version <- function() {
 #' @export
 #' @return version as class `package_version`
 get_fastf1_version <- function() {
+  reticulate::py_available(initialize = TRUE)
   ver <- reticulate::py_list_packages() %>%
     dplyr::filter(.data$package == "fastf1") %>%
     dplyr::pull("version")
@@ -352,48 +365,8 @@ add_col_if_absent <- function(data, column_name, na_type = NA) {
   }
   return(dplyr::as_tibble(data))
 }
+
 # nocov start
-
-#' Setup fastf1 connection
-#'
-#' @description Installs or optionally updates `fastf1` Python package in the current active Python
-#' environment/virtualenv/conda env.
-#'
-#' More information on how to manage complex environment needs can be read in the
-#' \href{https://rstudio.github.io/reticulate/articles/python_dependencies.html}{reticulate docs}, and tools for
-#' managing virtual environments are documented in  \link[reticulate]{virtualenv-tools} and
-#' \link[reticulate]{conda-tools}
-#' @param ... Additional parameters to pass to \link[reticulate]{py_install}
-#' @param envname Optionally pass an environment name used. Defaults to package default of `f1dataR_env`.
-#' @param new_env Whether or not to completely remove and recreate the environment provided in `envname`. This will fix
-#' any issues experienced by `fastf1` related to package dependencies.
-#' @export
-#' @return No return value, called to install or update `fastf1` Python package.
-#' @examples
-#' \dontrun{
-#' # Install fastf1 into the currently active Python environment
-#' setup_fastf1()
-#'
-#' # Reinstall fastf1 and recreate the environment.
-#' setup_fastf1(envname = "f1dataR_env", new_env = TRUE)
-#' }
-setup_fastf1 <- function(
-    ...,
-    envname = "f1dataR_env",
-    new_env = identical(envname, "f1dataR_env")) {
-  if (new_env && virtualenv_exists(envname)) {
-    cli::cli_alert_warning(
-      "The Python environment {.var {envname}} is being removed and rebuilt for {.pkg FastF1}f"
-    )
-    virtualenv_remove(envname)
-  }
-
-  cli::cli_alert_info(
-    "Installing {.pkg FastF1} in current Python environment: {.var {envname}}."
-  )
-  reticulate::py_install("fastf1", envname = envname, ...)
-}
-
 
 #' @noRd
 dummy <- function() {
