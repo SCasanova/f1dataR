@@ -5,6 +5,7 @@
 * Removed support for FastF1 v < 3.0 (now causes errors instead of warnings).
 * Test suite and automated testing changes to reflect the above changes.
 * Fixed a data conversion issue in `time_to_sec()` (#290)
+* Updated testing to comply with changes in ggplot2 (#292)
 
 # f1dataR 2.0.1
 
