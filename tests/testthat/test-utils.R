@@ -14,7 +14,7 @@ test_that("utility functions work", {
   # get_jolpica_content() is inherently tested in load_x functions too
   url <- "2022/circuits.json?limit=40"
 
-  expect_warning(get_ergast_content(url), regexp = "was deprecated in f1dataR")
+  suppressWarnings(expect_warning(get_ergast_content(url), regexp = "was deprecated in f1dataR"))
   # Test for ergast deprecation
 
   # Test add_col_if_absent()
