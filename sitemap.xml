@@ -7,7 +7,6 @@
 <url><loc>https://scasanova.github.io/f1dataR/articles/introduction.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/jolpica-data-analysis.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/articles/plotting-turn-info.html</loc></url>
-<url><loc>https://scasanova.github.io/f1dataR/articles/setup_fastf1.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/authors.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/index.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/news/index.html</loc></url>
@@ -42,7 +41,6 @@
 <url><loc>https://scasanova.github.io/f1dataR/reference/load_sprint.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/load_standings.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/plot_fastest.html</loc></url>
-<url><loc>https://scasanova.github.io/f1dataR/reference/setup_fastf1.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/theme_dark_f1.html</loc></url>
 <url><loc>https://scasanova.github.io/f1dataR/reference/time_to_sec.html</loc></url>
 </urlset>

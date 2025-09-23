@@ -6,8 +6,7 @@ articles:
   introduction: introduction.html
   jolpica-data-analysis: jolpica-data-analysis.html
   plotting-turn-info: plotting-turn-info.html
-  setup_fastf1: setup_fastf1.html
-last_built: 2025-08-29T12:42Z
+last_built: 2025-09-23T00:40Z
 urls:
   reference: https://scasanova.github.io/f1dataR/reference
   article: https://scasanova.github.io/f1dataR/articles
