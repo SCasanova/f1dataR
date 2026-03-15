@@ -17,10 +17,10 @@ test_that("Cache Clearing works for memoised functions to file", {
 
   expect_false(memoise::has_cache(load_schedule)())
   vcr::local_cassette("clear_cache")
-  tmp <- load_schedule()
-  expect_true(memoise::has_cache(load_schedule)())
+  tmp <- load_schedule(season = 2025)
+  expect_true(memoise::has_cache(load_schedule)(season = 2025))
   clear_f1_cache()
-  expect_false(memoise::has_cache(load_schedule)())
+  expect_false(memoise::has_cache(load_schedule)(season = 2025))
 })
 
 
