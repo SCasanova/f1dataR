@@ -4,6 +4,7 @@
 * Updated tests to use `vcr` package to reduce hits on the Jolpica API.
 * Removed support for FastF1 v < 3.0 (now causes errors instead of warnings).
 * Test suite and automated testing changes to reflect the above changes.
+* Refactored out `case_match` which was deprecated from `dplyr`.
 * Fixed a data conversion issue in `time_to_sec()` (#290).
 * Updated testing to comply with changes in `ggplot2` (#292).
 * Updated data conversions to avoid bugs after changes in Jolpica database. (#281, #284, #298, #299)

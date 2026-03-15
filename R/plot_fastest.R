@@ -87,7 +87,7 @@ plot_fastest <- function(season = get_current_season(), round = 1, session = "R"
   race_name <- s$event$EventName
 
   if (!(session %in% c("r", "R"))) {
-    race_name <- dplyr::case_match(
+    race_name <- dplyr::recode_values(
       session,
       c("q", "Q") ~ paste0(race_name, " Qualifying"),
       c("s", "S") ~ paste0(race_name, " Sprint"),
