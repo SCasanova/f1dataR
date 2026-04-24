@@ -92,7 +92,7 @@ long_telem_alo <- alo_telem %>%
     names_to = "param",
     values_to = "value"
   ) %>%
-  dplyr::mutate(param = dplyr::case_match(
+  dplyr::mutate(param = dplyr::recode_values(
     param,
     "speed" ~ "Speed (kph)",
     "n_gear" ~ "Gear",
@@ -145,7 +145,7 @@ long_telem_rus <- rus_telem %>%
     values_to = "value"
   ) %>%
   dplyr::filter(!(param == "distance_to_driver_ahead" & value > 50)) %>%
-  dplyr::mutate(param = dplyr::case_match(
+  dplyr::mutate(param = dplyr::recode_values(
     param,
     "speed" ~ "Speed (kph)",
     "n_gear" ~ "Gear",

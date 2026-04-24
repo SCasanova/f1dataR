@@ -4,15 +4,21 @@
 
 - Updated code to match new `reticulate` interface for package and
   environment management.
-- Updated tests to use `vcr` package to reduce hits on the Jolpica API
+- Updated tests to use `vcr` package to reduce hits on the Jolpica API.
 - Removed support for FastF1 v \< 3.0 (now causes errors instead of
   warnings).
 - Test suite and automated testing changes to reflect the above changes.
+- Refactored out `case_match` which was deprecated from `dplyr`.
 - Fixed a data conversion issue in
   [`time_to_sec()`](https://scasanova.github.io/f1dataR/reference/time_to_sec.md)
-  ([\#290](https://github.com/SCasanova/f1dataR/issues/290))
-- Updated testing to comply with changes in ggplot2
-  ([\#292](https://github.com/SCasanova/f1dataR/issues/292))
+  ([\#290](https://github.com/SCasanova/f1dataR/issues/290)).
+- Updated testing to comply with changes in `ggplot2`
+  ([\#292](https://github.com/SCasanova/f1dataR/issues/292)).
+- Updated data conversions to avoid bugs after changes in Jolpica
+  database. ([\#281](https://github.com/SCasanova/f1dataR/issues/281),
+  [\#284](https://github.com/SCasanova/f1dataR/issues/284),
+  [\#298](https://github.com/SCasanova/f1dataR/issues/298),
+  [\#299](https://github.com/SCasanova/f1dataR/issues/299))
 
 ## f1dataR 2.0.1
 
@@ -21,9 +27,9 @@ CRAN release: 2025-03-27
 - Forced fail-over from Ergast to Jolpica (still deprecated at ‘warn’
   level).
 - Fixed a pre-season bug where Jolpica API was missing a column in
-  load_season().
+  `load_season()`.
 - Fixed a bug resulting from a change in API for 2025 season - Thanks to
-  [@appiehappie999](https://github.com/appiehappie999)
+  [@appiehappie999](https://github.com/appiehappie999).
   ([\#277](https://github.com/SCasanova/f1dataR/issues/277))
 
 ## f1dataR 2.0.0
@@ -35,8 +41,11 @@ CRAN release: 2025-03-01
   changes significantly to reflect this and a new major version is
   appropriate.
   ([\#268](https://github.com/SCasanova/f1dataR/issues/268))
-- Bugfix in plot_fastest().
-- Bugfix in load_results() with pagination - Thanks to
+- Bugfix in
+  [`plot_fastest()`](https://scasanova.github.io/f1dataR/reference/plot_fastest.md).
+- Bugfix in
+  [`load_results()`](https://scasanova.github.io/f1dataR/reference/load_results.md)
+  with pagination - Thanks to
   [@awanderingspirit](https://github.com/awanderingspirit).
   ([\#272](https://github.com/SCasanova/f1dataR/issues/272))
 - Bugfix in README.

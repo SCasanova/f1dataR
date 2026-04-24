@@ -151,7 +151,7 @@ traces to see all the changes in driving style for that lap:</p>
 <span>    names_to <span class="op">=</span> <span class="st">"param"</span>,</span>
 <span>    values_to <span class="op">=</span> <span class="st">"value"</span></span>
 <span>  <span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_match.html" class="external-link">case_match</a></span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode-and-replace-values.html" class="external-link">recode_values</a></span><span class="op">(</span></span>
 <span>    <span class="va">param</span>,</span>
 <span>    <span class="st">"speed"</span> <span class="op">~</span> <span class="st">"Speed (kph)"</span>,</span>
 <span>    <span class="st">"n_gear"</span> <span class="op">~</span> <span class="st">"Gear"</span>,</span>
@@ -200,7 +200,7 @@ observe this (with his other telemetry lines too).</p>
 <span>    values_to <span class="op">=</span> <span class="st">"value"</span></span>
 <span>  <span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">param</span> <span class="op">==</span> <span class="st">"distance_to_driver_ahead"</span> <span class="op">&amp;</span> <span class="va">value</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_match.html" class="external-link">case_match</a></span><span class="op">(</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/recode-and-replace-values.html" class="external-link">recode_values</a></span><span class="op">(</span></span>
 <span>    <span class="va">param</span>,</span>
 <span>    <span class="st">"speed"</span> <span class="op">~</span> <span class="st">"Speed (kph)"</span>,</span>
 <span>    <span class="st">"n_gear"</span> <span class="op">~</span> <span class="st">"Gear"</span>,</span>
