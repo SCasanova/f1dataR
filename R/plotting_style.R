@@ -80,10 +80,10 @@ get_driver_style <- function(driver, season = get_current_season(), round = 1) {
 
   driverstyle$driver <- driver
   driverstyle$abbreviation <- py_env$abbreviation
-  driverstyle$marker <- dplyr::case_match(driverstyle$marker,
+  driverstyle$marker <- dplyr::recode_values(driverstyle$marker,
     "o" ~ 16,
     "x" ~ 4,
-    .default = 2
+    default = 2
   )
 
   return(driverstyle)
