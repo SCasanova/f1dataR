@@ -1,6 +1,6 @@
 # Changelog
 
-## f1dataR (development version)
+## f1dataR 2.0.2
 
 - Updated code to match new `reticulate` interface for package and
   environment management.
