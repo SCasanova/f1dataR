@@ -1,3 +1,26 @@
+# Wraps a cachem cache so that NULL function results are never stored.
+# memoise stores results via withVisible(), so a NULL return is represented
+# as list(value = NULL, visible = ...). By skipping set() for those values
+# the cache misses on the next call, causing the underlying function to be
+# retried rather than returning the cached NULL error.
+null_filtering_cache <- function(cache) {
+  list(
+    get = function(key, ...) cache$get(key, ...),
+    set = function(key, value) {
+      if (is.list(value) && is.null(value$value)) {
+        return(invisible(NULL))
+      }
+      invisible(cache$set(key, value))
+    },
+    exists = function(key, ...) cache$exists(key, ...),
+    remove = function(key, ...) cache$remove(key, ...),
+    reset = function(...) cache$reset(...),
+    keys = function(...) cache$keys(...),
+    info = function(...) cache$info(...),
+    prune = function(...) cache$prune(...)
+  )
+}
+
 # nocov start
 .onLoad <- function(libname, pkgname) {
   reticulate::py_require("fastf1")
@@ -28,9 +51,9 @@
       # set the cachedir to our new location for fastf1 caching too
       options("f1dataR.cache" = cache_dir)
     }
-    cache <- cachem::cache_disk(dir = memoise_option)
+    cache <- null_filtering_cache(cachem::cache_disk(dir = memoise_option))
   } else if (memoise_option == "memory") {
-    cache <- cachem::cache_mem()
+    cache <- null_filtering_cache(cachem::cache_mem())
   }
 
   if (memoise_option != "off") {

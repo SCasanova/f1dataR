@@ -8,6 +8,7 @@
 * Fixed a data conversion issue in `time_to_sec()` (#290).
 * Updated testing to comply with changes in `ggplot2` (#292).
 * Updated data conversions to avoid bugs after changes in Jolpica database. (#281, #284, #298, #299)
+* Fixed a bug where a NULL error return from Jolpica would be cached, preventing retries when the API recovers. (#295)
 
 # f1dataR 2.0.1
 

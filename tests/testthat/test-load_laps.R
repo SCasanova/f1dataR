@@ -56,5 +56,9 @@ test_that("load_laps works without internet", {
         })
       })
     })
+
+    # NULL (error) results must not be stored in the cache so that subsequent
+    # calls retry the request rather than returning the cached failure.
+    expect_false(memoise::has_cache(load_laps)(2021, 1))
   }
 })
