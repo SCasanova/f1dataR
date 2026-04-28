@@ -26,7 +26,6 @@ if (dir.exists(file.path(tempdir(), "vignettes", "vig_build_tmp"))) {
 }
 dir.create(file.path(tempdir(), "vignettes", "vig_build_tmp"), recursive = TRUE)
 withr::local_options(f1dataR.cache = file.path(tempdir(), "vignettes", "vig_build_tmp"))
-f1dataR::setup_fastf1()
 
 knitr::knit_hooks$set(optipng = knitr::hook_optipng)
 withr::local_timezone("UTC")

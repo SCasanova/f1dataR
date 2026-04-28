@@ -7,9 +7,6 @@
 #' session data streams. See the \href{https://docs.fastf1.dev/}{fastf1 documentation}
 #' for more details on the data returned by the python API.
 #'
-#' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
-#' 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
-#'
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
 #'

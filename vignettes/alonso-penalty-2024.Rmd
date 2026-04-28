@@ -12,12 +12,11 @@ vignette: >
 In the closing laps of the 2024 Australian Grand Prix, the lone remaining Mercedes of George Russell was in a showdown with Aston Martin's Fernando Alonso. On the penultimate lap, Russell crashed out at turn 6-7, coming to a stop at an awkward angle and askew across the track. Following the race, both drivers were called to the Stewards, who discussed the incident with both drivers and reviewed data and video. They handed Alonso a 20 second penalty for causing the crash, despite there not having been any contact between the two drivers. A large portion of the decision rested on the telemetry from the drivers' cars. While the Stewards, FIA and teams have much more detailed data than we do, we can repeat their analysis using R, `f1dataR` and the Python FastF1 package.
 
 # Accessing the Data
-We'll start by loading the `f1dataR` package, and preparing the Python virtual environment (including installing FastF1). This happens automatically with a call to `setup_fastf1()`, [see the setup_fastf1 vignette](setup_fastf1.Rmd) for more information.
+We'll start by loading the `f1dataR` package.
 
 
 ``` r
 library(f1dataR)
-setup_fastf1()
 ```
 
 Since the crash occurred on lap 57, we'll download telemetry for Alonso for the five previous laps to compare what Alonso did on the fateful lap compared to those before. We'll also load Russell's telemetry from those same laps to see how he reacts before the crash. Note we use some `dplyr` for data manipulation.

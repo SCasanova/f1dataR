@@ -8,9 +8,6 @@
 #' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
 #' default is the current working directory.
 #'
-#' If you have trouble with errors mentioning 'fastf1' or 'get_fastf1_version()' read the
-#' 'Setup FastF1 Connection vignette (run \code{vignette('setup_fastf1', 'f1dataR')}).
-#'
 #' @inheritParams load_race_session
 #' @param add_weather Whether to add weather information to the laps. See
 #' \href{https://docs.fastf1.dev/core.html#fastf1.core.Laps.get_weather_data}{fastf1 documentation} for info on weather.

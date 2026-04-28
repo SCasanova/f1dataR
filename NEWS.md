@@ -1,6 +1,7 @@
 # f1dataR 2.0.2
 
-* Updated code to match new `reticulate` interface for package and environment management.
+* Updated code to match new `reticulate` interface for package and environment management (#300).
+  * Documented changes (including requirement for `reticulate` `v1.46.0`).
 * Updated tests to use `vcr` package to reduce hits on the Jolpica API.
 * Removed support for FastF1 v < 3.0 (now causes errors instead of warnings).
 * Test suite and automated testing changes to reflect the above changes.
