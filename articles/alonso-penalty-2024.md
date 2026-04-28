@@ -15,15 +15,10 @@ FastF1 package.
 
 ## Accessing the Data
 
-We’ll start by loading the `f1dataR` package, and preparing the Python
-virtual environment (including installing FastF1). This happens
-automatically with a call to `setup_fastf1()`, [see the setup_fastf1
-vignette](https://scasanova.github.io/f1dataR/articles/setup_fastf1.Rmd)
-for more information.
+We’ll start by loading the `f1dataR` package.
 
 ``` r
 library(f1dataR)
-setup_fastf1()
 ```
 
 Since the crash occurred on lap 57, we’ll download telemetry for Alonso

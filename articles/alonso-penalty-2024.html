@@ -87,14 +87,9 @@ Python FastF1 package.</p>
 <div class="section level2">
 <h2 id="accessing-the-data">Accessing the Data<a class="anchor" aria-label="anchor" href="#accessing-the-data"></a>
 </h2>
-<p>We’ll start by loading the <code>f1dataR</code> package, and
-preparing the Python virtual environment (including installing FastF1).
-This happens automatically with a call to <code>setup_fastf1()</code>,
-<a href="setup_fastf1.Rmd">see the setup_fastf1 vignette</a> for more
-information.</p>
+<p>We’ll start by loading the <code>f1dataR</code> package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span>
-<span><span class="fu">setup_fastf1</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://scasanova.github.io/f1dataR/">f1dataR</a></span><span class="op">)</span></span></code></pre></div>
 <p>Since the crash occurred on lap 57, we’ll download telemetry for
 Alonso for the five previous laps to compare what Alonso did on the
 fateful lap compared to those before. We’ll also load Russell’s

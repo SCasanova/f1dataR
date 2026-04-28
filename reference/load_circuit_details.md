@@ -20,10 +20,6 @@ recommended (and default behavior). Cache directory can be set by
 setting `option(f1dataR.cache = [cache dir])`, default is the current
 working directory.
 
-If you have trouble with errors mentioning 'fastf1' or
-'get_fastf1_version()' read the 'Setup FastF1 Connection vignette (run
-`vignette('setup_fastf1', 'f1dataR')`).
-
 ## Usage
 
 ``` r
