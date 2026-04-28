@@ -49,6 +49,30 @@ test_that("utility functions work", {
   )
 })
 
+test_that("null_filtering_cache prevents NULL results from being stored", {
+  inner <- cachem::cache_mem()
+  filtered <- f1dataR:::null_filtering_cache(inner)
+
+  # Non-NULL values must be stored and retrievable
+  filtered$set("k1", list(value = "hello", visible = TRUE))
+  expect_true(filtered$exists("k1"))
+  expect_equal(filtered$get("k1")$value, "hello")
+
+  # NULL values must NOT be stored
+  filtered$set("k2", list(value = NULL, visible = FALSE))
+  expect_false(filtered$exists("k2"))
+
+  # Other cache methods delegate correctly
+  filtered$remove("k1")
+  expect_false(filtered$exists("k1"))
+
+  filtered$set("k3", list(value = 42L, visible = TRUE))
+  expect_true(filtered$exists("k3"))
+  filtered$reset()
+  expect_false(filtered$exists("k3"))
+})
+
+
 test_that("Utility Functions work without internet", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_utils2"))) {
