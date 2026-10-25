@@ -17,7 +17,7 @@ test_that("Load Session (file cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
@@ -78,7 +78,7 @@ test_that("Load Session (memory cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
@@ -105,7 +105,7 @@ test_that("Load Session works without internet", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session2"))
 
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     skip("Skipping load_race_session (no internet) test as FastF1 is out of date.")
   }
 

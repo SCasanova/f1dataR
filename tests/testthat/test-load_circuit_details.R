@@ -15,7 +15,7 @@ test_that("load circuit details works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       circuit_details <- load_circuit_details(2023, "bahrain"),
       "Skipping load_race_session as FastF1 is out of date."
@@ -63,7 +63,7 @@ test_that("Load Circuit Details works without internet", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_telem2"))
 
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     skip("Skipping load_circuit_details (no internet) test as FastF1 is out of date.")
   }
 

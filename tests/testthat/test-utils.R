@@ -74,3 +74,12 @@ test_that("Utility Functions work without internet", {
     })
   }
 })
+
+test_that("check_ff1_version requires FastF1 3.9.0 or newer", {
+  local_mocked_bindings(get_fastf1_version = function() package_version("3.8.9"))
+  expect_error(check_ff1_version(), "3.9.0")
+  local_mocked_bindings(get_fastf1_version = function() NA)
+  expect_error(check_ff1_version(), "could not be found")
+  local_mocked_bindings(get_fastf1_version = function() package_version("3.9.0"))
+  expect_true(check_ff1_version())
+})

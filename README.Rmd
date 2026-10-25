@@ -56,6 +56,18 @@ remotes::install_github("SCasanova/f1dataR")
 library(f1dataR)
 ```
 
+## Authentication
+
+Since October 2026, F1 live timing data (accessed via `FastF1`) requires an F1 account. Set your credentials with:
+
+```{r eval = FALSE}
+set_f1_auth()
+# or, to also save them in your .Renviron for future sessions (stored in plain text):
+set_f1_auth(persist = TRUE)
+```
+
+Alternatively set the `F1_USERNAME` and `F1_PASSWORD` environment variables yourself. Non-interactive sessions require these to be set. Jolpica-based functions (e.g. `load_results()`) do not need authentication.
+
 ## Data Sources
 
 Data is pulled from:

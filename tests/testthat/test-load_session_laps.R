@@ -15,7 +15,7 @@ test_that("load session laps works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       laps <- load_session_laps(season = 2023, round = "bahrain"),
       "Skipping load_race_session as FastF1 is out of date."
@@ -63,7 +63,7 @@ test_that("Load Session Laps works without internet", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session_laps2"))
 
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     skip("Skipping load_session_laps (no internet) test as FastF1 is out of date.")
   }
 

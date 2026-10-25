@@ -23,7 +23,7 @@ to most recent.}
 \code{'Q'}, \code{'S'}, \code{'SS'}, \code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{driver}{three letter driver code (see load_drivers() for a list) or name to be
-fuzzy matched to a driver from the session if FastF1 >= 3.4.0 is available.}
+fuzzy matched to a driver from the session.}
 
 \item{color}{argument that indicates which variable to plot along the
 circuit. Choice of \code{'gear'} or \code{'speed'}, default \code{'gear'}.}

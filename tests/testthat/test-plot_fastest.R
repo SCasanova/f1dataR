@@ -31,7 +31,7 @@ test_that("graphics work", {
 
   # Ensure caught failure if old ff1, then skip remainder
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
@@ -104,7 +104,7 @@ test_that("graphics works without internet", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_graphics2"))
 
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.1") {
+  if (ff1_ver < "3.9.0") {
     skip(
       "Skipping load_circuit_details (no internet) test as FastF1 is out of date."
     )

@@ -18,16 +18,6 @@ test_that("aesthetics works", {
 
   # Tests
 
-  # Ensure failure if old ff1, then skip
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    expect_error(
-      session <- get_driver_style(driver = "ALO", season = 2024, round = 1),
-      "requires FastF1 version 3.4.0"
-    )
-    skip("Skipping get_driver_style as FastF1 is out of date.")
-  }
-
   driver1 <- get_driver_style(driver = "ALO", season = 2024, round = 1)
   driver2 <- get_driver_style(driver = "ALO", season = 2024, round = "Bahrain")
 
@@ -92,16 +82,6 @@ test_that("lookups works", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_lookups"))
 
   # Tests
-
-  # Ensure failure if old ff1, then skip
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    expect_error(
-      session <- get_driver_style(driver = "ALO", season = 2024, round = 1),
-      "requires FastF1 version 3.4.0"
-    )
-    skip("Skipping look-ups as FastF1 is out of date.")
-  }
 
   expect_equal(get_driver_abbreviation("Lewis Hamilton", 2024), "HAM")
   expect_equal(get_driver_name("Lewis", 2024), "Lewis Hamilton")
