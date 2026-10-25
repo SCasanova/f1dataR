@@ -76,7 +76,12 @@ plot_fastest <- function(
     driver_abbreviation <- driver
   }
 
-  s <- load_race_session(season = season, round = round, session = session)
+  s <- load_race_session(
+    season = season,
+    round = round,
+    session = session,
+    log_level = log_level
+  )
   driver_data <- load_driver_telemetry(
     season,
     round,

@@ -8,11 +8,7 @@
 #' @return A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race.
 #' Returns `NULL` on API failure.
 load_schedule <- function(season = get_current_season()) {
-  if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1950)
 
   url <- glue::glue("{season}.json", season = season)
 

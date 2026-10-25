@@ -14,8 +14,8 @@
 #' @param obj_name name assigned to the loaded session to be referenced later.
 #' Leave as `'session'` unless otherwise required.
 #' @param season number from 2018 to current season. Defaults to current season.
-#' @param round number from 1 to 24 (depending on season selected), defaults
-#' to `1`. Also accepts race name.
+#' @param round number from 1 to the number of rounds in the season (depending on season
+#' selected), defaults to `1`. Also accepts race name.
 #' @param session the code for the session to load. Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`,`'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
@@ -52,18 +52,12 @@ load_race_session <- function(
   check_ff1_version()
 
   # Function Code
-  if (season != "current" && (season < 2018 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2018 and {get_current_season()} (or use "current")'
-    )
-  }
+  season <- check_season_arg(season, 2018)
+  check_round_arg(round, allow_name = TRUE)
   if (!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS", "SQ"))) {
     cli::cli_abort(
       '{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SQ", "SS", "S", or "R"'
     )
-  }
-  if (season == "current") {
-    season <- get_current_season()
   }
 
   log_level <- match.arg(

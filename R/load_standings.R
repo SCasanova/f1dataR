@@ -21,11 +21,8 @@ load_standings <- function(
   round = "last",
   type = "driver"
 ) {
-  if (season != "current" && (season < 2003 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2003 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 2003)
+  check_round_arg(round)
 
   type <- match.arg(tolower(type), c("driver", "constructor"))
 

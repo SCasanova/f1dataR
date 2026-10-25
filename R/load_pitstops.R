@@ -29,11 +29,8 @@ load_pitstops <- function(
   }
 
   # Parameter Check
-  if (season != "current" && (season < 2011 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2011 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 2011)
+  check_round_arg(round)
 
   # Function Code
   lim <- 100

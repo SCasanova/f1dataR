@@ -17,11 +17,8 @@
 #' `points`, `position`, `grid`, and `laps` are returned by the API as strings and are
 #' therefore all **character** columns, not numeric.
 load_sprint <- function(season = get_current_season(), round = "last") {
-  if (season != "current" && (season < 2021 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2021 and {get_current_season()} (or use "current").'
-    )
-  }
+  check_season_arg(season, 2021)
+  check_round_arg(round)
 
   url <- glue::glue(
     "{season}/{round}/sprint.json",

@@ -198,6 +198,84 @@ time_to_sec <- function(time) {
 }
 
 
+#' Check Season Argument
+#'
+#' @description Internal helper that validates a `season` argument against the minimum season
+#' supported by the calling function, and resolves `"current"` to a numeric year. Centralises the
+#' `season != "current" && (season < min_season || season > get_current_season())` check that was
+#' previously duplicated across every loader.
+#'
+#' @param season the `season` argument as passed by the caller (numeric, coercible character, or `"current"`).
+#' @param min_season the minimum season supported by the calling function (e.g. `1950`, `2003`, `2011`, `2018`).
+#'
+#' @return invisibly, `season` resolved to a numeric year (`get_current_season()` if `season == "current"`).
+#' Aborts with a `cli::cli_abort()` message if `season` is invalid.
+#' @keywords internal
+check_season_arg <- function(season, min_season) {
+  season_num <- if (identical(season, "current")) {
+    get_current_season()
+  } else {
+    suppressWarnings(as.numeric(season))
+  }
+
+  if (
+    length(season_num) != 1 ||
+      is.na(season_num) ||
+      season_num < min_season ||
+      season_num > get_current_season()
+  ) {
+    cli::cli_abort(
+      '{.var season} must be between {min_season} and {get_current_season()} (or use "current")'
+    )
+  }
+
+  invisible(season_num)
+}
+
+
+#' Check Round Argument
+#'
+#' @description Internal helper that validates a `round` argument. `round` must be `"last"`, a
+#' positive whole number (numeric or a numeric-looking character string), or, when `allow_name = TRUE`,
+#' an arbitrary non-empty race-name string (as accepted by the FastF1-backed loaders).
+#'
+#' @param round the `round` argument as passed by the caller.
+#' @param allow_name whether a non-numeric race-name string is also acceptable (used by the
+#' FastF1-backed loaders such as `load_race_session()`); Jolpica loaders should leave this `FALSE`.
+#'
+#' @return invisibly `TRUE`. Aborts with a `cli::cli_abort()` message if `round` is invalid.
+#' @keywords internal
+check_round_arg <- function(round, allow_name = FALSE) {
+  if (identical(round, "last")) {
+    return(invisible(TRUE))
+  }
+
+  round_num <- suppressWarnings(as.numeric(round))
+
+  if (
+    length(round) != 1 ||
+      (is.character(round) && is.na(round)) ||
+      (length(round_num) == 1 &&
+        !is.na(round_num) &&
+        (round_num != as.integer(round_num) || round_num < 1))
+  ) {
+    cli::cli_abort(
+      '{.var round} must be a positive whole number{if (allow_name) " or race name" else ""} (or "last")'
+    )
+  }
+
+  if (is.na(round_num) && !allow_name) {
+    cli::cli_abort('{.var round} must be a positive whole number (or "last")')
+  }
+
+  if (is.na(round_num) && (!is.character(round) || !nzchar(round))) {
+    cli::cli_abort('{.var round} must be a non-empty race name (or "last")')
+  }
+
+  invisible(TRUE)
+}
+
+
 #' Check FastF1 Session Loaded
 #'
 #' @description Used to verify that the fastf1 session is loaded before trying to work with it.

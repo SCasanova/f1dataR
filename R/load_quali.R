@@ -15,17 +15,8 @@
 #' so sessions with more than 100 results are returned in full. Note that `position` is
 #' returned by the API as a string and is therefore a **character** column, not numeric.
 load_quali <- function(season = get_current_season(), round = "last") {
-  if (season != "current" && (season < 2003 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2003 and {get_current_season()} (or use "current")'
-    )
-  }
-
-  season_num <- ifelse(
-    season == "current",
-    get_current_season(),
-    as.numeric(season)
-  )
+  season_num <- check_season_arg(season, 2003)
+  check_round_arg(round)
 
   url <- glue::glue(
     "{season}/{round}/qualifying.json",

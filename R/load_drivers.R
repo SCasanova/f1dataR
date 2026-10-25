@@ -12,11 +12,7 @@
 #' `NA_integer_` when absent for a given driver), so its type is not stable across seasons;
 #' coerce with `as.integer()` if a consistent numeric type is required.
 load_drivers <- function(season = get_current_season()) {
-  if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1950)
 
   url <- glue::glue("{season}/drivers.json", season = season)
 

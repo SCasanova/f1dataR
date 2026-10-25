@@ -47,4 +47,3 @@ the FastF1 telemetry data available for the session/driver.
 \code{get_driver_telemetry()} was renamed to \code{load_driver_telemetry()} to create a more
 consistent API.
 }
-\keyword{internal}

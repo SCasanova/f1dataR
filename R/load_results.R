@@ -17,11 +17,8 @@
 #'   not numeric, even though they look numeric (e.g. `position` can also be non-numeric text such as `"R"` for a
 #'   retirement). Coerce with `as.numeric()` if a numeric type is required.
 load_results <- function(season = get_current_season(), round = "last") {
-  if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1950)
+  check_round_arg(round)
 
   url <- glue::glue(
     "{season}/{round}/results.json",

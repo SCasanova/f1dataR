@@ -26,11 +26,8 @@ load_laps <- function(
   }
 
   # Parameter Check
-  if (season != "current" && (season < 1996 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1996 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1996)
+  check_round_arg(round)
 
   lim <- 100
 

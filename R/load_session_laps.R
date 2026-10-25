@@ -38,6 +38,7 @@ load_session_laps <- function(
     )
   }
   check_ff1_version()
+  check_round_arg(round, allow_name = TRUE)
 
   # Function Code
   status <- load_race_session(

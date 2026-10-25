@@ -61,6 +61,7 @@ load_driver_telemetry <- function(
     )
   }
   check_ff1_version()
+  check_round_arg(round, allow_name = TRUE)
 
   # Function Code
   # Param checks
@@ -140,7 +141,6 @@ load_driver_telemetry <- function(
 #'
 #' `get_driver_telemetry()` was renamed to `load_driver_telemetry()` to create a more
 #' consistent API.
-#' @keywords internal
 #' @export
 
 get_driver_telemetry <-
