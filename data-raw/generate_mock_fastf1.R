@@ -10,7 +10,10 @@ if (!nzchar(Sys.getenv("F1_USERNAME")) || !nzchar(Sys.getenv("F1_PASSWORD"))) {
   stop("Set F1_USERNAME and F1_PASSWORD before generating mock data.")
 }
 
-out_dir <- normalizePath(file.path("tests", "testthat", "fixtures", "fastf1"), mustWork = FALSE)
+out_dir <- normalizePath(
+  file.path("tests", "testthat", "fixtures", "fastf1"),
+  mustWork = FALSE
+)
 cache_dir <- file.path(tempdir(), "f1_mock_cache")
 
 sys <- import("sys")

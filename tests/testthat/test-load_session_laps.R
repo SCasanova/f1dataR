@@ -8,7 +8,11 @@ test_that("load session laps works", {
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
   # because python's process has it locked.
   if (dir.exists(file.path(tempdir(), "tst_session_laps"))) {
-    unlink(file.path(tempdir(), "tst_session_laps"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_session_laps"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_session_laps"))
   dir.create(file.path(tempdir(), "tst_session_laps"), recursive = TRUE)
@@ -25,9 +29,18 @@ test_that("load session laps works", {
   }
 
   laps <- load_session_laps(season = 2023, round = "bahrain")
-  laps2 <- load_session_laps(season = 2023, round = "bahrain", add_weather = TRUE)
+  laps2 <- load_session_laps(
+    season = 2023,
+    round = "bahrain",
+    add_weather = TRUE
+  )
   lapsq <- load_session_laps(season = 2023, round = "bahrain", session = "Q")
-  lapsqw <- load_session_laps(season = 2023, round = "bahrain", session = "Q", add_weather = TRUE)
+  lapsqw <- load_session_laps(
+    season = 2023,
+    round = "bahrain",
+    session = "Q",
+    add_weather = TRUE
+  )
   lapssq <- load_session_laps(season = 2024, round = "china", session = "SQ")
 
   expect_true("tbl" %in% class(laps))
@@ -42,11 +55,18 @@ test_that("load session laps works", {
   expect_true(!is.na(lapsq$time[1]))
   expect_equal(round(min(lapsq$lap_time, na.rm = TRUE)), round(89.708))
   expect_equal(nrow(lapsq), nrow(lapsqw))
-  expect_equal(min(lapsq$lap_time, na.rm = TRUE), min(lapsqw$lap_time, na.rm = TRUE))
+  expect_equal(
+    min(lapsq$lap_time, na.rm = TRUE),
+    min(lapsqw$lap_time, na.rm = TRUE)
+  )
   expect_lt(ncol(lapsq), ncol(lapsqw))
   expect_true("wind_speed" %in% colnames(lapsqw))
 
-  expect_error(load_session_laps(season = 2023, race = "bahrain", session = "Q"))
+  expect_error(load_session_laps(
+    season = 2023,
+    race = "bahrain",
+    session = "Q"
+  ))
 })
 
 test_that("load session laps works with mocked FastF1", {
@@ -57,7 +77,9 @@ test_that("load session laps works with mocked FastF1", {
   lapsq <- load_session_laps(season = 2023, round = 1, session = "Q")
 
   expect_s3_class(laps, "tbl")
-  expect_true(all(c("time", "lap_time", "driver", "session_type") %in% colnames(laps)))
+  expect_true(all(
+    c("time", "lap_time", "driver", "session_type") %in% colnames(laps)
+  ))
   expect_true(all(laps$session_type == "R"))
   expect_equal(nrow(laps), nrow(laps_w))
   expect_equal(laps$time, laps_w$time)
@@ -66,7 +88,11 @@ test_that("load session laps works with mocked FastF1", {
   expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
   expect_true(is.numeric(lapsq$lap_time))
 
-  expect_error(load_session_laps(season = 2023, race = "bahrain", session = "Q"))
+  expect_error(load_session_laps(
+    season = 2023,
+    race = "bahrain",
+    session = "Q"
+  ))
 })
 
 test_that("load session laps returns NULL without network (mocked)", {

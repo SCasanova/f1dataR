@@ -38,7 +38,10 @@ test_that("set_f1_auth persist upserts .Renviron and preserves other lines", {
   suppressMessages(set_f1_auth("a@b.com", "p\"w", persist = TRUE))
   suppressMessages(set_f1_auth("a@b.com", "p\"w", persist = TRUE))
   lines <- readLines(renv)
-  expect_equal(lines, c("FOO=bar", "F1_USERNAME=\"a@b.com\"", "F1_PASSWORD=\"p\\\"w\""))
+  expect_equal(
+    lines,
+    c("FOO=bar", "F1_USERNAME=\"a@b.com\"", "F1_PASSWORD=\"p\\\"w\"")
+  )
 })
 
 test_that("set_f1_auth rejects empty values", {

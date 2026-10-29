@@ -35,7 +35,9 @@ load_constructors <- function() {
     full <- dplyr::bind_rows(full, data$MRData$ConstructorTable$Constructors)
   }
 
-  return(full %>%
-    dplyr::select("constructorId", "name", "nationality") %>%
-    janitor::clean_names())
+  return(
+    full %>%
+      dplyr::select("constructorId", "name", "nationality") %>%
+      janitor::clean_names()
+  )
 }

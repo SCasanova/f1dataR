@@ -14,7 +14,10 @@ test_that("utility functions work", {
   # get_jolpica_content() is inherently tested in load_x functions too
   url <- "2022/circuits.json"
 
-  suppressWarnings(expect_warning(get_ergast_content(url), regexp = "was deprecated in f1dataR"))
+  suppressWarnings(expect_warning(
+    get_ergast_content(url),
+    regexp = "was deprecated in f1dataR"
+  ))
   # Test for ergast deprecation
 
   # Test add_col_if_absent()
@@ -76,10 +79,14 @@ test_that("Utility Functions work without internet", {
 })
 
 test_that("check_ff1_version requires FastF1 3.9.0 or newer", {
-  local_mocked_bindings(get_fastf1_version = function() package_version("3.8.9"))
+  local_mocked_bindings(get_fastf1_version = function() {
+    package_version("3.8.9")
+  })
   expect_error(check_ff1_version(), "3.9.0")
   local_mocked_bindings(get_fastf1_version = function() NA)
   expect_error(check_ff1_version(), "could not be found")
-  local_mocked_bindings(get_fastf1_version = function() package_version("3.9.0"))
+  local_mocked_bindings(get_fastf1_version = function() {
+    package_version("3.9.0")
+  })
   expect_true(check_ff1_version())
 })

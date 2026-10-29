@@ -1,11 +1,17 @@
 test_that("load_schedule works", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_schedule"))) {
-    unlink(file.path(tempdir(), "tst_load_schedule"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_schedule"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_schedule"))
   dir.create(file.path(tempdir(), "tst_load_schedule"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_schedule"))
+  withr::local_options(
+    f1dataR.cache = file.path(tempdir(), "tst_load_schedule")
+  )
 
   skip_if_no_jolpica()
 
@@ -32,11 +38,17 @@ test_that("load_schedule works", {
 test_that("load_schedule works without internet", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_schedule2"))) {
-    unlink(file.path(tempdir(), "tst_load_schedule2"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_schedule2"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_schedule2"))
   dir.create(file.path(tempdir(), "tst_load_schedule2"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_load_schedule2"))
+  withr::local_options(
+    f1dataR.cache = file.path(tempdir(), "tst_load_schedule2")
+  )
 
   clear_cache()
 
@@ -46,7 +58,10 @@ test_that("load_schedule works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_schedule(2021), "f1dataR: Error getting data from Jolpica")
+          expect_message(
+            load_schedule(2021),
+            "f1dataR: Error getting data from Jolpica"
+          )
           expect_null(load_schedule(2021))
         })
       })

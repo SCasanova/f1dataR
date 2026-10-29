@@ -9,8 +9,12 @@ skip_if_no_ff1 <- function() {
   if (!reticulate::py_module_available("fastf1")) {
     testthat::skip("fastf1 not available for testing")
   }
-  if (!nzchar(Sys.getenv("F1_USERNAME")) || !nzchar(Sys.getenv("F1_PASSWORD"))) {
-    testthat::skip("F1 credentials (F1_USERNAME, F1_PASSWORD) not available for testing")
+  if (
+    !nzchar(Sys.getenv("F1_USERNAME")) || !nzchar(Sys.getenv("F1_PASSWORD"))
+  ) {
+    testthat::skip(
+      "F1 credentials (F1_USERNAME, F1_PASSWORD) not available for testing"
+    )
   }
 }
 

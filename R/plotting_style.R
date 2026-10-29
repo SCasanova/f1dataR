@@ -583,6 +583,11 @@ get_session <- function(
     cache_dir = f1datar_cache
   ))
 
-  py_env <- ff1_get_session("session", season = season, round = round, session = "R")
+  py_env <- ff1_get_session(
+    "session",
+    season = season,
+    round = round,
+    session = "R"
+  )
   invisible(py_env)
 }

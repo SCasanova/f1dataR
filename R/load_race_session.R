@@ -167,7 +167,12 @@ load_race_session <- function(
 #' @return the python environment (`__main__`), as returned by `py_run_string()`
 #' @keywords internal
 #' @noRd
-ff1_get_session <- function(obj_name = "session", season, round, session = "R") {
+ff1_get_session <- function(
+  obj_name = "session",
+  season,
+  round,
+  session = "R"
+) {
   py_string <- glue::glue(
     "{name} = fastf1.get_session({season}, ",
     name = obj_name,
@@ -207,5 +212,8 @@ ff1_get_session <- function(obj_name = "session", season, round, session = "R") 
 #' @keywords internal
 #' @noRd
 ff1_load_session <- function(obj_name = "session") {
-  invisible(reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name)))
+  invisible(reticulate::py_run_string(glue::glue(
+    "{name}.load()",
+    name = obj_name
+  )))
 }

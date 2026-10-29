@@ -12,11 +12,15 @@
 #' @return A tibble with one row per driver
 load_quali <- function(season = get_current_season(), round = "last") {
   if (season != "current" && (season < 2003 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 2003 and {get_current_season()} (or use "current")'
+    )
   }
 
-  url <- glue::glue("{season}/{round}/qualifying.json",
-    season = season, round = round
+  url <- glue::glue(
+    "{season}/{round}/qualifying.json",
+    season = season,
+    round = round
   )
 
   data <- get_jolpica_content(url)

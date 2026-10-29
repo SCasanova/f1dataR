@@ -29,7 +29,11 @@ test_that("Load Session (file cached) Works", {
   # test with all parameters but session provided
   expect_invisible(load_race_session(season = 2023, round = 1))
   # validate the cache is there now
-  expect_true(file.exists(file.path(tempdir(), "tst_session", "fastf1_http_cache.sqlite")))
+  expect_true(file.exists(file.path(
+    tempdir(),
+    "tst_session",
+    "fastf1_http_cache.sqlite"
+  )))
 
   # test without race provided - loads from cache
   expect_invisible(load_race_session(season = 2023, session = "R"))
@@ -44,7 +48,10 @@ test_that("Load Session (file cached) Works", {
   session1 <- load_race_session(season = 2023, round = 1, session = "R")
   session2 <- load_race_session(season = 2023, round = "Bahrain", session = "R")
   expect_equal(session1$api_path, session2$api_path)
-  expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2023")
+  expect_equal(
+    session1$event$OfficialEventName,
+    "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2023"
+  )
 
   expect_error(
     load_race_session(season = 2017),
@@ -54,14 +61,28 @@ test_that("Load Session (file cached) Works", {
     load_race_session(session = "ZZZ"),
     '`session` must be one of "FP1", "FP2", "FP3", "Q", "SQ", "SS", "S", or "R"'
   )
-  expect_error(load_race_session(season = 2023, round = 1, session = "R", log_level = "ZZZ"))
+  expect_error(load_race_session(
+    season = 2023,
+    round = 1,
+    session = "R",
+    log_level = "ZZZ"
+  ))
 
-  expect_error(load_race_session(season = 2023, race = "Bahrain", session = "R"))
+  expect_error(load_race_session(
+    season = 2023,
+    race = "Bahrain",
+    session = "R"
+  ))
 
   expect_error(load_race_session(season = 2023, round = 100, session = "R"))
 
   expect_message(
-    load_race_session(season = 2023, round = 1, session = "R", log_level = "INFO"),
+    load_race_session(
+      season = 2023,
+      round = 1,
+      session = "R",
+      log_level = "INFO"
+    ),
     "The first time a session is loaded, some time is required. Please*"
   )
 })
@@ -85,25 +106,40 @@ test_that("Load Session (memory cached) Works", {
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
     )
-    skip("Skipping load_race_session (memory cache) test as FastF1 is out of date.")
+    skip(
+      "Skipping load_race_session (memory cache) test as FastF1 is out of date."
+    )
   }
 
   session1 <- load_race_session(season = 2023, round = 1, session = "R")
-  expect_equal(session1$event$OfficialEventName, "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2023")
+  expect_equal(
+    session1$event$OfficialEventName,
+    "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2023"
+  )
 })
 
 test_that("Load Session works with mocked FastF1", {
   local_mock_fastf1()
 
   expect_invisible(load_race_session(season = 2023, round = 1))
-  expect_invisible(load_race_session(season = 2023, round = "Bahrain", session = "Q"))
+  expect_invisible(load_race_session(
+    season = 2023,
+    round = "Bahrain",
+    session = "Q"
+  ))
   expect_message(
     load_race_session(season = 2023, round = 1, log_level = "INFO"),
     "The first time a session is loaded, some time is required. Please*"
   )
 
-  expect_error(load_race_session(season = 2017), "`season` must be between 2018 and *")
-  expect_error(load_race_session(session = "ZZZ"), '`session` must be one of "FP1"*')
+  expect_error(
+    load_race_session(season = 2017),
+    "`season` must be between 2018 and *"
+  )
+  expect_error(
+    load_race_session(session = "ZZZ"),
+    '`session` must be one of "FP1"*'
+  )
   expect_error(load_race_session(season = 2023, round = 1, log_level = "ZZZ"))
   expect_error(load_race_session(season = 2023, race = "Bahrain"))
 })

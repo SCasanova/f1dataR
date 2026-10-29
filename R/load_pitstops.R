@@ -12,20 +12,32 @@
 #' @export
 #' @return A tibble with columns driver_id, lap, stop (number), time (of day),
 #' and stop duration
-load_pitstops <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
+load_pitstops <- function(
+  season = get_current_season(),
+  round = "last",
+  race = lifecycle::deprecated()
+) {
   # Deprecation check
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.4.0", "load_pitstops(race)", "load_pitstops(round)")
+    lifecycle::deprecate_stop(
+      "1.4.0",
+      "load_pitstops(race)",
+      "load_pitstops(round)"
+    )
   }
 
   # Parameter Check
   if (season != "current" && (season < 2011 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 2011 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 2011 and {get_current_season()} (or use "current")'
+    )
   }
 
   # Function Code
-  url <- glue::glue("{season}/{round}/pitstops.json",
-    season = season, round = round
+  url <- glue::glue(
+    "{season}/{round}/pitstops.json",
+    season = season,
+    round = round
   )
   data <- get_jolpica_content(url, parameters = list(limit = 100))
 

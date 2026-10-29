@@ -31,21 +31,36 @@
 #' `distance` is the location of the marker as a distance from the start/finish line.
 #'
 #' @export
-load_circuit_details <- function(season = get_current_season(), round = 1, log_level = "WARNING") {
+load_circuit_details <- function(
+  season = get_current_season(),
+  round = 1,
+  log_level = "WARNING"
+) {
   # Deprecation Checks
   check_ff1_version()
 
   # Function Code
-  status <- load_race_session(obj_name = "session", season = season, round = round, session = "R", log_level = log_level)
+  status <- load_race_session(
+    obj_name = "session",
+    season = season,
+    round = round,
+    session = "R",
+    log_level = log_level
+  )
 
   if (is.null(status)) {
     # Failure to load - escape
     return(NULL)
   }
 
-  py_env <- reticulate::py_run_string("circuit_info = session.get_circuit_info()")
+  py_env <- reticulate::py_run_string(
+    "circuit_info = session.get_circuit_info()"
+  )
 
-  circuit_info <- reticulate::py_to_r(reticulate::py_get_item(py_env, "circuit_info"))
+  circuit_info <- reticulate::py_to_r(reticulate::py_get_item(
+    py_env,
+    "circuit_info"
+  ))
 
   corners <- circuit_info$corners %>%
     tibble::tibble() %>%
@@ -62,7 +77,9 @@ load_circuit_details <- function(season = get_current_season(), round = 1, log_l
   rotation <- circuit_info$rotation
 
   return(list(
-    "corners" = corners, "marshal_posts" = marshal_post, "marshal_sectors" = marshal_sectors,
+    "corners" = corners,
+    "marshal_posts" = marshal_post,
+    "marshal_sectors" = marshal_sectors,
     "rotation" = rotation
   ))
 }

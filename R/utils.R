@@ -288,7 +288,9 @@ check_ff1_network_connection <- function(path = NA_character_) {
 check_ff1_version <- function() {
   version <- get_fastf1_version()
   if (is.na(version)) {
-    cli::cli_abort("The {.pkg FastF1} Python package could not be found. {.pkg f1dataR} requires {.pkg FastF1} version 3.9.0 or newer.")
+    cli::cli_abort(
+      "The {.pkg FastF1} Python package could not be found. {.pkg f1dataR} requires {.pkg FastF1} version 3.9.0 or newer."
+    )
   }
   if (version < "3.9.0") {
     cli::cli_abort(c(
@@ -338,19 +340,19 @@ get_fastf1_version <- function() {
 #' @keywords internal
 add_col_if_absent <- function(data, column_name, na_type = NA) {
   if (!is.na(na_type)) {
-    cli::cli_abort(
+    cli::cli_abort(c(
       x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_})."
-    )
+    ))
   }
   if (!(inherits(data, "data.frame"))) {
-    cli::cli_abort(
+    cli::cli_abort(c(
       x = "{.arg data} must be provided as a {.code data.frame} or {.code tibble}."
-    )
+    ))
   }
   if (!(length(column_name) == 1) | !(inherits(column_name, "character"))) {
-    cli::cli_abort(
+    cli::cli_abort(c(
       x = "{.arg column_name} must be provided as a single {.code character} value."
-    )
+    ))
   }
   if (!(column_name %in% colnames(data))) {
     data[, column_name] <- na_type
