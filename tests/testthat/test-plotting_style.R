@@ -1,6 +1,7 @@
 test_that("aesthetics works", {
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -70,6 +71,7 @@ test_that("aesthetics works", {
 test_that("lookups works", {
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -178,4 +180,10 @@ test_that("lookups works", {
     "Error running FastF1 code:",
     fixed = TRUE
   )
+})
+
+test_that("get_session works with mocked FastF1", {
+  local_mock_fastf1()
+  expect_invisible(get_session(2023, 1))
+  expect_invisible(get_session(2023, "Bahrain"))
 })

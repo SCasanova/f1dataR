@@ -583,29 +583,6 @@ get_session <- function(
     cache_dir = f1datar_cache
   ))
 
-  py_string <- glue::glue(
-    "session = fastf1.get_session({season}, ",
-    season = season
-  )
-  if (is.numeric(round)) {
-    py_string <- glue::glue(
-      "{py_string}{round}, 'R')",
-      py_string = py_string,
-      round = round
-    )
-  } else {
-    # Character race, so need quotes around it
-    py_string <- glue::glue(
-      "{py_string}'{round}', 'R')",
-      py_string = py_string,
-      round = round
-    )
-  }
-  tryCatch(
-    py_env <- reticulate::py_run_string(py_string),
-    error = function(e) {
-      cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
-    }
-  )
+  py_env <- ff1_get_session("session", season = season, round = round, session = "R")
   invisible(py_env)
 }

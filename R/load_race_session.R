@@ -102,35 +102,13 @@ load_race_session <- function(
     cache_dir = f1datar_cache
   ))
 
-  py_string <- glue::glue(
-    "{name} = fastf1.get_session({season}, ",
-    name = obj_name,
-    season = season
-  )
-  if (is.numeric(round)) {
-    py_string <- glue::glue(
-      "{py_string}{round}, '{session}')",
-      py_string = py_string,
-      round = round,
-      session = session
-    )
-  } else {
-    # Character race, so need quotes around it
-    py_string <- glue::glue(
-      "{py_string}'{round}', '{session}')",
-      py_string = py_string,
-      round = round,
-      session = session
-    )
-  }
-
   # fastf1.get_session([args]) runs even if there's no internet connection,
   # the schedule of sessions is built into the package
-  tryCatch(
-    session <- reticulate::py_run_string(py_string),
-    error = function(e) {
-      cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
-    }
+  session <- ff1_get_session(
+    obj_name = obj_name,
+    season = season,
+    round = round,
+    session = session
   )
 
   # Check for fastf1 (F1timing/internet) connection
@@ -143,7 +121,7 @@ load_race_session <- function(
   }
 
   # likewise, without internet the session itself will 'load' but not actually retrieve any data
-  reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+  ff1_load_session(obj_name)
 
   # without internet the session check will fail, and retry reload
   check_ff1_session_loaded(session_name = obj_name)
@@ -172,4 +150,62 @@ load_race_session <- function(
   }
 
   invisible(session[obj_name])
+}
+
+
+#' Get a FastF1 session (python object)
+#'
+#' @description Creates the python session object (without loading data) in the
+#' python `__main__` namespace under `obj_name`. Separated from
+#' [load_race_session()] so the FastF1 calls can be mocked in tests.
+#'
+#' @param obj_name name of the python variable to assign
+#' @param season season number
+#' @param round round number or name
+#' @param session session code
+#'
+#' @return the python environment (`__main__`), as returned by `py_run_string()`
+#' @keywords internal
+#' @noRd
+ff1_get_session <- function(obj_name = "session", season, round, session = "R") {
+  py_string <- glue::glue(
+    "{name} = fastf1.get_session({season}, ",
+    name = obj_name,
+    season = season
+  )
+  if (is.numeric(round)) {
+    py_string <- glue::glue(
+      "{py_string}{round}, '{session}')",
+      py_string = py_string,
+      round = round,
+      session = session
+    )
+  } else {
+    # Character race, so need quotes around it
+    py_string <- glue::glue(
+      "{py_string}'{round}', '{session}')",
+      py_string = py_string,
+      round = round,
+      session = session
+    )
+  }
+
+  tryCatch(
+    reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
+    }
+  )
+}
+
+
+#' Load data into an existing FastF1 session (python object)
+#'
+#' @param obj_name name of the python session variable
+#'
+#' @return invisibly, the python environment
+#' @keywords internal
+#' @noRd
+ff1_load_session <- function(obj_name = "session") {
+  invisible(reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name)))
 }
