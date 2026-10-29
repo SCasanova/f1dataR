@@ -44,6 +44,27 @@ local_mock_fastf1 <- function(network = TRUE, .env = parent.frame()) {
   }
   withr::local_options(f1dataR.cache = "memory", .local_envir = .env)
 
+  # fastf1.plotting looks up driver/team info via the live API; serve a pickled copy
+  driver_info <- test_path("fixtures", "fastf1", "driver_info_2023_1.pkl")
+  if (file.exists(driver_info)) {
+    reticulate::py_run_string("import pickle, fastf1, fastf1._api")
+    reticulate::py_run_string(sprintf(
+      paste(
+        "_f1dataR_orig_driver_info = fastf1._api.driver_info",
+        "with open(r'%s', 'rb') as _f:\n    _f1dataR_di = pickle.load(_f)",
+        "fastf1._api.driver_info = lambda *a, **k: _f1dataR_di",
+        sep = "\n"
+      ),
+      normalizePath(driver_info, winslash = "/")
+    ))
+    withr::defer(
+      reticulate::py_run_string(
+        "fastf1._api.driver_info = _f1dataR_orig_driver_info"
+      ),
+      envir = .env
+    )
+  }
+
   testthat::local_mocked_bindings(
     check_ff1_auth = function(...) invisible(TRUE),
     check_ff1_network_connection = function(...) network,
