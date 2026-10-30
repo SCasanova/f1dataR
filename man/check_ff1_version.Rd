@@ -11,7 +11,7 @@ Invisibly \code{TRUE} if not raising an error for unsupported \code{FastF1} vers
 }
 \description{
 This function checks the version of \code{FastF1} and ensures it's at or above the minimum supported version for
-\code{f1dataR} (currently requires 3.4.0 or better).
+\code{f1dataR} (currently requires 3.9.0 or better).
 
 This function is a light wrapper around get_fastf1_version()
 }

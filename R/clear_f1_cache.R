@@ -117,14 +117,6 @@ change_cache <- function(
   create_dir = FALSE,
   persist = FALSE
 ) {
-  if (
-    is.null(cache) || length(cache) != 1 || !is.character(cache) || is.na(cache)
-  ) {
-    cli::cli_abort(
-      "{.var cache} must be a single character value: one of 'memory', 'filesystem', 'off', or a directory path."
-    )
-  }
-
   if (!cache %in% c("memory", "filesystem", "off")) {
     if (create_dir) {
       if (!dir.exists(normalizePath(cache, mustWork = FALSE))) {

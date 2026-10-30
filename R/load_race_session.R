@@ -50,6 +50,7 @@ load_race_session <- function(
     )
   }
   check_ff1_version()
+  check_ff1_auth()
 
   # Function Code
   season <- check_season_arg(season, 2018)
@@ -96,6 +97,77 @@ load_race_session <- function(
     cache_dir = f1datar_cache
   ))
 
+  # fastf1.get_session([args]) runs even if there's no internet connection,
+  # the schedule of sessions is built into the package
+  session <- ff1_get_session(
+    obj_name = obj_name,
+    season = season,
+    round = round,
+    session = session
+  )
+
+  # Check for fastf1 (F1timing/internet) connection
+  status <- check_ff1_network_connection(session$session$api_path)
+  if (!status) {
+    cli::cli_alert_danger(
+      "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+    )
+    return(NULL)
+  }
+
+  # likewise, without internet the session itself will 'load' but not actually retrieve any data
+  ff1_load_session(obj_name)
+
+  # without internet the session check will fail, and retry reload
+  check_ff1_session_loaded(session_name = obj_name)
+
+  status <- FALSE
+  tryCatch(
+    {
+      # Only returns a value if session.load() has been successful
+      # If it hasn't, internet or fastf1 must be down
+      reticulate::py_run_string(glue::glue(
+        "{obj_name}.t0_date",
+        obj_name = obj_name
+      ))
+      status <- TRUE
+    },
+    error = function(e) {
+      cli::cli_alert_danger(
+        "f1dataR: Error getting data from FastF1 or F1 Live Timing"
+      )
+      status <- FALSE
+    }
+  )
+
+  if (!status) {
+    return(NULL)
+  }
+
+  invisible(session[obj_name])
+}
+
+
+#' Get a FastF1 session (python object)
+#'
+#' @description Creates the python session object (without loading data) in the
+#' python `__main__` namespace under `obj_name`. Separated from
+#' [load_race_session()] so the FastF1 calls can be mocked in tests.
+#'
+#' @param obj_name name of the python variable to assign
+#' @param season season number
+#' @param round round number or name
+#' @param session session code
+#'
+#' @return the python environment (`__main__`), as returned by `py_run_string()`
+#' @keywords internal
+#' @noRd
+ff1_get_session <- function(
+  obj_name = "session",
+  season,
+  round,
+  session = "R"
+) {
   py_string <- glue::glue(
     "{name} = fastf1.get_session({season}, ",
     name = obj_name,
@@ -118,52 +190,25 @@ load_race_session <- function(
     )
   }
 
-  # fastf1.get_session([args]) runs even if there's no internet connection,
-  # the schedule of sessions is built into the package
   tryCatch(
-    session <- reticulate::py_run_string(py_string),
+    reticulate::py_run_string(py_string),
     error = function(e) {
       cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
     }
   )
+}
 
-  # Check for fastf1 (F1timing/internet) connection
-  status <- check_ff1_network_connection(session$session$api_path)
-  if (!status) {
-    cli::cli_alert_danger(
-      "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
-    )
-    return(NULL)
-  }
 
-  # likewise, without internet the session itself will 'load' but not actually retrieve any data
-  reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
-
-  # without internet the session check will fail, and retry reload
-  check_ff1_session_loaded(session_name = obj_name)
-
-  status <- FALSE
-  tryCatch(
-    {
-      # Only returns a value if session.load() has been successful
-      # If it hasn't, internet or fastf1 must be down
-      reticulate::py_run_string(glue::glue(
-        "{obj_name}.t0_date",
-        obj_name = obj_name
-      ))
-      status <- TRUE
-    },
-    error = function(e) {
-      cli::cli_alert_danger(
-        "f1dataR: Error getting data from FastF1 or F1 Live Timing"
-      )
-      status <<- FALSE
-    }
-  )
-
-  if (!status) {
-    return(NULL)
-  }
-
-  invisible(session[obj_name])
+#' Load data into an existing FastF1 session (python object)
+#'
+#' @param obj_name name of the python session variable
+#'
+#' @return invisibly, the python environment
+#' @keywords internal
+#' @noRd
+ff1_load_session <- function(obj_name = "session") {
+  invisible(reticulate::py_run_string(glue::glue(
+    "{name}.load()",
+    name = obj_name
+  )))
 }

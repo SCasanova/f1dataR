@@ -572,12 +572,7 @@ get_session <- function(
 ) {
   # checks
   check_ff1_version()
-  ff1_version <- get_fastf1_version()
-  if (is.na(ff1_version)) {
-    cli::cli_abort(
-      "{.pkg fastf1} Python package is not installed or its version could not be determined."
-    )
-  }
+  check_ff1_auth()
 
   # Function Code
   # only cache to tempdir if cache option is set to memory or off (includes filesystem in vector as a fallback error catch)
@@ -590,41 +585,17 @@ get_session <- function(
     f1datar_cache <- normalizePath(getOption("f1dataR.cache"), winslash = "/")
   }
 
-  if (!dir.exists(f1datar_cache)) {
-    dir.create(f1datar_cache, recursive = TRUE)
-  }
-
   reticulate::py_run_string("import fastf1")
   reticulate::py_run_string(glue::glue(
     "fastf1.Cache.enable_cache('{cache_dir}')",
     cache_dir = f1datar_cache
   ))
 
-  py_string <- glue::glue(
-    "session = fastf1.get_session({season}, ",
-    season = season
-  )
-  if (is.numeric(round)) {
-    py_string <- glue::glue(
-      "{py_string}{round}, '{session}')",
-      py_string = py_string,
-      round = round,
-      session = session
-    )
-  } else {
-    # Character race, so need quotes around it
-    py_string <- glue::glue(
-      "{py_string}'{round}', '{session}')",
-      py_string = py_string,
-      round = round,
-      session = session
-    )
-  }
-  tryCatch(
-    py_env <- reticulate::py_run_string(py_string),
-    error = function(e) {
-      cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
-    }
+  py_env <- ff1_get_session(
+    "session",
+    season = season,
+    round = round,
+    session = "R"
   )
   invisible(py_env)
 }

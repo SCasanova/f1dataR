@@ -1,6 +1,6 @@
 Package: f1dataR
 Title: Access Formula 1 Data
-Version: 2.0.2
+Version: 2.1.0
 Authors@R: c(
     person("Santiago", "Casanova", , "santiago.casanova@yahoo.com", role = c("aut", "cre", "cph")),
     person("Philip", "Bulsink", , "bulsinkp@gmail.com", role = "aut",
@@ -10,7 +10,7 @@ Description: Obtain Formula 1 data via the 'Jolpica API' <https://jolpi.ca> and 
 Config/reticulate: 
   list(
     packages = list(
-      list(package = "fastf1", pip = TRUE)
+      list(package = "fastf1>=3.9.0", pip = TRUE)
     )
   )
 License: MIT + file LICENSE
@@ -34,7 +34,8 @@ Imports:
     cli,
     rappdirs,
     cachem,
-    withr
+    withr,
+    askpass
 Suggests: 
     ggplot2,
     httptest2,
@@ -46,4 +47,4 @@ VignetteBuilder: knitr
 URL: https://scasanova.github.io/f1dataR/, https://github.com/SCasanova/f1dataR
 BugReports: https://github.com/SCasanova/f1dataR/issues
 Config/testthat/edition: 3
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

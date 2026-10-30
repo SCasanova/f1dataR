@@ -2,6 +2,7 @@ test_that("load circuit details works", {
   testthat::skip_if_offline("livetiming.formula1.com")
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -21,7 +22,7 @@ test_that("load circuit details works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
+  if (ff1_ver < "3.1") {
     expect_error(
       circuit_details <- load_circuit_details(2023, "bahrain"),
       "Skipping load_race_session as FastF1 is out of date."
@@ -78,7 +79,7 @@ test_that("Load Circuit Details works without internet", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_telem2"))
 
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
+  if (ff1_ver < "3.1") {
     skip(
       "Skipping load_circuit_details (no internet) test as FastF1 is out of date."
     )

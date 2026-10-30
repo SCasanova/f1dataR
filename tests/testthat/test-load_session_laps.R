@@ -2,6 +2,7 @@ test_that("load session laps works", {
   testthat::skip_if_offline("livetiming.formula1.com")
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -19,7 +20,7 @@ test_that("load session laps works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       laps <- load_session_laps(season = 2023, round = "bahrain"),
       "Skipping load_race_session as FastF1 is out of date."
@@ -68,48 +69,33 @@ test_that("load session laps works", {
   ))
 })
 
-test_that("Load Session Laps works without internet", {
-  skip_if_no_py()
-  skip_if_no_ff1()
+test_that("load session laps works with mocked FastF1", {
+  local_mock_fastf1()
 
-  # Set testing specific parameters - this disposes after the test finishes
-  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
-  # because python's process has it locked.
-  if (dir.exists(file.path(tempdir(), "tst_session_laps2"))) {
-    unlink(
-      file.path(tempdir(), "tst_session_laps2"),
-      recursive = TRUE,
-      force = TRUE
-    )
-  }
-  withr::local_file(file.path(tempdir(), "tst_session_laps2"))
-  dir.create(file.path(tempdir(), "tst_session_laps2"), recursive = TRUE)
-  withr::local_options(
-    f1dataR.cache = file.path(tempdir(), "tst_session_laps2")
-  )
+  laps <- load_session_laps(season = 2023, round = 1)
+  laps_w <- load_session_laps(season = 2023, round = 1, add_weather = TRUE)
+  lapsq <- load_session_laps(season = 2023, round = 1, session = "Q")
 
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    skip(
-      "Skipping load_session_laps (no internet) test as FastF1 is out of date."
-    )
-  }
+  expect_s3_class(laps, "tbl")
+  expect_true(all(
+    c("time", "lap_time", "driver", "session_type") %in% colnames(laps)
+  ))
+  expect_true(all(laps$session_type == "R"))
+  expect_equal(nrow(laps), nrow(laps_w))
+  expect_equal(laps$time, laps_w$time)
+  expect_lt(ncol(laps), ncol(laps_w))
+  expect_true("wind_speed" %in% colnames(laps_w))
+  expect_true(all(lapsq$session_type %in% c("Q1", "Q2", "Q3")))
+  expect_true(is.numeric(lapsq$lap_time))
 
-  clear_cache()
+  expect_error(load_session_laps(
+    season = 2023,
+    race = "bahrain",
+    session = "Q"
+  ))
+})
 
-  if (requireNamespace("httptest2", quietly = TRUE)) {
-    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
-    # a byproduct of the without_internet call
-    suppressWarnings({
-      suppressMessages({
-        httptest2::without_internet({
-          expect_message(
-            load_session_laps(season = 2023, round = "bahrain"),
-            "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
-          )
-          expect_null(load_session_laps(season = 2023, round = "bahrain"))
-        })
-      })
-    })
-  }
+test_that("load session laps returns NULL without network (mocked)", {
+  local_mock_fastf1(network = FALSE)
+  expect_null(suppressMessages(load_session_laps(season = 2024, round = 1)))
 })

@@ -1,12 +1,15 @@
 # f1dataR (development version)
 
-* Unified the minimum supported FastF1 version to 3.4.0 across the package. Previously `check_ff1_version()`
-  hard-required 3.1.0 and only soft-warned below 3.4.0, while `get_session()` (used by most FastF1-backed
-  functions) silently required 3.4.0 anyway. `check_ff1_version()` now aborts below FastF1 3.4.0, matching
-  `get_session()`'s actual requirement, and no longer emits a separate soft-deprecation warning for the
-  3.1.0–3.4.0 range.
-* Fixed stale README wording ("will be shutting down" -> "was shut down") and a broken inline-R code chunk
-  (missing backticks) in the function list.
+* Fixed stale README wording ("will be shutting down" -> "was shut down") and a broken inline-R code chunk(missing backticks) in the function list.
+
+# f1dataR 2.1.0
+
+* F1 live timing (via `FastF1`) now requires an F1 account (#303).
+  * Added `set_f1_auth()` to set the `F1_USERNAME` and `F1_PASSWORD` environment variables for the session, optionally saving them to `.Renviron` (`persist = TRUE`).
+  * Functions using `FastF1` now check that credentials are set; interactive sessions are prompted, non-interactive sessions error.
+  * Now requires `FastF1` version 3.9.0 or newer.
+  * Added `askpass` as a dependency for password entry.
+
 
 # f1dataR 2.0.2
 

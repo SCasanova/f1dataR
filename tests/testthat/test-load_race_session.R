@@ -2,6 +2,7 @@ test_that("Load Session (file cached) Works", {
   testthat::skip_if_offline("livetiming.formula1.com")
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -17,7 +18,7 @@ test_that("Load Session (file cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
@@ -91,6 +92,7 @@ test_that("Load Session (memory cached) Works", {
 
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -99,7 +101,7 @@ test_that("Load Session (memory cached) Works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
+  if (ff1_ver < "3.9.0") {
     expect_error(
       session <- load_race_session(season = 2023, round = 1),
       "Skipping load_race_session as FastF1 is out of date."
@@ -116,42 +118,55 @@ test_that("Load Session (memory cached) Works", {
   )
 })
 
-test_that("Load Session works without internet", {
-  skip_if_no_py()
-  skip_if_no_ff1()
+test_that("Load Session works with mocked FastF1", {
+  local_mock_fastf1()
 
-  # Set testing specific parameters - this disposes after the test finishes
-  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
-  # because python's process has it locked.
-  if (dir.exists(file.path(tempdir(), "tst_session2"))) {
-    unlink(file.path(tempdir(), "tst_session2"), recursive = TRUE, force = TRUE)
-  }
-  withr::local_file(file.path(tempdir(), "tst_session2"))
-  dir.create(file.path(tempdir(), "tst_session2"), recursive = TRUE)
-  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_session2"))
+  expect_invisible(load_race_session(season = 2023, round = 1))
+  expect_invisible(load_race_session(
+    season = 2023,
+    round = "Bahrain",
+    session = "Q"
+  ))
+  expect_message(
+    load_race_session(season = 2023, round = 1, log_level = "INFO"),
+    "The first time a session is loaded, some time is required. Please*"
+  )
 
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    skip(
-      "Skipping load_race_session (no internet) test as FastF1 is out of date."
-    )
-  }
+  expect_error(
+    load_race_session(season = 2017),
+    "`season` must be between 2018 and *"
+  )
+  expect_error(
+    load_race_session(session = "ZZZ"),
+    '`session` must be one of "FP1"*'
+  )
+  expect_error(load_race_session(season = 2023, round = 1, log_level = "ZZZ"))
+  expect_error(load_race_session(season = 2023, race = "Bahrain"))
+})
 
-  clear_cache()
+test_that("Load Session (mocked) returns NULL without network", {
+  local_mock_fastf1(network = FALSE)
 
-  if (requireNamespace("httptest2", quietly = TRUE)) {
-    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
-    # a byproduct of the without_internet call
-    suppressWarnings({
-      suppressMessages({
-        httptest2::without_internet({
-          expect_message(
-            load_race_session(season = 2023, round = 1),
-            "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
-          )
-          expect_null(load_race_session(season = 2023, round = 1))
-        })
-      })
-    })
-  }
+  expect_message(
+    load_race_session(season = 2023, round = 1),
+    "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+  )
+  expect_null(suppressMessages(load_race_session(season = 2023, round = 1)))
+})
+
+test_that("Load Session (mocked) returns NULL when session data not loaded", {
+  local_mock_fastf1()
+  testthat::local_mocked_bindings(
+    ff1_get_session = function(obj_name = "session", ...) {
+      reticulate::py_run_string(glue::glue(
+        "class _Unloaded:\n    api_path = 'x'\n    @property\n    def t0_date(self):\n        raise ValueError('not loaded')\n    def load(self):\n        pass\n{obj_name} = _Unloaded()"
+      ))
+    },
+    check_ff1_session_loaded = function(...) invisible(TRUE)
+  )
+  expect_message(
+    out <- load_race_session(season = 2023, round = 1),
+    "Error getting data from FastF1"
+  )
+  expect_null(out)
 })

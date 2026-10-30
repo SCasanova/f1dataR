@@ -26,3 +26,4 @@
 cobertura.xml
 ^\.positai$
 ^\.claude$
+^\.posit$
