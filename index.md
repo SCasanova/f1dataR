@@ -8,12 +8,14 @@ Ergast) and the official F1 data stream via the FastF1 Python library.
 Install the stable version from CRAN:
 
 ``` r
+
 install.packages("f1dataR")
 ```
 
 or install the development version from GitHub:
 
 ``` r
+
 if (!require("remotes")) install.packages("remotes")
 remotes::install_github("SCasanova/f1dataR")
 library(f1dataR)
@@ -44,6 +46,7 @@ season and last race. Lap data is limited to 1996-present.
 **Example:**
 
 ``` r
+
 load_laps(season = 2021, round = 15)
 #> # A tibble: 1,025 × 6
 #>    driver_id position time       lap time_sec season
@@ -73,6 +76,7 @@ is called, loading times will be relatively long but in subsequent calls
 this will improve to only a couple of seconds
 
 ``` r
+
 load_driver_telemetry(season = 2022, round = 4, driver = "PER")
 #> # A tibble: 592 × 19
 #>    date                session_time  time   rpm speed n_gear throttle brake
@@ -120,6 +124,7 @@ This function will give us detailed information of lap and sector times,
 tyres, weather (optional), and more for every lap of the GP and driver.
 
 ``` r
+
 load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 #> # A tibble: 962 × 39
 #>     time driver driver_number lap_time lap_number stint pit_out_time pit_in_time
@@ -158,6 +163,7 @@ A built in plotting function that plots the circuit and a driver’s
 fastest laps’ `speed` or `gear` exists.
 
 ``` r
+
 plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "gear")
 ```
 
@@ -209,6 +215,7 @@ The cache directory for sessions can be set manually with the options
 function
 
 ``` r
+
 options(f1dataR.cache = "path/to/directory")
 ```
 

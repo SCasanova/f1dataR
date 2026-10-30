@@ -10,6 +10,7 @@ The most sought-after aspect of F1 data is telemetry data. Let’s get
 Leclerc’s fastest lap from the first race of 2022:
 
 ``` r
+
 library(f1dataR)
 
 load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
@@ -34,6 +35,7 @@ load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 Now let’s use ggplot2 to visualize some of the data we have
 
 ``` r
+
 library(dplyr)
 library(ggplot2)
 
@@ -56,6 +58,7 @@ What if we get more drivers involved. Let’s also get the Qualifying data
 from Hamilton and Pérez
 
 ``` r
+
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest") %>%
   head(300)
 
@@ -84,6 +87,7 @@ that simply applies a theme similar to the official F1 graphics. We can
 apply it to our previous data.
 
 ``` r
+
 ggplot(data, aes(distance, speed, color = driver_code)) +
   geom_line() +
   theme_dark_f1(axis_marks = TRUE) +
@@ -108,6 +112,7 @@ that can plot the speed or gear changes throughout the fastest lap for a
 driver/race.
 
 ``` r
+
 plot_fastest(2022, 1, "R", "PER")
 #> ℹ If the session has not been loaded yet, this could take a minute
 ```
@@ -125,6 +130,7 @@ time change over time (tyre age) for Pérez with every compound used in
 the Spanish GP.
 
 ``` r
+
 laps <- load_session_laps(2023, "Spain") %>%
   filter(driver == "PER") %>%
   group_by(compound) %>%
@@ -163,6 +169,7 @@ tweaks for pretty plotting). Alternatively, you can call
 while building track plots to ensure the `x` & `y` ratios are equal.
 
 ``` r
+
 ver_can <- load_driver_telemetry(
   season = 2023,
   round = "Canada",
@@ -197,6 +204,7 @@ constructor data to get the colors for our plot. Note the time is the
 difference from pit entry to exit, not stopped time.
 
 ``` r
+
 pit_data <- load_pitstops(2023, 4)
 
 driver_team <- load_results(2023, 4) %>%

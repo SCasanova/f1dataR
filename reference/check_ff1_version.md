@@ -2,7 +2,7 @@
 
 This function checks the version of `FastF1` and ensures it's at or
 above the minimum supported version for `f1dataR` (currently requires
-3.1.0 or better).
+3.9.0 or better).
 
 This function is a light wrapper around get_fastf1_version()
 

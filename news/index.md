@@ -1,5 +1,19 @@
 # Changelog
 
+## f1dataR 2.1.0
+
+- F1 live timing (via `FastF1`) now requires an F1 account
+  ([\#303](https://github.com/SCasanova/f1dataR/issues/303)).
+  - Added
+    [`set_f1_auth()`](https://scasanova.github.io/f1dataR/reference/set_f1_auth.md)
+    to set the `F1_USERNAME` and `F1_PASSWORD` environment variables for
+    the session, optionally saving them to `.Renviron`
+    (`persist = TRUE`).
+  - Functions using `FastF1` now check that credentials are set;
+    interactive sessions are prompted, non-interactive sessions error.
+  - Now requires `FastF1` version 3.9.0 or newer.
+  - Added `askpass` as a dependency for password entry.
+
 ## f1dataR 2.0.2
 
 - Updated code to match new `reticulate` interface for package and

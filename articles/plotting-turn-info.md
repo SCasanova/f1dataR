@@ -8,6 +8,7 @@ data in generating plots.
 We’ll load all the required libraries for our data analysis:
 
 ``` r
+
 library(f1dataR)
 library(dplyr)
 library(ggplot2)
@@ -19,6 +20,7 @@ As in our Introduction vignette, we’ll start by working with telemetry
 data.
 
 ``` r
+
 lec <- load_driver_telemetry(2022, 1, "Q", driver = "LEC", laps = "fastest")
 ham <- load_driver_telemetry(2022, 1, "Q", driver = "HAM", laps = "fastest")
 per <- load_driver_telemetry(2022, 1, "Q", driver = "PER", laps = "fastest")
@@ -38,6 +40,7 @@ To demonstrate the addition of turn information, we’ll start by plotting
 the speed telemetry for the three drivers
 
 ``` r
+
 telem_plot_speed <- ggplot(telem, aes(x = distance, y = speed, color = driver_code)) +
   geom_path() +
   scale_color_manual(values = drivercolours) +
@@ -60,6 +63,7 @@ Now, to add the corner numbers to a plot like this, we’ll have to
 retrieve those from FastF1.
 
 ``` r
+
 bahrain_circuit <- load_circuit_details(2022, 1)
 bahrain_corners <- bahrain_circuit$corners
 
@@ -70,6 +74,7 @@ speedmin <- min(telem$speed, na.rm = TRUE)
 Now we can add these indicators to the previous plot:
 
 ``` r
+
 telem_plot_speed +
   geom_vline(xintercept = bahrain_corners$distance, linetype = "longdash", color = "#646464") +
   geom_label(data = bahrain_corners, aes(
@@ -98,6 +103,7 @@ We’ll work with 2022 Silverstone (British Grand Prix) for this plot.
 Lets’ start by getting the data:
 
 ``` r
+
 ver <- load_driver_telemetry(season = 2022, round = "Silverstone", session = "Q", driver = "VER", laps = "fastest")
 silverstone_circuit <- load_circuit_details(season = 2022, round = "Silverstone")
 ```
@@ -106,6 +112,7 @@ Now we’ll plot it. Look to the bottom of the code to see the addition of
 labels.
 
 ``` r
+
 gear_plot <- ggplot(ver, aes(x, y, color = as.factor(n_gear), group = NA)) +
   geom_path(linewidth = 4, lineend = "round") +
   ggplot2::scale_color_manual(
@@ -149,6 +156,7 @@ label. With that data, and some careful math, we can move the labels to
 where we want them.
 
 ``` r
+
 labelx <- function(x, angle, distance = 750) {
   angle <- angle * pi / 180
   return(cos(angle) * distance + x)
@@ -166,6 +174,7 @@ With those new label x and y points calculated, we can re-plot the
 labels slightly offset from the track.
 
 ``` r
+
 labelled_gear_plot2 <- gear_plot +
   geom_label(data = silverstone_circuit$corners, aes(
     label = paste0(silverstone_circuit$corners$number, silverstone_circuit$corners$letter),

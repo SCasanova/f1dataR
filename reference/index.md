@@ -60,6 +60,8 @@
   : Load Standings
 - [`plot_fastest()`](https://scasanova.github.io/f1dataR/reference/plot_fastest.md)
   : Plot Fastest Lap
+- [`set_f1_auth()`](https://scasanova.github.io/f1dataR/reference/set_f1_auth.md)
+  : Set F1 Account Credentials
 - [`theme_dark_f1()`](https://scasanova.github.io/f1dataR/reference/theme_dark_f1.md)
   : Dark F1-style Theme for ggplot
 - [`time_to_sec()`](https://scasanova.github.io/f1dataR/reference/time_to_sec.md)

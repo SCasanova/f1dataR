@@ -15,6 +15,7 @@ developed as a direct replacement.
 We’ll load all the required libraries for our data analysis:
 
 ``` r
+
 library(f1dataR)
 library(dplyr)
 ```
@@ -47,6 +48,7 @@ the race finishing position. We’ll look at the Austrian Grand Prix from
 it produced a well mixed field.
 
 ``` r
+
 library(ggplot2)
 # Load the data
 results <- load_results(2020, 1) %>%
@@ -81,6 +83,7 @@ also those who didn’t start from the grid (i.e. those who started from
 Pit Lane, where `grid` = 0).
 
 ``` r
+
 # Load the data
 results <- data.frame()
 for (i in seq_len(17)) {
@@ -124,6 +127,7 @@ at both position or total points accumulation. We’ll do that for 2021,
 which had good competition throughout the year for P1.
 
 ``` r
+
 # Load the data
 points <- data.frame()
 for (rnd in seq_len(22)) {
@@ -162,6 +166,7 @@ What may be more interesting is the total accumulation of points. For
 that we can change up the plot just a little bit.
 
 ``` r
+
 # Plot the Results
 ggplot(points, aes(x = round, y = points, color = driver_id)) +
   geom_line() +
@@ -186,6 +191,7 @@ data.frame after we generate driver abbreviations from the Jolpica
 `driver_id`.
 
 ``` r
+
 driver_style <- rbind(
   get_session_drivers_and_teams(2021, round = 1),
   get_session_drivers_and_teams(2021, round = 13)
@@ -227,6 +233,7 @@ With our data having graphical and label information added, we can
 remake these plots:
 
 ``` r
+
 ggplot(points, aes(x = round, y = points, color = code, shape = code, linetype = code)) +
   geom_line() +
   geom_point() +
@@ -254,6 +261,7 @@ race conditions. We’ll also show extracting constructor colour from the
 built-in data set.
 
 ``` r
+
 # Load the laps data and select one driver (this time - Russell)
 bot <- load_laps(season = 2021, round = 4) %>%
   filter(driver_id == "bottas")
@@ -289,6 +297,7 @@ seconds to make the variation in lap time easier to see (i.e. show only
 racing laps). We can recycle the color values we produced above.
 
 ``` r
+
 # Load the laps data (cached!) and filter
 laps <- load_laps(season = 2021, round = 4) %>%
   filter(time_sec < 100) %>%
@@ -325,6 +334,7 @@ with different ways of handling the data could produce different
 results!
 
 ``` r
+
 # Load the Data
 quali <- load_quali(2021, 8)
 

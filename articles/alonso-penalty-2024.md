@@ -18,6 +18,7 @@ FastF1 package.
 We’ll start by loading the `f1dataR` package.
 
 ``` r
+
 library(f1dataR)
 ```
 
@@ -28,6 +29,7 @@ same laps to see how he reacts before the crash. Note we use some
 `dplyr` for data manipulation.
 
 ``` r
+
 alo_telem <- dplyr::bind_rows(lapply(c(52:57), function(l) load_driver_telemetry(season = 2024, round = "Australia", session = "R", driver = "ALO", laps = l) %>% dplyr::mutate(lap = l)))
 rus_telem <- dplyr::bind_rows(lapply(c(52:57), function(l) load_driver_telemetry(season = 2024, round = "Australia", session = "R", driver = "RUS", laps = l) %>% dplyr::mutate(lap = l)))
 ```
@@ -35,6 +37,7 @@ rus_telem <- dplyr::bind_rows(lapply(c(52:57), function(l) load_driver_telemetry
 A few manipulations now will make later plotting easier:
 
 ``` r
+
 alo_telem$lap <- as.factor(alo_telem$lap)
 alo_telem$brake <- as.integer(alo_telem$brake)
 rus_telem$lap <- as.factor(rus_telem$lap)
@@ -52,6 +55,7 @@ previous, we see the following (focusing on the T6-7 area from 1500 to
 2000 m into the lap):
 
 ``` r
+
 ggplot2::ggplot(alo_telem, ggplot2::aes(x = distance, y = throttle, color = lap)) +
   ggplot2::geom_path() +
   ggplot2::scale_color_viridis_d() +
@@ -80,6 +84,7 @@ Similarly, we can look at braking (on/off), selected gear, and speed
 traces to see all the changes in driving style for that lap:
 
 ``` r
+
 long_telem_alo <- alo_telem %>%
   dplyr::select(c("speed", "n_gear", "throttle", "brake", "lap", "distance")) %>%
   tidyr::pivot_longer(
@@ -132,6 +137,7 @@ Russell, of course, was tailing Alonso, and the telemetry provides a
 observe this (with his other telemetry lines too).
 
 ``` r
+
 long_telem_rus <- rus_telem %>%
   dplyr::select(c("speed", "n_gear", "throttle", "brake", "lap", "distance", "distance_to_driver_ahead")) %>%
   tidyr::pivot_longer(

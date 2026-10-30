@@ -36,8 +36,7 @@ plot_fastest(
 - driver:
 
   three letter driver code (see load_drivers() for a list) or name to be
-  fuzzy matched to a driver from the session if FastF1 \>= 3.4.0 is
-  available.
+  fuzzy matched to a driver from the session.
 
 - color:
 
