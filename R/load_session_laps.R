@@ -14,16 +14,32 @@
 #'
 #' @return A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
 #' @export
-load_session_laps <- function(season = get_current_season(), round = 1, session = "R", log_level = "WARNING",
-                              add_weather = FALSE, race = lifecycle::deprecated()) {
+load_session_laps <- function(
+  season = get_current_season(),
+  round = 1,
+  session = "R",
+  log_level = "WARNING",
+  add_weather = FALSE,
+  race = lifecycle::deprecated()
+) {
   # Deprecation Checks
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.4.0", "load_session_laps(race)", "load_session_laps(round)")
+    lifecycle::deprecate_stop(
+      "1.4.0",
+      "load_session_laps(race)",
+      "load_session_laps(round)"
+    )
   }
   check_ff1_version()
 
   # Function Code
-  status <- load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
+  status <- load_race_session(
+    obj_name = "session",
+    season = season,
+    round = round,
+    session = session,
+    log_level = log_level
+  )
 
   if (is.null(status)) {
     # Failure to load - escape
@@ -32,7 +48,8 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
 
   reticulate::py_run_string("laps = session.laps")
   if (add_weather) {
-    reticulate::py_run_string(paste("import pandas as pd",
+    reticulate::py_run_string(paste(
+      "import pandas as pd",
       "weather_data = laps.get_weather_data()",
       "laps = laps.reset_index(drop=True)",
       "weather_data = weather_data.reset_index(drop=True)",
@@ -43,7 +60,8 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
 
   if (session %in% c("Q", "SQ")) {
     # prepping for Q1/Q2/Q3 labels - this has to happen before timedelta64 is converted to seconds
-    reticulate::py_run_string(paste("q1, q2, q3 = session.laps.split_qualifying_sessions()",
+    reticulate::py_run_string(paste(
+      "q1, q2, q3 = session.laps.split_qualifying_sessions()",
       "q1len = len(q1.index)",
       "q2len = len(q2.index)",
       "q3len = len(q3.index)",
@@ -54,7 +72,8 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
   # The FF1 function returns timedelta64 results for the below columns, which don't properly convert to
   # R compatible types. Instead, use the dt.total_seconds() function inherent to the type to convert in
   # Python before extracting the DataFrame to the R data.frame
-  py_env <- reticulate::py_run_string(paste("laps.Time = laps.Time.dt.total_seconds()",
+  py_env <- reticulate::py_run_string(paste(
+    "laps.Time = laps.Time.dt.total_seconds()",
     "laps.LapTime = laps.LapTime.dt.total_seconds()",
     "laps.PitOutTime = laps.PitOutTime.dt.total_seconds()",
     "laps.PitInTime = laps.PitInTime.dt.total_seconds()",
@@ -79,9 +98,17 @@ load_session_laps <- function(season = get_current_season(), round = 1, session 
     q3len <- reticulate::py_to_r(reticulate::py_get_item(py_env, "q3len"))
 
     if (session == "Q") {
-      laps$SessionType <- c(rep("Q1", q1len), rep("Q2", q2len), rep("Q3", q3len))
+      laps$SessionType <- c(
+        rep("Q1", q1len),
+        rep("Q2", q2len),
+        rep("Q3", q3len)
+      )
     } else {
-      laps$SessionType <- c(rep("SQ1", q1len), rep("SQ2", q2len), rep("SQ3", q3len))
+      laps$SessionType <- c(
+        rep("SQ1", q1len),
+        rep("SQ2", q2len),
+        rep("SQ3", q3len)
+      )
     }
   } else {
     laps$SessionType <- session

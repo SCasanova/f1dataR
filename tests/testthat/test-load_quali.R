@@ -1,7 +1,11 @@
 test_that("load_quali works", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_quali"))) {
-    unlink(file.path(tempdir(), "tst_load_quali"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_quali"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_quali"))
   dir.create(file.path(tempdir(), "tst_load_quali"), recursive = TRUE)
@@ -31,7 +35,11 @@ test_that("load_quali works", {
 test_that("load_quali works without internet", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_quali2"))) {
-    unlink(file.path(tempdir(), "tst_load_quali2"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_quali2"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_quali2"))
   dir.create(file.path(tempdir(), "tst_load_quali2"), recursive = TRUE)
@@ -45,7 +53,10 @@ test_that("load_quali works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_quali(2021, 1), "f1dataR: Error getting data from Jolpica")
+          expect_message(
+            load_quali(2021, 1),
+            "f1dataR: Error getting data from Jolpica"
+          )
           expect_null(load_quali(2021, 1))
         })
       })

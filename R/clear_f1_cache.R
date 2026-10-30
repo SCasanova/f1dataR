@@ -20,7 +20,8 @@ clear_f1_cache <- function() {
       reticulate::py_run_string("import fastf1")
 
       try(
-        reticulate::py_run_string(glue::glue("fastf1.Cache.clear_cache('{cache_dir}')",
+        reticulate::py_run_string(glue::glue(
+          "fastf1.Cache.clear_cache('{cache_dir}')",
           cache_dir = normalizePath(getOption("f1dataR.cache"))
         ))
       )
@@ -99,15 +100,21 @@ clear_cache <- function() {
 #'
 #' change_cache("off", persist = FALSE)
 #' }
-change_cache <- function(cache = "memory", create_dir = FALSE, persist = FALSE) {
+change_cache <- function(
+  cache = "memory",
+  create_dir = FALSE,
+  persist = FALSE
+) {
   if (!cache %in% c("memory", "filesystem", "off")) {
     if (create_dir) {
       if (!dir.exists(normalizePath(cache, mustWork = FALSE))) {
         dir.create(normalizePath(cache), recursive = TRUE, showWarnings = TRUE)
       }
     } else if (!dir.exists(normalizePath(cache, mustWork = FALSE))) {
-      cli::cli_abort("Attempt to set cache to {cache} failed.
-                      Directory does not exist and `create_dir` was set to FALSE.")
+      cli::cli_abort(
+        "Attempt to set cache to {cache} failed.
+                      Directory does not exist and `create_dir` was set to FALSE."
+      )
     }
   }
 

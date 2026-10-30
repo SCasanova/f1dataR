@@ -30,35 +30,59 @@
 #' if (interactive()) {
 #'   session <- load_race_session(season = 2019, round = 1, session = "Q")
 #' }
-load_race_session <- function(obj_name = "session", season = get_current_season(), round = 1, session = "R",
-                              log_level = "WARNING", race = lifecycle::deprecated()) {
+load_race_session <- function(
+  obj_name = "session",
+  season = get_current_season(),
+  round = 1,
+  session = "R",
+  log_level = "WARNING",
+  race = lifecycle::deprecated()
+) {
   # Deprecation Checks
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.4.0", "load_race_session(race)", "load_race_session(round)")
+    lifecycle::deprecate_stop(
+      "1.4.0",
+      "load_race_session(race)",
+      "load_race_session(round)"
+    )
   }
   check_ff1_version()
+  check_ff1_auth()
 
   # Function Code
   if (season != "current" && (season < 2018 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 2018 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 2018 and {get_current_season()} (or use "current")'
+    )
     # stop(glue::glue('Year must be between 2018 and {current} (or use "current")',
     #                 current = get_current_season()))
   }
   if (!(session %in% c("FP1", "FP2", "FP3", "Q", "R", "S", "SS", "SQ"))) {
-    cli::cli_abort('{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SQ", "SS", "S", or "R"')
+    cli::cli_abort(
+      '{.var session} must be one of "FP1", "FP2", "FP3", "Q", "SQ", "SS", "S", or "R"'
+    )
   }
   if (season == "current") {
     season <- get_current_season()
   }
 
-  log_level <- match.arg(log_level, c("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"), several.ok = FALSE)
+  log_level <- match.arg(
+    log_level,
+    c("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"),
+    several.ok = FALSE
+  )
 
   if (log_level %in% c("DEBUG", "INFO")) {
-    cli::cli_alert_info("The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster.")
+    cli::cli_alert_info(
+      "The first time a session is loaded, some time is required. Please be patient. Subsequent times will be faster."
+    )
   }
 
   # only cache to tempdir if cache option is set to memory or off (includes filesystem in vector as a fallback error catch)
-  if (getOption("f1dataR.cache", default = "memory") %in% c("memory", "off", "filesystem")) {
+  if (
+    getOption("f1dataR.cache", default = "memory") %in%
+      c("memory", "off", "filesystem")
+  ) {
     f1datar_cache <- normalizePath(tempdir(), winslash = "/")
   } else {
     f1datar_cache <- normalizePath(getOption("f1dataR.cache"), winslash = "/")
@@ -69,41 +93,35 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   reticulate::py_run_string("import fastf1")
-  reticulate::py_run_string(glue::glue("fastf1.set_log_level('{log_level}')", log_level = log_level))
-  reticulate::py_run_string(glue::glue("fastf1.Cache.enable_cache('{cache_dir}')", cache_dir = f1datar_cache))
-
-  py_string <- glue::glue("{name} = fastf1.get_session({season}, ", name = obj_name, season = season)
-  if (is.numeric(round)) {
-    py_string <- glue::glue("{py_string}{round}, '{session}')",
-      py_string = py_string, round = round, session = session
-    )
-  } else {
-    # Character race, so need quotes around it
-    py_string <- glue::glue("{py_string}'{round}', '{session}')",
-      py_string = py_string, round = round, session = session
-    )
-  }
+  reticulate::py_run_string(glue::glue(
+    "fastf1.set_log_level('{log_level}')",
+    log_level = log_level
+  ))
+  reticulate::py_run_string(glue::glue(
+    "fastf1.Cache.enable_cache('{cache_dir}')",
+    cache_dir = f1datar_cache
+  ))
 
   # fastf1.get_session([args]) runs even if there's no internet connection,
   # the schedule of sessions is built into the package
-  tryCatch(
-    session <- reticulate::py_run_string(py_string),
-    error = function(e) {
-      cli::cli_abort(c("Error loading FastF1 session.",
-        "x" = as.character(e)
-      ))
-    }
+  session <- ff1_get_session(
+    obj_name = obj_name,
+    season = season,
+    round = round,
+    session = session
   )
 
   # Check for fastf1 (F1timing/internet) connection
   status <- check_ff1_network_connection(session$session$api_path)
   if (!status) {
-    cli::cli_alert_danger("f1dataR: Can't connect to F1 Live Timing for FastF1 data download")
+    cli::cli_alert_danger(
+      "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+    )
     return(NULL)
   }
 
   # likewise, without internet the session itself will 'load' but not actually retrieve any data
-  reticulate::py_run_string(glue::glue("{name}.load()", name = obj_name))
+  ff1_load_session(obj_name)
 
   # without internet the session check will fail, and retry reload
   check_ff1_session_loaded(session_name = obj_name)
@@ -113,11 +131,16 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
     {
       # Only returns a value if session.load() has been successful
       # If it hasn't, internet or fastf1 must be down
-      reticulate::py_run_string(glue::glue("{obj_name}.t0_date", obj_name = obj_name))
+      reticulate::py_run_string(glue::glue(
+        "{obj_name}.t0_date",
+        obj_name = obj_name
+      ))
       status <- TRUE
     },
     error = function(e) {
-      cli::cli_alert_danger("f1dataR: Error getting data from FastF1 or F1 Live Timing")
+      cli::cli_alert_danger(
+        "f1dataR: Error getting data from FastF1 or F1 Live Timing"
+      )
       status <- FALSE
     }
   )
@@ -127,4 +150,70 @@ load_race_session <- function(obj_name = "session", season = get_current_season(
   }
 
   invisible(session[obj_name])
+}
+
+
+#' Get a FastF1 session (python object)
+#'
+#' @description Creates the python session object (without loading data) in the
+#' python `__main__` namespace under `obj_name`. Separated from
+#' [load_race_session()] so the FastF1 calls can be mocked in tests.
+#'
+#' @param obj_name name of the python variable to assign
+#' @param season season number
+#' @param round round number or name
+#' @param session session code
+#'
+#' @return the python environment (`__main__`), as returned by `py_run_string()`
+#' @keywords internal
+#' @noRd
+ff1_get_session <- function(
+  obj_name = "session",
+  season,
+  round,
+  session = "R"
+) {
+  py_string <- glue::glue(
+    "{name} = fastf1.get_session({season}, ",
+    name = obj_name,
+    season = season
+  )
+  if (is.numeric(round)) {
+    py_string <- glue::glue(
+      "{py_string}{round}, '{session}')",
+      py_string = py_string,
+      round = round,
+      session = session
+    )
+  } else {
+    # Character race, so need quotes around it
+    py_string <- glue::glue(
+      "{py_string}'{round}', '{session}')",
+      py_string = py_string,
+      round = round,
+      session = session
+    )
+  }
+
+  tryCatch(
+    reticulate::py_run_string(py_string),
+    error = function(e) {
+      cli::cli_abort(c("Error loading FastF1 session.", "x" = as.character(e)))
+    }
+  )
+}
+
+
+#' Load data into an existing FastF1 session (python object)
+#'
+#' @param obj_name name of the python session variable
+#'
+#' @return invisibly, the python environment
+#' @keywords internal
+#' @noRd
+ff1_load_session <- function(obj_name = "session") {
+  invisible(reticulate::py_run_string(glue::glue(
+    "{name}.load()",
+    name = obj_name
+  )))
 }

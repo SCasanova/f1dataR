@@ -12,17 +12,26 @@
 #' @export
 #' @return A tibble with columns driver_id (or constructor_id), position,
 #' points, wins (and constructors_id in the case of drivers championship).
-load_standings <- function(season = get_current_season(), round = "last", type = "driver") {
+load_standings <- function(
+  season = get_current_season(),
+  round = "last",
+  type = "driver"
+) {
   if (season != "current" && (season < 2003 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 2003 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 2003 and {get_current_season()} (or use "current")'
+    )
   }
 
   if (!(type %in% c("driver", "constructor"))) {
     cli::cli_abort('{.var type} must be either "driver" or "constructor"')
   }
 
-  url <- glue::glue("{season}/{round}/{type}Standings.json",
-    season = season, round = round, type = type
+  url <- glue::glue(
+    "{season}/{round}/{type}Standings.json",
+    season = season,
+    round = round,
+    type = type
   )
 
   data <- get_jolpica_content(url)
@@ -34,11 +43,23 @@ load_standings <- function(season = get_current_season(), round = "last", type =
   if (type == "driver") {
     data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
       tidyr::unnest(cols = c("Driver")) %>%
-      dplyr::select("driverId", "position", "points", "wins", "Constructors") %>%
+      dplyr::select(
+        "driverId",
+        "position",
+        "points",
+        "wins",
+        "Constructors"
+      ) %>%
       tidyr::unnest(cols = c("Constructors")) %>%
       suppressWarnings() %>%
       suppressMessages() %>%
-      dplyr::select("driverId", "position", "points", "wins", "constructorId") %>%
+      dplyr::select(
+        "driverId",
+        "position",
+        "points",
+        "wins",
+        "constructorId"
+      ) %>%
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else if (type == "constructor") {

@@ -16,3 +16,4 @@ docs
 /revdep/
 Thumbs.db
 cobertura.xml
+!tests/testthat/fixtures/fastf1/*.pkl

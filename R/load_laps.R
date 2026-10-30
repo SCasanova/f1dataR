@@ -11,7 +11,11 @@
 #' @export
 #' @return A tibble with columns driver_id (unique and recurring), position
 #' during lap, time (in clock form), lap number, time (in seconds), and season.
-load_laps <- function(season = get_current_season(), round = "last", race = lifecycle::deprecated()) {
+load_laps <- function(
+  season = get_current_season(),
+  round = "last",
+  race = lifecycle::deprecated()
+) {
   # Deprecation Check
   if (lifecycle::is_present(race)) {
     lifecycle::deprecate_stop("1.4.0", "load_laps(race)", "load_laps(round)")
@@ -19,14 +23,18 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
 
   # Parameter Check
   if (season != "current" && (season < 1996 || season > get_current_season())) {
-    cli::cli_abort('{.var season} must be between 1996 and {get_current_season()} (or use "current")')
+    cli::cli_abort(
+      '{.var season} must be between 1996 and {get_current_season()} (or use "current")'
+    )
   }
 
   lim <- 100
 
   # Function Code
-  url <- glue::glue("{season}/{round}/laps.json",
-    season = season, round = round
+  url <- glue::glue(
+    "{season}/{round}/laps.json",
+    season = season,
+    round = round
   )
   data <- get_jolpica_content(url, parameters = list("limit" = lim))
 
@@ -43,7 +51,10 @@ load_laps <- function(season = get_current_season(), round = "last", race = life
   while (offset + lim <= total) {
     offset <- offset + lim
 
-    data <- get_jolpica_content(url, parameters = list(limit = lim, offset = offset))
+    data <- get_jolpica_content(
+      url,
+      parameters = list(limit = lim, offset = offset)
+    )
 
     if (is.null(data)) {
       return(NULL)

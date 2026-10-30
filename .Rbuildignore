@@ -20,3 +20,4 @@
 ^\w*.pem$
 ^revdep$
 cobertura.xml
+^\.posit$

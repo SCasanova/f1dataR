@@ -1,6 +1,7 @@
 test_that("aesthetics works", {
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -17,16 +18,6 @@ test_that("aesthetics works", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_aesthetics"))
 
   # Tests
-
-  # Ensure failure if old ff1, then skip
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    expect_error(
-      session <- get_driver_style(driver = "ALO", season = 2024, round = 1),
-      "requires FastF1 version 3.4.0"
-    )
-    skip("Skipping get_driver_style as FastF1 is out of date.")
-  }
 
   driver1 <- get_driver_style(driver = "ALO", season = 2024, round = 1)
   driver2 <- get_driver_style(driver = "ALO", season = 2024, round = "Bahrain")
@@ -80,6 +71,7 @@ test_that("aesthetics works", {
 test_that("lookups works", {
   skip_if_no_py()
   skip_if_no_ff1()
+  skip_if_no_fastf1_creds()
 
   # Set testing specific parameters - this disposes after the test finishes
   # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
@@ -92,16 +84,6 @@ test_that("lookups works", {
   withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_lookups"))
 
   # Tests
-
-  # Ensure failure if old ff1, then skip
-  ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.4") {
-    expect_error(
-      session <- get_driver_style(driver = "ALO", season = 2024, round = 1),
-      "requires FastF1 version 3.4.0"
-    )
-    skip("Skipping look-ups as FastF1 is out of date.")
-  }
 
   expect_equal(get_driver_abbreviation("Lewis Hamilton", 2024), "HAM")
   expect_equal(get_driver_name("Lewis", 2024), "Lewis Hamilton")
@@ -198,4 +180,10 @@ test_that("lookups works", {
     "Error running FastF1 code:",
     fixed = TRUE
   )
+})
+
+test_that("get_session works with mocked FastF1", {
+  local_mock_fastf1()
+  expect_invisible(get_session(2023, 1))
+  expect_invisible(get_session(2023, "Bahrain"))
 })

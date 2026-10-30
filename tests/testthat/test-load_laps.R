@@ -1,7 +1,11 @@
 test_that("load_laps works", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_laps"))) {
-    unlink(file.path(tempdir(), "tst_load_laps"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_laps"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_laps"))
   dir.create(file.path(tempdir(), "tst_load_laps"), recursive = TRUE)
@@ -37,7 +41,11 @@ test_that("load_laps works", {
 test_that("load_laps works without internet", {
   # Set testing specific parameters - this disposes after the test finishes
   if (dir.exists(file.path(tempdir(), "tst_load_laps2"))) {
-    unlink(file.path(tempdir(), "tst_load_laps2"), recursive = TRUE, force = TRUE)
+    unlink(
+      file.path(tempdir(), "tst_load_laps2"),
+      recursive = TRUE,
+      force = TRUE
+    )
   }
   withr::local_file(file.path(tempdir(), "tst_load_laps2"))
   dir.create(file.path(tempdir(), "tst_load_laps2"), recursive = TRUE)
@@ -51,7 +59,10 @@ test_that("load_laps works without internet", {
     suppressWarnings({
       suppressMessages({
         httptest2::without_internet({
-          expect_message(load_laps(2021, 1), "f1dataR: Error getting data from Jolpica")
+          expect_message(
+            load_laps(2021, 1),
+            "f1dataR: Error getting data from Jolpica"
+          )
           expect_null(load_laps(2021, 1))
         })
       })

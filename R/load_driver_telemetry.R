@@ -33,15 +33,30 @@
 #'   )
 #' }
 #'
-load_driver_telemetry <- function(season = get_current_season(), round = 1, session = "R", driver, laps = "fastest",
-                                  log_level = "WARNING", race = lifecycle::deprecated(),
-                                  fastest_only = lifecycle::deprecated()) {
+load_driver_telemetry <- function(
+  season = get_current_season(),
+  round = 1,
+  session = "R",
+  driver,
+  laps = "fastest",
+  log_level = "WARNING",
+  race = lifecycle::deprecated(),
+  fastest_only = lifecycle::deprecated()
+) {
   # Deprecation Checks
   if (lifecycle::is_present(race)) {
-    lifecycle::deprecate_stop("1.4.0", "load_driver_telemetry(race)", "load_driver_telemetry(round)")
+    lifecycle::deprecate_stop(
+      "1.4.0",
+      "load_driver_telemetry(race)",
+      "load_driver_telemetry(round)"
+    )
   }
   if (lifecycle::is_present(fastest_only)) {
-    lifecycle::deprecate_stop("1.4.0", "load_driver_telemetry(fastest_only)", "load_driver_telemetry(laps)")
+    lifecycle::deprecate_stop(
+      "1.4.0",
+      "load_driver_telemetry(fastest_only)",
+      "load_driver_telemetry(laps)"
+    )
   }
   check_ff1_version()
 
@@ -50,14 +65,24 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   if (!(laps %in% c("fastest", "all"))) {
     if (is.numeric(laps)) {
       if (as.numeric(laps) != as.integer(laps)) {
-        cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+        cli::cli_abort(
+          "{.var laps} must be one of `fastest`, `all` or an integer value"
+        )
       }
     } else {
-      cli::cli_abort("{.var laps} must be one of `fastest`, `all` or an integer value")
+      cli::cli_abort(
+        "{.var laps} must be one of `fastest`, `all` or an integer value"
+      )
     }
   }
 
-  status <- load_race_session(obj_name = "session", season = season, round = round, session = session, log_level = log_level)
+  status <- load_race_session(
+    obj_name = "session",
+    season = season,
+    round = round,
+    session = session,
+    log_level = log_level
+  )
 
   if (is.null(status)) {
     # Failure to load - escape
@@ -65,19 +90,24 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
   }
 
   if (laps == "fastest") {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_drivers('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",
+    reticulate::py_run_string(glue::glue(
+      "tel = session.laps.pick_drivers('{driver}').pick_fastest().get_telemetry().add_distance().add_driver_ahead()",
       driver = driver
     ))
   } else if (laps != "all") {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_drivers('{driver}').pick_laps({laps}).get_telemetry().add_distance().add_driver_ahead()",
-      driver = driver, laps = laps
+    reticulate::py_run_string(glue::glue(
+      "tel = session.laps.pick_drivers('{driver}').pick_laps({laps}).get_telemetry().add_distance().add_driver_ahead()",
+      driver = driver,
+      laps = laps
     ))
   } else {
-    reticulate::py_run_string(glue::glue("tel = session.laps.pick_drivers('{driver}').get_telemetry().add_distance().add_driver_ahead()",
+    reticulate::py_run_string(glue::glue(
+      "tel = session.laps.pick_drivers('{driver}').get_telemetry().add_distance().add_driver_ahead()",
       driver = driver
     ))
   }
-  py_env <- reticulate::py_run_string(paste("tel.SessionTime = tel.SessionTime.dt.total_seconds()",
+  py_env <- reticulate::py_run_string(paste(
+    "tel.SessionTime = tel.SessionTime.dt.total_seconds()",
     "tel.Time = tel.Time.dt.total_seconds()",
     sep = "\n"
   ))
@@ -100,14 +130,16 @@ load_driver_telemetry <- function(season = get_current_season(), round = 1, sess
 #' @export
 
 get_driver_telemetry <-
-  function(season = get_current_season(),
-           round = 1,
-           session = "R",
-           driver,
-           laps = "fastest",
-           log_level = "WARNING",
-           fastest_only = lifecycle::deprecated(),
-           race = lifecycle::deprecated()) {
+  function(
+    season = get_current_season(),
+    round = 1,
+    session = "R",
+    driver,
+    laps = "fastest",
+    log_level = "WARNING",
+    fastest_only = lifecycle::deprecated(),
+    race = lifecycle::deprecated()
+  ) {
     lifecycle::deprecate_stop(
       "1.4.0",
       "get_driver_telemetry()",
