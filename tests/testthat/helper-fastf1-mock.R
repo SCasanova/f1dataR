@@ -69,12 +69,10 @@ local_mock_fastf1 <- function(network = TRUE, .env = parent.frame()) {
     check_ff1_auth = function(...) invisible(TRUE),
     check_ff1_network_connection = function(...) network,
     ff1_load_session = function(...) invisible(NULL),
-    ff1_get_session = function(
-      obj_name = "session",
-      season,
-      round,
-      session = "R"
-    ) {
+    ff1_get_session = function(obj_name = "session",
+                               season,
+                               round,
+                               session = "R") {
       path <- mock_fastf1_fixture(session)
       if (!file.exists(path)) {
         cli::cli_abort("No mock FastF1 fixture for session {.val {session}}")
