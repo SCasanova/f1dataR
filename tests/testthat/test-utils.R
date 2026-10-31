@@ -89,7 +89,7 @@ test_that("check_ff1_version returns invisible(TRUE) on all non-error paths", {
   )
 
   testthat::local_mocked_bindings(
-    get_fastf1_version = function() package_version("3.8.0")
+    get_fastf1_version = function() package_version("3.9.0")
   )
   result2 <- withVisible(check_ff1_version())
   expect_true(result2$value)

@@ -98,7 +98,7 @@ plot_fastest <- function(
       dplyr::filter(.data$code == driver_abbreviation) %>%
       dplyr::pull("driver_id")
     lap_time <- load_laps(season, round) %>%
-      dplyr::filter(.data$driver_id == .env$driver_id) %>%
+      dplyr::filter(.data$driver_id == driver_id) %>%
       dplyr::filter(.data$time_sec == min(.data$time_sec)) %>%
       dplyr::pull(.data$time)
     if (length(lap_time) == 0) {

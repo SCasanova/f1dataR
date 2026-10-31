@@ -8,26 +8,41 @@ test_that(".onLoad's filesystem cache option matches the memoise cache directory
 
   test_wd <- withr::local_tempdir("tst_onload_wd")
 
+  # Source tree (devtools::test) has DESCRIPTION and R/; under R CMD check the
+  # tests run against the *installed* package, which has neither, so
+  # pkgload::load_all() cannot be used there.
   pkg_path <- Sys.getenv("F1DATAR_PKG_ROOT", unset = NA)
   if (is.na(pkg_path)) {
-    # Fall back to searching upward from the test file for the DESCRIPTION.
-    candidate <- testthat::test_path("..", "..")
-    if (file.exists(file.path(candidate, "DESCRIPTION"))) {
-      pkg_path <- normalizePath(candidate)
+    candidate <- normalizePath(
+      testthat::test_path("..", ".."),
+      mustWork = FALSE
+    )
+    pkg_path <- if (
+      file.exists(file.path(candidate, "DESCRIPTION")) &&
+        dir.exists(file.path(candidate, "R"))
+    ) {
+      candidate
     } else {
-      pkg_path <- normalizePath(find.package("f1dataR"))
+      NA_character_
     }
+  }
+  if (!is.na(pkg_path)) {
+    skip_if_not_installed("pkgload")
   }
 
   result <- callr::r(
     function(wd, pkg_path) {
       setwd(wd)
       options(f1dataR.cache = "filesystem")
-      pkgload::load_all(pkg_path, quiet = TRUE)
+      if (is.na(pkg_path)) {
+        loadNamespace("f1dataR")
+      } else {
+        pkgload::load_all(pkg_path, quiet = TRUE)
+      }
       list(
         option = getOption("f1dataR.cache"),
         relative_dir_exists = dir.exists(file.path(wd, "filesystem")),
-        has_cache = memoise::has_cache(load_circuits)
+        has_cache = memoise::has_cache(f1dataR::load_circuits)
       )
     },
     args = list(wd = test_wd, pkg_path = pkg_path),
