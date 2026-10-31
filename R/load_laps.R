@@ -1,16 +1,20 @@
 #' Load Lap by Lap Time Data
 #'
 #' @description Loads basic lap-by-lap time data for all drivers in a given season
-#' and round. Lap time data is available from 1996 onward. Use `.load_laps()` for a uncached version.
+#' and round. Lap time data is available from 1996 onward.
 #'
-#' @param season number from 1996 to current season (defaults to current season).
-#' @param round number from 1 to 23 (depending on season selected) and defaults
+#' @param season number from 1996 to current season (defaults to current season). Also accepts `"current"`.
+#' @param round number from 1 to the number of rounds in the season and defaults
 #' to most recent.  Also accepts `'last'`.
 #' @param race `r lifecycle::badge("deprecated")` `race` is no longer supported, use `round`.
 #' @importFrom magrittr "%>%"
 #' @export
 #' @return A tibble with columns driver_id (unique and recurring), position
-#' during lap, time (in clock form), lap number, time (in seconds), and season.
+#' during lap (character), time (in clock form, `time`), lap number (`lap`, taken from the API's
+#' `number` field), time in seconds (`time_sec`), and season. Returns `NULL` on API failure.
+#' Note that `season` is numeric when the caller passed a numeric `season` or `"current"`, but
+#' will be character if a character `season` string (e.g. `"2021"`) was passed in, since the
+#' original argument is echoed back rather than coerced.
 load_laps <- function(
   season = get_current_season(),
   round = "last",
@@ -22,11 +26,8 @@ load_laps <- function(
   }
 
   # Parameter Check
-  if (season != "current" && (season < 1996 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1996 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1996)
+  check_round_arg(round)
 
   lim <- 100
 
@@ -45,10 +46,20 @@ load_laps <- function(
   total <- data$MRData$total %>% as.numeric()
   offset <- data$MRData$offset %>% as.numeric()
 
-  full <- data$MRData$RaceTable$Races$Laps[[1]][2]
+  if (length(data$MRData$RaceTable$Races$Laps) == 0) {
+    cli::cli_alert_warning("No lap data available for this season/round.")
+    return(NULL)
+  }
+
+  # Jolpica paginates by driver-lap timing row, not by lap, so a single lap's
+  # timing rows can be split across pages (e.g. non-20-car seasons). Collect all
+  # pages of `Laps` (each a data.frame of `number` + `Timings`) first, then
+  # aggregate `Timings` per `number` once all pages are in hand.
+  pages <- list(data$MRData$RaceTable$Races$Laps[[1]])
+  received <- sum(vapply(pages[[1]]$Timings, nrow, integer(1)))
 
   # Iterate over the request until completed
-  while (offset + lim <= total) {
+  while (received < total) {
     offset <- offset + lim
 
     data <- get_jolpica_content(
@@ -60,22 +71,33 @@ load_laps <- function(
       return(NULL)
     }
 
-    full <- dplyr::bind_rows(full, data$MRData$RaceTable$Races$Laps[[1]][2])
+    if (length(data$MRData$RaceTable$Races$Laps) == 0) {
+      break
+    }
+
+    page <- data$MRData$RaceTable$Races$Laps[[1]]
+    pages[[length(pages) + 1]] <- page
+    received <- received + sum(vapply(page$Timings, nrow, integer(1)))
   }
 
-  laps <- tibble::tibble()
+  full <- dplyr::bind_rows(pages)
+
   season_text <- ifelse(season == "current", get_current_season(), season)
-  for (i in seq_len(nrow(full))) {
-    laps <- dplyr::bind_rows(
-      laps,
-      full[[1]][i][[1]] %>%
-        dplyr::mutate(
-          lap = i,
-          time_sec = time_to_sec(.data$time),
-          season = season_text
-        )
+
+  laps <- full %>%
+    dplyr::mutate(lap = as.numeric(.data$number)) %>%
+    dplyr::group_by(.data$lap) %>%
+    dplyr::summarise(
+      Timings = list(dplyr::bind_rows(.data$Timings)),
+      .groups = "drop"
+    ) %>%
+    dplyr::arrange(.data$lap) %>%
+    tidyr::unnest(cols = "Timings") %>%
+    dplyr::mutate(
+      time_sec = time_to_sec(.data$time),
+      season = season_text
     )
-  }
+
   laps %>%
     tibble::tibble() %>%
     janitor::clean_names()

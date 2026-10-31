@@ -1,27 +1,45 @@
 #' Load Schedule
 #'
 #' @description Loads schedule information for a given F1 season.
-#' Use `.load_schedule()` for an uncached version.
 #'
 #' @param season number from 1950 to current season (defaults to current season). `'current'` also accepted.
 #' @importFrom magrittr "%>%"
 #' @export
-#' @return A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race
+#' @return A tibble with one row per round in season. Indicates in sprint_date if a specific round has a sprint race.
+#' Returns `NULL` on API failure.
 load_schedule <- function(season = get_current_season()) {
-  if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1950)
 
   url <- glue::glue("{season}.json", season = season)
 
-  data <- get_jolpica_content(url)
+  lim <- 100
+  data <- get_jolpica_content(url, parameters = list(limit = lim))
   if (is.null(data)) {
     return(NULL)
   }
 
-  data <- data$MRData$RaceTable$Races
+  total <- data$MRData$total %>% as.numeric()
+  offset <- data$MRData$offset %>% as.numeric()
+
+  full <- data$MRData$RaceTable$Races
+
+  # Iterate over the request until completed
+  while (nrow(full) < total) {
+    offset <- offset + lim
+
+    data <- get_jolpica_content(
+      url,
+      parameters = list(limit = lim, offset = offset)
+    )
+
+    if (is.null(data)) {
+      return(NULL)
+    }
+
+    full <- dplyr::bind_rows(full, data$MRData$RaceTable$Races)
+  }
+
+  data <- full
 
   if ("url" %in% colnames(data)) {
     data$url <- NULL

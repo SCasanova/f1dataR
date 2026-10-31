@@ -7,7 +7,7 @@
 get_fastf1_version()
 }
 \value{
-version as class \code{package_version}
+version as class \code{package_version}, or \code{NA} if \code{fastf1} is not installed
 }
 \description{
 Gets the current installed FastF1 version available (via \code{reticulate}) to the function.

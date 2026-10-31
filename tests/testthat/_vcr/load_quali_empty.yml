@@ -1,0 +1,32 @@
+http_interactions:
+- request:
+    method: GET
+    uri: https://api.jolpi.ca/ergast/f1/2003/17/qualifying.json?limit=100
+  response:
+    status: 200
+    headers:
+      age: '47'
+      allow: GET, HEAD, OPTIONS
+      alt-svc: h3=":443"; ma=86400
+      cache-control: max-age=600
+      cf-cache-status: HIT
+      cf-ray: a3cb552c6e9736aa-YYZ
+      content-encoding: gzip
+      content-type: application/json
+      cross-origin-opener-policy: same-origin
+      date: Thu, 17 Sep 2026 21:51:31 GMT
+      expires: Thu, 17 Sep 2026 22:00:44 GMT
+      last-modified: Thu, 17 Sep 2026 21:50:44 GMT
+      nel: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      referrer-policy: same-origin
+      report-to: '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=amiT3QMtVoR9Vy7mi8PvI8Rg5sm1YBb1LKF2hjzpcuZ9ul4K93CHSZtUR0PXodrAxWP9RYof0V4lLd48eoL14Z%2FBPpyU2%2FgKok8NNwQU8Qz8nOl5HwA1h9rxWdxWKPI%3D"}]}'
+      server: cloudflare
+      vary:
+      - Accept, origin
+      - accept-encoding
+      x-content-type-options: nosniff
+      x-frame-options: DENY
+    body:
+      string: '{"MRData":{"xmlns":"","series":"f1","url":"https://api.jolpi.ca/ergast/f1/2003/17/qualifying.json","limit":"100","offset":"0","total":"0","RaceTable":{"season":"2003","round":"17","Races":[]}}}'
+  recorded_at: 2026-09-17 21:51:31
+recorded_with: VCR-vcr/2.1.0

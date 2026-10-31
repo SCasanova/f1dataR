@@ -15,3 +15,4 @@ A numeric variable that represents that time in seconds
 \description{
 This function converts clock format time (0:00.000) to seconds (0.000s)
 }
+\keyword{internal}

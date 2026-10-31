@@ -14,8 +14,13 @@ No return value, called to erase cached data
 }
 \description{
 Clears the cache for f1dataR telemetry and Jolpica API results.
-Note that the cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-but the default is a temporary directory.
+Note that memoised results default to in-memory caching (up to 24 hours), while the
+underlying FastF1 HTTP cache defaults to a temporary directory; both can be redirected
+by setting \verb{options(f1dataR.cache = [cache dir])}.
+
+Note that calling \code{memoise::forget()} on a function that is not currently memoised
+(for example when the cache is set to \code{'off'}, or for \code{get_current_season()} which is
+never memoised) silently does nothing and produces no warning.
 
 You can also call the alias \code{clear_cache()} for the same result
 }

@@ -30,6 +30,15 @@ test_that("load_quali works", {
   expect_equal(nrow(load_quali(2015, 16)), 20)
 
   expect_error(load_quali(3050, 2), "`season` must be between 2003 and *")
+
+  # Regression test: seasons/rounds with no qualifying data (total = 0)
+  # used to crash with "subscript out of bounds" instead of returning NULL.
+  vcr::local_cassette("load_quali_empty")
+  expect_message(
+    quali_empty <- load_quali(2003, 17),
+    "No qualifying data available"
+  )
+  expect_null(quali_empty)
 })
 
 test_that("load_quali works without internet", {

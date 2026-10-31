@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: GET
-    uri: https://api.jolpi.ca/ergast/f1/2021/circuits.json?limit=40
+    uri: https://api.jolpi.ca/ergast/f1/2021/circuits.json?limit=100
   response:
     status: 200
     headers:
@@ -21,7 +21,7 @@ http_interactions:
       Cross-Origin-Opener-Policy: same-origin
       Content-Encoding: gzip
     body:
-      string: '{"MRData":{"xmlns":"","series":"f1","url":"https://api.jolpi.ca/ergast/f1/2021/circuits.json","limit":"40","offset":"0","total":"21","CircuitTable":{"season":"2021","Circuits":[{"circuitId":"americas","url":"https://en.wikipedia.org/wiki/Circuit_of_the_Americas","circuitName":"Circuit
+      string: '{"MRData":{"xmlns":"","series":"f1","url":"https://api.jolpi.ca/ergast/f1/2021/circuits.json","limit":"100","offset":"0","total":"21","CircuitTable":{"season":"2021","Circuits":[{"circuitId":"americas","url":"https://en.wikipedia.org/wiki/Circuit_of_the_Americas","circuitName":"Circuit
         of the Americas","Location":{"lat":"30.1328","long":"-97.6411","locality":"Austin","country":"USA"}},{"circuitId":"bahrain","url":"https://en.wikipedia.org/wiki/Bahrain_International_Circuit","circuitName":"Bahrain
         International Circuit","Location":{"lat":"26.0325","long":"50.5106","locality":"Sakhir","country":"Bahrain"}},{"circuitId":"baku","url":"https://en.wikipedia.org/wiki/Baku_City_Circuit","circuitName":"Baku
         City Circuit","Location":{"lat":"40.3725","long":"49.8533","locality":"Baku","country":"Azerbaijan"}},{"circuitId":"catalunya","url":"https://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya","circuitName":"Circuit

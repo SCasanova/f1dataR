@@ -1,0 +1,32 @@
+http_interactions:
+- request:
+    method: GET
+    uri: https://api.jolpi.ca/ergast/f1/2021/25/pitstops.json?limit=100
+  response:
+    status: 200
+    headers:
+      age: '30'
+      allow: GET, HEAD, OPTIONS
+      alt-svc: h3=":443"; ma=86400
+      cache-control: max-age=600
+      cf-cache-status: HIT
+      cf-ray: a3cb552d0f3436aa-YYZ
+      content-encoding: gzip
+      content-type: application/json
+      cross-origin-opener-policy: same-origin
+      date: Thu, 17 Sep 2026 21:51:31 GMT
+      expires: Thu, 17 Sep 2026 22:01:00 GMT
+      last-modified: Thu, 17 Sep 2026 21:51:00 GMT
+      nel: '{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'
+      referrer-policy: same-origin
+      report-to: '{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=h8f6fCLKhUC4ZETRCBm8T6XRuHRaarlXwefvAPfkEfkhqfx4mlcNk1KmY%2BpBw6apQLAi6bXBf0JTPu%2B%2Bhz4YeEch6%2BKkRO8yx67WZu6wg%2BWa0JwwoS%2B4oY7twbKQ8TQ%3D"}]}'
+      server: cloudflare
+      vary:
+      - Accept, origin
+      - accept-encoding
+      x-content-type-options: nosniff
+      x-frame-options: DENY
+    body:
+      string: '{"MRData":{"xmlns":"","series":"f1","url":"https://api.jolpi.ca/ergast/f1/2021/25/pitstops.json","limit":"100","offset":"0","total":"0","RaceTable":{"season":"2021","round":"25","Races":[]}}}'
+  recorded_at: 2026-09-17 21:51:31
+recorded_with: VCR-vcr/2.1.0

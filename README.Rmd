@@ -75,12 +75,12 @@ Data is pulled from:
 * [Jolpica F1 API](https://api.jolpi.ca/ergast/)
 * [F1 Data Stream](https://www.formula1.com/en/timing/f1-live) via the [Fast F1 python library](https://docs.fastf1.dev/index.html)
 
-Note the Ergast Motor Racing Database API will be shutting down at the end of 2024. A new data source (Jolpica-F1 project) was identified and implemented.
+Note the Ergast Motor Racing Database API was shut down at the end of 2024. A new data source (Jolpica-F1 project) was identified and implemented.
 
 ## Functions
 
 ### Load Lap Times
-> `load_laps(season = "current", race = "last")`
+> `load_laps(season = "current", round = "last")`
 
 This function loads lap-by-lap time data for all drivers in a given season
 and round. Round refers to race number. The defaults are current season and last race. Lap data is limited to 1996-present.
@@ -93,9 +93,9 @@ load_laps(season = 2021, round = 15)
 
 
 ### Driver Telemetry
-> `load_driver_telemetry(season = "current", race = "last", session = "R", driver, laps = "all")`
+> `load_driver_telemetry(season = "current", round = "last", session = "R", driver, laps = "fastest")`
 
-When the parameters for season (four digit year), round (number or GP name), session (FP1. FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds
+When the parameters for season (four digit year), round (number or GP name), session (FP1, FP2, FP3, Q, S, SS, or R), and driver code (three letter code) are entered, the function will load all data for a session and the pull the info for the selected driver. The first time a session is called, loading times will be relatively long but in subsequent calls this will improve to only a couple of seconds
 
 ```{r load_telemetries}
 load_driver_telemetry(season = 2022, round = 4, driver = "PER")
@@ -104,7 +104,7 @@ load_driver_telemetry(season = 2018, round = 7, "Q", "HAM", laps = "fastest")
 ```
 
 ### Lap-by-Lap information
-> `load_session_laps(season = "current", race = "last", session = "R", add_weather = FALSE)`
+> `load_session_laps(season = "current", round = "last", session = "R", add_weather = FALSE)`
 
 This function will give us detailed information of lap and sector times, tyres, weather (optional), and more for every lap of the GP and driver.
 
@@ -118,9 +118,9 @@ load_session_laps(season = 2023, round = 4, add_weather = TRUE)
 This function loads circuit details for a specific race session. Note that different track layouts are used at some circuits depending on the year of the race. Useful for visualizing or annotating data. Contains information on corners, marshal_lights and marshal_sectors.
 
 ### Plotting
-> `plot_fastest(season = "current", round = "last", session = "R", driver, color = "gear")`
+> `plot_fastest(season = "current", round = 1, session = "R", driver, color = "gear")`
 
-A built in plotting function that plots the circuit and a driver's fastest laps' `speed` or `gear` exists.
+A built in plotting function that plots a driver's fastest lap around the circuit, shaded by `speed` or `gear`.
 
 ```{r plot, eval=require('ggplot2', quietly = TRUE), message=FALSE, warning=FALSE}
 plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "gear")
@@ -129,7 +129,7 @@ plot_fastest(season = 2023, round = 1, session = "R", driver = "VER", color = "g
 Two helper functions exist as well. The first, `theme_dark_f1()` assists with colour schemes similar to that used in other F1 graphics. The second, `correct_track_ratio()` is a function that fixes track ratio issues that appear when you create images similar to that above from `plot_fastest()`. Please refer to their documentation for usage.
 
 ### Metadata Lookups
-The package echos the metadata information look-up from the FastF1 package. this is a convenient way to programmatically look up drivers, teams, driver-team relationships, team colors, driver colors, tire types & colors and more. See the following functions for this look-up:
+The package echoes the metadata information look-up from the FastF1 package. This is a convenient way to programmatically look up drivers, teams, driver-team relationships, team colors, driver colors, tire types & colors and more. See the following functions for this look-up:
 
 * `get_driver_abbreviation()`
 * `get_driver_color()`
@@ -138,7 +138,6 @@ The package echos the metadata information look-up from the FastF1 package. this
 * `get_driver_colour_map()`
 * `get_driver_name()`
 * `get_driver_style()`
-* `get_driver_telemetry()`
 * `get_drivers_by_team()`
 * `get_session_drivers_and_teams()`
 * `get_team_by_driver()`
@@ -167,7 +166,7 @@ Many other functions exist, and are flexible enough to call the current `season`
 * `load_pitstops(season = "current", round = "last")`
 * `load_quali(season = "current", round = "last")`
 * `load_results(season = "current", round = "last")`
-* `load_schedule(season = ``r get_current_season()``)`
+* `` `load_schedule(season = `r get_current_season()`)` ``
 * `load_sprint(season = "current", round = "last")`
 * `load_standings(season = "current", round = "last", type = c("driver", "constructor"))`
 

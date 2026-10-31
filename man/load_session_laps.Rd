@@ -16,14 +16,14 @@ load_session_laps(
 \arguments{
 \item{season}{number from 2018 to current season. Defaults to current season.}
 
-\item{round}{number from 1 to 24 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season (depending on season
+selected), defaults to \code{1}. Also accepts race name.}
 
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL.'} See
+\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See
 \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{add_weather}{Whether to add weather information to the laps. See
@@ -32,14 +32,21 @@ to most recent. Also accepts race name.}
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}}
 }
 \value{
-A tibble. Note time information is in seconds, see \href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information on timing.
+A tibble with (at least) columns \code{driver}, \code{lap}, \code{time}, \code{lap_time}, \code{stint},
+\code{compound}, and \code{session_type}. Additional columns are provided by FastF1, see
+\href{https://docs.fastf1.dev/core.html#fastf1.core.Laps}{fastf1 documentation} for more
+information on available columns. Note time information is in seconds, see
+\href{https://docs.fastf1.dev/time_explanation.html}{fastf1 documentation} for more information
+on timing. Returns \code{NULL} if the session fails to load.
 }
 \description{
 Loads lapwise data for a race session.
 
 Includes each driver's each lap's laptime, pit in/out time, tyre information, track status, and (optionally) weather information.
-The resulting data frame contains a column for the session type. Note that quali sessions are labelled Q1, Q2 & Q3.
+The resulting data frame contains a column for the session type. Note that quali sessions are labelled
+Q1, Q2 & Q3, and sprint qualifying sessions (\code{session = 'SQ'}) are labelled SQ1, SQ2 & SQ3.
 
-Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-default is the current working directory.
+Cache directory can be set by setting \verb{options(f1dataR.cache = [cache dir])}.
+The default option is \code{"memory"}; when the option is \code{"memory"}, \code{"off"}, or
+\code{"filesystem"}, the underlying FastF1 HTTP cache is written to \code{tempdir()}.
 }

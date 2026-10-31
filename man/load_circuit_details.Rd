@@ -13,7 +13,7 @@ load_circuit_details(
 \arguments{
 \item{season}{number from 2018 to current season. Defaults to current season.}
 
-\item{round}{number from 1 to 23 (depending on season selected). Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season (also accepts a race name).}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
 \code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See
@@ -28,6 +28,8 @@ The tibbles all have the following structure:
 \code{number} is the number of the corner. Letter is optionally used to differentiate corners with the same number on some circuits, e.g. “2A”.
 \code{angle} is an angle in degrees, used to visually offset the marker’s placement on a track map in a logical direction (usually orthogonal to the track).
 \code{distance} is the location of the marker as a distance from the start/finish line.
+
+\code{NULL} is returned if the session fails to load.
 }
 \description{
 Loads circuit details for a specific race session. Note that different track layouts are used at some
@@ -42,6 +44,10 @@ Also returns an angle (in degrees) to indicate the amount of rotation of the tel
 More information on the data provided (and uses) can be seen at https://docs.fastf1.dev/circuit_info.html#fastf1.mvapi.CircuitInfo.corners
 
 Note that this is an exposition of FastF1 data. As such, caching is recommended (and default behavior).
-Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-default is the current working directory.
+Cache directory can be set with \verb{options(f1dataR.cache = [cache dir])}. The default option is
+\code{"memory"}; when the cache option is \code{"memory"}, \code{"off"}, or \code{"filesystem"}, the underlying FastF1
+HTTP cache is stored in \code{tempdir()} instead.
+
+This function always loads the race ("R") session for the given season/round, regardless of any
+other session previously loaded, since circuit layout information is retrieved from the race session.
 }

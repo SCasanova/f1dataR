@@ -58,11 +58,11 @@ given season & race. Note that, in contrast to earlier versions, both drivers fo
 color. Use \code{get_driver_style()} to develop a unique marker/linestyle for each driver in a team. Data is provided by
 the python FastF1 package.
 
-\code{get_driver_color_mapping()} and its alias \code{get_driver_colour_mapping()} return a data.frame of driver short-codes
+\code{get_driver_color_map()} and its alias \code{get_driver_colour_map()} return a data.frame of driver short-codes
 and their hexidecimal colour. Like \code{get_driver_color()}, both drivers on a team will get the same colour returned.
 Data is provided by the python FastF1 package. Requires provision of a specific race event (season/round/session).
 
-\code{get_team_color()} and its alias \code{get_team_colour()} return a hexidecimal RGB colour code for a a team at a given
+\code{get_team_color()} and its alias \code{get_team_colour()} return a hexidecimal RGB colour code for a team at a given
 season & race. Data is provided by the python FastF1 package.
 }
 \examples{
@@ -74,7 +74,7 @@ if (interactive()) {
   get_driver_style(driver = "LEC")
 
   # Get all driver abbreviations and colors quickly:
-  get_driver_color_mapping(season = 2023, round = "Montreal", session = "R")
+  get_driver_color_map(season = 2023, round = "Montreal", session = "R")
 
   get_team_color(team = "Alpine", season = 2023, round = 1)
 }

@@ -11,18 +11,22 @@ load_laps(
 )
 }
 \arguments{
-\item{season}{number from 1996 to current season (defaults to current season).}
+\item{season}{number from 1996 to current season (defaults to current season). Also accepts \code{"current"}.}
 
-\item{round}{number from 1 to 23 (depending on season selected) and defaults
+\item{round}{number from 1 to the number of rounds in the season and defaults
 to most recent.  Also accepts \code{'last'}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}.}
 }
 \value{
 A tibble with columns driver_id (unique and recurring), position
-during lap, time (in clock form), lap number, time (in seconds), and season.
+during lap (character), time (in clock form, \code{time}), lap number (\code{lap}, taken from the API's
+\code{number} field), time in seconds (\code{time_sec}), and season. Returns \code{NULL} on API failure.
+Note that \code{season} is numeric when the caller passed a numeric \code{season} or \code{"current"}, but
+will be character if a character \code{season} string (e.g. \code{"2021"}) was passed in, since the
+original argument is echoed back rather than coerced.
 }
 \description{
 Loads basic lap-by-lap time data for all drivers in a given season
-and round. Lap time data is available from 1996 onward. Use \code{.load_laps()} for a uncached version.
+and round. Lap time data is available from 1996 onward.
 }

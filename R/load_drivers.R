@@ -1,29 +1,50 @@
 #' Load Driver Info
 #'
 #' @description Loads driver info for all participants in a given season.
-#' Use `.load_drivers()` for an uncached version of this function.
 #'
-#' @param season number from 1950 to current season (defaults to current season).
+#' @param season number from 1950 to current season, or `"current"` (defaults to current season).
 #' @importFrom magrittr "%>%"
 #' @export
-#' @return A tibble with columns driver_id (unique and recurring), first name,
-#' last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
-#' permanent number (for post-2014 drivers).
+#' @return A tibble with columns `driver_id` (unique and recurring), `given_name`,
+#' `family_name`, `nationality`, `date_of_birth` (yyyy-mm-dd format), `code` (driver code), and
+#' `permanent_number` (for post-2014 drivers). Returns `NULL` on API failure. Note that
+#' `permanent_number` is returned by the API as a **character** column when present (and is
+#' `NA_integer_` when absent for a given driver), so its type is not stable across seasons;
+#' coerce with `as.integer()` if a consistent numeric type is required.
 load_drivers <- function(season = get_current_season()) {
-  if (season != "current" && (season < 1950 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 1950 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 1950)
 
   url <- glue::glue("{season}/drivers.json", season = season)
-  data <- get_jolpica_content(url)
+
+  lim <- 100
+  data <- get_jolpica_content(url, parameters = list(limit = lim))
 
   if (is.null(data)) {
     return(NULL)
   }
 
-  data <- data$MRData$DriverTable$Drivers
+  total <- data$MRData$total %>% as.numeric()
+  offset <- data$MRData$offset %>% as.numeric()
+
+  full <- data$MRData$DriverTable$Drivers
+
+  # Iterate over the request until completed
+  while (nrow(full) < total) {
+    offset <- offset + lim
+
+    data <- get_jolpica_content(
+      url,
+      parameters = list(limit = lim, offset = offset)
+    )
+
+    if (is.null(data)) {
+      return(NULL)
+    }
+
+    full <- dplyr::bind_rows(full, data$MRData$DriverTable$Drivers)
+  }
+
+  data <- full
 
   data <- add_col_if_absent(data, "code", NA_character_)
   data <- add_col_if_absent(data, "permanentNumber", NA_integer_)

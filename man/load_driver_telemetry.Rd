@@ -18,9 +18,9 @@ load_driver_telemetry(
 \arguments{
 \item{season}{number from 2018 to current season (defaults to current season).}
 
-\item{round}{number from 1 to 23 (depending on season selected). Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season. Also accepts race name.}
 
-\item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
+\item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'}, \code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{driver}{three letter driver code (see \code{load_drivers()} for a list)}
@@ -37,7 +37,9 @@ or \code{all}. Note that integer lap choice requires \code{fastf1} version 3.0 o
 laps in \code{laps}.}
 }
 \value{
-A tibble with telemetry data for selected driver/session.
+A tibble with telemetry data for selected driver/session. Returns \code{NULL}
+if the session fails to load. Otherwise, returns a tibble whose columns depend on
+the FastF1 telemetry data available for the session/driver.
 }
 \description{
 Receives season, race number, driver code, and an optional fastest lap only

@@ -1,3 +1,7 @@
+# f1dataR (development version)
+
+* Fixed stale README wording ("will be shutting down" -> "was shut down") and a broken inline-R code chunk(missing backticks) in the function list.
+
 # f1dataR 2.1.0
 
 * F1 live timing (via `FastF1`) now requires an F1 account (#303).
@@ -5,6 +9,7 @@
   * Functions using `FastF1` now check that credentials are set; interactive sessions are prompted, non-interactive sessions error.
   * Now requires `FastF1` version 3.9.0 or newer.
   * Added `askpass` as a dependency for password entry.
+
 
 # f1dataR 2.0.2
 

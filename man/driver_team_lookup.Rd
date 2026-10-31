@@ -48,8 +48,8 @@ get_session_drivers_and_teams(season, round, session = "R")
 \item{season}{The season for which the look-up should occur. Should be a number from 2018 to current season.
 Defaults to current season.}
 
-\item{round}{number from 1 to 24 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season (depending on season
+selected), defaults to \code{1}. Also accepts race name.}
 
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
@@ -59,8 +59,8 @@ to most recent. Also accepts race name.}
 \item{short}{whether to provide a shortened version of the team name. Default False.}
 }
 \value{
-for \code{get_session_drivers_and_teams()} a data.frame,
-for \code{get_drivers_by_team()} a unnamed character vector with all drivers for the requested team,
+for \code{get_session_drivers_and_teams()} a tibble,
+for \code{get_drivers_by_team()} an unnamed character vector with all drivers for the requested team,
 for all other functions a character result with the requested value.
 }
 \description{
@@ -84,4 +84,13 @@ for practice rookies, they typically participate in \code{session = FP1}.
 \code{get_team_by_driver()} looks up the team for the specified driver (at the specified race event).
 
 \code{get_session_drivers_and_teams()} returns a data frame of all drivers and their team for a provided session.
+}
+\details{
+Driver identity is represented inconsistently across the package, reflecting the two upstream
+data sources: Jolpica loaders (e.g. \code{load_drivers()}, \code{load_results()}) use \code{driver_id}, a lower_snake_case
+slug (e.g. \code{"max_verstappen"}) that is stable across seasons, and \code{code}, a 3-letter code assigned by the
+API (not available for all drivers/seasons). FastF1-backed functions in this file instead take a fuzzy-matched
+\code{driver}/\code{driver_name} string (full name, surname, or 3-letter abbreviation all work) and return/report
+\code{abbreviation}, FastF1's own 3-letter driver code for that season. \code{code} and \code{abbreviation} are usually,
+but not guaranteed to be, identical for the same driver.
 }

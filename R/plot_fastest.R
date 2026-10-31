@@ -4,11 +4,11 @@
 #' Complete with a gearshift or speed analysis.
 #'
 #' @param season number from 2018 to current season (defaults to current season).
-#' @param race number from 1 to 23 (depending on season selected) and defaults
-#' to most recent.
-#' @param round number from 1 to 23 (depending on season selected) and defaults
-#' to most recent.
-#' @param session the code for the session to load Options are `'FP1'`, `'FP2'`, `'FP3'`,
+#' @param race `r lifecycle::badge("deprecated")` number from 1 to the number of rounds
+#' in the season (depending on season selected); use `round` instead.
+#' @param round number from 1 to the number of rounds in the season (depending on season
+#' selected) and defaults to `1`.
+#' @param session the code for the session to load. Options are `'FP1'`, `'FP2'`, `'FP3'`,
 #' `'Q'`, `'S'`, `'SS'`, `'SQ'`, and `'R'`. Default is `'R'`, which refers to Race.
 #' @param driver three letter driver code (see load_drivers() for a list) or name to be
 #' fuzzy matched to a driver from the session.
@@ -16,8 +16,9 @@
 #' circuit. Choice of `'gear'` or `'speed'`, default `'gear'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
-#' @return A ggplot object that indicates grand prix, driver, time and selected
-#' color variable.
+#' @return A ggplot object showing the driver's fastest lap traced around the circuit,
+#' colored by the selected `color` variable (gear or speed), with a title/subtitle
+#' identifying the grand prix, driver and lap time. Returns `NULL` if the session fails to load.
 #' @export
 #' @examples
 #' # Plot Verstappen's fastest lap (speed) from Bahrain 2023:
@@ -38,6 +39,8 @@ plot_fastest <- function(
       "f1dataR::plot_fastest() requires ggplot2 package installation"
     )
   }
+
+  color <- match.arg(color, c("gear", "speed"))
 
   # Deprecation Check
   if (lifecycle::is_present(race)) {
@@ -98,8 +101,18 @@ plot_fastest <- function(
       dplyr::filter(.data$driver_id == driver_id) %>%
       dplyr::filter(.data$time_sec == min(.data$time_sec)) %>%
       dplyr::pull(.data$time)
-    lap_time <- paste0(" | ", lap_time)
+    if (length(lap_time) == 0) {
+      lap_time <- ""
+    } else {
+      lap_time <- paste0(" | ", lap_time)
+    }
   }
+
+  season_year <- ifelse(
+    season == "current",
+    get_current_season(),
+    season
+  )
 
   race_name <- s$event$EventName
 
@@ -108,9 +121,12 @@ plot_fastest <- function(
       session,
       c("q", "Q") ~ paste0(race_name, " Qualifying"),
       c("s", "S") ~ paste0(race_name, " Sprint"),
+      c("sq", "SQ") ~ paste0(race_name, " Sprint Qualifying"),
+      c("ss", "SS") ~ paste0(race_name, " Sprint Shootout"),
       c("fp1", "FP1") ~ paste0(race_name, " FP1"),
       c("fp2", "FP2") ~ paste0(race_name, " FP2"),
-      c("fp3", "FP3") ~ paste0(race_name, " FP3")
+      c("fp3", "FP3") ~ paste0(race_name, " FP3"),
+      default = race_name
     )
   }
 
@@ -138,7 +154,7 @@ plot_fastest <- function(
       ggplot2::labs(
         title = glue::glue(
           "{year} {race_name}",
-          year = season,
+          year = season_year,
           race = race_name
         ),
         subtitle = glue::glue(
@@ -159,7 +175,7 @@ plot_fastest <- function(
       ggplot2::labs(
         title = glue::glue(
           "{year} {race_name}",
-          year = season,
+          year = season_year,
           race = race_name
         ),
         subtitle = glue::glue(
@@ -183,7 +199,9 @@ plot_fastest <- function(
 #'
 #' Note that this leaves the plot object on a dark background, any plot borders will be maintained
 #'
-#' @param trackplot A GGPlot object, ideally showing a track layout for ratio correction
+#' @param trackplot A ggplot object, ideally showing a track layout for ratio correction. Its
+#' inline `data` must contain numeric `x`/`y` columns (accessed as `trackplot$data$x`/`$y`) for
+#' the ratio correction to work.
 #' @param x,y Names of columns in the original data used for the plot's x and y values.
 #' Defaults to 'x' and 'y'
 #' @param background Background colour to use for filling out the plot edges. Defaults to
@@ -197,7 +215,7 @@ plot_fastest <- function(
 #' @examples
 #' \dontrun{
 #' # Note that plot_fastest plots have already been ratio corrected
-#' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
+#' fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = "VER")
 #' correct_track_ratio(fast_plot)
 #' }
 correct_track_ratio <- function(

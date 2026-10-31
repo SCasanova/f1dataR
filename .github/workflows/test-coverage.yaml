@@ -109,6 +109,8 @@ jobs:
             any::devtools
             any::xml2
             any::vcr
+            any::callr
+            any::pkgload
           needs: coverage
 
       - name: Test coverage

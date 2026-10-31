@@ -7,7 +7,9 @@
 correct_track_ratio(trackplot, x = "x", y = "y", background = "grey10")
 }
 \arguments{
-\item{trackplot}{A GGPlot object, ideally showing a track layout for ratio correction}
+\item{trackplot}{A ggplot object, ideally showing a track layout for ratio correction. Its
+inline \code{data} must contain numeric \code{x}/\code{y} columns (accessed as \code{trackplot$data$x}/\verb{$y}) for
+the ratio correction to work.}
 
 \item{x, y}{Names of columns in the original data used for the plot's x and y values.
 Defaults to 'x' and 'y'}
@@ -30,7 +32,7 @@ Note that this leaves the plot object on a dark background, any plot borders wil
 \examples{
 \dontrun{
 # Note that plot_fastest plots have already been ratio corrected
-fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = V)
+fast_plot <- plot_fastest(season = 2022, round = 1, session = "Q", driver = "VER")
 correct_track_ratio(fast_plot)
 }
 }

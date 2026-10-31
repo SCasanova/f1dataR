@@ -9,8 +9,8 @@ get_session(season = get_current_season(), round = 1, session = "R")
 \arguments{
 \item{season}{number from 2018 to current season. Defaults to current season.}
 
-\item{round}{number from 1 to 23 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season and defaults
+to 1. Also accepts race name.}
 
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}

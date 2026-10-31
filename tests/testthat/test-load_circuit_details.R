@@ -22,7 +22,7 @@ test_that("load circuit details works", {
 
   # Ensure failure if old ff1, then skip
   ff1_ver <- get_fastf1_version()
-  if (ff1_ver < "3.9.0") {
+  if (ff1_ver < "3.1") {
     expect_error(
       circuit_details <- load_circuit_details(2023, "bahrain"),
       "Skipping load_race_session as FastF1 is out of date."
@@ -64,25 +64,42 @@ test_that("load circuit details works", {
   expect_true(circuit_details[[4]] >= 0 & circuit_details[[4]] <= 360)
 })
 
-test_that("load circuit details works with mocked FastF1", {
-  local_mock_fastf1()
+test_that("Load Circuit Details works without internet", {
+  skip_if_no_py()
+  skip_if_no_ff1()
 
-  circuit_details <- load_circuit_details(2023, 1)
-  expect_type(circuit_details, "list")
-  expect_length(circuit_details, 4)
-  expect_named(
-    circuit_details[[1]],
-    c("x", "y", "number", "letter", "angle", "distance")
-  )
-  expect_true(is.data.frame(circuit_details[[1]]))
-  expect_true(all(circuit_details[[1]]$number > 0))
-  expect_true(is.data.frame(circuit_details[[2]]))
-  expect_true(is.data.frame(circuit_details[[3]]))
-  expect_type(circuit_details[[4]], "double")
-  expect_true(circuit_details[[4]] >= 0 & circuit_details[[4]] <= 360)
-})
+  # Set testing specific parameters - this disposes after the test finishes
+  # Note: The test suite can't delete the old fastf1_http_cache.sqlite file
+  # because python's process has it locked.
+  if (dir.exists(file.path(tempdir(), "tst_telem2"))) {
+    unlink(file.path(tempdir(), "tst_telem2"), recursive = TRUE, force = TRUE)
+  }
+  withr::local_file(file.path(tempdir(), "tst_telem2"))
+  dir.create(file.path(tempdir(), "tst_telem2"), recursive = TRUE)
+  withr::local_options(f1dataR.cache = file.path(tempdir(), "tst_telem2"))
 
-test_that("load circuit details returns NULL without network (mocked)", {
-  local_mock_fastf1(network = FALSE)
-  expect_null(suppressMessages(load_circuit_details(2024, 1)))
+  ff1_ver <- get_fastf1_version()
+  if (ff1_ver < "3.1") {
+    skip(
+      "Skipping load_circuit_details (no internet) test as FastF1 is out of date."
+    )
+  }
+
+  clear_cache()
+
+  if (requireNamespace("httptest2", quietly = TRUE)) {
+    # This will normally print many warnings and errors to the test log, we don't need those (we expect them as
+    # a byproduct of the without_internet call
+    suppressWarnings({
+      suppressMessages({
+        httptest2::without_internet({
+          expect_message(
+            load_circuit_details(2023, "bahrain"),
+            "f1dataR: Can't connect to F1 Live Timing for FastF1 data download"
+          )
+          expect_null(load_circuit_details(2023, "bahrain"))
+        })
+      })
+    })
+  }
 })

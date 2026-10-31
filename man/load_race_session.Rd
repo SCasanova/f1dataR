@@ -19,20 +19,22 @@ Leave as \code{'session'} unless otherwise required.}
 
 \item{season}{number from 2018 to current season. Defaults to current season.}
 
-\item{round}{number from 1 to 24 (depending on season selected) and defaults
-to most recent. Also accepts race name.}
+\item{round}{number from 1 to the number of rounds in the season (depending on season
+selected), defaults to \code{1}. Also accepts race name.}
 
 \item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'},\code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{log_level}{Detail of logging from fastf1 to be displayed. Choice of:
-\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL.'} See
+\code{'DEBUG'}, \code{'INFO'}, \code{'WARNING'}, \code{'ERROR'} and \code{'CRITICAL'}. See
 \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.}
 
 \item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{race} is no longer supported, use \code{round}}
 }
 \value{
-A session object to be used in other functions invisibly.
+Invisibly, a \code{reticulate} Python FastF1 session object, primarily useful
+for advanced users who want to run their own \code{reticulate::py_run_string()} calls
+against it. Returns \code{NULL} if the session fails to load.
 }
 \description{
 Loads telemetry and general data from the official F1 data stream via
@@ -42,8 +44,9 @@ The data loaded can optionally be assigned to a R variable, and then interrogate
 session data streams. See the \href{https://docs.fastf1.dev/}{fastf1 documentation}
 for more details on the data returned by the python API.
 
-Cache directory can be set by setting \verb{option(f1dataR.cache = [cache dir])},
-default is the current working directory.
+Cache directory can be set by setting \verb{options(f1dataR.cache = [cache dir])}.
+The default option is \code{"memory"}; when the option is \code{"memory"}, \code{"off"}, or
+\code{"filesystem"}, the underlying FastF1 HTTP cache is written to \code{tempdir()}.
 }
 \examples{
 # Load the quali session from 2019 first round
@@ -52,5 +55,5 @@ if (interactive()) {
 }
 }
 \seealso{
-\code{\link[=load_session_laps]{load_session_laps()}} \code{\link[=plot_fastest]{plot_fastest()}}
+\code{\link[=load_session_laps]{load_session_laps()}}, \code{\link[=plot_fastest]{plot_fastest()}}
 }

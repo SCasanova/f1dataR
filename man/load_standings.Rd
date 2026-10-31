@@ -7,9 +7,9 @@
 load_standings(season = get_current_season(), round = "last", type = "driver")
 }
 \arguments{
-\item{season}{number from 2003 to current season (defaults to current season).}
+\item{season}{number from 2003 to current season (or the word 'current') (defaults to current season).}
 
-\item{round}{number from 1 to 23 (depending on season), and defaults
+\item{round}{number from 1 to the number of rounds in the season, and defaults
 to most recent. Also accepts \code{'last'}.}
 
 \item{type}{select \code{'driver'} or \code{'constructor'} championship data. Defaults to
@@ -17,9 +17,13 @@ to most recent. Also accepts \code{'last'}.}
 }
 \value{
 A tibble with columns driver_id (or constructor_id), position,
-points, wins (and constructors_id in the case of drivers championship).
+points, wins (and constructor_id in the case of drivers championship), or NULL if the request fails.
+\code{position}, \code{points}, and \code{wins} are returned by the API as strings and are therefore all
+\strong{character} columns, not numeric. For the drivers' championship, a driver who raced for more
+than one constructor in the season will appear as multiple rows (one per constructor), since the
+underlying \code{Constructors} field is unnested.
 }
 \description{
 Loads standings at the end of a given season and round for drivers' or
-constructors' championships. Use \code{.load_standings()} for an uncached version of this function.
+constructors' championships.
 }

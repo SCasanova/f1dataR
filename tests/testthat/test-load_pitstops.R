@@ -26,6 +26,15 @@ test_that("load_pitstops works", {
   expect_error(load_pitstops(3050, 1), "`season` must be between 2011 and *")
 
   expect_error(load_pitstops(2021, race = 1))
+
+  # Regression test: a round with no pit stop data used to crash with
+  # "subscript out of bounds" instead of returning NULL.
+  vcr::local_cassette("load_pitstops_empty")
+  expect_message(
+    pitstop_empty <- load_pitstops(2021, 25),
+    "No pit stop data available"
+  )
+  expect_null(pitstop_empty)
 })
 
 test_that("load_pitstops works without internet", {

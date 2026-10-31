@@ -78,3 +78,38 @@ test_that("load_ciruits (filesystem cache) works", {
   expect_equal(ciruits_2021$circuit_id[3], "baku")
   expect_equal(ciruits_2021$locality[1], "Austin")
 })
+
+
+test_that("change_cache(persist = FALSE) actually applies temporarily", {
+  # Regression test: withr::local_options()/local_tempdir() called inside
+  # change_cache() used to unwind as soon as change_cache() returned,
+  # making persist = FALSE a complete no-op. It should now apply for as
+  # long as the caller's own frame is active, and unwind when the caller
+  # (not change_cache() itself) returns.
+  withr::local_options("f1dataR.cache" = "memory")
+
+  local({
+    change_cache("off", persist = FALSE)
+    expect_equal(getOption("f1dataR.cache"), "off")
+  })
+  # Once the caller's frame (the `local()` block above) has exited, the
+  # temporary change should have unwound.
+  expect_equal(getOption("f1dataR.cache"), "memory")
+})
+
+
+test_that("change_cache('filesystem', persist = FALSE) creates a directory that persists for the caller's frame", {
+  withr::local_options("f1dataR.cache" = "memory")
+
+  change_cache("filesystem", persist = FALSE)
+  cache_path <- getOption("f1dataR.cache")
+
+  expect_true(dir.exists(cache_path))
+})
+
+
+test_that("change_cache() validates cache argument type/length", {
+  expect_error(change_cache(NULL))
+  expect_error(change_cache(c("memory", "off")))
+  expect_error(change_cache(NA_character_))
+})

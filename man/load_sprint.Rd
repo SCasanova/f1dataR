@@ -7,18 +7,21 @@
 load_sprint(season = get_current_season(), round = "last")
 }
 \arguments{
-\item{season}{number from 2021 to current season  (defaults to current season).}
+\item{season}{number from 2021 to current season (or the word 'current') (defaults to current season).}
 
-\item{round}{number from 1 to 23 (depending on season), and defaults
+\item{round}{number from 1 to the number of rounds in the season, and defaults
 to most recent. Also accepts \code{'last'}.}
 }
 \value{
-A dataframetibble with columns driver_id, constructor_id, points awarded, finishing position,
+A tibble with columns driver_id, constructor_id, points awarded, finishing position,
 grid position, laps completed, race status (finished or otherwise), gap to
-first place, fastest lap, fastest lap time, fastest lap in seconds,
-or NULL if no sprint exists for this season/round combo
+first place, fastest lap's lap number, fastest lap time, fastest lap in seconds,
+or NULL if no sprint exists for this season/round combo. Results are paginated
+automatically, so sprints with more than 100 results are returned in full. Note that
+\code{points}, \code{position}, \code{grid}, and \code{laps} are returned by the API as strings and are
+therefore all \strong{character} columns, not numeric.
 }
 \description{
-Loads final race results for a given year and round. Note not all rounds have
-sprint results. Use \code{.load_sprint()} for an uncached version of this function.
+Loads final sprint race results for a given year and round. Note not all rounds have
+sprint results.
 }

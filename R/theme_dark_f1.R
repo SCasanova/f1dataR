@@ -5,11 +5,20 @@
 #' @param axis_marks True or false, whether axis line, ticks and title should
 #' be shown or not. Defaults to false
 #' @importFrom magrittr "%>%"
-#' @return A ggplot object that indicates grand prix, driver, time and selected
-#' color variable.
+#' @return A `ggplot2` theme object; add to a plot with `+ theme_dark_f1()`.
 #' @export
-
+#' @examples
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+#'     ggplot2::geom_point() +
+#'     theme_dark_f1()
+#' }
 theme_dark_f1 <- function(axis_marks = FALSE) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    cli::cli_abort(
+      "f1dataR::theme_dark_f1() requires ggplot2 package installation"
+    )
+  }
   if (axis_marks) {
     ggplot2::theme_gray() +
       ggplot2::theme(

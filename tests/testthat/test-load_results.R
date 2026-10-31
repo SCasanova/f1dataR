@@ -36,6 +36,12 @@ test_that("load_results works", {
   expect_equal(ncol(results_2021_1), ncol(results_2021_12))
 
   expect_error(load_results(3050, 2), "`season` must be between 1950 and")
+
+  # Regression test: default limit=40 with no pagination used to silently
+  # truncate large entry lists (e.g. 1953 round 2 had 47 entries).
+  vcr::local_cassette("load_results_pagination")
+  results_1953_2 <- load_results(1953, 2)
+  expect_equal(nrow(results_1953_2), 47)
 })
 
 test_that("load_results works without internet", {

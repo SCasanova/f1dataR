@@ -7,14 +7,16 @@
 load_drivers(season = get_current_season())
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season, or \code{"current"} (defaults to current season).}
 }
 \value{
-A tibble with columns driver_id (unique and recurring), first name,
-last name, nationality, date of birth (yyyy-mm-dd format), driver code, and
-permanent number (for post-2014 drivers).
+A tibble with columns \code{driver_id} (unique and recurring), \code{given_name},
+\code{family_name}, \code{nationality}, \code{date_of_birth} (yyyy-mm-dd format), \code{code} (driver code), and
+\code{permanent_number} (for post-2014 drivers). Returns \code{NULL} on API failure. Note that
+\code{permanent_number} is returned by the API as a \strong{character} column when present (and is
+\code{NA_integer_} when absent for a given driver), so its type is not stable across seasons;
+coerce with \code{as.integer()} if a consistent numeric type is required.
 }
 \description{
 Loads driver info for all participants in a given season.
-Use \code{.load_drivers()} for an uncached version of this function.
 }

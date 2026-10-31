@@ -26,6 +26,12 @@ test_that("Drivers Load works", {
   expect_equal(drivers_1999$driver_id[1], "alesi")
 
   expect_error(load_drivers(3050), "`season` must be between 1950 and *")
+
+  # Regression test: default limit=40 with no pagination used to silently
+  # truncate seasons with more than 40 drivers (e.g. 1953 had 108 drivers).
+  vcr::local_cassette("load_drivers_pagination")
+  drivers_1953 <- load_drivers(1953)
+  expect_equal(nrow(drivers_1953), 108)
 })
 
 test_that("load_drivers works without internet", {

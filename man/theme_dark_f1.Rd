@@ -11,9 +11,15 @@ theme_dark_f1(axis_marks = FALSE)
 be shown or not. Defaults to false}
 }
 \value{
-A ggplot object that indicates grand prix, driver, time and selected
-color variable.
+A \code{ggplot2} theme object; add to a plot with \code{+ theme_dark_f1()}.
 }
 \description{
 Theme for all f1dataR plot functions. Mimics Formula 1 style.
+}
+\examples{
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(mtcars, ggplot2::aes(mpg, wt)) +
+    ggplot2::geom_point() +
+    theme_dark_f1()
+}
 }

@@ -12,11 +12,15 @@
 #' More information on the data provided (and uses) can be seen at https://docs.fastf1.dev/circuit_info.html#fastf1.mvapi.CircuitInfo.corners
 #'
 #' Note that this is an exposition of FastF1 data. As such, caching is recommended (and default behavior).
-#' Cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
-#' default is the current working directory.
+#' Cache directory can be set with `options(f1dataR.cache = [cache dir])`. The default option is
+#' `"memory"`; when the cache option is `"memory"`, `"off"`, or `"filesystem"`, the underlying FastF1
+#' HTTP cache is stored in `tempdir()` instead.
+#'
+#' This function always loads the race ("R") session for the given season/round, regardless of any
+#' other session previously loaded, since circuit layout information is retrieved from the race session.
 #'
 #' @param season number from 2018 to current season. Defaults to current season.
-#' @param round number from 1 to 23 (depending on season selected). Also accepts race name.
+#' @param round number from 1 to the number of rounds in the season (also accepts a race name).
 #' @param log_level Detail of logging from fastf1 to be displayed. Choice of:
 #' `'DEBUG'`, `'INFO'`, `'WARNING'`, `'ERROR'` and `'CRITICAL'`. See
 #' \href{https://docs.fastf1.dev/fastf1.html#configure-logging-verbosity}{fastf1 documentation}.
@@ -30,6 +34,8 @@
 #' `angle` is an angle in degrees, used to visually offset the marker’s placement on a track map in a logical direction (usually orthogonal to the track).
 #' `distance` is the location of the marker as a distance from the start/finish line.
 #'
+#' `NULL` is returned if the session fails to load.
+#'
 #' @export
 load_circuit_details <- function(
   season = get_current_season(),
@@ -38,6 +44,7 @@ load_circuit_details <- function(
 ) {
   # Deprecation Checks
   check_ff1_version()
+  check_round_arg(round, allow_name = TRUE)
 
   # Function Code
   status <- load_race_session(

@@ -36,6 +36,15 @@ test_that("load_laps works", {
   # 2021 Monaco had very many laps, this checks >1000 return code
   laps_long <- load_laps(2021, 5)
   expect_equal(nrow(laps_long), 1418)
+
+  # Regression test: a round with no lap data used to crash rather than
+  # returning NULL.
+  vcr::local_cassette("load_laps_empty")
+  expect_message(
+    laps_empty <- load_laps(2021, 25),
+    "No lap data available"
+  )
+  expect_null(laps_empty)
 })
 
 test_that("load_laps works without internet", {

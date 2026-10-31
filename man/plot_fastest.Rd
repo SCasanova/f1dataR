@@ -16,10 +16,10 @@ plot_fastest(
 \arguments{
 \item{season}{number from 2018 to current season (defaults to current season).}
 
-\item{round}{number from 1 to 23 (depending on season selected) and defaults
-to most recent.}
+\item{round}{number from 1 to the number of rounds in the season (depending on season
+selected) and defaults to \code{1}.}
 
-\item{session}{the code for the session to load Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
+\item{session}{the code for the session to load. Options are \code{'FP1'}, \code{'FP2'}, \code{'FP3'},
 \code{'Q'}, \code{'S'}, \code{'SS'}, \code{'SQ'}, and \code{'R'}. Default is \code{'R'}, which refers to Race.}
 
 \item{driver}{three letter driver code (see load_drivers() for a list) or name to be
@@ -28,12 +28,13 @@ fuzzy matched to a driver from the session.}
 \item{color}{argument that indicates which variable to plot along the
 circuit. Choice of \code{'gear'} or \code{'speed'}, default \code{'gear'}.}
 
-\item{race}{number from 1 to 23 (depending on season selected) and defaults
-to most recent.}
+\item{race}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} number from 1 to the number of rounds
+in the season (depending on season selected); use \code{round} instead.}
 }
 \value{
-A ggplot object that indicates grand prix, driver, time and selected
-color variable.
+A ggplot object showing the driver's fastest lap traced around the circuit,
+colored by the selected \code{color} variable (gear or speed), with a title/subtitle
+identifying the grand prix, driver and lap time. Returns \code{NULL} if the session fails to load.
 }
 \description{
 Creates a ggplot graphic that details the fastest lap for a driver in a race.

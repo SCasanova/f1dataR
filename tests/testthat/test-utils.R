@@ -30,6 +30,28 @@ test_that("utility functions work", {
   expect_error(add_col_if_absent(testdf, "col1", 0))
   expect_error(add_col_if_absent(list(a = 1:5), "col1", NA_real_))
 
+  # Regression test: cli::cli_abort() used to be called with a named `x =`
+  # argument instead of a proper bulleted message vector, which raised
+  # "argument \"message\" is missing" instead of the intended error text.
+  expect_error(
+    add_col_if_absent(testdf, "col1", 0),
+    "must be provided as an actual"
+  )
+  expect_error(
+    add_col_if_absent(list(a = 1:5), "col1", NA_real_),
+    "must be provided as a"
+  )
+  expect_error(
+    add_col_if_absent(testdf, c("col1", "col2")),
+    "must be provided as a single"
+  )
+  # A non-NA, length > 1 na_type used to error inside is.na() with a cryptic
+  # "the condition has length > 1" message rather than the intended cli_abort.
+  expect_error(
+    add_col_if_absent(testdf, "col1", c(NA, NA)),
+    "must be provided as an actual"
+  )
+
   # add_col_if_absent is also inherently tested in many load_x functions too
 
   # Test time format changes
@@ -46,10 +68,32 @@ test_that("utility functions work", {
     c(12.345, 83.456, 45296.789, 12.3456)
   )
 
+  # Regression test: Vectorize() over character(0) used to return list(),
+  # not numeric(0).
+  expect_equal(time_to_sec(character(0)), numeric(0))
+  expect_type(time_to_sec(character(0)), "double")
+
   expect_error(
     check_ff1_network_connection(),
     "f1dataR: Specific race path must be provided"
   )
+})
+
+test_that("check_ff1_version returns invisible(TRUE) on all non-error paths", {
+  testthat::local_mocked_bindings(
+    get_fastf1_version = function() package_version("3.2.0")
+  )
+  expect_error(
+    check_ff1_version(),
+    "FastF1"
+  )
+
+  testthat::local_mocked_bindings(
+    get_fastf1_version = function() package_version("3.9.0")
+  )
+  result2 <- withVisible(check_ff1_version())
+  expect_true(result2$value)
+  expect_false(result2$visible)
 })
 
 test_that("Utility Functions work without internet", {

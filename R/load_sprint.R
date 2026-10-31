@@ -1,24 +1,24 @@
 #' Load Sprint Results
 #'
-#' Loads final race results for a given year and round. Note not all rounds have
-#' sprint results. Use `.load_sprint()` for an uncached version of this function.
+#' Loads final sprint race results for a given year and round. Note not all rounds have
+#' sprint results.
 #'
-#' @param season number from 2021 to current season  (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
+#' @param season number from 2021 to current season (or the word 'current') (defaults to current season).
+#' @param round number from 1 to the number of rounds in the season, and defaults
 #' to most recent. Also accepts `'last'`.
 #' @importFrom magrittr "%>%"
 #' @importFrom rlang .data
 #' @export
-#' @return A dataframetibble with columns driver_id, constructor_id, points awarded, finishing position,
+#' @return A tibble with columns driver_id, constructor_id, points awarded, finishing position,
 #' grid position, laps completed, race status (finished or otherwise), gap to
-#' first place, fastest lap, fastest lap time, fastest lap in seconds,
-#' or NULL if no sprint exists for this season/round combo
+#' first place, fastest lap's lap number, fastest lap time, fastest lap in seconds,
+#' or NULL if no sprint exists for this season/round combo. Results are paginated
+#' automatically, so sprints with more than 100 results are returned in full. Note that
+#' `points`, `position`, `grid`, and `laps` are returned by the API as strings and are
+#' therefore all **character** columns, not numeric.
 load_sprint <- function(season = get_current_season(), round = "last") {
-  if (season != "current" && (season < 2021 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2021 and {get_current_season()} (or use "current").'
-    )
-  }
+  check_season_arg(season, 2021)
+  check_round_arg(round)
 
   url <- glue::glue(
     "{season}/{round}/sprint.json",
@@ -26,7 +26,8 @@ load_sprint <- function(season = get_current_season(), round = "last") {
     round = round
   )
 
-  data <- get_jolpica_content(url)
+  lim <- 100
+  data <- get_jolpica_content(url, parameters = list(limit = lim))
 
   if (is.null(data)) {
     return(NULL)
@@ -41,7 +42,35 @@ load_sprint <- function(season = get_current_season(), round = "last") {
     return(NULL)
   }
 
-  data <- data$MRData$RaceTable$Races$SprintResults[[1]]
+  total <- data$MRData$total %>% as.numeric()
+  offset <- data$MRData$offset %>% as.numeric()
+
+  full <- data$MRData$RaceTable$Races$SprintResults[[1]]
+
+  # Iterate over the request until completed
+  while (nrow(full) < total) {
+    offset <- offset + lim
+
+    data <- get_jolpica_content(
+      url,
+      parameters = list(limit = lim, offset = offset)
+    )
+
+    if (is.null(data)) {
+      return(NULL)
+    }
+
+    if (length(data$MRData$RaceTable$Races) == 0) {
+      break
+    }
+
+    full <- dplyr::bind_rows(
+      full,
+      data$MRData$RaceTable$Races$SprintResults[[1]]
+    )
+  }
+
+  data <- full
 
   data <- data %>%
     tidyr::unnest(
@@ -64,7 +93,6 @@ load_sprint <- function(season = get_current_season(), round = "last") {
       "grid",
       "laps",
       "status",
-      "position",
       "gap" = "Time.time",
       "lap" = "FastestLap.lap",
       "fastest" = "FastestLap.Time.time"

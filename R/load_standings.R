@@ -1,31 +1,30 @@
 #' Load Standings
 #'
 #' @description Loads standings at the end of a given season and round for drivers' or
-#' constructors' championships. Use `.load_standings()` for an uncached version of this function.
+#' constructors' championships.
 #'
-#' @param season number from 2003 to current season (defaults to current season).
-#' @param round number from 1 to 23 (depending on season), and defaults
+#' @param season number from 2003 to current season (or the word 'current') (defaults to current season).
+#' @param round number from 1 to the number of rounds in the season, and defaults
 #' to most recent. Also accepts `'last'`.
 #' @param type select `'driver'` or `'constructor'` championship data. Defaults to
 #' `'driver'`
 #' @importFrom magrittr "%>%"
 #' @export
 #' @return A tibble with columns driver_id (or constructor_id), position,
-#' points, wins (and constructors_id in the case of drivers championship).
+#' points, wins (and constructor_id in the case of drivers championship), or NULL if the request fails.
+#' `position`, `points`, and `wins` are returned by the API as strings and are therefore all
+#' **character** columns, not numeric. For the drivers' championship, a driver who raced for more
+#' than one constructor in the season will appear as multiple rows (one per constructor), since the
+#' underlying `Constructors` field is unnested.
 load_standings <- function(
   season = get_current_season(),
   round = "last",
   type = "driver"
 ) {
-  if (season != "current" && (season < 2003 || season > get_current_season())) {
-    cli::cli_abort(
-      '{.var season} must be between 2003 and {get_current_season()} (or use "current")'
-    )
-  }
+  check_season_arg(season, 2003)
+  check_round_arg(round)
 
-  if (!(type %in% c("driver", "constructor"))) {
-    cli::cli_abort('{.var type} must be either "driver" or "constructor"')
-  }
+  type <- match.arg(tolower(type), c("driver", "constructor"))
 
   url <- glue::glue(
     "{season}/{round}/{type}Standings.json",
@@ -34,14 +33,44 @@ load_standings <- function(
     type = type
   )
 
-  data <- get_jolpica_content(url)
+  lim <- 100
+  data <- get_jolpica_content(url, parameters = list(limit = lim))
 
   if (is.null(data)) {
     return(NULL)
   }
 
+  total <- data$MRData$total %>% as.numeric()
+  offset <- data$MRData$offset %>% as.numeric()
+
+  standings_col <- if (type == "driver") {
+    "DriverStandings"
+  } else {
+    "ConstructorStandings"
+  }
+  full <- data$MRData$StandingsTable$StandingsLists[[standings_col]][[1]]
+
+  # Iterate over the request until completed
+  while (nrow(full) < total) {
+    offset <- offset + lim
+
+    data <- get_jolpica_content(
+      url,
+      parameters = list(limit = lim, offset = offset)
+    )
+
+    if (is.null(data)) {
+      return(NULL)
+    }
+
+    full <- dplyr::bind_rows(
+      full,
+      data$MRData$StandingsTable$StandingsLists[[standings_col]][[1]]
+    )
+  }
+
   if (type == "driver") {
-    data$MRData$StandingsTable$StandingsLists$DriverStandings[[1]] %>%
+    full %>%
       tidyr::unnest(cols = c("Driver")) %>%
       dplyr::select(
         "driverId",
@@ -63,7 +92,7 @@ load_standings <- function(
       tibble::as_tibble() %>%
       janitor::clean_names()
   } else if (type == "constructor") {
-    data$MRData$StandingsTable$StandingsLists$ConstructorStandings[[1]] %>%
+    full %>%
       tidyr::unnest(cols = c("Constructor")) %>%
       suppressWarnings() %>%
       suppressMessages() %>%

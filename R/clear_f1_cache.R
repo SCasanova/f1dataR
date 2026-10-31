@@ -1,8 +1,13 @@
 #' Clear f1dataR Cache
 #'
 #' @description Clears the cache for f1dataR telemetry and Jolpica API results.
-#' Note that the cache directory can be set by setting `option(f1dataR.cache = [cache dir])`,
-#' but the default is a temporary directory.
+#' Note that memoised results default to in-memory caching (up to 24 hours), while the
+#' underlying FastF1 HTTP cache defaults to a temporary directory; both can be redirected
+#' by setting `options(f1dataR.cache = [cache dir])`.
+#'
+#' Note that calling `memoise::forget()` on a function that is not currently memoised
+#' (for example when the cache is set to `'off'`, or for `get_current_season()` which is
+#' never memoised) silently does nothing and produces no warning.
 #'
 #' You can also call the alias `clear_cache()` for the same result
 #'
@@ -19,10 +24,17 @@ clear_f1_cache <- function() {
     if ("fastf1" %in% reticulate::py_list_packages()$package) {
       reticulate::py_run_string("import fastf1")
 
+      memoise_option <- getOption("f1dataR.cache", default = "memory")
+      if (memoise_option %in% c("memory", "off", "filesystem")) {
+        fastf1_cache_dir <- tempdir()
+      } else {
+        fastf1_cache_dir <- memoise_option
+      }
+
       try(
         reticulate::py_run_string(glue::glue(
           "fastf1.Cache.clear_cache('{cache_dir}')",
-          cache_dir = normalizePath(getOption("f1dataR.cache"))
+          cache_dir = normalizePath(fastf1_cache_dir, mustWork = FALSE)
         ))
       )
     }
@@ -120,7 +132,10 @@ change_cache <- function(
 
   if (cache == "filesystem") {
     if (!persist) {
-      cache_dir <- withr::local_tempdir("f1dataR_cache")
+      cache_dir <- withr::local_tempdir(
+        "f1dataR_cache",
+        .local_envir = parent.frame()
+      )
     } else {
       cache_dir <- rappdirs::user_cache_dir(appname = "f1dataR")
     }
@@ -137,6 +152,6 @@ change_cache <- function(
   if (persist) {
     options("f1dataR.cache" = cache)
   } else {
-    withr::local_options("f1dataR.cache" = cache)
+    withr::local_options("f1dataR.cache" = cache, .local_envir = parent.frame())
   }
 }

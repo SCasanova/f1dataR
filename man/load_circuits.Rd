@@ -7,12 +7,11 @@
 load_circuits(season = get_current_season())
 }
 \arguments{
-\item{season}{number from 1950 to current season (defaults to current season).}
+\item{season}{number from 1950 to current season, or \code{"current"} (defaults to current season).}
 }
 \value{
-A tibble with one row per circuit
+A tibble with one row per circuit. Returns \code{NULL} on API failure.
 }
 \description{
-Loads circuit info for all circuits in a given season. Use \code{.load_circuits()}
-for an uncached version of this function
+Loads circuit info for all circuits in a given season.
 }

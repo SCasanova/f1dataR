@@ -2,13 +2,13 @@
 #'
 #' @description Gets Ergast content and returns the processed json object if
 #' no Ergast errors are found. This will automatically fall back from https://
-#' to http:// if Ergast suffers errors, and will automatically retry up to 5
+#' to http:// if Ergast suffers errors, and will automatically retry up to 10
 #' times by each protocol
 #'
 #' `r lifecycle::badge("deprecated")`
 #'
-#' Note the Ergast Motor Racing Database API will shut down at the end of 2024.
-#' This function willbe replaced with a new data-source when one is made available.
+#' Note the Ergast Motor Racing Database API shut down at the end of 2024.
+#' This function was replaced by the Jolpica data source.
 #'
 #' @param url the Ergast URL tail to get from the API (for example,
 #' `"{season}/circuits.json?limit=40"` is called from `load_circuits()`).
@@ -34,15 +34,15 @@ get_ergast_content <- function(url) {
 #'
 #' @description Gets Jolpica-F1 content and returns the processed json object if
 #' no  errors are found. This will automatically fall back from https://
-#' to http:// if Jolpica suffers errors, and will automatically retry up to 5
+#' to http:// if Jolpica suffers errors, and will automatically retry up to 10
 #' times by each protocol
 #'
 #' Note in 2024 this replaced the deprecated Ergast API. Much of the historical data
 #' is duplicated in Jolpica
 #'
 #' @param url the Jolpica URL tail to get from the API (for example,
-#' `"{season}/circuits.json?limit=40"` is called from `load_circuits()`).
-#' @param parameters Parameters to add to the url. Typically `"...?limit=40"`.
+#' `"{season}/circuits.json"` is called from `load_circuits()`).
+#' @param parameters Parameters to add to the url. Typically fills things like `limit`: passed as a `list(limit = 40)`.
 #' @keywords internal
 #' @return the result of `jsonlite::fromJSON` called on Jolpica's return content.
 #' Further processing is performed by specific functions
@@ -50,9 +50,9 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
   # Function Code
 
   # note:
-  # Throttles at 200 req/hr requested.
+  # Throttles at 500 req/hr (Jolpica's documented sustained limit).
   # Caches requests at option = 'f1dataR.cache' location, if not 'current', 'last', or 'latest' result requested
-  # Automatically retries request up to 5 times. Back-off provided in httr2 documentation
+  # Automatically retries request up to 10 times. Back-off provided in httr2 documentation
   # Automatically retries at http if https fails after retries.
 
   if (grepl("?", url, fixed = TRUE)) {
@@ -62,7 +62,7 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
     ))
   }
   if (!is.list(parameters)) {
-    as.list(parameters)
+    parameters <- as.list(parameters)
   }
 
   jolpica_raw <- httr2::request("https://api.jolpi.ca/ergast/f1/") %>%
@@ -75,7 +75,7 @@ get_jolpica_content <- function(url, parameters = list(limit = 40)) {
       "f1dataR/{ver}",
       ver = utils::installed.packages()["f1dataR", "Version"]
     )) %>%
-    httr2::req_throttle(4 / 1) %>%
+    httr2::req_throttle(capacity = 500, fill_time_s = 3600) %>%
     httr2::req_error(is_error = ~FALSE)
 
   jolpica_res <- NULL
@@ -167,9 +167,13 @@ get_current_season <- function() {
 #' @description This function converts clock format time (0:00.000) to seconds (0.000s)
 #'
 #' @param time character string with clock format (0:00.000)
-#' @importFrom magrittr "%>%"
 #' @return A numeric variable that represents that time in seconds
+#' @keywords internal
 time_to_sec <- function(time) {
+  if (length(time) == 0) {
+    return(numeric(0))
+  }
+
   subfun <- function(x) {
     if (is.na(x)) {
       return(NA_real_)
@@ -191,6 +195,84 @@ time_to_sec <- function(time) {
   v_tts <- Vectorize(subfun, USE.NAMES = FALSE)
 
   v_tts(time)
+}
+
+
+#' Check Season Argument
+#'
+#' @description Internal helper that validates a `season` argument against the minimum season
+#' supported by the calling function, and resolves `"current"` to a numeric year. Centralises the
+#' `season != "current" && (season < min_season || season > get_current_season())` check that was
+#' previously duplicated across every loader.
+#'
+#' @param season the `season` argument as passed by the caller (numeric, coercible character, or `"current"`).
+#' @param min_season the minimum season supported by the calling function (e.g. `1950`, `2003`, `2011`, `2018`).
+#'
+#' @return invisibly, `season` resolved to a numeric year (`get_current_season()` if `season == "current"`).
+#' Aborts with a `cli::cli_abort()` message if `season` is invalid.
+#' @keywords internal
+check_season_arg <- function(season, min_season) {
+  season_num <- if (identical(season, "current")) {
+    get_current_season()
+  } else {
+    suppressWarnings(as.numeric(season))
+  }
+
+  if (
+    length(season_num) != 1 ||
+      is.na(season_num) ||
+      season_num < min_season ||
+      season_num > get_current_season()
+  ) {
+    cli::cli_abort(
+      '{.var season} must be between {min_season} and {get_current_season()} (or use "current")'
+    )
+  }
+
+  invisible(season_num)
+}
+
+
+#' Check Round Argument
+#'
+#' @description Internal helper that validates a `round` argument. `round` must be `"last"`, a
+#' positive whole number (numeric or a numeric-looking character string), or, when `allow_name = TRUE`,
+#' an arbitrary non-empty race-name string (as accepted by the FastF1-backed loaders).
+#'
+#' @param round the `round` argument as passed by the caller.
+#' @param allow_name whether a non-numeric race-name string is also acceptable (used by the
+#' FastF1-backed loaders such as `load_race_session()`); Jolpica loaders should leave this `FALSE`.
+#'
+#' @return invisibly `TRUE`. Aborts with a `cli::cli_abort()` message if `round` is invalid.
+#' @keywords internal
+check_round_arg <- function(round, allow_name = FALSE) {
+  if (identical(round, "last")) {
+    return(invisible(TRUE))
+  }
+
+  round_num <- suppressWarnings(as.numeric(round))
+
+  if (
+    length(round) != 1 ||
+      (is.character(round) && is.na(round)) ||
+      (length(round_num) == 1 &&
+        !is.na(round_num) &&
+        (round_num != as.integer(round_num) || round_num < 1))
+  ) {
+    cli::cli_abort(
+      '{.var round} must be a positive whole number{if (allow_name) " or race name" else ""} (or "last")'
+    )
+  }
+
+  if (is.na(round_num) && !allow_name) {
+    cli::cli_abort('{.var round} must be a positive whole number (or "last")')
+  }
+
+  if (is.na(round_num) && (!is.character(round) || !nzchar(round))) {
+    cli::cli_abort('{.var round} must be a non-empty race name (or "last")')
+  }
+
+  invisible(TRUE)
 }
 
 
@@ -254,7 +336,7 @@ check_ff1_network_connection <- function(path = NA_character_) {
           "f1dataR/{ver}",
           ver = utils::installed.packages()["f1dataR", "Version"]
         )) %>%
-        httr2::req_throttle(4 / 1) %>%
+        httr2::req_throttle(capacity = 500, fill_time_s = 3600) %>%
         httr2::req_error(is_error = ~FALSE)
       status <- ff1raw %>%
         httr2::req_perform()
@@ -309,7 +391,7 @@ check_ff1_version <- function() {
 #' Gets the current installed FastF1 version available (via `reticulate`) to the function.
 #' Displays a note if significantly out of date.
 #' @export
-#' @return version as class `package_version`
+#' @return version as class `package_version`, or `NA` if `fastf1` is not installed
 get_fastf1_version <- function() {
   reticulate::py_available(initialize = TRUE)
   ver <- reticulate::py_list_packages() %>%
@@ -339,7 +421,7 @@ get_fastf1_version <- function() {
 #' @return the data.frame as provided (converted to tibble)
 #' @keywords internal
 add_col_if_absent <- function(data, column_name, na_type = NA) {
-  if (!is.na(na_type)) {
+  if (length(na_type) != 1 || !is.na(na_type)) {
     cli::cli_abort(c(
       x = "{.arg na_type} must be provided as an actual {.code NA_type_} (for example, {.val NA_character_})."
     ))

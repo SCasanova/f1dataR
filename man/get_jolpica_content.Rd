@@ -8,9 +8,9 @@ get_jolpica_content(url, parameters = list(limit = 40))
 }
 \arguments{
 \item{url}{the Jolpica URL tail to get from the API (for example,
-\code{"{season}/circuits.json?limit=40"} is called from \code{load_circuits()}).}
+\code{"{season}/circuits.json"} is called from \code{load_circuits()}).}
 
-\item{parameters}{Parameters to add to the url. Typically \code{"...?limit=40"}.}
+\item{parameters}{Parameters to add to the url. Typically fills things like \code{limit}: passed as a \code{list(limit = 40)}.}
 }
 \value{
 the result of \code{jsonlite::fromJSON} called on Jolpica's return content.
@@ -19,7 +19,7 @@ Further processing is performed by specific functions
 \description{
 Gets Jolpica-F1 content and returns the processed json object if
 no  errors are found. This will automatically fall back from https://
-to http:// if Jolpica suffers errors, and will automatically retry up to 5
+to http:// if Jolpica suffers errors, and will automatically retry up to 10
 times by each protocol
 
 Note in 2024 this replaced the deprecated Ergast API. Much of the historical data

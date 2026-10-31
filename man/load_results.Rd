@@ -9,14 +9,19 @@ load_results(season = get_current_season(), round = "last")
 \arguments{
 \item{season}{number from 1950 to current season (or the word 'current') (defaults to current season).}
 
-\item{round}{number from 1 to 23 (depending on season), and defaults to most recent. Also accepts \code{'last'}.}
+\item{round}{number from 1 to the number of rounds in the season, and defaults to most recent. Also accepts \code{'last'}.}
 }
 \value{
 A tibble with one row per driver, with columns for driver & constructor ID, the points won by each driver in
 the race, their finishing position, their starting (grid) position, number of completed laps, status code, gap to
 leader (or time of race), fastest lap ranking, drivers' fastest lap time, top speed achieved, and fastest lap time
-in seconds.
+in seconds, or NULL if the request fails. \code{gap} is a string like \code{"m:ss.ttt"} giving the gap to the leader, or
+the leader's total race time for the race winner. For races without fastest-lap data (races before 2004, and
+2021 round 12), \code{fastest_rank}, \code{fastest}, \code{top_speed_kph}, and \code{time_sec} will be \code{NA}. Note that \code{points},
+\code{position}, \code{grid}, and \code{laps} are returned by the API as strings and are therefore all \strong{character} columns,
+not numeric, even though they look numeric (e.g. \code{position} can also be non-numeric text such as \code{"R"} for a
+retirement). Coerce with \code{as.numeric()} if a numeric type is required.
 }
 \description{
-Loads final race results for a given year and round. Use \code{.load_results()} for an uncached version
+Loads final race results for a given year and round.
 }
